@@ -1,8 +1,8 @@
 # Plans
 
-## V0.2 local milestone — 2026-08-14
+## V0.3 local milestone — 2026-08-14
 
-V0.2 adds a provisional code-native white Jack with puppy/adult stages, 24 pet-hour growth, sleep automation, session-only test-clock levels, original generated local WAV sounds with a mute toggle, and child-friendly need callouts. V1 saves migrate to strict V2 state without losing needs; invalid saves remain unreplaced until the player chooses Start Fresh. The broader LCD/classic-control milestone remains deferred.
+V0.3 adds the first-time **Meet Baby Jack** introduction, a confirmed **New Baby** restart for existing saves, five code-native growth stages at 0/5/10/15/20 accumulated pet hours, player-directed timed naps with automatic wake feedback, a distinct lying-down sleep pose, richer need-aware poses/emotes, and separate opt-in SFX and looping music controls. Strict V3 saves migrate V1 and V2 needs, age, and prior sleeping state safely; invalid saves remain unreplaced until the player chooses Start Fresh. The broader LCD/classic-control milestone remains deferred.
 
 ## Current objective
 
@@ -12,16 +12,16 @@ Current scope status:
 
 - Product identity and the broader future milestone boundary are recorded.
 - V0 uses Expo / React Native / TypeScript with static web export and a configurable Pages base URL.
-- V0 has one original, code-native provisional pixel Jack; no reference likeness has been approved yet.
-- V0 deliberately excludes LCD mode, classic controls, snoot-booping, audio, health/medicine, discipline, accounts, cloud, native packaging, and multiple pets.
+- V0 has one original, code-native provisional white pixel Jack; no reference likeness has been approved yet.
+- V0.3 includes local opt-in playback-only SFX/music, but still excludes LCD mode, classic controls, snoot-booping, health/medicine, discipline, accounts, cloud, native packaging, and multiple pets.
 
 ## V0 implementation charter — 2026-08-14
 
-**Objective and user outcome.** A player can open Jack's original retro pet room in a phone or desktop browser, see four needs decay on an accelerated test clock, care for him with clear direct controls, observe an idle/action reaction, and return to the same local save after refresh or browser reopen.
+**Objective and user outcome.** A player can meet Baby Jack in an original retro pet room, restart safely as a fresh baby when desired, see five visible growth steps from accumulated pet time, choose a timed nap, observe his horizontal sleeping pose and automatic wake reaction, care for him with clear direct controls, and return to the same local save after refresh or browser reopen.
 
-**Scope and architecture.** `App.tsx` owns presentation and an accessibility-aware animation layer. `src/simulation.ts` is a pure deterministic state model with a 12× test clock, clamped care effects, backward-clock protection, and a 24-hour real-time catch-up cap. `src/persistence.ts` stores the versioned state through AsyncStorage (web local storage today, mobile-compatible later). `src/pixel-dog.tsx` contains original code-native rectangle pixel art. There is no network call or account flow.
+**Scope and architecture.** `App.tsx` owns presentation, intro/modal state, and an accessibility-aware animation/audio layer. `src/simulation.ts` is a pure deterministic V3 state model with a 12× test clock, clamped care effects, backward-clock protection, timed virtual-age sleep targets, and a 24-hour real-time catch-up cap. `src/persistence.ts` stores the versioned state through AsyncStorage (web local storage today, mobile-compatible later). `src/pixel-dog.tsx` contains original code-native rectangle pixel art. There is no network call or account flow.
 
-**Responsive and visual rules.** Phone-first single column; content centers at 760px on wider screens. Care buttons maintain at least 84px height, all controls have explicit accessible labels, audio is absent, contrast is intentionally high, and reduced-motion users receive a still sprite rather than idle/action movement.
+**Responsive and visual rules.** Phone-first single column; content centers at 760px on wider screens. Care buttons maintain at least 64px height and supporting controls at least 44px, all controls and modals have explicit accessible labels, contrast is intentionally high, local SFX/music starts off and follows a gesture, and reduced-motion users receive a still sprite rather than idle/action movement.
 
 **Verification.** Run every exact command in `docs/QUALITY_GATES.md`; then open the local web app at a phone and desktop viewport if browser tooling is available. Capture the primary room, an action response, and a persisted-refresh result in `evidence/`.
 
