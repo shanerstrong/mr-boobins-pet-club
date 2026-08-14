@@ -23,11 +23,15 @@ Run the applicable commands before declaring the V0 implementation complete:
 
 ## GitHub Pages export configuration
 
-`app.config.ts` defaults to `/` for local and root-hosted use. When the repository name is known for a project Pages site, export with:
+`app.config.ts` defaults to `/` for local and root-hosted use. The public project Pages build uses:
 
-`$env:EXPO_PUBLIC_BASE_URL='/repository-name/'; npm run export:web`
+`EXPO_PUBLIC_BASE_URL=/mr-boobins-pet-club/ npm run export:web`
 
-Replace `repository-name` with the actual repository name. Do not set this value until a publishing decision is approved; this project currently has no remote configured.
+For local PowerShell verification, use:
+
+`$env:EXPO_PUBLIC_BASE_URL='/mr-boobins-pet-club/'; npm run export:web`
+
+`.github/workflows/deploy-pages.yml` runs the public build after `npm ci`, lint, type checking, and tests, then uploads `dist/` to GitHub Pages.
 
 ## Review limits
 
