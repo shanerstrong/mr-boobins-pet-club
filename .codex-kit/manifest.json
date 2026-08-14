@@ -1,0 +1,126 @@
+{
+    "schemaVersion":  2,
+    "kitVersion":  "0.5.0",
+    "appliedAt":  "2026-08-14T13:49:40.1405693+00:00",
+    "profiles":  [
+                     "software",
+                     "visual-design"
+                 ],
+    "modelRouting":  {
+                         "mode":  "automatic-with-guardrails",
+                         "configPath":  ".codex-kit/model-routing.json"
+                     },
+    "deliverySignals":  {
+                            "deadline":  null,
+                            "milestoneCount":  3,
+                            "buildTrackCount":  3,
+                            "writerCount":  1,
+                            "persistentGoal":  true,
+                            "multiArtifactRelease":  true,
+                            "approvalGateCount":  2
+                        },
+    "proposedPermanentTasks":  [
+                                   "00 — Project Q\u0026A (Read-Only)",
+                                   "01 — Tooling \u0026 Alternatives (Paid · Free · Open Source)",
+                                   "03 — Goals \u0026 Delivery Monitor (Read-Only)",
+                                   "04 — Master Orchestrator (Coordinator)"
+                               ],
+    "files":  [
+                  {
+                      "path":  ".codex/agents/researcher.toml",
+                      "sha256":  "2ea6b4ff87c86986f4cf41fc6638ed212de72ea9f2f206ac817561b957570488"
+                  },
+                  {
+                      "path":  ".codex/agents/reviewer.toml",
+                      "sha256":  "0d2e0016ed6ebef14a2ea6435a12e5d92abfd41855dc5c3fd06d80dd4244ddb4"
+                  },
+                  {
+                      "path":  ".codex/config.toml",
+                      "sha256":  "b0fc9fd7cbfdc73bba4cc4764a1f7cc5fbf1f5244df1f5ea790b392fdaaa3695"
+                  },
+                  {
+                      "path":  ".codex/rules/default.rules",
+                      "sha256":  "3f7ce6e7d82371a9878d2031bf49e76409cda6044007fc8264d8f6a37ba13bfe"
+                  },
+                  {
+                      "path":  ".codex-kit/model-routing.json",
+                      "sha256":  "0949f84b39b4aa18fc21b0ef79a9d1286107d465c55c7cccdb41e49a8bb572a8"
+                  },
+                  {
+                      "path":  "AGENTS.md",
+                      "sha256":  "55eae3bc34de867833ff04c8b1e844d87e4d1e9f75f0a3a77d9b270839f816df"
+                  },
+                  {
+                      "path":  "docs/audits/README.md",
+                      "sha256":  "c0b491213903c8edbea4cf27fa419bc6036b7a79a8ac1206f39e68b7cee0bad6"
+                  },
+                  {
+                      "path":  "docs/DECISIONS.md",
+                      "sha256":  "3ecdf7cbcbe4ed35953cc8a88cb4a1f2d90e181e1e743f383e01889634e4d5f6"
+                  },
+                  {
+                      "path":  "docs/MODEL_ROUTING.md",
+                      "sha256":  "aef75ce23708d9414157b0aba1fcbe701437cd73f08916c141e45665d800a056"
+                  },
+                  {
+                      "path":  "docs/PROJECT_BRIEF.md",
+                      "sha256":  "647f1f3e2e28784594a178fa101bf9e34d96cc8ca8feb9c6a918a18f0f99fe42"
+                  },
+                  {
+                      "path":  "docs/PROJECT_OPERATING_MODEL.md",
+                      "sha256":  "f2f1ba8f608b84294b766be0752c2ca513771f5dc7d2cb4a1c7ae43e5851a5fd"
+                  },
+                  {
+                      "path":  "docs/QUALITY_GATES.md",
+                      "sha256":  "c567405ac70fe81d27b3ec4235500718e6dc2251bd15bb29cd07f82344de3936"
+                  },
+                  {
+                      "path":  "docs/TASK_CHARTERS.md",
+                      "sha256":  "cff7c7e50d96258b18750df246b4428a5b69a18867ccead3090b811f50694bc9"
+                  },
+                  {
+                      "path":  "docs/TOOLING_OPTIONS.md",
+                      "sha256":  "7108336bed1e6d17ff4859ebe755caca412b4e714ef6095f8d32d777f7e96579"
+                  },
+                  {
+                      "path":  "PLANS.md",
+                      "sha256":  "13da50199ca55607c8cb55f6d943a18eae86d2a1073cb34fb2ea72a0f06060d5"
+                  },
+                  {
+                      "path":  "docs/SOFTWARE_PROFILE.md",
+                      "sha256":  "7a3eb6fd2b0f7ced4567be11f2a027ec35b63cf87d64aaf213980433d37bcb0c"
+                  },
+                  {
+                      "path":  "docs/VISUAL_DESIGN_PROFILE.md",
+                      "sha256":  "c0e2a5264fc357ed3e7d6c67242b4de4bf642d50c9dd3e49eb96d9d5dcd3c4f6"
+                  },
+                  {
+                      "path":  ".agents/skills/run-review-fix-loop/agents/openai.yaml",
+                      "sha256":  "898029aa83c94c0af93f140414283b9b19dafd2514bb7e8a4d762dd9e5d04ab0"
+                  },
+                  {
+                      "path":  ".agents/skills/run-review-fix-loop/references/docs-media.md",
+                      "sha256":  "f892bc7f496a2a0f7bde8535c779a1fbf1ad1694f94b495ca39848ed4e2b32f7"
+                  },
+                  {
+                      "path":  ".agents/skills/run-review-fix-loop/references/report-format.md",
+                      "sha256":  "fdbdcacc60b8f3b56a04331faa5d74ec89c74d3cb616c1b231c7d677b9d2b698"
+                  },
+                  {
+                      "path":  ".agents/skills/run-review-fix-loop/references/software.md",
+                      "sha256":  "cdfea3df7dcd6a93d4dd70684a05cb9bcb4077c05b0d7238d9ea7fecffac1c54"
+                  },
+                  {
+                      "path":  ".agents/skills/run-review-fix-loop/references/visual-design.md",
+                      "sha256":  "293288dddd2c6cdd886bdd2b4c644b0195be7c8ca8cc368ee7e9255e41bed209"
+                  },
+                  {
+                      "path":  ".agents/skills/run-review-fix-loop/scripts/validate-review-report.ps1",
+                      "sha256":  "6d6eb72f8ef45b61b7ad9364334e306e209728d37398c23c3686d804593f0e60"
+                  },
+                  {
+                      "path":  ".agents/skills/run-review-fix-loop/SKILL.md",
+                      "sha256":  "0900d78745e4b35ab9736a205762614aa453f8f6def62d474bdaeaca33a26a3f"
+                  }
+              ]
+}

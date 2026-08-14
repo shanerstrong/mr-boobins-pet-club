@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "mode": "automatic-with-guardrails",
+  "userOverrideWins": true,
+  "recordSelectionReason": true,
+  "allowPhaseEscalation": true,
+  "unavailableModelBehavior": "report-and-propose-fallback",
+  "profiles": {
+    "default": "balanced",
+    "flagship": {
+      "preferredModels": ["gpt-5.6-sol"],
+      "fallbackModels": ["gpt-5.5", "gpt-5.4"],
+      "defaultEffort": "high"
+    },
+    "balanced": {
+      "preferredModels": ["gpt-5.6-terra"],
+      "fallbackModels": ["gpt-5.6-sol", "gpt-5.4"],
+      "defaultEffort": "high"
+    },
+    "efficient": {
+      "preferredModels": ["gpt-5.6-luna"],
+      "fallbackModels": ["gpt-5.4-mini", "gpt-5.3-codex-spark"],
+      "defaultEffort": "medium"
+    },
+    "high-risk": {
+      "preferredModels": ["gpt-5.6-sol"],
+      "fallbackModels": [],
+      "minimumProfile": "flagship",
+      "defaultEffort": "xhigh"
+    },
+    "final-audit": {
+      "preferredModels": ["gpt-5.6-sol"],
+      "fallbackModels": ["gpt-5.5"],
+      "minimumProfile": "flagship",
+      "defaultEffort": "xhigh"
+    }
+  },
+  "effort": {
+    "maxRequiresJustification": true
+  },
+  "apiOnlyAdvisoryControls": [
+    "reasoning.mode",
+    "reasoning.context",
+    "text.verbosity"
+  ]
+}

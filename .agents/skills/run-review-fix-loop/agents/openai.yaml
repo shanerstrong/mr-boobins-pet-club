@@ -1,0 +1,4 @@
+interface:
+  display_name: "Run Review Fix Loop"
+  short_description: "Run a bounded independent review and fix loop"
+  default_prompt: "Use $run-review-fix-loop to verify and improve this implementation safely."

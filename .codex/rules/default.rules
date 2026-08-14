@@ -1,0 +1,63 @@
+prefix_rule(
+    pattern = ["git", "reset", "--hard"],
+    decision = "forbidden",
+    justification = "Preserve local work; use a reviewed path-specific recovery plan.",
+    match = ["git reset --hard", "git reset --hard HEAD~1"],
+    not_match = ["git reset --soft HEAD~1", "git status"],
+)
+
+prefix_rule(
+    pattern = ["git", "clean"],
+    decision = "forbidden",
+    justification = "Do not delete untracked user files; inspect exact paths instead.",
+    match = ["git clean -fd", "git clean -fdx"],
+    not_match = ["git status --short"],
+)
+
+prefix_rule(
+    pattern = ["git", "push", ["--force", "--force-with-lease"]],
+    decision = "forbidden",
+    justification = "Do not rewrite remote history.",
+    match = ["git push --force origin main", "git push --force-with-lease origin feature"],
+    not_match = ["git push origin feature"],
+)
+
+prefix_rule(
+    pattern = ["git", "commit"],
+    decision = "prompt",
+    justification = "Review the exact staged scope before committing.",
+    match = ["git commit -m update", "git commit --amend"],
+    not_match = ["git status", "git diff --cached"],
+)
+
+prefix_rule(
+    pattern = ["git", "push"],
+    decision = "prompt",
+    justification = "Pushing is an external write.",
+    match = ["git push", "git push -u origin feature"],
+    not_match = ["git status", "git fetch origin"],
+)
+
+prefix_rule(
+    pattern = ["gh", "pr", "create"],
+    decision = "prompt",
+    justification = "Creating a pull request changes external state.",
+    match = ["gh pr create --draft", "gh pr create --fill"],
+    not_match = ["gh pr view 12", "gh pr list"],
+)
+
+prefix_rule(
+    pattern = ["gh", "release", "create"],
+    decision = "prompt",
+    justification = "Publishing a release requires approval.",
+    match = ["gh release create v1.0.0"],
+    not_match = ["gh release view v1.0.0"],
+)
+
+prefix_rule(
+    pattern = ["npm", "publish"],
+    decision = "prompt",
+    justification = "Package publication is an external release action.",
+    match = ["npm publish", "npm publish --access public"],
+    not_match = ["npm pack", "npm test"],
+)
