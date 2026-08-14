@@ -1,5 +1,9 @@
 # Plans
 
+## V0.2 local milestone — 2026-08-14
+
+V0.2 adds a provisional code-native white Jack with puppy/adult stages, 24 pet-hour growth, sleep automation, session-only test-clock levels, original generated local WAV sounds with a mute toggle, and child-friendly need callouts. V1 saves migrate to strict V2 state without losing needs; invalid saves remain unreplaced until the player chooses Start Fresh. The broader LCD/classic-control milestone remains deferred.
+
 ## Current objective
 
 Deliver a locally verified, GitHub-Pages-ready V0 web demo of the original color pet room. It is a deliberately smaller pre-milestone slice of the broader prototype described in `docs/PROJECT_BRIEF.md`.

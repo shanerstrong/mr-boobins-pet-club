@@ -14,7 +14,11 @@ const config: ExpoConfig = {
     output: 'static',
     favicon: './assets/favicon.png',
   },
-  plugins: ['expo-router'],
+  android: { permissions: [] },
+  plugins: [
+    'expo-router',
+    ['expo-audio', { recordAudioAndroid: false, enableBackgroundPlayback: false }],
+  ],
   experiments: {
     baseUrl,
   },

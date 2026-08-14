@@ -10,9 +10,10 @@ Run the applicable commands before declaring the V0 implementation complete:
 - Production web export: `npm run export:web`.
 - Static-export smoke check (run after export): `npm run smoke`.
 - Dependency/security check: `npm run check:deps` (fails only for critical production dependency advisories; report moderate/high findings as release risks rather than hiding them).
-- Simulation and persistence tests cover accelerated need decay, care effects, elapsed time, backward clock protection, large-jump capping, exact persisted-state validation, and save/load round trips. Loading distinguishes missing, valid, invalid, and unavailable storage; invalid raw saves are retained until an explicit reset, while unavailable storage is session-only.
+- Simulation and persistence tests cover V1→V2 migration, strict V2 schema, explicit clock rates through 3600×, switching continuity, sleep/wake recovery, 24-hour growth, rollback/large jumps, and save/load failures. Loading distinguishes missing, valid, invalid, and unavailable storage; invalid raw saves are retained until an explicit reset, while unavailable storage is session-only.
 - Visual QA captures the primary color pet-room screen, one action response, and a persisted refresh at a 390px phone viewport plus a desktop viewport. LCD, classic controls, and Boop reaction captures are deferred outside V0.
-- Accessibility checks cover labels, logical focus order, readable contrast, reduced motion, no audio, and 44px-or-larger touch targets.
+- Accessibility checks cover labels, logical focus order, readable contrast, reduced motion, muted-by-default local audio that only follows a user gesture, and 44px-or-larger touch targets.
+- Audio QA verifies the playback-only Expo Audio plugin configuration (no recording or background media permissions), original WAV headers, default mute, and immediate mute/pause behavior.
 
 ## Required evidence
 
