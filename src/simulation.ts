@@ -1,15 +1,38 @@
 export const DEFAULT_CLOCK_MULTIPLIER = 12;
 export const MAX_ELAPSED_REAL_MS = 24 * 60 * 60 * 1000;
-export const PUPPY_GROWTH_MINUTES = 24 * 60;
-export const AUTO_SLEEP_ENERGY = 12;
-export const AUTO_WAKE_ENERGY = 78;
+export const GROWTH_STEP_MINUTES = 5 * 60;
 
 export type NeedKey = "hunger" | "happiness" | "energy" | "hygiene";
-export type CareAction = "feed" | "play" | "rest" | "clean";
+export type CareAction = "feed" | "play" | "clean";
 export type Needs = Record<NeedKey, number>;
-export type LifeStage = "puppy" | "adult";
+export type GrowthStage =
+  | "baby"
+  | "little-puppy"
+  | "puppy"
+  | "young-dog"
+  | "adult";
 
 export interface PetState {
+  version: 3;
+  id: string;
+  name: string;
+  createdAt: number;
+  lastUpdatedAt: number;
+  needs: Needs;
+  ageVirtualMinutes: number;
+  introCompleted: boolean;
+  sleepUntilVirtualMinutes: number | null;
+}
+
+type V1Pet = {
+  version: 1;
+  id: string;
+  name: string;
+  createdAt: number;
+  lastUpdatedAt: number;
+  needs: Needs;
+};
+type V2Pet = {
   version: 2;
   id: string;
   name: string;
@@ -18,9 +41,6 @@ export interface PetState {
   needs: Needs;
   ageVirtualMinutes: number;
   isSleeping: boolean;
-}
-type V1Pet = Omit<PetState, "version" | "ageVirtualMinutes" | "isSleeping"> & {
-  version: 1;
 };
 
 const decay: Needs = {
@@ -32,7 +52,6 @@ const decay: Needs = {
 const effects: Record<CareAction, Partial<Needs>> = {
   feed: { hunger: 28, happiness: 3 },
   play: { happiness: 24, energy: -12, hunger: -6, hygiene: -3 },
-  rest: {},
   clean: { hygiene: 35, happiness: 5 },
 };
 const needKeys: NeedKey[] = ["hunger", "happiness", "energy", "hygiene"];
@@ -43,20 +62,44 @@ const exactKeys = (value: object, keys: string[]) =>
 
 export function createNewPet(now = Date.now()): PetState {
   return {
-    version: 2,
+    version: 3,
     id: "jack-provisional",
     name: "Jack",
     createdAt: now,
     lastUpdatedAt: now,
     needs: { hunger: 84, happiness: 80, energy: 76, hygiene: 88 },
     ageVirtualMinutes: 0,
-    isSleeping: false,
+    introCompleted: false,
+    sleepUntilVirtualMinutes: null,
   };
 }
-export function getLifeStage(
+
+export function getGrowthStage(
   pet: Pick<PetState, "ageVirtualMinutes">,
-): LifeStage {
-  return pet.ageVirtualMinutes >= PUPPY_GROWTH_MINUTES ? "adult" : "puppy";
+): GrowthStage {
+  const step = Math.floor(pet.ageVirtualMinutes / GROWTH_STEP_MINUTES);
+  return ["baby", "little-puppy", "puppy", "young-dog", "adult"][
+    Math.min(4, Math.max(0, step))
+  ] as GrowthStage;
+}
+
+export function isSleeping(pet: Pick<PetState, "sleepUntilVirtualMinutes">) {
+  return pet.sleepUntilVirtualMinutes !== null;
+}
+
+function applyAwakeNeeds(needs: Needs, minutes: number): Needs {
+  const next = { ...needs };
+  for (const key of needKeys) next[key] = clamp(next[key] - decay[key] * minutes);
+  return next;
+}
+
+function applySleepingNeeds(needs: Needs, minutes: number): Needs {
+  const next = { ...needs };
+  for (const key of needKeys) {
+    const change = key === "energy" ? -0.72 : decay[key] * 0.42;
+    next[key] = clamp(next[key] - change * minutes);
+  }
+  return next;
 }
 
 export function advancePet(
@@ -69,32 +112,62 @@ export function advancePet(
     !Number.isFinite(multiplier) ||
     multiplier <= 0 ||
     now <= pet.lastUpdatedAt
-  )
+  ) {
     return pet;
+  }
+
   const virtualMinutes =
     (Math.min(now - pet.lastUpdatedAt, MAX_ELAPSED_REAL_MS) / 60_000) *
     multiplier;
-  let sleeping = pet.isSleeping || pet.needs.energy <= AUTO_SLEEP_ENERGY;
-  const needs: Needs = { ...pet.needs };
-  for (const key of needKeys)
-    needs[key] = clamp(
-      needs[key] -
-        (sleeping && key === "energy"
-          ? -0.72
-          : sleeping
-            ? decay[key] * 0.42
-            : decay[key]) *
-          virtualMinutes,
-    );
-  if (sleeping && needs.energy >= AUTO_WAKE_ENERGY) sleeping = false;
-  if (!sleeping && needs.energy <= AUTO_SLEEP_ENERGY) sleeping = true;
+  const target = pet.sleepUntilVirtualMinutes;
+  const sleepMinutes =
+    target === null
+      ? 0
+      : Math.min(virtualMinutes, Math.max(0, target - pet.ageVirtualMinutes));
+  const awakeMinutes = virtualMinutes - sleepMinutes;
+  const needs = applyAwakeNeeds(
+    applySleepingNeeds(pet.needs, sleepMinutes),
+    awakeMinutes,
+  );
+  const ageVirtualMinutes = pet.ageVirtualMinutes + virtualMinutes;
+
   return {
     ...pet,
     lastUpdatedAt: now,
     needs,
-    ageVirtualMinutes: pet.ageVirtualMinutes + virtualMinutes,
-    isSleeping: sleeping,
+    ageVirtualMinutes,
+    sleepUntilVirtualMinutes:
+      target !== null && ageVirtualMinutes >= target ? null : target,
   };
+}
+
+export function startSleep(
+  pet: PetState,
+  hours: number,
+  now: number,
+  multiplier = DEFAULT_CLOCK_MULTIPLIER,
+): PetState {
+  const current = advancePet(pet, now, multiplier);
+  if (!Number.isFinite(hours) || hours <= 0 || isSleeping(current)) return current;
+  return {
+    ...current,
+    sleepUntilVirtualMinutes: current.ageVirtualMinutes + hours * 60,
+  };
+}
+
+export function wakePet(
+  pet: PetState,
+  now: number,
+  multiplier = DEFAULT_CLOCK_MULTIPLIER,
+): PetState {
+  const current = advancePet(pet, now, multiplier);
+  return { ...current, sleepUntilVirtualMinutes: null };
+}
+
+export function canCareForPet(
+  pet: Pick<PetState, "sleepUntilVirtualMinutes">,
+): boolean {
+  return !isSleeping(pet);
 }
 
 export function careForPet(
@@ -104,19 +177,17 @@ export function careForPet(
   multiplier = DEFAULT_CLOCK_MULTIPLIER,
 ): PetState {
   const current = advancePet(pet, now, multiplier);
+  if (!canCareForPet(current)) return current;
   const needs = { ...current.needs };
   for (const [key, amount] of Object.entries(effects[action]) as [
     NeedKey,
     number,
-  ][])
+  ][]) {
     needs[key] = clamp(needs[key] + amount);
-  return {
-    ...current,
-    needs,
-    isSleeping: action === "rest" ? true : false,
-    lastUpdatedAt: now,
-  };
+  }
+  return { ...current, needs };
 }
+
 export function switchClockRate(
   pet: PetState,
   now: number,
@@ -140,6 +211,7 @@ function validNeeds(value: unknown): value is Needs {
     )
   );
 }
+
 function validBase(
   value: unknown,
 ): value is {
@@ -162,7 +234,12 @@ function validBase(
     validNeeds(pet.needs)
   );
 }
+
 export function isPetState(value: unknown): value is PetState {
+  const sleepUntil =
+    value && typeof value === "object"
+      ? (value as Partial<PetState>).sleepUntilVirtualMinutes
+      : undefined;
   return (
     validBase(value) &&
     exactKeys(value, [
@@ -173,29 +250,75 @@ export function isPetState(value: unknown): value is PetState {
       "lastUpdatedAt",
       "needs",
       "ageVirtualMinutes",
-      "isSleeping",
+      "introCompleted",
+      "sleepUntilVirtualMinutes",
     ]) &&
-    (value as PetState).version === 2 &&
+    (value as PetState).version === 3 &&
     Number.isFinite((value as PetState).ageVirtualMinutes) &&
     (value as PetState).ageVirtualMinutes >= 0 &&
-    typeof (value as PetState).isSleeping === "boolean"
+    typeof (value as PetState).introCompleted === "boolean" &&
+    (sleepUntil === null ||
+      (typeof sleepUntil === "number" &&
+        Number.isFinite(sleepUntil) &&
+        sleepUntil >=
+          (value as PetState).ageVirtualMinutes))
   );
 }
+
 export function migratePetState(value: unknown): PetState | null {
   if (isPetState(value)) return value;
+  if (!validBase(value) || !value || typeof value !== "object") return null;
+  const version = (value as { version?: unknown }).version;
   if (
-    !validBase(value) ||
-    !exactKeys(value, [
+    version === 2 &&
+    exactKeys(value, [
       "version",
       "id",
       "name",
       "createdAt",
       "lastUpdatedAt",
       "needs",
-    ]) ||
-    (value as V1Pet).version !== 1
-  )
-    return null;
-  const pet = value as V1Pet;
-  return { ...pet, version: 2, ageVirtualMinutes: 0, isSleeping: false };
+      "ageVirtualMinutes",
+      "isSleeping",
+    ])
+  ) {
+    const pet = value as V2Pet;
+    if (
+      !Number.isFinite(pet.ageVirtualMinutes) ||
+      pet.ageVirtualMinutes < 0 ||
+      typeof pet.isSleeping !== "boolean"
+    ) {
+      return null;
+    }
+    const { isSleeping: wasSleeping, ...base } = pet;
+    return {
+      ...base,
+      version: 3,
+      introCompleted: false,
+      sleepUntilVirtualMinutes: wasSleeping
+        ? pet.ageVirtualMinutes + 2 * 60
+        : null,
+    };
+  }
+  if (
+    version === 1 &&
+    exactKeys(value, [
+      "version",
+      "id",
+      "name",
+      "createdAt",
+      "lastUpdatedAt",
+      "needs",
+    ])
+  ) {
+    const pet = value as V1Pet;
+    return {
+      ...pet,
+      version: 3,
+      ageVirtualMinutes: 0,
+      introCompleted: false,
+      sleepUntilVirtualMinutes: null,
+    };
+  }
+  return null;
 }
