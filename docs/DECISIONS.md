@@ -2,6 +2,21 @@
 
 Record durable decisions that future work must preserve.
 
+## V0.5 — V6 pet hub, living room, and separate audio preferences
+
+V6 replaces the V5 intro/background fields with `adoptionCompleted` and `roomTheme`, maps Sunny → Cozy, Moonlight → Blue, and Backyard → Garden, and derives the wall clock/daylight directly from virtual age. Every launch intentionally returns through the title and single-pet hub without resetting the pet. SFX/music preferences use a separate strict record; remembered playback never begins before an ENTER or VISIT ROOM gesture.
+
+| Date | Decision | Why | Alternatives rejected | Consequences |
+| --- | --- | --- | --- | --- |
+| 2026-08-14 | Treat the approved V0.5 Figma file as the visual source of truth for responsive title, hub, room, settings, and state compositions. | It keeps design rules, component states, and implementation parity reviewable in one durable location. | Continuing code-first without a validated design record. | Preserve the file URL and node inventory in `docs/V0.5_FIGMA_HANDOFF.md`; implementation remains code-native. |
+| 2026-08-14 | Derive virtual time from age with age zero at 8:00 AM; persist room theme but keep test speed session-only. | One timeline avoids clock drift and lets tests accelerate safely without making a debug setting part of the pet save. | Persisting a second clock or the test multiplier. | Daypart boundaries are Morning 6–10, Day 10–17, Dusk 17–20, and Night 20–6. |
+| 2026-08-14 | Make BOOP and the nose target the same no-needs action with hunger → energy → hygiene → happiness → comfortable priority. | The response stays funny and state-aware without becoming a care exploit. | Random reactions, need rewards, or barking in every condition. | Bark/hop occurs only when comfortable; asleep/dead/cooldown states reject Boop. |
+| 2026-08-14 | Keep cleaning as a fixed 1.5-second four-phase interaction that locks care without moving the controls. | The shower is understandable while preventing overlapping state transitions. | Instant cleaning or a modal that reflows controls. | Reduced motion keeps the phase meaning but removes decorative movement. |
+
+## V0.4 — V5 scenes and gentle starvation consequence
+
+V5 stores a Sunny Room, Moonlight Room, or Backyard preference and a bounded virtual zero-hunger timer. At 120 zero-hunger pet minutes Jack dies and the pure simulation freezes; a feed before death clears the timer. V1–V4 migrate to an alive Sunny Room without replacing invalid raw data. The room has one fixed-height live message slot so changing reactions never shift care controls.
+
 | Date | Decision | Why | Alternatives rejected | Consequences |
 | --- | --- | --- | --- | --- |
 | 2026-08-14 | Use **Mr. Boobins' Pet Club** as the working product name. | It preserves Jack's real family nickname and clearly supports multiple pets. | Generic or coined public names without the personal connection. | Recheck marketplace and trademark status before a public filing or release; the name itself is not a copyright claim. |
@@ -21,5 +36,6 @@ Record durable decisions that future work must preserve.
 | 2026-08-14 | Derive five visual growth stages from accumulated pet time at five-hour steps. | Baby, Little Puppy, Puppy, Young Dog, and Adult make the demo’s progression immediately legible while remaining testable. | Feeding-based growth or label-only scaling. | Feeding never adds age; every stage changes code-native child-part geometry, and Adult begins at 20 pet hours. |
 | 2026-08-14 | Keep SFX and looping music as separate default-off, user-gesture controls. | Players can choose expressive original audio without surprise playback or native recording/background permissions. | A combined sound toggle, autoplay, or external music. | Both controls have 44px targets; turning either off pauses it immediately; the generated melody is local and loops only while Music is on. |
 | 2026-08-14 | Make valid-save restart an explicit confirmed New Baby flow. | Existing players need a practical way to begin from Baby without silently replacing a loved save. | Hiding reset in recovery-only UI or resetting on a single tap. | Cancel preserves the current V3 save; confirmation creates a new Baby state with fresh needs, no sleep target, and the one-time intro reopened. |
+| 2026-08-14 | Store V0.3 pets as strict V4 state with earned growth-meal credits. | Growth should reflect both elapsed pet time and regular feeding, without allowing full-hunger feed farming. | Time-only growth or action-count growth without a hunger-cycle guard. | A visible stage requires both its five-hour checkpoint and its matching earned meal; V3 saves receive credits matching their already-visible stage, while invalid raw saves remain untouched. |
 
 Do not use this file for temporary task notes or speculative ideas.
