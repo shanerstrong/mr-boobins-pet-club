@@ -1,0 +1,336 @@
+{
+  "schemaVersion": 1,
+  "kind": "baseline-text-raw-to-normalized-mapping",
+  "generatedAt": "2026-08-16T14:04:48.795Z",
+  "preservationManifest": "docs/production/V0.6-V0.8_PRESERVATION_MANIFEST.json",
+  "rawPreservation": {
+    "stagingRoot": "preservation-staging/20260816T134500Z-baseline-text-originals/",
+    "bundleName": "mr-boobins-baseline-text-originals-pre-normalization.zip",
+    "bundleBytes": 42387,
+    "bundleSha256": "93275693464e477080d7da94282b35318edaf98a7892b5c8f27ede45903a5c87",
+    "bundleDriveFileId": "1Djps8b5NDwG6EmOMVp7JZ7gZTThVK9zC",
+    "manifestName": "baseline-text-originals-manifest.private.json",
+    "manifestBytes": 4626,
+    "manifestSha256": "131a6824bd4c87d6ef485a18f2f59305283647cf7139b2c5c3d8af3e129583bc",
+    "manifestDriveFileId": "1FpevZWLLfaDUbk0dCe9irH0fm5WBQ6QX",
+    "remoteVerification": {
+      "method": "authenticated-download-sha256",
+      "bundleMatched": true,
+      "manifestMatched": true,
+      "parentMatched": true,
+      "shared": false,
+      "sourceVisibilityStatus": "not_shared"
+    }
+  },
+  "memberCount": 21,
+  "entries": [
+    {
+      "path": "assets/3d/jack/animations/clip-manifest.json",
+      "rawBytes": 3296,
+      "rawSha256": "d2e2a134de59e1a57ede8c59004f9e8e732fdc7b8402df40eb5d06ccac94aa81",
+      "normalizedBytes": 3188,
+      "normalizedSha256": "c29866e1ce1a47e6df05313b0ba4e47345f0b5d1c48a89f953707b0e5e453d24",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 108,
+          "bareCrCount": 0
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/animations/jack-rig-animation-metrics.json",
+      "rawBytes": 4408,
+      "rawSha256": "12d37921d0bc4f12afea1308fc86caf201669aed23f3ca99997f0cb72dd9204c",
+      "normalizedBytes": 4206,
+      "normalizedSha256": "0d2e731a427cf163d0db751da16a0b142a905df65f67058d73fb17f6774eab15",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 202,
+          "bareCrCount": 0
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/blockout-metrics.json",
+      "rawBytes": 999,
+      "rawSha256": "7f48268119e7b2a2983d7af5bbed5cb389b45226067f7ff508f79b4e5a0a406c",
+      "normalizedBytes": 958,
+      "normalizedSha256": "0c0e4b348893c38626be078f02447c5a860cf0436fdeb1d6a68e3d9c95ba05ef",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 41,
+          "bareCrCount": 0
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/hero-metrics.json",
+      "rawBytes": 815,
+      "rawSha256": "5093339fad533d8f83184aed599086292d30f0f7c8c43b80d40c3cbfd5bc2d7e",
+      "normalizedBytes": 776,
+      "normalizedSha256": "4e88f9c6b2739a76302b4024b37791557bec3a99ee2c893d34c72a927e4c54c2",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 39,
+          "bareCrCount": 0
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/skins/jack-baby-metrics.json",
+      "rawBytes": 6336,
+      "rawSha256": "90bdf3ac67261fdb19580010f15b6c2f676c869a17f58cf82018b8249fd61d2a",
+      "normalizedBytes": 6018,
+      "normalizedSha256": "73bf71993bdf3da743d1451487442173c51dd8c18d206ac5392564aa8bb8019f",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 318,
+          "bareCrCount": 0
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/skins/jack-teen-metrics.json",
+      "rawBytes": 6369,
+      "rawSha256": "a05ad1f3e2c34114f30bc29fc9f963dc7c0ab648e42f5524ed9eb36fad2c2664",
+      "normalizedBytes": 6052,
+      "normalizedSha256": "7f26edb93dc519dc445b3f929f0659616c45cb034d4edfa281e474ec5e766e7f",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 317,
+          "bareCrCount": 0
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/tools/build_hero_geometry.py",
+      "rawBytes": 13604,
+      "rawSha256": "d2388b354aa5fffc73552168ac3a4db5c720c48a4d4dda53b3091f49e58666f7",
+      "normalizedBytes": 13603,
+      "normalizedSha256": "15622420749e49163d223fca926135b87caff50e2900fa20bfe9920c430f3b02",
+      "transformations": [
+        {
+          "type": "blank-line-at-eof-removed",
+          "removedNewlines": 1
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/tools/receive_meshy_bridge.py",
+      "rawBytes": 8618,
+      "rawSha256": "c794fb16d8dd65679fab35046526e57ad1fcd880f0a6ba62062d1faabb98a7b1",
+      "normalizedBytes": 8617,
+      "normalizedSha256": "6b30e5dcdbf02389650ede78728d82667734905a0f26ae820d4a50c6d360833d",
+      "transformations": [
+        {
+          "type": "blank-line-at-eof-removed",
+          "removedNewlines": 1
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/tools/render_evidence.py",
+      "rawBytes": 6406,
+      "rawSha256": "d9d51d2b6c356f1d5bbbb007a70fc27e2ea3b821cf260889265f61fbde850a43",
+      "normalizedBytes": 6405,
+      "normalizedSha256": "ead5d5750df0abf0662d19e5d1556efa722a168283fd01d2fdd41d3e21808a18",
+      "transformations": [
+        {
+          "type": "blank-line-at-eof-removed",
+          "removedNewlines": 1
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/tools/render_videos.py",
+      "rawBytes": 2981,
+      "rawSha256": "482af94b718536a78fa21e8878e1ca87fdb3ea3db312d53b9e37209ab9bc1ac5",
+      "normalizedBytes": 2980,
+      "normalizedSha256": "eda73a7002b1b4dade8e95c6342bd13e871dced293239a9fcfa46bf56ca42331",
+      "transformations": [
+        {
+          "type": "blank-line-at-eof-removed",
+          "removedNewlines": 1
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/tools/validate_blockout.py",
+      "rawBytes": 4104,
+      "rawSha256": "ecf4b11c9badc43f9a04ca116f438550c5c56019ba3da6e097a544efbc37c4d4",
+      "normalizedBytes": 4103,
+      "normalizedSha256": "01756d2f87385e8bbcdfcdcb27f9555bb9424651a003841e729bde83fd9ec5ea",
+      "transformations": [
+        {
+          "type": "blank-line-at-eof-removed",
+          "removedNewlines": 1
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/tools/validate_character.py",
+      "rawBytes": 7632,
+      "rawSha256": "6d678b3026400c45d26cf484b642ce033f28bdc2130d6b3b6bb793f93cbe5e5e",
+      "normalizedBytes": 7631,
+      "normalizedSha256": "99bc7f3241b03656fa98fe0cfe2a301c4d65ca4e5adc4ffd5edf1113dec07d58",
+      "transformations": [
+        {
+          "type": "blank-line-at-eof-removed",
+          "removedNewlines": 1
+        }
+      ]
+    },
+    {
+      "path": "assets/3d/jack/v2/source/third-party/quaternius-ultimate-animated-animals-cc0/License.txt",
+      "rawBytes": 364,
+      "rawSha256": "83d8959f9fc56353ed571fbe2dc52e4bcd64508e2399501cd45ac2ce3df0bf8c",
+      "normalizedBytes": 350,
+      "normalizedSha256": "12d80352b886d647a03f3b30d9c0869e44f91a15bf9b29d6443bc6599bb5e70d",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 12,
+          "bareCrCount": 0
+        },
+        {
+          "type": "single-trailing-space-removed",
+          "line": 9
+        },
+        {
+          "type": "blank-line-at-eof-removed",
+          "removedNewlines": 1
+        }
+      ]
+    },
+    {
+      "path": "docs/audits/2026-08-14-3d-jack-pass1.md",
+      "rawBytes": 4748,
+      "rawSha256": "680838e3b110d66f72484dffb4204ea8373809988bb695f046f07bf6c9f62edb",
+      "normalizedBytes": 4749,
+      "normalizedSha256": "199232f5227ca212b4efce2555adf9d52f66ccb69126c88a173d646fa9f44b33",
+      "transformations": [
+        {
+          "type": "markdown-hard-break-to-br",
+          "line": 7
+        },
+        {
+          "type": "blank-line-at-eof-removed",
+          "removedNewlines": 1
+        }
+      ]
+    },
+    {
+      "path": "docs/GAME_PRODUCTION_PLAN.md",
+      "rawBytes": 21226,
+      "rawSha256": "b0cb6bfb6b4a3b111d0edcb41509f53d11d8ee46148d5da836aef915452e0c84",
+      "normalizedBytes": 21230,
+      "normalizedSha256": "f723a35c34f7eebf9ba66077b40eebd48258a59a22e242ec8e31c4740c30f2ab",
+      "transformations": [
+        {
+          "type": "markdown-hard-break-to-br",
+          "line": 3
+        },
+        {
+          "type": "markdown-hard-break-to-br",
+          "line": 4
+        }
+      ]
+    },
+    {
+      "path": "docs/production/V0.6-V0.8_CHECKPOINT_REPORT.md",
+      "rawBytes": 12769,
+      "rawSha256": "043f9a29ca80b317fc15b6a001546cfaab5c7e5ad7079412fef316a67b1b5a34",
+      "normalizedBytes": 14785,
+      "normalizedSha256": "1ab2f1609c0f53b36fd080406ff7267869206768230342e895aea931b854e5c5",
+      "transformations": [
+        {
+          "type": "markdown-hard-break-to-br",
+          "line": 3
+        },
+        {
+          "type": "markdown-hard-break-to-br",
+          "line": 4
+        },
+        {
+          "type": "checkpoint-metadata-refresh-after-preservation"
+        }
+      ]
+    },
+    {
+      "path": "evidence/3d-jack/v2/contract-validation.json",
+      "rawBytes": 376,
+      "rawSha256": "e1cce021f296f1150912511b59c7fcfcb825314938926158783827a6763e3aaa",
+      "normalizedBytes": 361,
+      "normalizedSha256": "b11b3dfb1f46c8916a4c2537e2735fa75f54b892992b944bccaaf26fd700807a",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 15,
+          "bareCrCount": 0
+        }
+      ]
+    },
+    {
+      "path": "evidence/3d-jack/v2/full-frame-deformation-validation.json",
+      "rawBytes": 8860,
+      "rawSha256": "65d2f33dda5d80cc9d6410658eccddb93b2be9d8b6649f6ab5fd02c78eeed392",
+      "normalizedBytes": 8476,
+      "normalizedSha256": "5334ee3863f8c347a2ef804bc70562471586762da1492ed4dd2245ab1d7fd5ba",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 384,
+          "bareCrCount": 0
+        }
+      ]
+    },
+    {
+      "path": "evidence/3d-jack/v2/glb-contract-validation.json",
+      "rawBytes": 1216,
+      "rawSha256": "7b998ee52d65b897502c9b0bc893284c4b4ae63f03d7b92a06c341f396dbd1fe",
+      "normalizedBytes": 1168,
+      "normalizedSha256": "25091c830ca1fb5c2383253e0dad7c5563e189c2bb1e5bba7db72761d545045c",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 48,
+          "bareCrCount": 0
+        }
+      ]
+    },
+    {
+      "path": "evidence/3d-jack/v2/runtime-playback-validation.json",
+      "rawBytes": 6014,
+      "rawSha256": "afd8e3ec1fc501c08b710cda2bc43453780d1cfa4f62993fd239702baa81b4db",
+      "normalizedBytes": 5722,
+      "normalizedSha256": "06f2dd4a46b8a7f0ab66f4033fa7ea29f4ba105b7d8d6f5a2ddd59276dd602a8",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 292,
+          "bareCrCount": 0
+        }
+      ]
+    },
+    {
+      "path": "evidence/3d-jack/v2/v2-package-validation.json",
+      "rawBytes": 308,
+      "rawSha256": "c233bd612d101310787fb38168f140a2a0a737cc66986ca0c6400566d130270d",
+      "normalizedBytes": 296,
+      "normalizedSha256": "8ba16696c1deb8344693e545d820ccc034bf9bb70a77108f56692d9ab20ff38c",
+      "transformations": [
+        {
+          "type": "line-endings-to-lf",
+          "crlfCount": 12,
+          "bareCrCount": 0
+        }
+      ]
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type ReactNode,
 } from "react";
 import {
   AccessibilityInfo,
@@ -19,31 +20,67 @@ import {
   TextInput,
   useWindowDimensions,
   View,
+  type StyleProp,
+  type ViewStyle,
 } from "react-native";
 import { useAudioPlayer } from "expo-audio";
 import {
   DEFAULT_AUDIO_PREFERENCES,
+  DEFAULT_CARE_GUIDE_PROGRESS,
+  DEFAULT_TRAINING_PROGRESS,
+  completeTrainingCommand,
   loadAudioPreferences,
+  loadCareGuideProgress,
   loadPet,
+  loadTrainingProgress,
   saveAudioPreferences,
+  saveCareGuideProgress,
   savePet,
+  saveTrainingProgress,
   type AudioPreferences,
+  type CareGuideProgress,
+  type TrainingProgress,
 } from "./src/persistence";
 import {
   canPlayRememberedAudio,
-  syncMusicPlayer,
+  selectMusicTrack,
+  syncAdaptiveMusic,
   syncSfxPlayers,
+  type MusicTrack,
 } from "./src/audio-policy";
 import {
   createInteractionScheduler,
   getBoopAvailability,
   getTerminalUiPolicy,
+  PLAY_REACTION_MS,
   resetTransientAnimations,
   resolvePetInteraction,
   restoreMessagePresentation,
   type PetInteraction,
 } from "./src/interaction-policy";
-import { MiniJack, PixelDog, type DogEmote } from "./src/pixel-dog";
+import {
+  MiniJack,
+  type DogEmote,
+  type TrainingVisualAction,
+} from "./src/pixel-dog";
+import { PetRoomScene } from "./src/pet-room-scene";
+import {
+  TRAINING_CELEBRATION_DURATION_MS,
+  TRAINING_COMMANDS,
+  TRAINING_COMMAND_DURATION_MS,
+  TRAINING_EAT_DURATION_MS,
+  TRAINING_TREAT_CONTACT_MS,
+  createTrainingState,
+  getTrainingAnnouncement,
+  getReducedCelebrationPose,
+  getTrainingMotionDuration,
+  trainingCelebrationLabels,
+  trainingCommandLabels,
+  transitionTraining,
+  type TrainingCelebration,
+  type TrainingCommand,
+  type TrainingState,
+} from "./src/training-policy";
 import {
   BOOP_COOLDOWN_MS,
   CLEANING_DURATION_MS,
@@ -69,11 +106,15 @@ import {
   type PetState,
   type RoomTheme,
 } from "./src/simulation";
+import { getReturnSummary } from "./src/return-policy";
 
 type Mode = "loading" | "available" | "invalid" | "unavailable" | "session";
 type Screen = "title" | "hub" | "room" | "settings";
 type PreferenceMode = "loading" | "available" | "invalid" | "session";
+type TrainingPersistenceMode = "loading" | "available" | "invalid" | "session";
+type CareGuidePersistenceMode = "loading" | "available" | "invalid" | "session";
 type SoundKind = "happy" | "sleepy" | "bark" | "shower" | "sneeze" | "huff";
+type ReturnContext = { before: PetState };
 
 const rates = [1, 12, 60, 360, 3600];
 const sleepOptions = [1, 2, 4, 8];
@@ -137,12 +178,28 @@ function PetClub() {
   );
   const [preferenceMode, setPreferenceMode] =
     useState<PreferenceMode>("loading");
+  const [trainingProgress, setTrainingProgress] = useState<TrainingProgress>(
+    DEFAULT_TRAINING_PROGRESS,
+  );
+  const [trainingPersistenceMode, setTrainingPersistenceMode] =
+    useState<TrainingPersistenceMode>("loading");
+  const [trainingSaveFailed, setTrainingSaveFailed] = useState(false);
+  const [careGuideProgress, setCareGuideProgress] = useState<CareGuideProgress>(
+    DEFAULT_CARE_GUIDE_PROGRESS,
+  );
+  const [careGuidePersistenceMode, setCareGuidePersistenceMode] =
+    useState<CareGuidePersistenceMode>("loading");
+  const [careGuideSaveFailed, setCareGuideSaveFailed] = useState(false);
+  const [trainingState, setTrainingState] = useState<TrainingState>(() =>
+    createTrainingState(),
+  );
+  const trainingStateRef = useRef(trainingState);
   const [audioGestureGranted, setAudioGestureGranted] = useState(false);
   const [rate, setRate] = useState(DEFAULT_CLOCK_MULTIPLIER);
   const rateRef = useRef(DEFAULT_CLOCK_MULTIPLIER);
   const [nicknameDraft, setNicknameDraft] = useState("Jack");
   const [nicknameError, setNicknameError] = useState("");
-  const [browseIndex, setBrowseIndex] = useState(0);
+  const [returnContext, setReturnContext] = useState<ReturnContext | null>(null);
   const [message, setMessage] = useState("");
   const [emote, setEmote] = useState<DogEmote>(null);
   const [messageOpacity] = useState(() => new Animated.Value(1));
@@ -161,17 +218,27 @@ function PetClub() {
   const [pulse] = useState(() => new Animated.Value(0));
   const [feedProgress] = useState(() => new Animated.Value(0));
   const [zoom] = useState(() => new Animated.Value(0));
+  const [trainingAnimation] = useState(() => new Animated.Value(0));
+  const [trainingAnimationRevision, setTrainingAnimationRevision] = useState(0);
+  const [trainingTreatProgress] = useState(() => new Animated.Value(0));
   const happyPlayer = useAudioPlayer(require("./assets/audio/happy.wav"));
   const sleepyPlayer = useAudioPlayer(require("./assets/audio/sleepy.wav"));
   const barkPlayer = useAudioPlayer(require("./assets/audio/bark.wav"));
   const showerPlayer = useAudioPlayer(require("./assets/audio/shower.wav"));
   const sneezePlayer = useAudioPlayer(require("./assets/audio/sneeze.wav"));
   const huffPlayer = useAudioPlayer(require("./assets/audio/huff.wav"));
-  const musicPlayer = useAudioPlayer(require("./assets/audio/music.wav"));
-  const musicAllowedRef = useRef(false);
+  const idleMusicPlayer = useAudioPlayer(require("./assets/audio/music-idle.wav"));
+  const playMusicPlayer = useAudioPlayer(require("./assets/audio/music-play.wav"));
+  const sleepMusicPlayer = useAudioPlayer(require("./assets/audio/music-sleep.wav"));
+  const musicTrackRef = useRef<MusicTrack>(null);
   const petRef = useRef<PetState | null>(null);
   const native = Platform.OS !== "web";
   const sleeping = pet ? isSleeping(pet) : false;
+  const playing = emote === "toy";
+  const trainingOpen = trainingState.phase !== "closed";
+  const modalOpen = trainingOpen || sleepMenuOpen || restartOpen;
+  const trainingAnimating =
+    trainingOpen && trainingState.phase !== "choosing";
   const previousSleepingRef = useRef<boolean | null>(null);
   const manualWakeRef = useRef(false);
 
@@ -189,6 +256,10 @@ function PetClub() {
     zoom.setValue(0);
     pulse.stopAnimation();
     pulse.setValue(0);
+    trainingAnimation.stopAnimation();
+    trainingAnimation.setValue(0);
+    trainingTreatProgress.stopAnimation();
+    trainingTreatProgress.setValue(0);
     messageOpacity.stopAnimation();
     messageOpacity.setValue(1);
     setCleaningPhase(null);
@@ -197,23 +268,32 @@ function PetClub() {
     setEmote(null);
     setSleepMenuOpen(false);
     setRestartOpen(false);
+    setTrainingState((current) => {
+      const next = transitionTraining(current, { type: "CLOSE" });
+      trainingStateRef.current = next;
+      return next;
+    });
     manualWakeRef.current = false;
     [happyPlayer, sleepyPlayer, barkPlayer, showerPlayer, sneezePlayer, huffPlayer].forEach(
       (player) => player.pause(),
     );
-    musicPlayer.pause();
-    musicAllowedRef.current = false;
+    [idleMusicPlayer, playMusicPlayer, sleepMusicPlayer].forEach((player) => player.pause());
+    musicTrackRef.current = null;
   }, [
     barkPlayer,
     feedProgress,
     happyPlayer,
     huffPlayer,
     messageOpacity,
-    musicPlayer,
+    idleMusicPlayer,
     pulse,
+    playMusicPlayer,
     showerPlayer,
     sleepyPlayer,
     sneezePlayer,
+    sleepMusicPlayer,
+    trainingAnimation,
+    trainingTreatProgress,
     zoom,
   ]);
 
@@ -234,12 +314,18 @@ function PetClub() {
 
   useEffect(() => {
     let alive = true;
-    void Promise.all([loadPet(), loadAudioPreferences()]).then(
-      ([petResult, preferenceResult]) => {
+    void Promise.all([
+      loadPet(),
+      loadAudioPreferences(),
+      loadTrainingProgress(),
+      loadCareGuideProgress(),
+    ]).then(
+      ([petResult, preferenceResult, trainingResult, careGuideResult]) => {
         if (!alive) return;
         const now = Date.now();
         if (petResult.kind === "loaded") {
           const wasSleeping = isSleeping(petResult.pet);
+          const elapsedRealMs = Math.max(0, now - petResult.pet.lastUpdatedAt);
           const current = advancePet(
             petResult.pet,
             now,
@@ -248,12 +334,19 @@ function PetClub() {
           previousSleepingRef.current = wasSleeping;
           setPet(current);
           setNicknameDraft(current.name);
+          const summary = getReturnSummary({
+            before: petResult.pet,
+            after: current,
+            elapsedRealMs,
+          });
+          setReturnContext(summary ? { before: petResult.pet } : null);
           setMode("available");
         } else if (petResult.kind === "missing") {
           const current = createNewPet(now);
           previousSleepingRef.current = false;
           setPet(current);
           setNicknameDraft(current.name);
+          setReturnContext(null);
           setMode("available");
         } else {
           previousSleepingRef.current = false;
@@ -269,6 +362,30 @@ function PetClub() {
           setPreferences(DEFAULT_AUDIO_PREFERENCES);
           setPreferenceMode(
             preferenceResult.kind === "invalid" ? "invalid" : "session",
+          );
+        }
+        if (trainingResult.kind === "loaded") {
+          setTrainingProgress(trainingResult.progress);
+          setTrainingPersistenceMode("available");
+        } else if (trainingResult.kind === "missing") {
+          setTrainingProgress(DEFAULT_TRAINING_PROGRESS);
+          setTrainingPersistenceMode("available");
+        } else {
+          setTrainingProgress(DEFAULT_TRAINING_PROGRESS);
+          setTrainingPersistenceMode(
+            trainingResult.kind === "invalid" ? "invalid" : "session",
+          );
+        }
+        if (careGuideResult.kind === "loaded") {
+          setCareGuideProgress(careGuideResult.progress);
+          setCareGuidePersistenceMode("available");
+        } else if (careGuideResult.kind === "missing") {
+          setCareGuideProgress(DEFAULT_CARE_GUIDE_PROGRESS);
+          setCareGuidePersistenceMode("available");
+        } else {
+          setCareGuideProgress(DEFAULT_CARE_GUIDE_PROGRESS);
+          setCareGuidePersistenceMode(
+            careGuideResult.kind === "invalid" ? "invalid" : "session",
           );
         }
         setScreen("title");
@@ -287,6 +404,28 @@ function PetClub() {
       () => setSaveFailed(true),
     );
   }, [hydrated, mode, pet]);
+
+  useEffect(() => {
+    if (!hydrated || trainingPersistenceMode !== "available") return;
+    void saveTrainingProgress(trainingProgress).then(
+      () => setTrainingSaveFailed(false),
+      () => {
+        setTrainingSaveFailed(true);
+        setTrainingPersistenceMode("session");
+      },
+    );
+  }, [hydrated, trainingPersistenceMode, trainingProgress]);
+
+  useEffect(() => {
+    if (!hydrated || careGuidePersistenceMode !== "available") return;
+    void saveCareGuideProgress(careGuideProgress).then(
+      () => setCareGuideSaveFailed(false),
+      () => {
+        setCareGuideSaveFailed(true);
+        setCareGuidePersistenceMode("session");
+      },
+    );
+  }, [careGuidePersistenceMode, careGuideProgress, hydrated]);
 
   useEffect(() => {
     petRef.current = pet;
@@ -309,7 +448,7 @@ function PetClub() {
   }, [cancelActiveInteractions]);
 
   useEffect(() => {
-    if (reduced || sleeping || pet?.isDead) {
+    if (reduced || sleeping || pet?.isDead || trainingAnimating) {
       bob.stopAnimation();
       wag.stopAnimation();
       bob.setValue(0);
@@ -346,7 +485,7 @@ function PetClub() {
     );
     animation.start();
     return () => animation.stop();
-  }, [bob, native, pet?.isDead, reduced, sleeping, wag]);
+  }, [bob, native, pet?.isDead, reduced, sleeping, trainingAnimating, wag]);
 
   useEffect(() => {
     const allowSfx = canPlayRememberedAudio(
@@ -380,13 +519,30 @@ function PetClub() {
       audioGestureGranted,
       !!pet?.isDead,
     );
-    syncMusicPlayer(musicPlayer, allowMusic, musicAllowedRef.current);
-    musicAllowedRef.current = allowMusic;
+    const nextTrack = selectMusicTrack({
+      allowed: allowMusic,
+      sleeping,
+      playing,
+    });
+    syncAdaptiveMusic(
+      {
+        idle: idleMusicPlayer,
+        play: playMusicPlayer,
+        sleep: sleepMusicPlayer,
+      },
+      nextTrack,
+      musicTrackRef.current,
+    );
+    musicTrackRef.current = nextTrack;
   }, [
     audioGestureGranted,
-    musicPlayer,
+    idleMusicPlayer,
     pet?.isDead,
+    playMusicPlayer,
     preferences.musicEnabled,
+    playing,
+    sleepMusicPlayer,
+    sleeping,
   ]);
 
   useEffect(
@@ -395,11 +551,15 @@ function PetClub() {
       interactionScheduler.current.cancel();
       if (boopCooldownTimer.current) clearTimeout(boopCooldownTimer.current);
       feedProgress.stopAnimation();
+      trainingAnimation.stopAnimation();
+      trainingTreatProgress.stopAnimation();
       messageOpacity.stopAnimation();
       zoom.stopAnimation();
-      musicPlayer.pause();
+      idleMusicPlayer.pause();
+      playMusicPlayer.pause();
+      sleepMusicPlayer.pause();
     },
-    [feedProgress, messageOpacity, musicPlayer, zoom],
+    [feedProgress, idleMusicPlayer, messageOpacity, playMusicPlayer, sleepMusicPlayer, trainingAnimation, trainingTreatProgress, zoom],
   );
 
   const playSound = (kind: SoundKind) => {
@@ -481,6 +641,156 @@ function PetClub() {
     ]).start();
   };
 
+  const sendTrainingEvent = (event: Parameters<typeof transitionTraining>[1]) => {
+    const current = trainingStateRef.current;
+    const next = transitionTraining(current, event);
+    if (next !== current) {
+      trainingStateRef.current = next;
+      setTrainingState(next);
+    }
+    return next;
+  };
+
+  const stopTrainingAnimations = () => {
+    trainingAnimation.stopAnimation();
+    trainingAnimation.setValue(0);
+    trainingTreatProgress.stopAnimation();
+    trainingTreatProgress.setValue(0);
+  };
+
+  const closeTraining = () => {
+    stopTrainingAnimations();
+    sendTrainingEvent({ type: "CLOSE" });
+  };
+
+  const runTrainingMotion = (
+    duration: number,
+    onComplete: () => void,
+    reducedTarget = 1,
+  ) => {
+    trainingAnimation.stopAnimation();
+    trainingAnimation.setValue(0);
+    setTrainingAnimationRevision((current) => current + 1);
+    Animated.timing(trainingAnimation, {
+      toValue: reduced ? reducedTarget : 1,
+      duration: getTrainingMotionDuration(reduced, duration),
+      useNativeDriver: native,
+    }).start(({ finished }) => {
+      if (finished) onComplete();
+    });
+  };
+
+  const finishCelebration = (
+    session: number,
+    celebration: TrainingCelebration,
+  ) => {
+    const current = trainingStateRef.current;
+    if (
+      current.phase !== "celebrating" ||
+      current.session !== session ||
+      current.celebration !== celebration
+    ) {
+      return;
+    }
+    sendTrainingEvent({ type: "CELEBRATION_COMPLETE", session });
+  };
+
+  const runCelebration = (
+    session: number,
+    celebration: TrainingCelebration,
+  ) => {
+    playSound("happy");
+    runTrainingMotion(
+      TRAINING_CELEBRATION_DURATION_MS[celebration],
+      () => finishCelebration(session, celebration),
+      getReducedCelebrationPose(celebration),
+    );
+  };
+
+  const beginTraining = () => {
+    const current = currentAliveSnapshot();
+    if (!current || isSleeping(current) || careLocked) return;
+    setReturnContext(null);
+    interactionScheduler.current.begin();
+    if (messageTimer.current) clearTimeout(messageTimer.current);
+    messageTimer.current = null;
+    feedProgress.stopAnimation();
+    feedProgress.setValue(0);
+    zoom.stopAnimation();
+    zoom.setValue(0);
+    pulse.stopAnimation();
+    pulse.setValue(0);
+    setMessage("");
+    setEmote(null);
+    setAudioGestureGranted(true);
+    stopTrainingAnimations();
+    sendTrainingEvent({ type: "OPEN" });
+  };
+
+  const chooseTrainingCommand = (command: TrainingCommand) => {
+    const next = sendTrainingEvent({ type: "SELECT_COMMAND", command });
+    if (next.phase !== "performing" || next.command !== command) return;
+    const session = next.session;
+    runTrainingMotion(TRAINING_COMMAND_DURATION_MS[command], () => {
+      sendTrainingEvent({
+        type: "COMMAND_COMPLETE",
+        session,
+        command,
+      });
+    });
+  };
+
+  const finishTrainingEat = (session: number) => {
+    const current = trainingStateRef.current;
+    if (
+      current.phase !== "eating" ||
+      current.session !== session ||
+      !current.command
+    ) {
+      return;
+    }
+    const command = current.command;
+    const completion = completeTrainingCommand(trainingProgress, command);
+    const celebration = completion.celebration;
+    setTrainingProgress(completion.progress);
+    const next = sendTrainingEvent({
+      type: "EAT_COMPLETE",
+      session,
+      celebration,
+    });
+    if (next.phase === "celebrating") {
+      runCelebration(session, celebration);
+    }
+  };
+
+  const giveTrainingTreat = () => {
+    const next = sendTrainingEvent({ type: "GIVE_TREAT" });
+    if (next.phase !== "treat-in-flight") return;
+    const session = next.session;
+    trainingTreatProgress.stopAnimation();
+    trainingTreatProgress.setValue(0);
+    Animated.timing(trainingTreatProgress, {
+      toValue: 1,
+      duration: getTrainingMotionDuration(reduced, TRAINING_TREAT_CONTACT_MS),
+      useNativeDriver: native,
+    }).start(({ finished }) => {
+      if (!finished) return;
+      const contacted = sendTrainingEvent({ type: "TREAT_CONTACT", session });
+      if (contacted.phase !== "eating") return;
+      playSound("bark");
+      runTrainingMotion(TRAINING_EAT_DURATION_MS, () =>
+        finishTrainingEat(session),
+      );
+    });
+  };
+
+  const showTrainingAgain = () => {
+    const next = sendTrainingEvent({ type: "SHOW_AGAIN" });
+    if (next.phase === "celebrating" && next.celebration) {
+      runCelebration(next.session, next.celebration);
+    }
+  };
+
   const commitTerminalState = (current: PetState) => {
     cancelActiveInteractions();
     petRef.current = current;
@@ -502,6 +812,7 @@ function PetClub() {
     });
     petRef.current = resolution.pet;
     setPet(resolution.pet);
+    if (resolution.allowed) setReturnContext(null);
     if (resolution.reason === "dead") commitTerminalState(resolution.pet);
     return { ...resolution, now };
   };
@@ -562,6 +873,11 @@ function PetClub() {
   const care = (action: CareAction) => {
     const resolution = prepareInteraction(action);
     if (!resolution?.allowed) return;
+    setCareGuideProgress((current) =>
+      current.firstCareCompleted
+        ? current
+        : { ...current, firstCareCompleted: true },
+    );
     if (action === "clean") {
       runCleaning(resolution.pet);
       return;
@@ -598,23 +914,25 @@ function PetClub() {
         });
       }
     } else {
-      setTransientMessage("Zoomies! Jack grabs his toy and runs!", "toy");
+      setTransientMessage(
+        "Zoomies! Jack grabs his toy and runs!",
+        "toy",
+        PLAY_REACTION_MS,
+      );
       if (!reduced) {
         zoom.setValue(0);
         Animated.sequence([
-          Animated.timing(zoom, {
-            toValue: 0.35,
-            duration: 220,
-            useNativeDriver: native,
-          }),
-          Animated.timing(zoom, {
-            toValue: 0.7,
-            duration: 280,
-            useNativeDriver: native,
-          }),
+          ...[0.35, 0.7, 0.35, 0.7, 0.35, 0.7, 0.35, 0.7, 0.35].map(
+            (toValue) =>
+              Animated.timing(zoom, {
+                toValue,
+                duration: PLAY_REACTION_MS / 10,
+                useNativeDriver: native,
+              }),
+          ),
           Animated.timing(zoom, {
             toValue: 1,
-            duration: 240,
+            duration: PLAY_REACTION_MS / 10,
             useNativeDriver: native,
           }),
         ]).start();
@@ -733,10 +1051,12 @@ function PetClub() {
     }
     setNicknameError("");
     setAudioGestureGranted(true);
+    const firstAdoption = !pet.adoptionCompleted;
     const next = { ...pet, name, adoptionCompleted: true };
     petRef.current = next;
     setPet(next);
     setNicknameDraft(name);
+    if (firstAdoption) setReturnContext(null);
     setScreen("room");
   };
 
@@ -752,6 +1072,12 @@ function PetClub() {
     setScreen("title");
     setMessage("");
     setEmote(null);
+    setReturnContext(null);
+    setTrainingProgress(DEFAULT_TRAINING_PROGRESS);
+    setTrainingSaveFailed(false);
+    setCareGuideProgress(DEFAULT_CARE_GUIDE_PROGRESS);
+    setCareGuidePersistenceMode(session ? "session" : "available");
+    setCareGuideSaveFailed(false);
     setAudioGestureGranted(false);
   };
 
@@ -783,6 +1109,18 @@ function PetClub() {
   }
 
   const clock = getVirtualClock(pet.ageVirtualMinutes);
+  const returnSummary = returnContext
+    ? getReturnSummary({
+        before: returnContext.before,
+        after: pet,
+        elapsedRealMs: Math.max(
+          0,
+          pet.lastUpdatedAt - returnContext.before.lastUpdatedAt,
+        ),
+      })
+    : null;
+  const firstCareHint =
+    pet.adoptionCompleted && !careGuideProgress.firstCareCompleted;
   const terminalPolicy = getTerminalUiPolicy(pet);
   const stage = getGrowthStage(pet);
   const stageIndex = growthStages.indexOf(stage);
@@ -793,11 +1131,11 @@ function PetClub() {
   const growthHint = pet.isDead
     ? "Jack’s story is frozen. Start a new Baby Jack when you are ready."
     : stage === "adult"
-      ? "Jack is all grown up!"
-      : `Next growth: ${Math.ceil(nextGrowthMinutes)} pet min + ${
+      ? "All grown up."
+      : `Growth: ${Math.max(1, Math.ceil(nextGrowthMinutes / 60))}h + ${
           pet.growthMeals > stageIndex
-            ? "meal earned"
-            : "a feed after hunger drops to 90"
+            ? "meal ready"
+            : "feed when hungry"
         }.`;
   const sleepRemaining = Math.max(
     0,
@@ -817,20 +1155,35 @@ function PetClub() {
     ? "Oh no — Jack’s story ended."
     : sleeping
       ? `Jack is sleeping • ${sleepRemaining} pet min left`
-      : pet.needs.hunger <= 20
-        ? `${pet.name} is very hungry and needs food.`
-        : pet.needs.energy <= 25
-          ? `${pet.name} is tired. Bedtime?`
-          : pet.needs.hygiene <= 35
-            ? `${pet.name} is muddy and needs a clean.`
-            : pet.needs.happiness <= 30
-              ? `${pet.name} wants to play.`
-              : clock.daypart === "night"
-                ? "Nighttime makes Jack sleepy, but bedtime is your choice."
-                : `${pet.name} is ready to play.`;
+      : firstCareHint
+        ? "Jack is home! Try FEED, PLAY, or CLEAN."
+        : returnSummary
+          ? returnSummary
+          : pet.needs.hunger <= 20
+            ? `${pet.name} is very hungry and needs food.`
+            : pet.needs.energy <= 25
+              ? `${pet.name} is tired. Bedtime?`
+              : pet.needs.hygiene <= 35
+                ? `${pet.name} is muddy and needs a clean.`
+                : pet.needs.happiness <= 30
+                  ? `${pet.name} wants to play.`
+                  : clock.daypart === "night"
+                    ? "Nighttime makes Jack sleepy, but bedtime is your choice."
+                    : `${pet.name} is ready to play.`;
   const displayEmote = pet.isDead
     ? null
     : emote ?? (pet.needs.energy <= 25 && !sleeping ? "yawn" : null);
+  const trainingVisualAction: TrainingVisualAction =
+    trainingState.phase === "eating"
+      ? "eating"
+      : trainingState.phase === "celebrating" ||
+          trainingState.phase === "result"
+        ? trainingState.celebration
+        : trainingState.phase === "performing" ||
+            trainingState.phase === "awaiting-treat" ||
+            trainingState.phase === "treat-in-flight"
+          ? trainingState.command
+          : null;
 
   let content;
   if (screen === "title") {
@@ -838,12 +1191,9 @@ function PetClub() {
   } else if (screen === "hub") {
     content = (
       <PetHubScreen
-        browseIndex={browseIndex}
+        adopted={pet.adoptionCompleted}
         nickname={nicknameDraft}
         nicknameError={nicknameError}
-        onBrowse={(direction) =>
-          setBrowseIndex((current) => (current + direction + 2) % 2)
-        }
         onChangeNickname={(value) => {
           setNicknameDraft(value.slice(0, 12));
           setNicknameError("");
@@ -888,20 +1238,22 @@ function PetClub() {
         careLocked={careLocked}
         cleaningPhase={cleaningPhase}
         clock={clock}
+        compactPhone={width < 350}
         desktop={desktop}
         displayEmote={displayEmote}
         feedProgress={feedProgress}
         growthHint={growthHint}
-        message={terminalPolicy.terminal ? terminalPolicy.terminalMessage! : message || ambientMessage}
+        message={terminalPolicy.terminal ? returnSummary ?? terminalPolicy.terminalMessage! : message || ambientMessage}
         messageOpacity={!terminalPolicy.terminal && message ? messageOpacity : undefined}
         boopAvailable={boopAvailability.available}
         boopStatus={boopAvailability.reason}
         onBoop={boop}
         onCare={care}
         onOpenSettings={() => {
-          if (!terminalPolicy.settingsDisabled && !careLocked) setScreen("settings");
+          if (!terminalPolicy.settingsDisabled && !careLocked && !trainingOpen) setScreen("settings");
         }}
         onSleep={sleeping ? wakeUp : () => setSleepMenuOpen(true)}
+        onTrain={beginTraining}
         pet={pet}
         pulse={pulse}
         reduced={reduced}
@@ -909,6 +1261,14 @@ function PetClub() {
         stage={stage}
         wag={wag}
         zoom={zoom}
+        trainingAction={trainingVisualAction}
+        trainingAnimation={trainingAnimation}
+        trainingAnimationRevision={trainingAnimationRevision}
+        trainingPoseHeld={trainingState.phase === "awaiting-treat"}
+        trainingDisabled={pet.isDead || sleeping || careLocked || trainingOpen}
+        trainingTreatProgress={trainingTreatProgress}
+        trainingTreatVisible={trainingState.phase === "treat-in-flight"}
+        trainingModeOpen={trainingOpen}
       />
     );
   }
@@ -917,10 +1277,19 @@ function PetClub() {
     <SafeAreaView style={s.app}>
       <StatusBar barStyle="dark-content" />
       <ScrollView
+        aria-hidden={modalOpen}
+        accessibilityElementsHidden={modalOpen}
+        {...(Platform.OS === "web" && modalOpen
+          ? ({ inert: true } as const)
+          : {})}
         contentContainerStyle={[
           s.page,
           screen === "room" && desktop && s.pageDesktop,
+          screen === "room" && !desktop && s.pageRoomMobile,
         ]}
+        importantForAccessibility={
+          modalOpen ? "no-hide-descendants" : "auto"
+        }
         keyboardShouldPersistTaps="handled"
       >
         {content}
@@ -933,15 +1302,24 @@ function PetClub() {
               {preferenceMode === "session" || preferenceMode === "invalid"
                 ? " • Audio preferences session only"
                 : " • Audio preferences remembered"}
+              {trainingSaveFailed ||
+              trainingPersistenceMode === "session" ||
+              trainingPersistenceMode === "invalid"
+                ? " • Training progress session only"
+                : " • Training progress remembered"}
+              {careGuideSaveFailed ||
+              careGuidePersistenceMode === "session" ||
+              careGuidePersistenceMode === "invalid"
+                ? " • Care guide session only"
+                : " • Care guide remembered"}
             </Text>
-            <Pressable
-              accessibilityRole="button"
+            <FocusableButton
               accessibilityLabel="Start a new Baby Jack game"
               onPress={() => setRestartOpen(true)}
-              style={s.textButton}
+              style={() => s.textButton}
             >
               <Text style={s.textButtonLabel}>NEW BABY</Text>
-            </Pressable>
+            </FocusableButton>
           </>
         )}
       </ScrollView>
@@ -950,6 +1328,16 @@ function PetClub() {
         visible={sleepMenuOpen}
         onCancel={() => setSleepMenuOpen(false)}
         onChoose={beginSleep}
+      />
+      <TrainingDialog
+        onCancel={closeTraining}
+        onChooseCommand={chooseTrainingCommand}
+        onDone={closeTraining}
+        onGiveTreat={giveTrainingTreat}
+        onShowAgain={showTrainingAgain}
+        progress={trainingProgress}
+        reduced={reduced}
+        state={trainingState}
       />
       <RestartDialog
         reduced={reduced}
@@ -1017,39 +1405,34 @@ function TitleScreen({
 }
 
 function PetHubScreen({
-  browseIndex,
+  adopted,
   nickname,
   nicknameError,
-  onBrowse,
   onChangeNickname,
   onEnterRoom,
 }: {
-  browseIndex: number;
+  adopted: boolean;
   nickname: string;
   nicknameError: string;
-  onBrowse: (direction: number) => void;
   onChangeNickname: (value: string) => void;
   onEnterRoom: () => void;
 }) {
   return (
     <View style={s.screenCard}>
       <Text style={s.flowLabel}>02 • PET HUB</Text>
-      <Text style={s.pixelTitle}>CHOOSE YOUR PET</Text>
-      <Text style={s.subtitle}>One save. One very good boy.</Text>
+      <Text style={s.pixelTitle}>{adopted ? "WELCOME BACK" : "CHOOSE YOUR PET"}</Text>
+      <Text style={s.subtitle}>
+        {adopted ? "Jack saved your spot." : "One save. One very good boy."}
+      </Text>
       <View style={s.petCards}>
-        <View style={[s.petCard, browseIndex === 0 && s.petCardSelected]}>
+        <View style={[s.petCard, s.petCardSelected]}>
           <MiniJack />
           <Text style={s.petName}>Jack</Text>
         </View>
-        <View style={[s.petCard, browseIndex === 1 && s.petCardSelected]}>
+        <View style={s.petCard}>
           <MiniJack locked />
-          <Text style={s.petName}>LOCKED</Text>
+          <Text style={s.petName}>COMING LATER</Text>
         </View>
-      </View>
-      <View style={s.browseRow}>
-        <UtilityButton label="−" accessibilityLabel="Browse previous pet" onPress={() => onBrowse(-1)} />
-        <Text style={s.note}>More pets coming soon</Text>
-        <UtilityButton label="+" accessibilityLabel="Browse next pet" onPress={() => onBrowse(1)} />
       </View>
       <View style={s.inputCard}>
         <Text style={s.inputLabel}>NICKNAME • 1–12 CHARACTERS</Text>
@@ -1064,16 +1447,20 @@ function PetHubScreen({
         />
       </View>
       <View style={s.hubActions}>
-        <ActionButton label="ADOPT JACK" onPress={onEnterRoom} compact />
-        <ActionButton label="VISIT ROOM" onPress={onEnterRoom} tone="sleep" compact />
+        <ActionButton
+          label={adopted ? "VISIT JACK" : "ADOPT JACK"}
+          onPress={onEnterRoom}
+          tone={adopted ? "sleep" : undefined}
+          wide
+        />
       </View>
       <Text accessibilityLiveRegion="polite" style={s.errorText}>
         {nicknameError || " "}
       </Text>
       <Text style={s.note}>
-        Minus/plus browses Jack and locked cards only. It never creates another save.
+        More pets will join the club later. This build keeps one local Jack save.
       </Text>
-      <Text style={s.flowNote}>02 ADOPT JACK / VISIT ROOM → 03 LIVING ROOM</Text>
+      <Text style={s.flowNote}>02 {adopted ? "VISIT JACK" : "ADOPT JACK"} → 03 LIVING ROOM</Text>
     </View>
   );
 }
@@ -1134,6 +1521,9 @@ function SettingsScreen({
       <Text style={s.note}>
         Audio remains silent until ENTER or VISIT ROOM provides a player gesture. SFX and music remember their last settings.
       </Text>
+      <Text style={s.note}>
+        Music adapts automatically: calm while idle, upbeat during PLAY, and soft while sleeping. BOOP follows hunger, energy, hygiene, then happiness without changing needs.
+      </Text>
       {(preferenceMode === "invalid" || preferenceMode === "session") && (
         <Text accessibilityLiveRegion="polite" style={s.errorText}>
           Audio preferences are session-only right now.
@@ -1153,6 +1543,7 @@ type RoomScreenProps = {
   careLocked: boolean;
   cleaningPhase: CleaningPhase | null;
   clock: ReturnType<typeof getVirtualClock>;
+  compactPhone: boolean;
   desktop: boolean;
   displayEmote: DogEmote;
   feedProgress: Animated.Value;
@@ -1163,6 +1554,7 @@ type RoomScreenProps = {
   onCare: (action: CareAction) => void;
   onOpenSettings: () => void;
   onSleep: () => void;
+  onTrain: () => void;
   pet: PetState;
   pulse: Animated.Value;
   reduced: boolean;
@@ -1170,6 +1562,14 @@ type RoomScreenProps = {
   stage: GrowthStage;
   wag: Animated.Value;
   zoom: Animated.Value;
+  trainingAction: TrainingVisualAction;
+  trainingAnimation: Animated.Value;
+  trainingAnimationRevision: number;
+  trainingPoseHeld: boolean;
+  trainingDisabled: boolean;
+  trainingTreatProgress: Animated.Value;
+  trainingTreatVisible: boolean;
+  trainingModeOpen: boolean;
 };
 
 function RoomScreen(props: RoomScreenProps) {
@@ -1191,6 +1591,7 @@ function RoomScreen(props: RoomScreenProps) {
     onCare,
     onOpenSettings,
     onSleep,
+    onTrain,
     pet,
     pulse,
     reduced,
@@ -1198,10 +1599,26 @@ function RoomScreen(props: RoomScreenProps) {
     stage,
     wag,
     zoom,
+    trainingAction,
+    trainingAnimation,
+    trainingAnimationRevision,
+    trainingPoseHeld,
+    trainingDisabled,
+    trainingTreatProgress,
+    trainingTreatVisible,
+    trainingModeOpen,
   } = props;
   const hygieneAppearance = pet.isDead
     ? "clear"
     : getHygieneAppearance(pet.needs.hygiene);
+  if (!desktop) {
+    return (
+      <MobileRoomScreen
+        {...props}
+        hygieneAppearance={hygieneAppearance}
+      />
+    );
+  }
   return (
     <View style={[s.roomCard, desktop && s.roomCardDesktop]}>
       <View style={s.roomHeader}>
@@ -1215,7 +1632,7 @@ function RoomScreen(props: RoomScreenProps) {
       </View>
       <View style={[desktop && s.roomGrid]}>
         <View style={desktop && s.roomVisualColumn}>
-          <PixelDog
+          <PetRoomScene
             bob={bob}
             cleaningPhase={pet.isDead ? null : cleaningPhase}
             clockLabel={clock.label}
@@ -1237,23 +1654,39 @@ function RoomScreen(props: RoomScreenProps) {
             tired={!pet.isDead && pet.needs.energy <= 25}
             wag={wag}
             zoom={zoom}
+            careDisabled={!careAvailable}
+            restDisabled={pet.isDead || careLocked}
+            restLabel={sleeping ? "Wake" : "Rest"}
+            onCare={onCare}
+            onRest={onSleep}
+            trainingAction={trainingAction}
+            trainingProgress={trainingAnimation}
+            trainingAnimationRevision={trainingAnimationRevision}
+            trainingPoseHeld={trainingPoseHeld}
+            trainingTreatProgress={trainingTreatProgress}
+            trainingTreatVisible={trainingTreatVisible}
+            trainingModeOpen={trainingModeOpen}
           />
-          <Text style={s.daypartCaption}>
-            {clock.daypart.toUpperCase()} • 8:00 AM START • Morning 6–10 • Day 10–5 • Dusk 5–8 • Night 8–6
+          <Text
+            accessibilityLabel={`${clock.daypart} lighting. New pets start at 8 AM. Morning is 6 to 10, day 10 to 5, dusk 5 to 8, and night 8 to 6.`}
+            style={s.daypartCaption}
+          >
+            {clock.daypart.toUpperCase()} • {clock.label}
           </Text>
         </View>
         <View style={[s.roomControls, desktop && s.roomControlsDesktop]}>
-          <FixedMessage message={message} opacity={messageOpacity} dead={pet.isDead} />
           <View style={s.meters}>
             {(Object.keys(pet.needs) as NeedKey[]).map((key) => (
               <NeedMeter key={key} label={needLabels[key]} value={pet.needs[key]} />
             ))}
           </View>
+          <FixedMessage message={message} opacity={messageOpacity} dead={pet.isDead} />
           <View style={s.actions}>
             <ActionButton label="BOOP" disabled={!boopAvailable} onPress={onBoop} compact />
             <ActionButton label="FEED" disabled={!careAvailable} onPress={() => onCare("feed")} compact />
             <ActionButton label="PLAY" disabled={!careAvailable} onPress={() => onCare("play")} compact />
             <ActionButton label="CLEAN" disabled={!careAvailable} onPress={() => onCare("clean")} compact />
+            <ActionButton label="TRAIN" disabled={trainingDisabled} onPress={onTrain} compact />
             <ActionButton
               label={sleeping ? "WAKE UP" : "SLEEP"}
               disabled={pet.isDead || careLocked}
@@ -1265,14 +1698,14 @@ function RoomScreen(props: RoomScreenProps) {
           <Text style={s.growthHint}>{growthHint}</Text>
           <Text style={s.note}>
             {careLocked
-              ? "Cleaning runs for ~1.5s; other care is temporarily locked."
+              ? "Shower in progress."
               : sleeping
-                ? "Only WAKE UP is available while Jack sleeps."
+                ? "Only WAKE UP while Jack sleeps."
                 : clock.daypart === "night"
-                  ? "Night suggests bedtime but never forces sleep."
+                  ? "Bedtime suggested."
                   : !boopAvailable
                     ? boopStatus
-                    : "BOOP uses needs priority, changes no needs, and has a short cooldown."}
+                    : "BOOP is need-aware and reward-free."}
           </Text>
         </View>
       </View>
@@ -1280,19 +1713,231 @@ function RoomScreen(props: RoomScreenProps) {
   );
 }
 
+function MobileRoomScreen({
+  bob,
+  boopAvailable,
+  boopStatus,
+  careAvailable,
+  careLocked,
+  cleaningPhase,
+  clock,
+  compactPhone,
+  displayEmote,
+  feedProgress,
+  hygieneAppearance,
+  message,
+  messageOpacity,
+  onBoop,
+  onCare,
+  onOpenSettings,
+  onSleep,
+  onTrain,
+  pet,
+  pulse,
+  reduced,
+  sleeping,
+  stage,
+  wag,
+  zoom,
+  trainingAction,
+  trainingAnimation,
+  trainingAnimationRevision,
+  trainingPoseHeld,
+  trainingDisabled,
+  trainingTreatProgress,
+  trainingTreatVisible,
+  trainingModeOpen,
+}: RoomScreenProps & { hygieneAppearance: ReturnType<typeof getHygieneAppearance> }) {
+  const actionDisabled = !careAvailable;
+  const restDisabled = pet.isDead || careLocked;
+
+  return (
+    <View style={s.deviceShell}>
+      <View style={[s.deviceTopPanel, compactPhone && s.deviceTopPanelNarrow]}>
+        <Text
+          adjustsFontSizeToFit
+          minimumFontScale={0.65}
+          numberOfLines={1}
+          style={[s.devicePetName, compactPhone && s.devicePetNameNarrow]}
+        >
+          {pet.name.toUpperCase()}
+        </Text>
+        <View style={[s.compactNeeds, compactPhone && s.compactNeedsNarrow]}>
+          <CompactNeed compact={compactPhone} icon="♥" label="Happiness" value={pet.needs.happiness} tint="#ef7e73" />
+          <CompactNeed compact={compactPhone} icon="●" label="Hygiene" value={pet.needs.hygiene} tint="#74bbd8" />
+          <CompactNeed compact={compactPhone} icon="◆" label="Hunger" value={pet.needs.hunger} tint="#efbb4d" />
+          <CompactNeed compact={compactPhone} icon="☾" label="Energy" value={pet.needs.energy} tint="#9b86c9" />
+        </View>
+        <View style={[s.deviceTimePanel, compactPhone && s.deviceTimePanelNarrow]}>
+          {!compactPhone && <Text style={s.daypartGlyph}>{clock.daypart === "night" ? "☾" : clock.daypart === "dusk" ? "◐" : "☀"}</Text>}
+          <View>
+            <Text style={[s.deviceDaypart, compactPhone && s.deviceDaypartNarrow]}>{clock.daypart.toUpperCase()}</Text>
+            <Text style={[s.deviceClock, compactPhone && s.deviceClockNarrow]}>{clock.label}</Text>
+          </View>
+        </View>
+        <DeviceSettingsButton
+          disabled={pet.isDead || careLocked}
+          onPress={onOpenSettings}
+        />
+      </View>
+
+      <View style={s.deviceScreenFrame}>
+        <PetRoomScene
+          bob={bob}
+          boopDisabled={!boopAvailable}
+          boopStatus={boopStatus}
+          careDisabled={actionDisabled}
+          cleaningPhase={pet.isDead ? null : cleaningPhase}
+          clockLabel={clock.label}
+          daypart={clock.daypart}
+          dead={pet.isDead}
+          emote={displayEmote}
+          feedProgress={feedProgress}
+          hygieneAppearance={hygieneAppearance}
+          lowHappiness={!pet.isDead && pet.needs.happiness <= 30}
+          onBoop={onBoop}
+          onCare={onCare}
+          onRest={onSleep}
+          pulse={pulse}
+          reduced={reduced}
+          restDisabled={restDisabled}
+          restLabel={sleeping ? "Wake" : "Rest"}
+          roomTheme={pet.roomTheme}
+          sleeping={sleeping}
+          stage={stage}
+          tired={!pet.isDead && pet.needs.energy <= 25}
+          wag={wag}
+          zoom={zoom}
+          trainingAction={trainingAction}
+          trainingProgress={trainingAnimation}
+          trainingAnimationRevision={trainingAnimationRevision}
+          trainingPoseHeld={trainingPoseHeld}
+          trainingTreatProgress={trainingTreatProgress}
+          trainingTreatVisible={trainingTreatVisible}
+          trainingModeOpen={trainingModeOpen}
+        />
+        <View pointerEvents="none" style={s.mobileMessageOverlay}>
+          <FixedMessage message={message} opacity={messageOpacity} dead={pet.isDead} overlay />
+        </View>
+        <View pointerEvents="none" style={s.boopHintBubble}>
+          <Text style={s.boopHintText}>{boopAvailable ? "Boop the snoot!" : boopStatus}</Text>
+        </View>
+      </View>
+
+      <View accessibilityLabel="Care actions" style={s.deviceActionStrip}>
+        <DeviceActionButton icon="◆" label="Feed" tint="#ef8a78" disabled={actionDisabled} onPress={() => onCare("feed")} />
+        <DeviceActionButton icon="◉" label="Play" tint="#a9cf82" disabled={actionDisabled} onPress={() => onCare("play")} />
+        <DeviceActionButton icon="✦" label="Clean" tint="#91cadd" disabled={actionDisabled} onPress={() => onCare("clean")} />
+        <DeviceActionButton icon="☾" label={sleeping ? "Wake" : "Rest"} tint="#b4a1d4" disabled={restDisabled} onPress={onSleep} />
+        <DeviceActionButton icon="★" label="Train" tint="#efc553" disabled={trainingDisabled} onPress={onTrain} />
+      </View>
+
+      <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={s.devicePawOrnament}>
+        <View style={[s.pawToe, s.pawToeOne]} />
+        <View style={[s.pawToe, s.pawToeTwo]} />
+        <View style={[s.pawToe, s.pawToeThree]} />
+        <View style={[s.pawToe, s.pawToeFour]} />
+        <View style={s.pawPad} />
+      </View>
+    </View>
+  );
+}
+
+function CompactNeed({ compact = false, icon, label, value, tint }: { compact?: boolean; icon: string; label: string; value: number; tint: string }) {
+  return (
+    <View accessible accessibilityLabel={`${label} ${Math.round(value)} percent`} style={[s.compactNeed, compact && s.compactNeedNarrow]}>
+      <Text style={[s.compactNeedIcon, compact && s.compactNeedIconNarrow, { color: tint }]}>{icon}</Text>
+      <View style={[s.compactNeedSegments, compact && s.compactNeedSegmentsNarrow]}>
+        {[25, 50, 75].map((threshold) => (
+          <View key={threshold} style={[s.compactNeedSegment, compact && s.compactNeedSegmentNarrow, value >= threshold && { backgroundColor: tint }]} />
+        ))}
+      </View>
+    </View>
+  );
+}
+
+function DeviceActionButton({
+  disabled,
+  icon,
+  label,
+  onPress,
+  tint,
+}: {
+  disabled: boolean;
+  icon: string;
+  label: string;
+  onPress: () => void;
+  tint: string;
+}) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
+      onPress={onPress}
+      style={({ pressed }) => [
+        s.deviceAction,
+        { backgroundColor: tint },
+        pressed && !disabled && s.deviceActionPressed,
+        focused && !disabled && s.focusRing,
+        disabled && s.deviceActionDisabled,
+      ]}
+    >
+      <Text style={s.deviceActionIcon}>{icon}</Text>
+      <Text numberOfLines={1} style={s.deviceActionLabel}>{label}</Text>
+    </Pressable>
+  );
+}
+
+function DeviceSettingsButton({
+  disabled,
+  onPress,
+}: {
+  disabled: boolean;
+  onPress: () => void;
+}) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Open settings"
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
+      onPress={onPress}
+      style={({ pressed }) => [
+        s.deviceSettings,
+        pressed && !disabled && s.deviceActionPressed,
+        focused && !disabled && s.focusRing,
+        disabled && s.deviceActionDisabled,
+      ]}
+    >
+      <Text style={s.deviceSettingsLabel}>⚙</Text>
+    </Pressable>
+  );
+}
+
 function FixedMessage({
   message,
   opacity,
   dead,
+  overlay = false,
 }: {
   message: string;
   opacity?: Animated.Value;
   dead: boolean;
+  overlay?: boolean;
 }) {
   return (
     <Animated.View
       style={[
         s.messageSlot,
+        overlay && s.messageSlotOverlay,
         dead && s.messageDanger,
         opacity ? { opacity } : undefined,
       ]}
@@ -1334,12 +1979,15 @@ function ActionButton({
   compact?: boolean;
   wide?: boolean;
 }) {
+  const [focused, setFocused] = useState(false);
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ disabled }}
       disabled={disabled}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
       onPress={onPress}
       style={({ pressed }) => [
         s.actionButton,
@@ -1348,10 +1996,11 @@ function ActionButton({
         compact && s.actionCompact,
         wide && s.actionWide,
         pressed && !disabled && s.actionPressed,
+        focused && !disabled && s.focusRing,
         disabled && s.actionDisabled,
       ]}
     >
-      <Text style={s.actionLabel}>{label}</Text>
+      <Text style={[s.actionLabel, compact && s.actionLabelCompact]}>{label}</Text>
     </Pressable>
   );
 }
@@ -1367,14 +2016,17 @@ function UtilityButton({
   disabled?: boolean;
   onPress: () => void;
 }) {
+  const [focused, setFocused] = useState(false);
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
       accessibilityState={{ disabled }}
       disabled={disabled}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
       onPress={onPress}
-      style={({ pressed }) => [s.utilityButton, pressed && !disabled && s.utilityPressed, disabled && s.actionDisabled]}
+      style={({ pressed }) => [s.utilityButton, pressed && !disabled && s.utilityPressed, focused && !disabled && s.focusRing, disabled && s.actionDisabled]}
     >
       <Text style={s.utilityLabel}>{label}</Text>
     </Pressable>
@@ -1385,23 +2037,38 @@ function ChoiceButton({
   label,
   selected,
   disabled = false,
+  initialFocus = false,
   onPress,
   accessibilityLabel = `Use ${label} room theme`,
 }: {
   label: string;
   selected: boolean;
   disabled?: boolean;
+  initialFocus?: boolean;
   onPress: () => void;
   accessibilityLabel?: string;
 }) {
+  const [focused, setFocused] = useState(false);
+  const pressableRef = useRef<View>(null);
+  useEffect(() => {
+    if (!initialFocus || Platform.OS !== "web") return;
+    const id = setTimeout(() => {
+      const element = pressableRef.current as unknown as { focus?: () => void };
+      element.focus?.();
+    }, 50);
+    return () => clearTimeout(id);
+  }, [initialFocus]);
   return (
     <Pressable
+      ref={pressableRef}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
       accessibilityState={{ selected, disabled }}
       disabled={disabled}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
       onPress={onPress}
-      style={[s.choiceButton, selected && s.choiceSelected, disabled && s.actionDisabled]}
+      style={[s.choiceButton, selected && s.choiceSelected, focused && !disabled && s.focusRing, disabled && s.actionDisabled]}
     >
       <Text style={s.choiceLabel}>{label}</Text>
     </Pressable>
@@ -1419,14 +2086,17 @@ function SettingsToggle({
   disabled?: boolean;
   onPress: () => void;
 }) {
+  const [focused, setFocused] = useState(false);
   return (
     <Pressable
       accessibilityRole="switch"
       accessibilityLabel={`${label} ${enabled ? "on" : "off"}`}
       accessibilityState={{ checked: enabled, disabled }}
       disabled={disabled}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
       onPress={onPress}
-      style={[s.settingRow, disabled && s.actionDisabled]}
+      style={[s.settingRow, focused && !disabled && s.focusRing, disabled && s.actionDisabled]}
     >
       <Text style={s.settingLabel}>{label}</Text>
       <Text style={s.toggleValue}>{enabled ? "ON" : "OFF"}</Text>
@@ -1434,6 +2104,203 @@ function SettingsToggle({
         <View style={[s.toggleKnob, enabled && s.toggleKnobOn]} />
       </View>
     </Pressable>
+  );
+}
+
+function FocusableButton({
+  accessibilityLabel,
+  children,
+  onPress,
+  style,
+}: {
+  accessibilityLabel: string;
+  children: ReactNode;
+  onPress: () => void;
+  style: (pressed: boolean) => StyleProp<ViewStyle>;
+}) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
+      onPress={onPress}
+      style={({ pressed }) => [style(pressed), focused && s.focusRing]}
+    >
+      {children}
+    </Pressable>
+  );
+}
+
+function TrainingDialog({
+  onCancel,
+  onChooseCommand,
+  onDone,
+  onGiveTreat,
+  onShowAgain,
+  progress,
+  reduced,
+  state,
+}: {
+  onCancel: () => void;
+  onChooseCommand: (command: TrainingCommand) => void;
+  onDone: () => void;
+  onGiveTreat: () => void;
+  onShowAgain: () => void;
+  progress: TrainingProgress;
+  reduced: boolean;
+  state: TrainingState;
+}) {
+  const visible = state.phase !== "closed";
+  const announcement = getTrainingAnnouncement(state);
+  const commandLabel = state.command
+    ? trainingCommandLabels[state.command]
+    : null;
+  const celebrationLabel = state.celebration
+    ? trainingCelebrationLabels[state.celebration]
+    : null;
+  const commandIcons: Record<TrainingCommand, string> = {
+    sit: "▰",
+    paw: "◒",
+    up: "↥",
+  };
+
+  return (
+    <Modal
+      animationType={reduced ? "none" : "fade"}
+      onRequestClose={onCancel}
+      transparent
+      visible={visible}
+    >
+      <View style={s.trainingOverlay}>
+        <View
+          accessibilityLabel="Training Mode"
+          accessibilityViewIsModal
+          style={s.trainingDialog}
+        >
+          <View style={s.trainingHeader}>
+            <View style={s.trainingHeaderCopy}>
+              <Text style={s.trainingEyebrow}>★ TRAINING MODE</Text>
+              <Text style={s.trainingTitle}>
+                {state.phase === "choosing"
+                  ? "WHAT SHOULD JACK LEARN?"
+                  : state.phase === "result"
+                    ? `${celebrationLabel?.toUpperCase()}!`
+                    : commandLabel
+                      ? `${commandLabel.toUpperCase()} IN PROGRESS`
+                      : "GOOD BOY IN PROGRESS"}
+              </Text>
+            </View>
+            <FocusableButton
+              accessibilityLabel="Close Training Mode"
+              onPress={onCancel}
+              style={(pressed) => [
+                s.trainingClose,
+                pressed && s.utilityPressed,
+              ]}
+            >
+              <Text style={s.trainingCloseLabel}>×</Text>
+            </FocusableButton>
+          </View>
+
+          <Text accessibilityLiveRegion="polite" style={s.trainingMessage}>
+            {announcement}
+          </Text>
+
+          {state.phase === "choosing" && (
+            <View accessibilityLabel="Training commands" style={s.trainingCommands}>
+              {TRAINING_COMMANDS.map((command) => {
+                const learned = progress.learned[command];
+                return (
+                  <FocusableButton
+                    key={command}
+                    accessibilityLabel={`${trainingCommandLabels[command]}. ${learned ? "Learned" : "New command"}.`}
+                    onPress={() => onChooseCommand(command)}
+                    style={(pressed) => [
+                      s.trainingCommand,
+                      pressed && s.trainingCommandPressed,
+                    ]}
+                  >
+                    <Text style={s.trainingCommandIcon}>{commandIcons[command]}</Text>
+                    <Text style={s.trainingCommandLabel}>
+                      {trainingCommandLabels[command].toUpperCase()}
+                    </Text>
+                    <Text style={s.trainingLearned}>
+                      {learned ? "LEARNED ✓" : "NEW"}
+                    </Text>
+                  </FocusableButton>
+                );
+              })}
+            </View>
+          )}
+
+          {state.phase === "awaiting-treat" && (
+            <FocusableButton
+              accessibilityLabel={`Give Jack one unlimited treat for ${commandLabel}`}
+              onPress={onGiveTreat}
+              style={(pressed) => [
+                s.trainingTreatButton,
+                pressed && s.trainingCommandPressed,
+              ]}
+            >
+              <Text style={s.trainingTreatIcon}>◆</Text>
+              <Text style={s.trainingTreatLabel}>GIVE TREAT</Text>
+            </FocusableButton>
+          )}
+
+          {(state.phase === "performing" ||
+            state.phase === "treat-in-flight" ||
+            state.phase === "eating" ||
+            state.phase === "celebrating") && (
+            <View accessible accessibilityLabel={announcement} style={s.trainingBusy}>
+              <Text style={s.trainingBusyPixels}>
+                {state.phase === "treat-in-flight"
+                  ? "◆  ·  ·  →"
+                  : state.phase === "eating"
+                    ? "CRUNCH  CRUNCH"
+                    : state.phase === "celebrating"
+                      ? "★  ✦  ★"
+                      : "●  ●  ●"}
+              </Text>
+              <Text style={s.trainingBusyLabel}>
+                {reduced ? "STILL POSE • MOTION REDUCED" : "WATCH JACK"}
+              </Text>
+            </View>
+          )}
+
+          {state.phase === "result" && (
+            <View style={s.trainingResultActions}>
+              <FocusableButton
+                accessibilityLabel={`Show ${celebrationLabel} again`}
+                onPress={onShowAgain}
+                style={(pressed) => [
+                  s.trainingResultButton,
+                  pressed && s.trainingCommandPressed,
+                ]}
+              >
+                <Text style={s.trainingResultLabel}>SHOW AGAIN</Text>
+              </FocusableButton>
+              <FocusableButton
+                accessibilityLabel="Finish Training Mode"
+                onPress={onDone}
+                style={(pressed) => [
+                  s.trainingResultButton,
+                  s.trainingDoneButton,
+                  pressed && s.trainingCommandPressed,
+                ]}
+              >
+                <Text style={s.trainingResultLabel}>DONE</Text>
+              </FocusableButton>
+            </View>
+          )}
+
+          <Text style={s.trainingFooterNote}>
+            UNLIMITED TREATS • NO STREAKS • SAVED ON THIS DEVICE
+          </Text>
+        </View>
+      </View>
+    </Modal>
   );
 }
 
@@ -1460,14 +2327,15 @@ function SleepDialog({
                 key={hours}
                 label={`${hours} HOUR${hours === 1 ? "" : "S"}`}
                 selected={false}
+                initialFocus={visible && hours === sleepOptions[0]}
                 accessibilityLabel={`Sleep for ${hours} accelerated hour${hours === 1 ? "" : "s"}`}
                 onPress={() => onChoose(hours)}
               />
             ))}
           </View>
-          <Pressable accessibilityRole="button" accessibilityLabel="Cancel sleep timer" onPress={onCancel} style={s.textButton}>
+          <FocusableButton accessibilityLabel="Cancel sleep timer" onPress={onCancel} style={() => s.textButton}>
             <Text style={s.textButtonLabel}>CANCEL</Text>
-          </Pressable>
+          </FocusableButton>
         </View>
       </View>
     </Modal>
@@ -1492,9 +2360,9 @@ function RestartDialog({
           <Text style={s.pixelTitle}>START A NEW BABY JACK?</Text>
           <Text style={s.bodyText}>This replaces this local pet’s age, needs, room, and sleep timer.</Text>
           <ActionButton label="NEW BABY" tone="danger" onPress={onConfirm} wide />
-          <Pressable accessibilityRole="button" accessibilityLabel="Keep current Jack" onPress={onCancel} style={s.textButton}>
+          <FocusableButton accessibilityLabel="Keep current Jack" onPress={onCancel} style={() => s.textButton}>
             <Text style={s.textButtonLabel}>KEEP JACK</Text>
-          </Pressable>
+          </FocusableButton>
         </View>
       </View>
     </Modal>
@@ -1510,6 +2378,7 @@ const s = StyleSheet.create({
   app: { flex: 1, backgroundColor: appBg },
   page: { width: "100%", maxWidth: 760, alignSelf: "center", padding: 12, gap: 12 },
   pageDesktop: { maxWidth: 1440, padding: 20 },
+  pageRoomMobile: { maxWidth: 390, paddingHorizontal: 0, paddingTop: 4, paddingBottom: 12, gap: 8 },
   recovery: { flex: 1, alignItems: "center", justifyContent: "center", padding: 24, gap: 18, backgroundColor: appBg },
   recoveryCard: { width: "100%", maxWidth: 420, padding: 20, gap: 16, borderRadius: 20, borderWidth: 3, borderColor: outline, backgroundColor: surface },
   screenCard: { width: "100%", maxWidth: 720, minHeight: 820, alignSelf: "center", padding: 20, gap: 18, borderRadius: 26, borderWidth: 2, borderColor: outline, backgroundColor: appBg, shadowColor: ink, shadowOpacity: 0.14, shadowRadius: 12, shadowOffset: { width: 0, height: 4 } },
@@ -1547,33 +2416,122 @@ const s = StyleSheet.create({
   toggleKnobOn: { alignSelf: "flex-end" },
   rateLabel: { minWidth: 50, color: ink, fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 15, fontWeight: "900", textAlign: "center" },
   daylightNote: { color: "#60767c", fontSize: 15, lineHeight: 22, textAlign: "center" },
-  roomCard: { width: "100%", alignSelf: "center", padding: 12, gap: 12, borderRadius: 26, borderWidth: 2, borderColor: outline, backgroundColor: appBg, shadowColor: ink, shadowOpacity: 0.14, shadowRadius: 12, shadowOffset: { width: 0, height: 4 } },
-  roomCardDesktop: { maxWidth: 1400, padding: 28 },
-  roomHeader: { minHeight: 58, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 },
-  roomGrid: { flexDirection: "row", gap: 46, alignItems: "flex-start" },
-  roomVisualColumn: { flex: 1.55 },
-  roomControls: { gap: 10 },
+  roomCard: { width: "100%", alignSelf: "center", padding: 10, gap: 8, borderRadius: 26, borderWidth: 2, borderColor: outline, backgroundColor: appBg, shadowColor: ink, shadowOpacity: 0.14, shadowRadius: 12, shadowOffset: { width: 0, height: 4 } },
+  roomCardDesktop: { maxWidth: 1400, padding: 20 },
+  deviceShell: {
+    width: "100%",
+    maxWidth: 390,
+    minHeight: 790,
+    alignSelf: "center",
+    justifyContent: "space-between",
+    gap: 10,
+    paddingHorizontal: 10,
+    paddingTop: 14,
+    paddingBottom: 18,
+    borderRadius: 48,
+    borderWidth: 3,
+    borderColor: "#c9b994",
+    backgroundColor: "#f3e6ca",
+    shadowColor: "#5b4d39",
+    shadowOpacity: 0.25,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 8 },
+    overflow: "hidden",
+  },
+  deviceTopPanel: {
+    minHeight: 78,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 9,
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: "#d2c19c",
+    backgroundColor: "#fff6df",
+    shadowColor: "#6e5d43",
+    shadowOpacity: 0.16,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 3 },
+  },
+  deviceTopPanelNarrow: { gap: 2, paddingHorizontal: 8 },
+  devicePetName: { width: 60, color: "#4c3928", fontSize: 17, lineHeight: 23, fontWeight: "900", letterSpacing: 0.3 },
+  devicePetNameNarrow: { width: 42, fontSize: 14, lineHeight: 19 },
+  compactNeeds: { flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-around", gap: 4 },
+  compactNeedsNarrow: { gap: 0 },
+  compactNeed: { minWidth: 27, alignItems: "center", gap: 3 },
+  compactNeedNarrow: { minWidth: 20, gap: 1 },
+  compactNeedIcon: { minHeight: 22, fontSize: 20, lineHeight: 22, fontWeight: "900" },
+  compactNeedIconNarrow: { minHeight: 17, fontSize: 15, lineHeight: 17 },
+  compactNeedSegments: { flexDirection: "row", gap: 2 },
+  compactNeedSegmentsNarrow: { gap: 1 },
+  compactNeedSegment: { width: 7, height: 5, borderRadius: 999, backgroundColor: "#d8ccb3" },
+  compactNeedSegmentNarrow: { width: 4, height: 4 },
+  deviceTimePanel: { minWidth: 78, paddingLeft: 6, flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: 4, borderLeftWidth: 1, borderLeftColor: "#dcccad" },
+  deviceTimePanelNarrow: { minWidth: 56, paddingLeft: 3, gap: 0 },
+  daypartGlyph: { color: "#e7af31", fontSize: 20, lineHeight: 24, fontWeight: "900" },
+  deviceDaypart: { color: "#4c3928", fontSize: 11, lineHeight: 14, fontWeight: "900", letterSpacing: 0.4, textAlign: "right" },
+  deviceDaypartNarrow: { fontSize: 9, lineHeight: 11, letterSpacing: 0 },
+  deviceClock: { color: "#4c3928", fontSize: 13, lineHeight: 17, fontWeight: "900", textAlign: "right" },
+  deviceClockNarrow: { fontSize: 10, lineHeight: 13 },
+  deviceScreenFrame: {
+    position: "relative",
+    borderRadius: 29,
+    borderWidth: 7,
+    borderColor: "#4b4c49",
+    backgroundColor: "#e6cfaa",
+    overflow: "visible",
+    shadowColor: "#4a3d2d",
+    shadowOpacity: 0.28,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 5 },
+  },
+  mobileMessageOverlay: { position: "absolute", left: 24, right: 24, top: 18, zIndex: 40 },
+  boopHintBubble: { position: "absolute", left: 70, right: 70, bottom: -18, minHeight: 42, paddingHorizontal: 12, alignItems: "center", justifyContent: "center", borderRadius: 18, borderWidth: 2, borderColor: "#d2c19c", backgroundColor: "#fff6df", zIndex: 45 },
+  boopHintText: { color: "#4c3928", fontSize: 15, lineHeight: 20, fontWeight: "900", textAlign: "center" },
+  deviceActionStrip: { minHeight: 92, paddingTop: 11, flexDirection: "row", alignItems: "stretch", justifyContent: "center", gap: 5 },
+  deviceAction: { flex: 1, minWidth: 0, minHeight: 80, paddingHorizontal: 3, paddingVertical: 8, alignItems: "center", justifyContent: "center", gap: 3, borderRadius: 17, borderWidth: 2, borderColor: "#a9946e", shadowColor: "#6d5d43", shadowOpacity: 0.2, shadowRadius: 3, shadowOffset: { width: 0, height: 4 } },
+  deviceActionPressed: { transform: [{ translateY: 3 }, { scale: 0.98 }], shadowOpacity: 0.08 },
+  deviceActionDisabled: { opacity: 0.48 },
+  deviceActionIcon: { color: "#4c3928", fontSize: 25, lineHeight: 28, fontWeight: "900" },
+  deviceActionLabel: { color: "#4c3928", fontSize: 12, lineHeight: 16, fontWeight: "900", textAlign: "center" },
+  deviceSettings: { width: 44, height: 44, marginLeft: 2, alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: "#a9946e", borderRadius: 999, backgroundColor: "#efd6a8" },
+  deviceSettingsLabel: { color: "#4c3928", fontSize: 19, lineHeight: 22, fontWeight: "900" },
+  devicePawOrnament: { width: 78, height: 66, alignSelf: "center", position: "relative" },
+  pawToe: { position: "absolute", width: 18, height: 24, borderRadius: 999, backgroundColor: "#5b99a4", borderWidth: 2, borderColor: "#3b6f78" },
+  pawToeOne: { left: 4, top: 10, transform: [{ rotate: "-24deg" }] },
+  pawToeTwo: { left: 24, top: 0, transform: [{ rotate: "-8deg" }] },
+  pawToeThree: { right: 18, top: 0, transform: [{ rotate: "8deg" }] },
+  pawToeFour: { right: 0, top: 12, transform: [{ rotate: "24deg" }] },
+  pawPad: { position: "absolute", width: 47, height: 34, left: 16, bottom: 0, borderRadius: 22, backgroundColor: "#5b99a4", borderWidth: 2, borderColor: "#3b6f78", transform: [{ rotate: "-2deg" }] },
+  roomHeader: { minHeight: 48, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 10 },
+  roomGrid: { flexDirection: "row", gap: 28, alignItems: "flex-start" },
+  roomVisualColumn: { flex: 1.6 },
+  roomControls: { gap: 6 },
   roomControlsDesktop: { flex: 1, paddingTop: 4 },
-  daypartCaption: { minHeight: 36, paddingTop: 8, color: "#60767c", fontSize: 12, lineHeight: 18, textAlign: "center" },
+  daypartCaption: { minHeight: 22, paddingTop: 4, color: "#60767c", fontSize: 12, lineHeight: 16, textAlign: "center" },
   messageSlot: { height: 52, flexDirection: "row", alignItems: "center", paddingHorizontal: 16, borderWidth: 2, borderLeftWidth: 6, borderColor: outline, borderRadius: 12, backgroundColor: surface, overflow: "hidden" },
+  messageSlotOverlay: { height: 48, borderColor: "#d2c19c", borderLeftWidth: 2, borderRadius: 18, backgroundColor: "#fff6df", shadowColor: "#5b4d39", shadowOpacity: 0.16, shadowRadius: 4, shadowOffset: { width: 0, height: 2 } },
   messageDanger: { borderLeftColor: "#b94747" },
   messageText: { flex: 1, color: ink, fontSize: 15, lineHeight: 22 },
-  meters: { gap: 6 },
-  meter: { minHeight: 56, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 12, backgroundColor: surface },
+  meters: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
+  meter: { flexGrow: 1, flexBasis: "47%", minHeight: 44, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 12, backgroundColor: surface },
   meterLabelRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   meterLabel: { color: ink, fontSize: 12, lineHeight: 16, fontWeight: "600", letterSpacing: 0.5 },
   meterValue: { color: ink, fontSize: 12, lineHeight: 16, fontWeight: "600" },
-  track: { height: 15, marginTop: 6, borderRadius: 999, overflow: "hidden", backgroundColor: "#c9d0d0" },
+  track: { height: 8, marginTop: 3, borderRadius: 999, overflow: "hidden", backgroundColor: "#c9d0d0" },
   fill: { height: "100%", borderRadius: 999 },
-  actions: { flexDirection: "row", flexWrap: "wrap", gap: 8, justifyContent: "center" },
+  actions: { flexDirection: "row", flexWrap: "wrap", gap: 6, justifyContent: "center" },
   actionButton: { minHeight: 64, paddingHorizontal: 20, alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: outline, borderRadius: 20, backgroundColor: "#ef7659", shadowColor: ink, shadowOpacity: 0.18, shadowRadius: 0, shadowOffset: { width: 4, height: 4 } },
-  actionCompact: { flexGrow: 1, flexBasis: "29%", minWidth: 102 },
+  actionCompact: { flexGrow: 1, flexBasis: "29%", minWidth: 96, minHeight: 48, paddingHorizontal: 10, borderRadius: 14 },
   actionWide: { width: "100%", maxWidth: 300, alignSelf: "center" },
   sleepButton: { backgroundColor: "#7a82ce" },
   dangerButton: { backgroundColor: "#b94747" },
   actionPressed: { backgroundColor: "#c95842", transform: [{ translateX: 2 }, { translateY: 2 }] },
   actionDisabled: { backgroundColor: "#c9d0d0", opacity: 0.72 },
+  focusRing: { borderColor: "#1f5f82", borderWidth: 4 },
   actionLabel: { color: ink, fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 18, lineHeight: 26, fontWeight: "900", letterSpacing: 0.5, textAlign: "center" },
+  actionLabelCompact: { fontSize: 14, lineHeight: 18 },
   utilityButton: { minWidth: 54, minHeight: 44, paddingHorizontal: 10, alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: outline, borderRadius: 999, backgroundColor: surface },
   utilityPressed: { backgroundColor: "#ffdf8a" },
   utilityLabel: { color: ink, fontSize: 18, fontWeight: "800" },
@@ -1587,4 +2545,30 @@ const s = StyleSheet.create({
   overlay: { flex: 1, alignItems: "center", justifyContent: "center", padding: 24, backgroundColor: "rgba(39,68,76,0.52)" },
   dialog: { width: "100%", maxWidth: 440, padding: 22, gap: 16, borderRadius: 26, borderWidth: 4, borderColor: outline, backgroundColor: surface },
   sleepOptions: { flexDirection: "row", flexWrap: "wrap", gap: 10, justifyContent: "center" },
+  trainingOverlay: { flex: 1, justifyContent: "flex-end", paddingHorizontal: 12, paddingBottom: 16, backgroundColor: "rgba(39,68,76,0.18)" },
+  trainingDialog: { width: "100%", maxWidth: 480, minHeight: 228, alignSelf: "center", padding: 14, gap: 10, borderRadius: 22, borderWidth: 4, borderColor: outline, backgroundColor: "#fff6df", shadowColor: "#4a3d2d", shadowOpacity: 0.35, shadowRadius: 8, shadowOffset: { width: 0, height: 5 } },
+  trainingHeader: { minHeight: 48, flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between", gap: 8 },
+  trainingHeaderCopy: { flex: 1, gap: 2 },
+  trainingEyebrow: { color: "#5a5688", fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 11, lineHeight: 15, fontWeight: "900", letterSpacing: 0.5 },
+  trainingTitle: { color: ink, fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 16, lineHeight: 21, fontWeight: "900" },
+  trainingClose: { width: 44, height: 44, alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: "#a9946e", borderRadius: 999, backgroundColor: "#efd6a8" },
+  trainingCloseLabel: { color: ink, fontSize: 27, lineHeight: 29, fontWeight: "900" },
+  trainingMessage: { minHeight: 42, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 13, backgroundColor: "#f4e3bd", color: ink, fontSize: 14, lineHeight: 20, fontWeight: "800", textAlign: "center" },
+  trainingCommands: { flexDirection: "row", gap: 7 },
+  trainingCommand: { flex: 1, minWidth: 0, minHeight: 82, paddingHorizontal: 3, paddingVertical: 7, alignItems: "center", justifyContent: "center", gap: 2, borderWidth: 2, borderColor: "#a9946e", borderRadius: 15, backgroundColor: "#efd6a8" },
+  trainingCommandPressed: { transform: [{ translateY: 2 }, { scale: 0.98 }], backgroundColor: "#efc553" },
+  trainingCommandIcon: { color: "#5a5688", fontSize: 23, lineHeight: 25, fontWeight: "900" },
+  trainingCommandLabel: { color: ink, fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 14, lineHeight: 18, fontWeight: "900" },
+  trainingLearned: { color: "#48784b", fontSize: 10, lineHeight: 13, fontWeight: "900" },
+  trainingTreatButton: { minHeight: 62, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 10, borderWidth: 3, borderColor: outline, borderRadius: 17, backgroundColor: "#efc553", shadowColor: ink, shadowOpacity: 0.2, shadowRadius: 0, shadowOffset: { width: 3, height: 3 } },
+  trainingTreatIcon: { color: "#d07d35", fontSize: 23, lineHeight: 26, fontWeight: "900" },
+  trainingTreatLabel: { color: ink, fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 17, lineHeight: 22, fontWeight: "900" },
+  trainingBusy: { minHeight: 68, alignItems: "center", justifyContent: "center", gap: 3 },
+  trainingBusyPixels: { color: "#b9477f", fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 18, lineHeight: 23, fontWeight: "900", letterSpacing: 1 },
+  trainingBusyLabel: { color: "#60767c", fontSize: 11, lineHeight: 15, fontWeight: "900" },
+  trainingResultActions: { flexDirection: "row", gap: 9 },
+  trainingResultButton: { flex: 1, minHeight: 54, alignItems: "center", justifyContent: "center", paddingHorizontal: 8, borderWidth: 3, borderColor: outline, borderRadius: 15, backgroundColor: "#efd6a8" },
+  trainingDoneButton: { backgroundColor: "#a9cf82" },
+  trainingResultLabel: { color: ink, fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 13, lineHeight: 18, fontWeight: "900", textAlign: "center" },
+  trainingFooterNote: { color: "#60767c", fontSize: 9, lineHeight: 12, fontWeight: "800", textAlign: "center", letterSpacing: 0.2 },
 });

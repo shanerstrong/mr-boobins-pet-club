@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "status": "repair-b-exported-and-runtime-validated",
+  "baselineSkeleton": "meshy-quadruped-dog-smart-rig",
+  "canonicalSkeletonName": "jack_quadruped_rig_v2",
+  "authoring": {
+    "unit": "meter",
+    "upAxis": "Z",
+    "forwardAxis": "-Y",
+    "neutralPose": "natural-square-dog-stand",
+    "rootAtOrigin": true,
+    "pawSolesAtZ0": true
+  },
+  "gltf": {
+    "unit": "meter",
+    "upAxis": "Y",
+    "forwardAxis": "+Z",
+    "rootNode": "jack_root",
+    "rootTransformIdentity": true,
+    "groundContactY": 0.0
+  },
+  "limits": {
+    "jointsMaximum": 64,
+    "deformJointsMaximum": 63,
+    "influencesPerVertexMaximum": 4,
+    "weightSumTolerance": 0.00001,
+    "rootTranslationToleranceMeters": 0.000001,
+    "standingFloorPenetrationMaximumMeters": 0.005
+  },
+  "requiredAnatomicalChains": [
+    "root_pelvis_spine_chest_neck_head",
+    "front_leg_left_scapula_elbow_wrist_paw_toe",
+    "front_leg_right_scapula_elbow_wrist_paw_toe",
+    "hind_leg_left_hip_stifle_hock_paw_toe",
+    "hind_leg_right_hip_stifle_hock_paw_toe",
+    "tail_base_to_tip"
+  ],
+  "requiredProjectControls": [
+    "jaw",
+    "muzzle",
+    "ear_left",
+    "ear_right",
+    "eyelid_left",
+    "eyelid_right",
+    "tail_base"
+  ],
+  "requiredSemanticAnchors": [
+    "jack_root",
+    "head",
+    "nose_visual",
+    "hit_nose",
+    "mouth_anchor",
+    "collar",
+    "tag",
+    "tail_base",
+    "paw_front_l",
+    "paw_front_r"
+  ],
+  "motionSources": [
+    {
+      "clip": "walk",
+      "source": "Meshy Walking quadruped preset",
+      "motionClass": "quadruped",
+      "status": "recovered-inspected-and-restrained-in-blender-repair-a"
+    },
+    {
+      "clip": "run",
+      "source": "Meshy Walking quadruped baseline with original Blender timing and restraint",
+      "motionClass": "quadruped",
+      "status": "authored-in-blender-repair-a"
+    }
+  ],
+  "humanoidAnimationPolicy": {
+    "directApplicationAllowed": false,
+    "retargetingAllowed": false,
+    "timingReferenceOnly": true
+  },
+  "meshyBoneMapping": {
+    "root_pelvis": "Hips",
+    "spine_chest": "chest",
+    "head": "head",
+    "muzzle": "headend",
+    "ear_left": "earend",
+    "ear_right": "R_earend",
+    "front_leg_left": ["frontleg", "frontleg0", "frontleg1", "frontleg2"],
+    "front_leg_right": ["R_frontleg", "R_frontleg0", "R_frontleg1", "R_frontleg2"],
+    "hind_leg_left": ["backleg", "backleg0", "backleg1", "backleg2"],
+    "hind_leg_right": ["R_backleg", "R_backleg0", "R_backleg1", "R_backleg2"],
+    "tail": ["tail", "tailstart", "tail1", "tail2", "tail3"]
+  },
+  "inverseBindMatrixSha256": "9e6bb93959b910b32c7a6b609eb46f530e14b1ba019ac4596cb2336518608087"
+}

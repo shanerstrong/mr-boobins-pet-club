@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 2,
+  "status": "adapter-v2-animation-glb-and-baby-structural-skin-verified-visual-gate-pending",
+  "coordinateSystem": {
+    "authoringUnit": "meter",
+    "upAxis": "Z",
+    "forwardAxis": "-Y",
+    "rootAtWorldOrigin": true,
+    "appliedTransformsRequired": true
+  },
+  "skinSet": {
+    "baby": {
+      "plannedExport": "exports/jack-baby.glb",
+      "growthStages": ["baby", "little-puppy"]
+    },
+    "teen": {
+      "plannedExport": "exports/jack-teen.glb",
+      "growthStages": ["puppy", "young-dog"]
+    },
+    "adult": {
+      "plannedExport": "exports/jack-adult.glb",
+      "growthStages": ["adult"]
+    }
+  },
+  "sharedAnimationExport": "exports/jack-rig-animations.glb",
+  "sharedAnimationSource": "source/jack-shared-rig-animations.blend",
+  "sharedAnimationValidation": "../../../evidence/3d-jack/rig-animation-validation.json",
+  "sharedAnimationClipCount": 16,
+  "animationEventManifest": "animations/animation-event-manifest.json",
+  "editableAnimationSourceMatchesExport": false,
+  "bones": [
+    "root",
+    "pelvis",
+    "spine_01",
+    "spine_02",
+    "chest",
+    "neck_01",
+    "neck_02",
+    "head",
+    "muzzle",
+    "jaw",
+    "ear_L_base",
+    "ear_L_tip",
+    "ear_R_base",
+    "ear_R_tip",
+    "scapula_L",
+    "upper_arm_L",
+    "forearm_L",
+    "wrist_L",
+    "front_paw_L",
+    "front_toe_L",
+    "scapula_R",
+    "upper_arm_R",
+    "forearm_R",
+    "wrist_R",
+    "front_paw_R",
+    "front_toe_R",
+    "thigh_L",
+    "shin_L",
+    "hock_L",
+    "rear_paw_L",
+    "rear_toe_L",
+    "thigh_R",
+    "shin_R",
+    "hock_R",
+    "rear_paw_R",
+    "rear_toe_R",
+    "tail_01",
+    "tail_02",
+    "tail_03",
+    "tail_04"
+  ],
+  "deformBoneLimit": 48,
+  "maxInfluencesPerVertex": 4,
+  "requiredMorphTargetsPerSkin": [
+    "condition_hungry",
+    "condition_starving",
+    "blink",
+    "lids_tired",
+    "nose_compress",
+    "smile",
+    "mouth_open",
+    "tongue_out"
+  ],
+  "materialSlots": [
+    "fur",
+    "ear",
+    "eyes",
+    "nose",
+    "mouth_tongue",
+    "collar",
+    "tag",
+    "condition_dirty"
+  ],
+  "requiredSemanticAnchors": [
+    "jack_root",
+    "head",
+    "nose_visual",
+    "hit_nose",
+    "mouth_anchor",
+    "collar",
+    "tag",
+    "tail_base",
+    "paw_front_l",
+    "paw_front_r"
+  ],
+  "rootMotionGameplay": false,
+  "simulationMutation": false,
+  "presentationOnly": true
+}

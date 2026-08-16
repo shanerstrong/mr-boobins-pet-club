@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "phase": "contract-only",
+  "clipCount": 28,
+  "requiredMvpPresent": true,
+  "requiredPetRoomPresent": true,
+  "meshyQuadrupedBaselineDeclared": true,
+  "humanoidAnimationDirectApplicationAllowed": false,
+  "missingOutputs": [
+    "exports/jack-teen-v2.glb",
+    "exports/jack-adult-v2.glb"
+  ],
+  "failures": []
+}

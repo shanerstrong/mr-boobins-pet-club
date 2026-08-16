@@ -1,5 +1,41 @@
 # Plans
 
+## Lean production-control framework — 2026-08-16
+
+Production now uses one manager/approval surface, one repository source of truth, a curated Google Drive review mirror, and temporary bounded worker tasks. `docs/production/PRODUCTION_DASHBOARD.md` is the concise current-state view. One reviewable milestone advances at a time; at most three isolated lanes may run only after shared contracts and ownership are stable. Scheduled monitoring remains read-only, and a custom OpenAI API control plane is deferred until measured coordination cost justifies building and maintaining it.
+
+The next ordered delivery path is: secure and classify the V0.6–V0.8 working baseline; implement the approved safe-return policy; close Baby Day 1 return and accessibility gaps; then complete health/attention/medicine, LCD presentation, and classic-control parity for the original first reviewable milestone. Expansion readiness is limited to stable content IDs, pack manifests, compatibility/fallback rules, and an entitlement adapter boundary; storefronts, payments, and paid packs remain deferred.
+
+Future visual work follows reference → inexpensive concept → Mark's direction approval → production asset → integration → rendered verification. `docs/production/CREATIVE_DIRECTION.md` is the durable taste record: objective technical success never counts as subjective approval, only Mark can accept or lock a look, and one clear rejection stops that method until the approach or references materially change. Meshy or another 3D tool may create consistent characters and reusable poses, but generated geometry is never treated as proof of anatomy, exercise technique, likeness, licensing, or accessibility.
+
+## Studio production roadmap and Baby Day 1 slice — 2026-08-15
+
+The end-to-end greenlight → pre-production → vertical slice → production → alpha → beta → release-candidate → operations plan is recorded in `docs/GAME_PRODUCTION_PLAN.md`. The current working build is classified as a pre-alpha representative slice. It proves the technical spine but does not yet satisfy the original first reviewable milestone.
+
+The first implementation slice improves the child-facing adoption and return loop without changing the V6 simulation schema or making the unresolved clock/death decision. It replaces duplicate ADOPT/VISIT actions with one context-aware action, persists first-care completion in a separate strict record, derives return guidance from live pet state, limits 3D Boop to the authored nose target, removes eager GLB preload, extends modal accessibility isolation, places initial focus inside the sleep dialog, adds visible focus treatment to shared controls, and strengthens static-export asset verification.
+
+This slice deliberately excludes health/attention/medicine, LCD/classic parity, more pets, all-age 3D integration, player-time/death policy changes, cloud/accounts/analytics/monetization, native packaging, publishing, and deployment. Verification uses every exact deterministic gate in `docs/QUALITY_GATES.md` plus rendered mobile/desktop interaction checks. It is done when the new flow works at 390×844 and 1440×900, the return-policy tests pass, the export contains all required runtime assets, and existing care/training/persistence behavior remains intact. Stop for a requested scope change, clock/death product decision, destructive/Git/external action, or a conflict that cannot preserve the V0.6–V0.8 working tree.
+
+## V0.8 Meshy Baby Jack runtime integration — 2026-08-15
+
+The browser room now loads the validated Meshy-derived Baby V2 all-clips GLB inside one fixed-camera original low-poly dollhouse. The adapter maps existing care and Training Mode states onto the locked V2 clip vocabulary, holds Sit/Paw/Up at their approved pose markers while Give Treat awaits input, and restarts celebration-only replay through a presentation revision without duplicating rewards. Code-native HUD, modal, object targets, and action controls remain the functional accessibility layer.
+
+Baby and Little Puppy use 3D when WebGL and the model load successfully. Reduced motion, unsupported rendering, and Puppy/Young Dog/Adult stages retain the existing pixel scene until their V2 age skins are independently compatible and approved. Verification includes manifest-backed clip mapping, production GLB bundling, runtime error inspection, responsive visual checks at 320×568, 390×844, and 1440×900, one-treat Training flow, celebration-only replay, and pixel fallback preservation.
+
+## V0.7 pixel Training Mode — 2026-08-15
+
+V0.7 adds an approved, child-friendly Training Mode to the existing pixel living room. The mobile fifth action is now **Train** and Settings moves to a 44px top-panel gear. Training keeps Jack visible while a compact modal progresses through Sit, Paw, or Up; one unlimited treat; treat contact and eating; and a deterministic no-repeat rotation of Happy Hop, Spin-and-Wag, and Goofy Shimmy. Show Again replays only the earned celebration and Done returns to the room.
+
+Training uses a guarded pure state machine and the approved V2 animation event contract. Command completion, `treat_contact`, eating completion, and celebration completion advance the flow; stale callbacks, overlapping commands, and duplicate treats are rejected. Learned booleans and a hidden celebration cursor use a separate strict local V1 record, leaving the V6 pet simulation/save untouched. There is no inventory, currency, purchase, streak, penalty, punishment, account, microphone, advertising, network dependency, or child-data path.
+
+Verification includes the exact project gates plus training reducer/persistence/manifest tests, muted text comprehension, reduced-motion still poses, modal accessibility isolation, all three browser-driven command loops, persisted refresh, and visual checks at 320×568, 390×844, 430×932, and 1440×900.
+
+## V0.6 local polish milestone — 2026-08-14
+
+V0.6 focuses on room readability and Jack's personality without changing the V6 save format. The room now gives the code-native dog scene visual priority, compresses needs into a two-column grid, and uses a stable two-row care dock with 48px actions. Jack remains provisional, completely white, and blue-collared, but now has a rounded canine head and muzzle, two floppy ears, four readable paws, a collar tag, and a tail layered behind his body.
+
+The original soundtrack is adaptive after the existing player-gesture gate: a slow calm loop plays while Jack is idle, the prior upbeat melody plays only during the full three-second PLAY/zoomies response, and a soft lullaby plays while he sleeps. Music transitions pause other tracks and do not restart because of unrelated state or SFX changes. Reduced motion removes zoom travel while preserving the same three-second readable PLAY state. This visual/audio polish is intentionally implemented before any new bounded audit.
+
 ## V0.5 local milestone — 2026-08-14
 
 V0.5 implements the approved Figma-first title → pet hub → living-room flow at mobile and desktop sizes. Every launch begins on the silent title screen, then shows Jack and a locked coming-soon pet card before entering the room. Strict V6 saves rename `introCompleted` to `adoptionCompleted`, replace `backgroundId` with persisted Cozy/Blue/Garden `roomTheme`, retain V1–V5 migrations and invalid-save retention, and keep the accelerated clock rate session-only. Remembered SFX/music preferences are stored separately and remain playback-gated until ENTER or VISIT ROOM.
@@ -23,7 +59,7 @@ Current scope status:
 - Product identity and the broader future milestone boundary are recorded.
 - V0 uses Expo / React Native / TypeScript with static web export and a configurable Pages base URL.
 - V0 has one original, code-native provisional white pixel Jack; no reference likeness has been approved yet.
-- V0.5 includes local opt-in playback-only SFX/music and Boop the Snoot, but still excludes LCD mode, classic controls, health/medicine, discipline, accounts, cloud, native packaging, and multiple playable pets.
+- V0.6 includes adaptive local opt-in playback-only music, compact care controls, and a more recognizable provisional Jack, but still excludes LCD mode, classic controls, health/medicine, discipline, accounts, cloud, native packaging, and multiple playable pets.
 
 ## V0 implementation charter — 2026-08-14
 
@@ -31,7 +67,7 @@ Current scope status:
 
 **Scope and architecture.** `App.tsx` uses a deterministic mount gate before storage/audio runtime initialization, then owns title/hub/room/settings presentation and an accessibility-aware animation/audio layer. `src/simulation.ts` is a pure deterministic V6 state model with a 12× default test clock, virtual daylight, Boop/hygiene/cleaning rules, clamped care effects, backward-clock protection, timed virtual-age sleep targets, earned growth-meal credits, and a 24-hour real-time catch-up cap. `src/persistence.ts` stores the pet and strict audio preferences through separate AsyncStorage keys. `src/pixel-dog.tsx` contains the original code-native living room and white pixel Jack. There is no network call or account flow.
 
-**Responsive and visual rules.** Phone-first single column; content centers at 760px on wider screens. Care buttons maintain at least 64px height and supporting controls at least 44px, all controls and modals have explicit accessible labels, contrast is intentionally high, local SFX/music starts off and follows a gesture, and reduced-motion users receive a still sprite rather than idle/action movement.
+**Responsive and visual rules.** Phone-first single column; desktop uses a balanced split room. The mobile pet stage is about 390px high, need cards form a compact 2×2 grid, care actions form a stable shallow dock, and every touch target remains at least 44px. Controls and modals have explicit accessible labels, contrast is intentionally high, local SFX/music starts off and follows a gesture, and reduced-motion users receive readable still action states without decorative travel.
 
 **Verification.** Run every exact command in `docs/QUALITY_GATES.md`; then open the local web app at a phone and desktop viewport if browser tooling is available. Capture the primary room, an action response, and a persisted-refresh result in `evidence/`.
 

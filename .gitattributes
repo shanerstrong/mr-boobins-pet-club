@@ -1,0 +1,11 @@
+# Prospective Git LFS boundary for canonical editable production sources only.
+# The assets/source/ path does not exist in the V0.6-V0.8 checkpoint inventory,
+# so these rules do not convert or hide any current runtime, source, or evidence file.
+# Do not relocate current sources here until their original bytes and preservation
+# destination are approved and verified. GitHub Pages runtime files stay outside LFS.
+/assets/source/**/*.blend filter=lfs diff=lfs merge=lfs -text
+/assets/source/**/*.fbx filter=lfs diff=lfs merge=lfs -text
+/assets/source/**/*.kra filter=lfs diff=lfs merge=lfs -text
+/assets/source/**/*.psd filter=lfs diff=lfs merge=lfs -text
+/assets/source/**/*.xcf filter=lfs diff=lfs merge=lfs -text
+/assets/source/**/*.afdesign filter=lfs diff=lfs merge=lfs -text

@@ -2,11 +2,11 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { Buffer } from "node:buffer";
 const rate = 8000;
-function wav(name, notes) {
+function wav(name, notes, amplitude = 11000) {
   const samples = notes.flatMap(([freq, seconds]) =>
     Array.from({ length: Math.floor(rate * seconds) }, (_, i) =>
       Math.round(
-        11000 *
+        amplitude *
           Math.sin((i / rate) * Math.PI * 2 * freq) *
           (1 - i / (rate * seconds)),
       ),
@@ -60,7 +60,7 @@ wav("huff.wav", [
   [170, 0.11],
   [135, 0.13],
 ]);
-wav("music.wav", [
+const playMelody = [
   [523, 0.16],
   [659, 0.16],
   [784, 0.16],
@@ -93,4 +93,36 @@ wav("music.wav", [
   [523, 0.16],
   [440, 0.16],
   [523, 0.16],
-]);
+];
+wav("music.wav", playMelody);
+wav("music-play.wav", playMelody);
+wav("music-idle.wav", [
+  [262, 0.48],
+  [0, 0.12],
+  [330, 0.48],
+  [0, 0.12],
+  [392, 0.48],
+  [0, 0.12],
+  [330, 0.48],
+  [0, 0.24],
+  [294, 0.48],
+  [0, 0.12],
+  [349, 0.48],
+  [0, 0.12],
+  [392, 0.48],
+  [0, 0.12],
+  [262, 0.72],
+  [0, 0.24],
+], 4200);
+wav("music-sleep.wav", [
+  [262, 0.72],
+  [196, 0.36],
+  [220, 0.72],
+  [165, 0.36],
+  [247, 0.72],
+  [185, 0.36],
+  [220, 0.72],
+  [165, 0.36],
+  [196, 0.96],
+  [0, 0.36],
+], 3200);

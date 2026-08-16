@@ -1,0 +1,318 @@
+{
+  "schemaVersion": 1,
+  "status": "built-structural-and-16-clip-deformation-qa-pass-pending-mark-age-set-approval",
+  "age": "teen",
+  "input": "jack-teen-meshy.glb",
+  "inputSha256": "741f4c24f8fbe5ee76ea4bdabe92c56f0b91af20a3c291e83c9ac49545b8fc7b",
+  "output": "jack-teen.glb",
+  "outputBytes": 3048908,
+  "outputSha256": "c43c90113377da6534af6d67f8a4f784a4b7bbc4277cf5e9f2734ae3ba99ebde",
+  "vertexCount": 7751,
+  "triangleCount": 10372,
+  "normalizedBoundsMin": [
+    -0.1824576,
+    0.0,
+    -0.6536194
+  ],
+  "normalizedBoundsMax": [
+    0.1824576,
+    1.3,
+    0.4936194
+  ],
+  "jointCount": 40,
+  "jointNames": [
+    "root",
+    "pelvis",
+    "spine_01",
+    "spine_02",
+    "chest",
+    "neck_01",
+    "neck_02",
+    "head",
+    "muzzle",
+    "jaw",
+    "ear_L_base",
+    "ear_L_tip",
+    "ear_R_base",
+    "ear_R_tip",
+    "scapula_L",
+    "upper_arm_L",
+    "forearm_L",
+    "wrist_L",
+    "front_paw_L",
+    "front_toe_L",
+    "scapula_R",
+    "upper_arm_R",
+    "forearm_R",
+    "wrist_R",
+    "front_paw_R",
+    "front_toe_R",
+    "thigh_L",
+    "shin_L",
+    "hock_L",
+    "rear_paw_L",
+    "rear_toe_L",
+    "thigh_R",
+    "shin_R",
+    "hock_R",
+    "rear_paw_R",
+    "rear_toe_R",
+    "tail_01",
+    "tail_02",
+    "tail_03",
+    "tail_04"
+  ],
+  "morphCount": 8,
+  "morphs": [
+    {
+      "name": "condition_hungry",
+      "affectedVertices": 6905,
+      "maximumDeltaMeters": 0.0114664,
+      "min": [
+        -0.0083669,
+        0.0,
+        -0.0051138
+      ],
+      "max": [
+        0.0083856,
+        0.009132,
+        0.0045229
+      ]
+    },
+    {
+      "name": "condition_starving",
+      "affectedVertices": 6905,
+      "maximumDeltaMeters": 0.018207,
+      "min": [
+        -0.0108769,
+        0.0,
+        -0.0076708
+      ],
+      "max": [
+        0.0109013,
+        0.0167421,
+        0.0067843
+      ]
+    },
+    {
+      "name": "blink",
+      "affectedVertices": 3209,
+      "maximumDeltaMeters": 0.0167485,
+      "min": [
+        0.0,
+        -0.0167485,
+        0.0
+      ],
+      "max": [
+        0.0,
+        0.0154872,
+        0.0
+      ]
+    },
+    {
+      "name": "lids_tired",
+      "affectedVertices": 2673,
+      "maximumDeltaMeters": 0.030987,
+      "min": [
+        0.0,
+        -0.0308909,
+        0.0
+      ],
+      "max": [
+        0.0,
+        -0.0,
+        0.0024388
+      ]
+    },
+    {
+      "name": "nose_compress",
+      "affectedVertices": 946,
+      "maximumDeltaMeters": 0.014256,
+      "min": [
+        -0.0003,
+        0.0,
+        -0.014256
+      ],
+      "max": [
+        0.0002904,
+        0.0,
+        -0.0
+      ]
+    },
+    {
+      "name": "smile",
+      "affectedVertices": 2731,
+      "maximumDeltaMeters": 0.0122033,
+      "min": [
+        -0.0093414,
+        0.0,
+        0.0
+      ],
+      "max": [
+        0.0093429,
+        0.0087976,
+        0.0031143
+      ]
+    },
+    {
+      "name": "mouth_open",
+      "affectedVertices": 242,
+      "maximumDeltaMeters": 0.0119258,
+      "min": [
+        0.0,
+        -0.0117334,
+        0.0
+      ],
+      "max": [
+        0.0,
+        -0.0,
+        0.0021333
+      ]
+    },
+    {
+      "name": "tongue_out",
+      "affectedVertices": 1211,
+      "maximumDeltaMeters": 0.0194812,
+      "min": [
+        0.0,
+        -0.0040359,
+        0.0
+      ],
+      "max": [
+        0.0,
+        -0.0,
+        0.0190586
+      ]
+    }
+  ],
+  "materialCount": 1,
+  "materialRoles": [
+    "fur",
+    "ear",
+    "eyes",
+    "nose",
+    "mouth_tongue",
+    "collar",
+    "tag",
+    "condition_dirty"
+  ],
+  "textureReduction": [
+    {
+      "name": "normal",
+      "maximumEdge": 512,
+      "width": 512,
+      "height": 512,
+      "sourceBytes": 4734021,
+      "outputBytes": 462504
+    },
+    {
+      "name": "Baked_BaseColor",
+      "maximumEdge": 896,
+      "width": 896,
+      "height": 896,
+      "sourceBytes": 4825773,
+      "outputBytes": 1159959
+    },
+    {
+      "name": "Baked_MetallicRoughness",
+      "maximumEdge": 512,
+      "width": 512,
+      "height": 512,
+      "sourceBytes": 6259608,
+      "outputBytes": 198871
+    }
+  ],
+  "animationCount": 0,
+  "externalAnimationLibrary": "jack-rig-animations.glb",
+  "presentationOnly": true,
+  "simulationMutation": false,
+  "privateReferencesEmbedded": false,
+  "weightMetrics": {
+    "usedBoneCount": 39,
+    "usedBones": [
+      "chest",
+      "ear_L_base",
+      "ear_L_tip",
+      "ear_R_base",
+      "ear_R_tip",
+      "forearm_L",
+      "forearm_R",
+      "front_paw_L",
+      "front_paw_R",
+      "front_toe_L",
+      "front_toe_R",
+      "head",
+      "hock_L",
+      "hock_R",
+      "jaw",
+      "muzzle",
+      "neck_01",
+      "neck_02",
+      "pelvis",
+      "rear_paw_L",
+      "rear_paw_R",
+      "rear_toe_L",
+      "rear_toe_R",
+      "scapula_L",
+      "scapula_R",
+      "shin_L",
+      "shin_R",
+      "spine_01",
+      "spine_02",
+      "tail_01",
+      "tail_02",
+      "tail_03",
+      "tail_04",
+      "thigh_L",
+      "thigh_R",
+      "upper_arm_L",
+      "upper_arm_R",
+      "wrist_L",
+      "wrist_R"
+    ],
+    "verticesPerBone": {
+      "chest": 3953,
+      "ear_L_base": 563,
+      "ear_L_tip": 563,
+      "ear_R_base": 610,
+      "ear_R_tip": 610,
+      "forearm_L": 404,
+      "forearm_R": 408,
+      "front_paw_L": 265,
+      "front_paw_R": 269,
+      "front_toe_L": 213,
+      "front_toe_R": 220,
+      "head": 4085,
+      "hock_L": 425,
+      "hock_R": 394,
+      "jaw": 317,
+      "muzzle": 68,
+      "neck_01": 3799,
+      "neck_02": 4407,
+      "pelvis": 1229,
+      "rear_paw_L": 265,
+      "rear_paw_R": 247,
+      "rear_toe_L": 260,
+      "rear_toe_R": 244,
+      "scapula_L": 139,
+      "scapula_R": 139,
+      "shin_L": 425,
+      "shin_R": 394,
+      "spine_01": 1093,
+      "spine_02": 1256,
+      "tail_01": 779,
+      "tail_02": 779,
+      "tail_03": 620,
+      "tail_04": 153,
+      "thigh_L": 168,
+      "thigh_R": 152,
+      "upper_arm_L": 191,
+      "upper_arm_R": 188,
+      "wrist_L": 353,
+      "wrist_R": 357
+    },
+    "minimumNonzeroWeight": 0.009373357,
+    "maximumWeight": 0.796631337,
+    "maximumInfluencesPerVertex": 4
+  }
+}

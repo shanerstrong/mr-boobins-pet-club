@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "asset": "Baby Jack static proportion blockout",
+  "status": "likeness-review-pending",
+  "units": "meters",
+  "standingHeight": 2.85,
+  "headHeightIncludingEars": 1.03,
+  "headHeightPercent": 36.1,
+  "standingHeightInHeadLengths": 2.77,
+  "headDepth": 1.65,
+  "muzzleProjection": 0.78,
+  "muzzleProjectionPercent": 47.3,
+  "muzzleWidth": 1.2,
+  "noseWidth": 0.5,
+  "noseToMuzzleWidthPercent": 41.7,
+  "pawScalePercentOfNeutral": 115,
+  "triangles": 2048,
+  "materials": 11,
+  "imageTextures": 0,
+  "glbBytes": 213360,
+  "heroTriangleTarget": {
+    "min": 8000,
+    "max": 14000,
+    "appliesAfterRefinement": true
+  },
+  "privateReferencesEmbedded": false,
+  "presentationOnly": true,
+  "rootMotionGameplay": false,
+  "renderResolution": [
+    1024,
+    1024
+  ],
+  "views": [
+    "front",
+    "side",
+    "three-quarter",
+    "rear"
+  ],
+  "generator": "assets/3d/jack/tools/build_blockout.py",
+  "blenderVersion": "4.5.12 LTS"
+}

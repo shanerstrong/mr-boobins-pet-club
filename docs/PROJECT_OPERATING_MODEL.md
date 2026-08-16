@@ -24,6 +24,14 @@ Coordinates authorized parallel build tracks, monitors ownership, and consolidat
 
 Use `Build — <Milestone>`, `Review — <Milestone>`, and explicitly approved `Audit — <Milestone>` tasks. Keep one writer per checkout, record durable decisions and results in project documentation, and archive temporary tasks after completion. Re-running bootstrap must detect exact-title matches and never duplicate permanent tasks.
 
+## Production control
+
+The repository is authoritative for code, runtime assets, plans, decisions, tests, and evidence. Google Drive contains curated review mirrors and phone-viewable exports. The production-manager conversation is the approval and coordination surface, but durable state must be recorded in the repository.
+
+`docs/production/PRODUCTION_DASHBOARD.md` records the current milestone, blockers, work ownership, evidence, and next approval. Only one reviewable milestone may be active. At most three independent work lanes may run after shared schemas, IDs, interfaces, and visual specifications are stable; shared-state architecture, persistence, integration, and source-of-truth documentation remain sequential unless worktrees and ownership are explicitly isolated.
+
+Scheduled monitoring is read-only by default. It may compare current evidence with the dashboard and recommend the next assignment, but it may not modify files, launch workers, commit, publish, or make product decisions. Routine checks use deterministic scripts and efficient routing; expensive reasoning and asset generation are reserved for uncertain or high-risk work.
+
 ## Audit policy
 
 Deterministic gates run after every implementation. Before the first reviewable milestone, do not offer an audit unless the user explicitly requests one. Define the milestone concretely in `docs/PROJECT_BRIEF.md`: a usable end-to-end demo for software, a complete rendered draft for documents/media, a functioning testable workflow for automation/configuration, or a complete reproducible output for data work.

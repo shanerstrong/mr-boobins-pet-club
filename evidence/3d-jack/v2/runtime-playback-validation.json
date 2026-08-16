@@ -1,0 +1,292 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "source": "jack-baby-v2-all-clips.glb",
+  "blenderVersion": "4.5.12 LTS",
+  "clipCount": 28,
+  "clipNamesExact": true,
+  "rootIdentity": true,
+  "meshVertices": 8232,
+  "clips": [
+    {
+      "name": "idle",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        72.0
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.048784
+    },
+    {
+      "name": "walk",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        24.0
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.207268
+    },
+    {
+      "name": "run",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        16.0
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.27367
+    },
+    {
+      "name": "tail_wag",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        28.8
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.352226
+    },
+    {
+      "name": "feed",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        52.8
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.275162
+    },
+    {
+      "name": "sleep",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        76.8
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.021665
+    },
+    {
+      "name": "wake",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        33.6
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.499847
+    },
+    {
+      "name": "play",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        72.0
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.215864
+    },
+    {
+      "name": "clean_reaction",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        36.0
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.145959
+    },
+    {
+      "name": "boop_comfortable",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        16.8
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.167407
+    },
+    {
+      "name": "boop_need_hunger",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        19.2
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.162435
+    },
+    {
+      "name": "boop_need_energy",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        19.2
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.210596
+    },
+    {
+      "name": "boop_need_hygiene",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        19.2
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.029726
+    },
+    {
+      "name": "boop_need_happiness",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        19.2
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.195026
+    },
+    {
+      "name": "boop_rejected",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        7.2
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.026479
+    },
+    {
+      "name": "tired",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        48.0
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.04195
+    },
+    {
+      "name": "dirty",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        21.6
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.020506
+    },
+    {
+      "name": "death_rest",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        43.2
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.414682
+    },
+    {
+      "name": "training_attention",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        24.0
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.065259
+    },
+    {
+      "name": "training_sit",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        28.8
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.21215
+    },
+    {
+      "name": "training_paw",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        38.4
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.216224
+    },
+    {
+      "name": "training_up",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        38.4
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.61381
+    },
+    {
+      "name": "training_treat_receive",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        24.0
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.048794
+    },
+    {
+      "name": "training_treat_eat",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        38.4
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.048794
+    },
+    {
+      "name": "celebration_happy_hop",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        36.0
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.21316
+    },
+    {
+      "name": "celebration_spin_wag",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        48.0
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 1.766039
+    },
+    {
+      "name": "celebration_goofy_shimmy",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        52.8
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.728976
+    },
+    {
+      "name": "training_return_idle",
+      "status": "pass",
+      "frameRange": [
+        0.0,
+        19.2
+      ],
+      "finite": true,
+      "firstToSampleMaximumVertexDelta": 0.212317
+    }
+  ]
+}

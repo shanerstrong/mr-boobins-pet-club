@@ -6,6 +6,8 @@ import {
   type PetState,
 } from "./simulation";
 
+export const PLAY_REACTION_MS = 3000;
+
 export type PetInteraction = CareAction | "sleep" | "wake" | "boop";
 export type InteractionBlockReason =
   | "dead"

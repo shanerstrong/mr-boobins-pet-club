@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "fps": 30,
+  "presentationOnly": true,
+  "simulationMutation": false,
+  "rootMotionGameplay": false,
+  "exactPolicies": {
+    "playMs": 3000,
+    "cleanReactionMs": 1500,
+    "cleanPhasesMs": [
+      0,
+      400,
+      800,
+      1150,
+      1500
+    ]
+  },
+  "clips": [
+    {
+      "name": "idle",
+      "durationMs": 3000,
+      "loop": true,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "tail_wag",
+      "durationMs": 1200,
+      "loop": true,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "feed",
+      "durationMs": 2200,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "sleep",
+      "durationMs": 3200,
+      "loop": true,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "wake",
+      "durationMs": 1400,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "play",
+      "durationMs": 3000,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "clean_reaction",
+      "durationMs": 1500,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "boop_comfortable",
+      "durationMs": 700,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "boop_need_hunger",
+      "durationMs": 800,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "boop_need_energy",
+      "durationMs": 800,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "boop_need_hygiene",
+      "durationMs": 800,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "boop_need_happiness",
+      "durationMs": 800,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "boop_rejected",
+      "durationMs": 300,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "tired",
+      "durationMs": 2000,
+      "loop": true,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "dirty",
+      "durationMs": 900,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    },
+    {
+      "name": "death_rest",
+      "durationMs": 1800,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false,
+      "presentationOnly": true
+    }
+  ]
+}

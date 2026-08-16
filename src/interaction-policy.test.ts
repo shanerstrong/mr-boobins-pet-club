@@ -6,6 +6,7 @@ import {
   resolvePetInteraction,
   resetTransientAnimations,
   restoreMessagePresentation,
+  PLAY_REACTION_MS,
   type PetInteraction,
 } from "./interaction-policy";
 import {
@@ -63,6 +64,10 @@ describe("interaction-time policy", () => {
 });
 
 describe("interaction cancellation", () => {
+  it("keeps the Play reaction contract at three seconds", () => {
+    expect(PLAY_REACTION_MS).toBe(3000);
+  });
+
   it("synchronously stops and zeros feed, zoom, and pulse before cleaning", () => {
     const calls: string[] = [];
     const animation = (name: string) => ({

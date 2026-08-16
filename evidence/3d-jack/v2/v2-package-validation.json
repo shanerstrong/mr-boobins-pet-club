@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "phase": "outputs-present",
+  "clipCount": 28,
+  "requiredMvpPresent": true,
+  "requiredPetRoomPresent": true,
+  "meshyQuadrupedBaselineDeclared": true,
+  "humanoidAnimationDirectApplicationAllowed": false,
+  "missingOutputs": [],
+  "failures": []
+}

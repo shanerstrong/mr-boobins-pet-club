@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-08-14",
+  "workspaceMode": "private",
+  "generator": "Meshy 7 Flagship",
+  "textureResolution": 2048,
+  "pbrMapsRequested": true,
+  "totalCreditsSpent": 90,
+  "remainingCreditsObserved": 1080,
+  "failedRemeshCredits": 0,
+  "skins": {
+    "baby": {
+      "workspaceName": "Jack Baby Optimized 10K",
+      "generationCredits": 30,
+      "highDetailFaces": 1937286,
+      "highDetailVertices": 1012952,
+      "optimizedFaces": 9744,
+      "optimizedVertices": 8162,
+      "targetBudgetPass": true,
+      "glbAcquired": false
+    },
+    "teen": {
+      "workspaceName": "Jack Teen Optimized 10K",
+      "generationCredits": 30,
+      "highDetailFaces": 1968156,
+      "highDetailVertices": 1018724,
+      "optimizedFaces": 10372,
+      "optimizedVertices": 7751,
+      "targetBudgetPass": true,
+      "glbAcquired": false
+    },
+    "adult": {
+      "workspaceName": "Jack Adult Optimized 10K",
+      "generationCredits": 30,
+      "highDetailFaces": 1954788,
+      "highDetailVertices": 1010234,
+      "optimizedFaces": 10286,
+      "optimizedVertices": 7892,
+      "targetBudgetPass": true,
+      "glbAcquired": false
+    }
+  },
+  "exportBlocker": "Meshy download dialog did not emit or write a file through the connected in-app browser after repeated GLB attempts."
+}

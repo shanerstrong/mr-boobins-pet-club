@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "status": "authored-and-exported-see-rig-animation-validation",
+  "validationReport": "evidence/3d-jack/rig-animation-validation.json",
+  "fps": 30,
+  "boneCount": 40,
+  "deformBoneCount": 39,
+  "bones": [
+    "root",
+    "pelvis",
+    "spine_01",
+    "spine_02",
+    "chest",
+    "neck_01",
+    "neck_02",
+    "head",
+    "muzzle",
+    "jaw",
+    "ear_L_base",
+    "ear_L_tip",
+    "ear_R_base",
+    "ear_R_tip",
+    "scapula_L",
+    "upper_arm_L",
+    "forearm_L",
+    "wrist_L",
+    "front_paw_L",
+    "front_toe_L",
+    "scapula_R",
+    "upper_arm_R",
+    "forearm_R",
+    "wrist_R",
+    "front_paw_R",
+    "front_toe_R",
+    "thigh_L",
+    "shin_L",
+    "hock_L",
+    "rear_paw_L",
+    "rear_toe_L",
+    "thigh_R",
+    "shin_R",
+    "hock_R",
+    "rear_paw_R",
+    "rear_toe_R",
+    "tail_01",
+    "tail_02",
+    "tail_03",
+    "tail_04"
+  ],
+  "clipCount": 16,
+  "clips": [
+    {
+      "name": "idle",
+      "durationMs": 3000,
+      "frameStart": 0.0,
+      "frameEnd": 90.0,
+      "loop": true,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "tail_wag",
+      "durationMs": 1200,
+      "frameStart": 0.0,
+      "frameEnd": 36.0,
+      "loop": true,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "feed",
+      "durationMs": 2200,
+      "frameStart": 0.0,
+      "frameEnd": 66.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "sleep",
+      "durationMs": 3200,
+      "frameStart": 0.0,
+      "frameEnd": 96.0,
+      "loop": true,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "wake",
+      "durationMs": 1400,
+      "frameStart": 0.0,
+      "frameEnd": 42.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "play",
+      "durationMs": 3000,
+      "frameStart": 0.0,
+      "frameEnd": 90.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "clean_reaction",
+      "durationMs": 1500,
+      "frameStart": 0.0,
+      "frameEnd": 45.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "boop_comfortable",
+      "durationMs": 700,
+      "frameStart": 0.0,
+      "frameEnd": 21.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "boop_need_hunger",
+      "durationMs": 800,
+      "frameStart": 0.0,
+      "frameEnd": 24.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "boop_need_energy",
+      "durationMs": 800,
+      "frameStart": 0.0,
+      "frameEnd": 24.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "boop_need_hygiene",
+      "durationMs": 800,
+      "frameStart": 0.0,
+      "frameEnd": 24.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "boop_need_happiness",
+      "durationMs": 800,
+      "frameStart": 0.0,
+      "frameEnd": 24.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "boop_rejected",
+      "durationMs": 300,
+      "frameStart": 0.0,
+      "frameEnd": 9.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "tired",
+      "durationMs": 2000,
+      "frameStart": 0.0,
+      "frameEnd": 60.0,
+      "loop": true,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "dirty",
+      "durationMs": 900,
+      "frameStart": 0.0,
+      "frameEnd": 27.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    },
+    {
+      "name": "death_rest",
+      "durationMs": 1800,
+      "frameStart": 0.0,
+      "frameEnd": 54.0,
+      "loop": false,
+      "rootMotion": false,
+      "simulationMutation": false
+    }
+  ],
+  "rootInvariantExpected": true,
+  "presentationOnly": true,
+  "simulationMutation": false,
+  "blendBytes": 116280,
+  "glbBytes": 1344804
+}

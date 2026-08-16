@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-16T13:09:53.6419616+00:00",
+  "scope": "V0.6-V0.8 non-destructive preservation setup",
+  "sourceClassification": {
+    "path": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+    "coldArchiveMembers": 291,
+    "coldArchiveOriginalBytes": 536212240,
+    "privateLocalMembers": 59,
+    "privateLocalOriginalBytes": 22677256,
+    "canonicalSourceMembers": 5,
+    "canonicalSourceOriginalBytes": 24926986
+  },
+  "canonicalCopies": [
+    {
+      "source": "assets/3d/jack/source/jack-character.blend",
+      "copy": "assets/source/jack-v1/jack-character-canonical.blend",
+      "bytes": 2057866,
+      "sha256": "49f700d394d6509dd9c70bb8896942525ca0b4e5474f413820c79b24b89514ce",
+      "expectedLfsOid": "sha256:49f700d394d6509dd9c70bb8896942525ca0b4e5474f413820c79b24b89514ce",
+      "localCopyVerification": "byte-identical"
+    },
+    {
+      "source": "assets/3d/jack/source/jack-shared-rig-animations.blend",
+      "copy": "assets/source/jack-v1/jack-shared-rig-animations-canonical.blend",
+      "bytes": 116280,
+      "sha256": "100794c6e90c6685c5b8ac4a56ac061a1f3ece499d5fc439df2a4acf40ccd794",
+      "expectedLfsOid": "sha256:100794c6e90c6685c5b8ac4a56ac061a1f3ece499d5fc439df2a4acf40ccd794",
+      "localCopyVerification": "byte-identical"
+    },
+    {
+      "source": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-h.blend",
+      "copy": "assets/source/jack-v2/jack-baby-v2.2-quaternius-canonical.blend",
+      "bytes": 7266275,
+      "sha256": "2849b88825e1d7d1084ff809071f9bf4ea60f47c83ff70abb63fe04ec74775ec",
+      "expectedLfsOid": "sha256:2849b88825e1d7d1084ff809071f9bf4ea60f47c83ff70abb63fe04ec74775ec",
+      "localCopyVerification": "byte-identical"
+    },
+    {
+      "source": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-derived-b-quaternius.blend",
+      "copy": "assets/source/jack-v2/jack-teen-v2.2-quaternius-canonical.blend",
+      "bytes": 7742554,
+      "sha256": "672a3bc9b3dc1504a5e3541949ab0e1133d78562c88373f68884871890cacb1a",
+      "expectedLfsOid": "sha256:672a3bc9b3dc1504a5e3541949ab0e1133d78562c88373f68884871890cacb1a",
+      "localCopyVerification": "byte-identical"
+    },
+    {
+      "source": "assets/3d/jack/v2/source/jack-adult-quadruped-v2-derived-b-quaternius.blend",
+      "copy": "assets/source/jack-v2/jack-adult-v2.2-quaternius-canonical.blend",
+      "bytes": 7744011,
+      "sha256": "14fba2d52d7015130622cfde13970a6ee53265201326cb1c646529b14f5e5fe9",
+      "expectedLfsOid": "sha256:14fba2d52d7015130622cfde13970a6ee53265201326cb1c646529b14f5e5fe9",
+      "localCopyVerification": "byte-identical"
+    }
+  ],
+  "gitLfs": {
+    "status": "pending-no-charge-capacity-proof",
+    "remoteUploadPerformed": false,
+    "fetchBackVerificationPerformed": false,
+    "note": "Local full-byte copies and expected pointer OIDs are verified. No remote LFS preservation is claimed."
+  },
+  "googleDrive": {
+    "providerDecision": "google-drive-only-no-icloud",
+    "root": {
+      "name": "Mr. Boobins' Pet Club — Preservation",
+      "id": "19u4wr9h_MT3uXDzdy_tMN1t8x6L7EIu1",
+      "url": "https://drive.google.com/drive/folders/19u4wr9h_MT3uXDzdy_tMN1t8x6L7EIu1",
+      "shared": false,
+      "sourceVisibilityStatus": "not_shared",
+      "separateFromPhoneReviewMirror": true
+    },
+    "coldArchiveFolder": {
+      "id": "1pP7En58Sv5XWJ5yeN6S0tnCObUIYeBY6",
+      "parentId": "19u4wr9h_MT3uXDzdy_tMN1t8x6L7EIu1",
+      "shared": false,
+      "sourceVisibilityStatus": "not_shared"
+    },
+    "privateBackupFolder": {
+      "id": "16LTupnydut-5y2IqISiq2C9m7YJFBlUT",
+      "parentId": "19u4wr9h_MT3uXDzdy_tMN1t8x6L7EIu1",
+      "shared": false,
+      "sourceVisibilityStatus": "not_shared"
+    }
+  },
+  "coldArchive": {
+    "status": "remote-verified",
+    "currentStagingRoot": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/",
+    "memberCount": 291,
+    "originalBytes": 536212240,
+    "bundleCount": 17,
+    "bundleBytes": 507494898,
+    "manifest": {
+      "name": "cold-archive-manifest.private.json",
+      "bytes": 69138,
+      "sha256": "eb2263c32b8f339eb877023673154b8eeb62cdd866d7e2b242f5a5f931f9a5c2",
+      "driveFileId": "1d_W8wCELDxsC2ArILy7P3GonPqe_rHX1",
+      "driveState": "uploaded-authenticated-download-sha256-verified"
+    },
+    "bundles": [
+      { "name": "mr-boobins-cold-archive-verified45-part-001.zip", "bytes": 23968519, "sha256": "3cbab38eef7be656dfdbbc89615b30ac64ab7edaef5b83861a4e44d16c9bf5c4", "driveFileId": "1ScR3VRxMYdJvoopT2VTaJmVajLUssseT", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-002.zip", "bytes": 16905364, "sha256": "ab3b22f81f6b21f91c1711174dfd0fb8712e89d45876ab8ffccecc2edbcf1511", "driveFileId": "1hM2F-xWNXxTgxQ9xJYXxopZGqdsfRxNG", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-003.zip", "bytes": 36326942, "sha256": "a21664f5dce4852de23e6737a2ddbe59fad1305a62422e7abb98ebbdf872c660", "driveFileId": "1nMflvekHaHqsyhWWy5WR8Cc1-7BbhoMT", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-004.zip", "bytes": 27430137, "sha256": "36777b72ae16327d150f0acc96e665e707cbca3d0c51b5f4e845e4d45e51320d", "driveFileId": "1r4gGoFinKJnjjMbeYBoS6d4zcCak1OsL", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-005.zip", "bytes": 36895583, "sha256": "a903344e105768ebf6f42a9cac333b22b74fd8aab73f4b9fd7573a4e1583ce22", "driveFileId": "1K-ksz4xgA3Sphh0MMXeHSi8KCPR52A9D", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-006.zip", "bytes": 37071544, "sha256": "bb5e5196d352cbff6015c85b429b8f2d6a98020cb7a827b196c166566f804d19", "driveFileId": "11fTqIhjlVYIwiBOcXiMV8N8pbmZQ1uzG", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-007.zip", "bytes": 36418358, "sha256": "2d7b77f38fc5ac3ad61329df96063c23c69e71d5a8c3fbf6cde9cc138b7b970b", "driveFileId": "1RbvoaFajY1Y6b1hQ9NA3FYEbzBaifbAv", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-008.zip", "bytes": 36074684, "sha256": "5621fa662c4761725e80179407886d00cbe541792b3ed8e92cc7d98cf3217bcc", "driveFileId": "1s1dvO_cpB320WNbMzdKCmZ2Zrmy7khHQ", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-009.zip", "bytes": 27975075, "sha256": "e0baee0d3ff9c93a2a0a751fbc12eae6e96c2e9cfe777fd28303b7a7440e44d9", "driveFileId": "1B2qhTL9eKG6ZP0PcqPoXForpG7Y9tWtd", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-010.zip", "bytes": 24104330, "sha256": "0d5b435c08b96fecfe75764aeba6057ccb06dbbe46ecf1ba08b15043ec02f348", "driveFileId": "12825Zg0b7osNRBSGXQF8UEBirpqJjAeQ", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-011.zip", "bytes": 30790979, "sha256": "f2ba644a9f96ba674367e75deec46f284e7820c889af5ef0049e52b8636baa17", "driveFileId": "1Ip8-F0DfkKqfLMuFgWy_-_E1iHSYmNPh", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-012.zip", "bytes": 24209584, "sha256": "8c4fc0bb93ac0f7b232d4e53327d848548935e22537c668d6bd0b1955ba05379", "driveFileId": "17fvChWsZkkedXCURkriU2G7j7oUfRhOx", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-013.zip", "bytes": 33470161, "sha256": "ea1a5a7a51744fff0ded798f746e6dbf6c94af24d7f98b50785c10ecde46c961", "driveFileId": "1svUZys_n9L7xqNto-r15U1030uh2YfnR", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-014.zip", "bytes": 34072115, "sha256": "173b60097826cf89857425cb71b14925608dd49f116803404ee36910dfc16761", "driveFileId": "1t541U1n3yy0XhCw_kc4Bj6CM2UnEUK3O", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-015.zip", "bytes": 35957541, "sha256": "734737b0069fc7005d87d18e2429e0dc7924bd84e0f58e17e56db4737a44be6e", "driveFileId": "1zmFy29-aZEtf4gTKHXNezx8DUD4vfofB", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-016.zip", "bytes": 36575472, "sha256": "0417cbb78fa3a458e5b4642c69271adc15c3adea3a8e2a4e6ece71bf639517a6", "driveFileId": "1aNgudkGhX5bH1xKp1uLdD3sDi6lZs_gs", "driveState": "uploaded-authenticated-download-sha256-verified" },
+      { "name": "mr-boobins-cold-archive-verified45-part-017.zip", "bytes": 9248510, "sha256": "4af6d80d22bad2e36a3b55cbdc1a42e2ea98d157ee0affe226ff1bd2d4119c35", "driveFileId": "1X_8pmsYMptc-iDiJZlY0Xt4JO7yod6DC", "driveState": "uploaded-authenticated-download-sha256-verified" }
+    ],
+    "localVerification": "Every current ZIP was reopened, entry-counted, size-checked, decompressed, and member-SHA-256 matched to the source classification.",
+    "remoteVerification": {
+      "method": "authenticated-download-sha256",
+      "manifestMatched": true,
+      "bundleCountMatched": 17,
+      "allBundleSizesAndHashesMatched": true,
+      "folderItemCount": 19,
+      "folderItemsNotShared": 19
+    }
+  },
+  "privateBackup": {
+    "status": "remote-verified",
+    "stagingRoot": "preservation-staging/20260816T125159Z/Private Backup/",
+    "privateMemberCount": 59,
+    "canonicalDefenseInDepthMemberCount": 5,
+    "totalMemberCount": 64,
+    "originalBytes": 47604242,
+    "bundle": {
+      "name": "mr-boobins-private-backup.zip",
+      "bytes": 45004614,
+      "sha256": "88056a4cd271a3294084dda6b02edddfc8487859ad8f64e776513ac0dfec18f8",
+      "driveFileId": "1xGIIfWI7uyu9QtrOcBAWTmnIn10A9sbB",
+      "driveState": "uploaded-authenticated-download-sha256-verified"
+    },
+    "manifest": {
+      "name": "private-backup-manifest.private.json",
+      "bytes": 24446,
+      "sha256": "66755fa9d16f9a8edbe690a962644418a47cce9a1d962ab5c62dd495cc3f28ad",
+      "driveFileId": "10zVWZwwMkaNDSTr_IA4S41TDDSENWNGa",
+      "driveState": "uploaded-authenticated-download-sha256-verified"
+    },
+    "localVerification": "The ZIP was reopened, entry-counted, size-checked, decompressed, and member-SHA-256 matched to the source classification.",
+    "remoteVerification": {
+      "method": "authenticated-download-sha256",
+      "bundleMatched": true,
+      "manifestMatched": true
+    }
+  },
+  "baselineTextOriginals": {
+    "status": "remote-verified",
+    "stagingRoot": "preservation-staging/20260816T134500Z-baseline-text-originals/",
+    "memberCount": 21,
+    "originalBytes": 121449,
+    "coldArchiveFolderId": "1pP7En58Sv5XWJ5yeN6S0tnCObUIYeBY6",
+    "bundle": {
+      "name": "mr-boobins-baseline-text-originals-pre-normalization.zip",
+      "bytes": 42387,
+      "sha256": "93275693464e477080d7da94282b35318edaf98a7892b5c8f27ede45903a5c87",
+      "driveFileId": "1Djps8b5NDwG6EmOMVp7JZ7gZTThVK9zC",
+      "driveState": "uploaded-authenticated-download-sha256-verified"
+    },
+    "manifest": {
+      "name": "baseline-text-originals-manifest.private.json",
+      "bytes": 4626,
+      "sha256": "131a6824bd4c87d6ef485a18f2f59305283647cf7139b2c5c3d8af3e129583bc",
+      "driveFileId": "1FpevZWLLfaDUbk0dCe9irH0fm5WBQ6QX",
+      "driveState": "uploaded-authenticated-download-sha256-verified"
+    },
+    "remoteVerification": {
+      "method": "authenticated-download-sha256",
+      "bundleMatched": true,
+      "manifestMatched": true,
+      "parentMatched": true,
+      "shared": false,
+      "sourceVisibilityStatus": "not_shared"
+    }
+  },
+  "supersededStaging": [
+    {
+      "root": "preservation-staging/20260816T125159Z/Cold Archive/",
+      "reason": "The first five-part cold set was locally valid, but its first 112557470-byte ZIP exceeded the Drive connector's 104857600-byte upload limit and was rejected before file creation.",
+      "bundleCount": 5,
+      "bundleBytes": 507234436,
+      "disposition": "generated-superseded-staging-retained-not-a-commit-candidate"
+    },
+    {
+      "root": "preservation-staging/20260816T125159Z/cold-regenerated-90mb/Cold Archive/",
+      "reason": "The second eight-part set satisfied the upload limit, but its first 58900726-byte ZIP exceeded the connector's authenticated inline-download return limit and could not receive checksum proof.",
+      "bundleCount": 8,
+      "bundleBytes": 507494700,
+      "disposition": "generated-superseded-staging-retained-not-a-commit-candidate"
+    }
+  ],
+  "supersededRemote": [
+    {
+      "driveFileId": "12WBTcdr4q0WPk55KWM6s_Bjz-YyG7Vdn",
+      "name": "mr-boobins-cold-archive-part-001.zip",
+      "bytes": 58900726,
+      "localSha256": "09725f66bf5062325756bdddf3c5d732fa8a5dc3f669401eaa8591d89a551566",
+      "verification": "upload-size-observed-but-download-hash-unverified",
+      "disposition": "retain-private-pending-separate-cleanup-approval"
+    }
+  ],
+  "originals": {
+    "deleted": false,
+    "moved": false,
+    "renamed": false,
+    "rewritten": false
+  }
+}

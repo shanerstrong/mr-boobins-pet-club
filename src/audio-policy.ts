@@ -14,6 +14,23 @@ export type PlaybackPlayer = {
   seekTo: (seconds: number) => Promise<void>;
 };
 
+export type MusicTrack = "idle" | "play" | "sleep" | null;
+
+export function selectMusicTrack({
+  allowed,
+  sleeping,
+  playing,
+}: {
+  allowed: boolean;
+  sleeping: boolean;
+  playing: boolean;
+}): MusicTrack {
+  if (!allowed) return null;
+  if (sleeping) return "sleep";
+  if (playing) return "play";
+  return "idle";
+}
+
 export function syncSfxPlayers(players: PlaybackPlayer[], enabled: boolean) {
   for (const player of players) {
     player.muted = !enabled;
@@ -21,18 +38,23 @@ export function syncSfxPlayers(players: PlaybackPlayer[], enabled: boolean) {
   }
 }
 
-export function syncMusicPlayer(
-  player: PlaybackPlayer,
-  enabled: boolean,
-  previouslyEnabled: boolean,
+export function syncAdaptiveMusic(
+  players: Record<Exclude<MusicTrack, null>, PlaybackPlayer>,
+  nextTrack: MusicTrack,
+  previousTrack: MusicTrack,
 ) {
-  player.loop = true;
-  player.muted = !enabled;
-  if (!enabled) {
-    player.pause();
-    return;
+  for (const [track, player] of Object.entries(players) as [
+    Exclude<MusicTrack, null>,
+    PlaybackPlayer,
+  ][]) {
+    const active = track === nextTrack;
+    player.loop = true;
+    player.muted = !active;
+    if (!active) player.pause();
   }
-  if (!previouslyEnabled) {
+
+  if (nextTrack && nextTrack !== previousTrack) {
+    const player = players[nextTrack];
     void player
       .seekTo(0)
       .then(() => player.play())

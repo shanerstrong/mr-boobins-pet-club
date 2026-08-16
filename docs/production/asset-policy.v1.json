@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 1,
+  "policyId": "mr-boobins-asset-control-v1",
+  "status": "preservation-verified-checkpoint-candidate",
+  "repositorySourceOfTruth": true,
+  "runtimeLfsPolicy": "Runtime assets consumed by GitHub Pages remain normal Git unless the deployment workflow explicitly fetches and verifies LFS objects.",
+  "budgets": {
+    "ordinaryGitMaxBytes": 10485760,
+    "runtimeGlbMaxBytes": 4194304,
+    "runtimeAudioMaxBytes": 524288,
+    "runtimeIconMaxBytes": 1048576
+  },
+  "requiredFiles": [
+    "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
+    "docs/production/V0.6-V0.8_PRESERVATION_MANIFEST.json",
+    "docs/production/V0.6-V0.8_TEXT_NORMALIZATION.json",
+    "assets/3d/jack/asset-manifest.json",
+    "assets/3d/jack/SOURCE_LEDGER.md",
+    "assets/3d/jack/v2/asset-manifest-v2.json",
+    "assets/3d/jack/v2/SOURCE_LEDGER_V2.md",
+    "assets/3d/jack/v2/animations/clip-manifest-v2.json",
+    "assets/3d/jack/v2/animations/animation-event-manifest-v2.json",
+    "assets/audio/v1/audio-manifest.v1.json",
+    "docs/audio/AUDIO_LICENSE_LEDGER.v1.md",
+    "assets/3d/jack/v2/source/third-party/quaternius-ultimate-animated-animals-cc0/License.txt"
+  ],
+  "parseableJson": [
+    "docs/production/asset-policy.v1.json",
+    "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
+    "docs/production/V0.6-V0.8_PRESERVATION_MANIFEST.json",
+    "docs/production/V0.6-V0.8_TEXT_NORMALIZATION.json",
+    "assets/3d/jack/asset-manifest.json",
+    "assets/3d/jack/v2/asset-manifest-v2.json",
+    "assets/3d/jack/animations/clip-manifest.json",
+    "assets/3d/jack/animations/animation-event-manifest.json",
+    "assets/3d/jack/v2/animations/clip-manifest-v2.json",
+    "assets/3d/jack/v2/animations/animation-event-manifest-v2.json",
+    "assets/audio/v1/audio-manifest.v1.json"
+  ],
+  "provenanceDeclarations": [
+    {
+      "scope": "Jack V1 project-authored and private-generated assets",
+      "record": "assets/3d/jack/SOURCE_LEDGER.md",
+      "status": "documented; private references excluded"
+    },
+    {
+      "scope": "Jack V2/V2.2 project, Meshy, and Quaternius assets",
+      "record": "assets/3d/jack/v2/SOURCE_LEDGER_V2.md",
+      "status": "documented; canonical-source selection still requires baseline approval"
+    },
+    {
+      "scope": "Quaternius canine donor source",
+      "record": "assets/3d/jack/v2/source/third-party/quaternius-ultimate-animated-animals-cc0/License.txt",
+      "status": "CC0 1.0 declaration present"
+    },
+    {
+      "scope": "Audio V1 source candidates and runtime derivatives",
+      "record": "docs/audio/AUDIO_LICENSE_LEDGER.v1.md",
+      "status": "in production; release rights and mastering remain incomplete"
+    },
+    {
+      "scope": "Unversioned project-authored runtime WAV files",
+      "record": "scripts/generate-audio.mjs",
+      "status": "project-generated provisional runtime assets"
+    }
+  ],
+  "runtimeImports": [
+    { "path": "assets/favicon.png", "maxBytes": 1048576 },
+    { "path": "assets/audio/bark.wav", "maxBytes": 524288 },
+    { "path": "assets/audio/happy.wav", "maxBytes": 524288 },
+    { "path": "assets/audio/huff.wav", "maxBytes": 524288 },
+    { "path": "assets/audio/music-idle.wav", "maxBytes": 524288 },
+    { "path": "assets/audio/music-play.wav", "maxBytes": 524288 },
+    { "path": "assets/audio/music-sleep.wav", "maxBytes": 524288 },
+    { "path": "assets/audio/shower.wav", "maxBytes": 524288 },
+    { "path": "assets/audio/sleepy.wav", "maxBytes": 524288 },
+    { "path": "assets/audio/sneeze.wav", "maxBytes": 524288 },
+    { "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb", "maxBytes": 4194304 }
+  ],
+  "forbiddenRuntimePathFragments": [
+    "/references/",
+    "/source/",
+    "evidence/",
+    "drive.google.com/"
+  ],
+  "forbiddenSourceText": [
+    "assets/3d/jack/references/",
+    "assets/3d/device/references/",
+    "assets/3d/room/references/",
+    "assets/3d/jack/source/",
+    "assets/3d/jack/v2/source/",
+    "../evidence/",
+    "drive.google.com/drive/folders/1Y_StiGFl17ATHM-nmiicHmHckcbujcpZ"
+  ],
+  "expectedLfsPointerGlobs": [
+    "assets/source/**/*.blend",
+    "assets/source/**/*.fbx",
+    "assets/source/**/*.kra",
+    "assets/source/**/*.psd",
+    "assets/source/**/*.xcf",
+    "assets/source/**/*.afdesign"
+  ],
+  "canonicalCopies": [
+    {
+      "source": "assets/3d/jack/source/jack-character.blend",
+      "copy": "assets/source/jack-v1/jack-character-canonical.blend"
+    },
+    {
+      "source": "assets/3d/jack/source/jack-shared-rig-animations.blend",
+      "copy": "assets/source/jack-v1/jack-shared-rig-animations-canonical.blend"
+    },
+    {
+      "source": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-h.blend",
+      "copy": "assets/source/jack-v2/jack-baby-v2.2-quaternius-canonical.blend"
+    },
+    {
+      "source": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-derived-b-quaternius.blend",
+      "copy": "assets/source/jack-v2/jack-teen-v2.2-quaternius-canonical.blend"
+    },
+    {
+      "source": "assets/3d/jack/v2/source/jack-adult-quadruped-v2-derived-b-quaternius.blend",
+      "copy": "assets/source/jack-v2/jack-adult-v2.2-quaternius-canonical.blend"
+    }
+  ],
+  "classificationRules": [
+    {
+      "id": "local-only-private",
+      "tier": "private-backup-verified",
+      "disposition": "Keep originals local/private and exclude them from Git/review mirrors. The approved restricted Drive bundle and manifest passed authenticated-download SHA-256 verification; cleanup remains separately approval-gated.",
+      "pathGlobs": [
+        "assets/**/references/**",
+        "assets/**/__pycache__/**",
+        "evidence/**/*.log",
+        "evidence/**/*.err.log"
+      ]
+    },
+    {
+      "id": "canonical-editable-lfs-pending",
+      "tier": "lfs-source-preserved-private",
+      "disposition": "Legacy canonical editable source preserved in the authenticated-download-verified private backup. Keep the original path untouched and exclude it from the checkpoint; remote Git LFS integration remains pending.",
+      "pathGlobs": [
+        "assets/3d/jack/source/jack-character.blend",
+        "assets/3d/jack/source/jack-shared-rig-animations.blend",
+        "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-h.blend",
+        "assets/3d/jack/v2/source/jack-teen-quadruped-v2-derived-b-quaternius.blend",
+        "assets/3d/jack/v2/source/jack-adult-quadruped-v2-derived-b-quaternius.blend"
+      ]
+    },
+    {
+      "id": "canonical-editable-lfs-local-copy",
+      "tier": "lfs-ready-local",
+      "disposition": "Byte-identical canonical copy under the attributed assets/source convention. Its source bytes are preserved in the verified private backup and the expected pointer/OID is recorded locally; exclude until remote LFS no-charge capacity and fetch-back verification are proven.",
+      "pathGlobs": [
+        "assets/source/jack-v1/jack-character-canonical.blend",
+        "assets/source/jack-v1/jack-shared-rig-animations-canonical.blend",
+        "assets/source/jack-v2/jack-baby-v2.2-quaternius-canonical.blend",
+        "assets/source/jack-v2/jack-teen-v2.2-quaternius-canonical.blend",
+        "assets/source/jack-v2/jack-adult-v2.2-quaternius-canonical.blend"
+      ]
+    },
+    {
+      "id": "normal-git-assets",
+      "tier": "normal-git",
+      "disposition": "Include as code, documentation, manifest, license, small runtime asset, or current GitHub Pages runtime dependency.",
+      "pathGlobs": [
+        "assets/*.png",
+        "assets/audio/*.wav",
+        "assets/audio/v1/ui/*.wav",
+        "assets/**/*.json",
+        "assets/**/*.md",
+        "assets/**/*.txt",
+        "assets/**/*.py",
+        "assets/**/*.ps1",
+        "assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb"
+      ]
+    },
+    {
+      "id": "normal-git-evidence-v06",
+      "tier": "normal-git",
+      "disposition": "Representative V0.6 visual evidence retained in Git.",
+      "pathGlobs": [
+        "evidence/v06-title-mobile.png",
+        "evidence/v06-room-mobile.png",
+        "evidence/v06-play-mobile.png",
+        "evidence/v06-sleep-mobile.png",
+        "evidence/v06-room-desktop.png"
+      ]
+    },
+    {
+      "id": "normal-git-evidence-baby-day1",
+      "tier": "normal-git",
+      "disposition": "Representative Baby Day 1 evidence retained in Git.",
+      "pathGlobs": [
+        "evidence/baby-day1/adoption-hub-390x844.jpg",
+        "evidence/baby-day1/guided-care-room-390x844.jpg",
+        "evidence/baby-day1/returning-hub-390x844.jpg",
+        "evidence/baby-day1/room-desktop-1440x900.jpg",
+        "evidence/baby-day1/sleep-dialog-keyboard-390x844.jpg",
+        "evidence/baby-day1/VERIFICATION.md"
+      ]
+    },
+    {
+      "id": "normal-git-evidence-training",
+      "tier": "normal-git",
+      "disposition": "Representative Training Mode control, state, and viewport evidence retained in Git.",
+      "pathGlobs": [
+        "evidence/training-mode/training-picker-320x568.png",
+        "evidence/training-mode/training-picker-390x844.png",
+        "evidence/training-mode/training-picker-1440x900.png",
+        "evidence/training-mode/training-sit-ready-390x844.png",
+        "evidence/training-mode/training-treat-travel-390x844.png",
+        "evidence/training-mode/training-happy-hop-result-390x844.png"
+      ]
+    },
+    {
+      "id": "normal-git-evidence-3d-runtime",
+      "tier": "normal-git",
+      "disposition": "Representative integrated 3D room and training evidence retained in Git.",
+      "pathGlobs": [
+        "evidence/3d-runtime/meshy-room-1440x900.png",
+        "evidence/3d-runtime/meshy-room-320x568.png",
+        "evidence/3d-runtime/meshy-room-390x844.png",
+        "evidence/3d-runtime/meshy-training-picker-390x844.png",
+        "evidence/3d-runtime/meshy-training-result-390x844.png",
+        "evidence/3d-runtime/meshy-training-sit-held-390x844.png",
+        "evidence/3d-runtime/meshy-training-treat-390x844.png"
+      ]
+    },
+    {
+      "id": "normal-git-evidence-ui",
+      "tier": "normal-git",
+      "disposition": "Representative implemented mobile/desktop UI evidence retained in Git.",
+      "pathGlobs": [
+        "evidence/ui-mobile-implementation/desktop-1440x900.png",
+        "evidence/ui-mobile-implementation/mobile-390x844.png",
+        "evidence/ui-mobile-implementation/VERIFICATION.md"
+      ]
+    },
+    {
+      "id": "normal-git-evidence-contract",
+      "tier": "normal-git",
+      "disposition": "Representative deterministic 3D contract evidence retained in Git.",
+      "pathGlobs": [
+        "evidence/3d-jack/v2/contract-validation.json",
+        "evidence/3d-jack/v2/glb-contract-validation.json",
+        "evidence/3d-jack/v2/full-frame-deformation-validation.json",
+        "evidence/3d-jack/v2/runtime-playback-validation.json",
+        "evidence/3d-jack/v2/v2-package-validation.json"
+      ]
+    },
+    {
+      "id": "normal-git-evidence-security",
+      "tier": "normal-git",
+      "disposition": "Existing representative dependency-audit evidence retained in Git; freshness is reported separately.",
+      "pathGlobs": [
+        "evidence/npm-audit-production.json"
+      ]
+    },
+    {
+      "id": "proposed-cold-archive",
+      "tier": "cold-archive-verified",
+      "disposition": "Rejected iteration, redundant checkpoint, raw candidate, unused derivative, or bulk evidence preserved in the restricted authenticated-download-verified Drive cold archive. Keep originals untouched and excluded pending separate cleanup approval.",
+      "pathGlobs": [
+        "assets/**",
+        "evidence/**"
+      ]
+    }
+  ],
+  "representativeEvidenceSets": [
+    {
+      "id": "v06",
+      "maxFiles": 6,
+      "paths": [
+        "evidence/v06-title-mobile.png",
+        "evidence/v06-room-mobile.png",
+        "evidence/v06-play-mobile.png",
+        "evidence/v06-sleep-mobile.png",
+        "evidence/v06-room-desktop.png"
+      ]
+    },
+    {
+      "id": "baby-day1",
+      "maxFiles": 6,
+      "paths": [
+        "evidence/baby-day1/adoption-hub-390x844.jpg",
+        "evidence/baby-day1/guided-care-room-390x844.jpg",
+        "evidence/baby-day1/returning-hub-390x844.jpg",
+        "evidence/baby-day1/room-desktop-1440x900.jpg",
+        "evidence/baby-day1/sleep-dialog-keyboard-390x844.jpg",
+        "evidence/baby-day1/VERIFICATION.md"
+      ]
+    },
+    {
+      "id": "training",
+      "maxFiles": 6,
+      "paths": [
+        "evidence/training-mode/training-picker-320x568.png",
+        "evidence/training-mode/training-picker-390x844.png",
+        "evidence/training-mode/training-picker-1440x900.png",
+        "evidence/training-mode/training-sit-ready-390x844.png",
+        "evidence/training-mode/training-treat-travel-390x844.png",
+        "evidence/training-mode/training-happy-hop-result-390x844.png"
+      ]
+    },
+    {
+      "id": "3d-runtime",
+      "maxFiles": 7,
+      "paths": [
+        "evidence/3d-runtime/meshy-room-1440x900.png",
+        "evidence/3d-runtime/meshy-room-320x568.png",
+        "evidence/3d-runtime/meshy-room-390x844.png",
+        "evidence/3d-runtime/meshy-training-picker-390x844.png",
+        "evidence/3d-runtime/meshy-training-result-390x844.png",
+        "evidence/3d-runtime/meshy-training-sit-held-390x844.png",
+        "evidence/3d-runtime/meshy-training-treat-390x844.png"
+      ]
+    },
+    {
+      "id": "ui-implementation",
+      "maxFiles": 4,
+      "paths": [
+        "evidence/ui-mobile-implementation/desktop-1440x900.png",
+        "evidence/ui-mobile-implementation/mobile-390x844.png",
+        "evidence/ui-mobile-implementation/VERIFICATION.md"
+      ]
+    },
+    {
+      "id": "dependency-audit",
+      "maxFiles": 1,
+      "paths": [
+        "evidence/npm-audit-production.json"
+      ]
+    },
+    {
+      "id": "3d-contract",
+      "maxFiles": 6,
+      "paths": [
+        "evidence/3d-jack/v2/contract-validation.json",
+        "evidence/3d-jack/v2/glb-contract-validation.json",
+        "evidence/3d-jack/v2/full-frame-deformation-validation.json",
+        "evidence/3d-jack/v2/runtime-playback-validation.json",
+        "evidence/3d-jack/v2/v2-package-validation.json"
+      ]
+    }
+  ]
+}

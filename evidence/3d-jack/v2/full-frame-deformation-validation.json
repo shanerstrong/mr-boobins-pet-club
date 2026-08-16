@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "blenderVersion": "4.5.12 LTS",
+  "clipCount": 28,
+  "vertexCount": 8224,
+  "rootIdentity": true,
+  "criteria": {
+    "finiteVertices": true,
+    "floorPenetrationMaximumMeters": 0.005,
+    "heightMeters": [
+      0.35,
+      1.35
+    ],
+    "maximumAnyAxisSpanMeters": 1.75,
+    "loopClosureMaximumVertexDeltaMeters": 0.002
+  },
+  "clips": [
+    {
+      "name": "idle",
+      "status": "pass",
+      "sampledFrameCount": 91,
+      "finite": true,
+      "minimumZ": 2.4e-05,
+      "heightRange": [
+        1.068016,
+        1.080096
+      ],
+      "maximumSpan": 1.093531,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "walk",
+      "status": "pass",
+      "sampledFrameCount": 31,
+      "finite": true,
+      "minimumZ": -5.8e-05,
+      "heightRange": [
+        0.993514,
+        1.012389
+      ],
+      "maximumSpan": 1.042482,
+      "loopClosureMaximumVertexDelta": 0.000129
+    },
+    {
+      "name": "run",
+      "status": "pass",
+      "sampledFrameCount": 22,
+      "finite": true,
+      "minimumZ": 0.008917,
+      "heightRange": [
+        0.936969,
+        0.968723
+      ],
+      "maximumSpan": 1.009887,
+      "loopClosureMaximumVertexDelta": 0.000178
+    },
+    {
+      "name": "tail_wag",
+      "status": "pass",
+      "sampledFrameCount": 37,
+      "finite": true,
+      "minimumZ": 0.000125,
+      "heightRange": [
+        1.078217,
+        1.078217
+      ],
+      "maximumSpan": 1.104596,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "feed",
+      "status": "pass",
+      "sampledFrameCount": 67,
+      "finite": true,
+      "minimumZ": 4.6e-05,
+      "heightRange": [
+        0.965977,
+        1.082813
+      ],
+      "maximumSpan": 1.19286,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "sleep",
+      "status": "pass",
+      "sampledFrameCount": 97,
+      "finite": true,
+      "minimumZ": 2.7e-05,
+      "heightRange": [
+        0.967004,
+        0.987636
+      ],
+      "maximumSpan": 1.188491,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "wake",
+      "status": "pass",
+      "sampledFrameCount": 43,
+      "finite": true,
+      "minimumZ": 5.4e-05,
+      "heightRange": [
+        0.967004,
+        1.100727
+      ],
+      "maximumSpan": 1.188491,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "play",
+      "status": "pass",
+      "sampledFrameCount": 91,
+      "finite": true,
+      "minimumZ": 3.2e-05,
+      "heightRange": [
+        1.04817,
+        1.092532
+      ],
+      "maximumSpan": 1.149029,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "clean_reaction",
+      "status": "pass",
+      "sampledFrameCount": 46,
+      "finite": true,
+      "minimumZ": 4.8e-05,
+      "heightRange": [
+        1.078212,
+        1.078238
+      ],
+      "maximumSpan": 1.104374,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "boop_comfortable",
+      "status": "pass",
+      "sampledFrameCount": 22,
+      "finite": true,
+      "minimumZ": 3.3e-05,
+      "heightRange": [
+        1.068002,
+        1.078217
+      ],
+      "maximumSpan": 1.098649,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "boop_need_hunger",
+      "status": "pass",
+      "sampledFrameCount": 25,
+      "finite": true,
+      "minimumZ": 3.5e-05,
+      "heightRange": [
+        1.069146,
+        1.082794
+      ],
+      "maximumSpan": 1.108203,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "boop_need_energy",
+      "status": "pass",
+      "sampledFrameCount": 25,
+      "finite": true,
+      "minimumZ": 3.5e-05,
+      "heightRange": [
+        1.046235,
+        1.079921
+      ],
+      "maximumSpan": 1.121039,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "boop_need_hygiene",
+      "status": "pass",
+      "sampledFrameCount": 25,
+      "finite": true,
+      "minimumZ": 2.8e-05,
+      "heightRange": [
+        1.078212,
+        1.078237
+      ],
+      "maximumSpan": 1.09106,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "boop_need_happiness",
+      "status": "pass",
+      "sampledFrameCount": 25,
+      "finite": true,
+      "minimumZ": 5.5e-05,
+      "heightRange": [
+        1.068002,
+        1.078217
+      ],
+      "maximumSpan": 1.103853,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "boop_rejected",
+      "status": "pass",
+      "sampledFrameCount": 10,
+      "finite": true,
+      "minimumZ": 0.000364,
+      "heightRange": [
+        1.078212,
+        1.078238
+      ],
+      "maximumSpan": 1.091069,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "tired",
+      "status": "pass",
+      "sampledFrameCount": 61,
+      "finite": true,
+      "minimumZ": 3.1e-05,
+      "heightRange": [
+        1.051094,
+        1.069118
+      ],
+      "maximumSpan": 1.118689,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "dirty",
+      "status": "pass",
+      "sampledFrameCount": 28,
+      "finite": true,
+      "minimumZ": 8.5e-05,
+      "heightRange": [
+        1.078212,
+        1.078237
+      ],
+      "maximumSpan": 1.09107,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "death_rest",
+      "status": "pass",
+      "sampledFrameCount": 55,
+      "finite": true,
+      "minimumZ": 3.5e-05,
+      "heightRange": [
+        0.967004,
+        1.101177
+      ],
+      "maximumSpan": 1.188491,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "training_attention",
+      "status": "pass",
+      "sampledFrameCount": 31,
+      "finite": true,
+      "minimumZ": 8.1e-05,
+      "heightRange": [
+        1.067965,
+        1.078217
+      ],
+      "maximumSpan": 1.090886,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "training_sit",
+      "status": "pass",
+      "sampledFrameCount": 37,
+      "finite": true,
+      "minimumZ": 4.2e-05,
+      "heightRange": [
+        1.078217,
+        1.101121
+      ],
+      "maximumSpan": 1.101121,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "training_paw",
+      "status": "pass",
+      "sampledFrameCount": 49,
+      "finite": true,
+      "minimumZ": 4.2e-05,
+      "heightRange": [
+        1.079315,
+        1.080148
+      ],
+      "maximumSpan": 1.080148,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "training_up",
+      "status": "pass",
+      "sampledFrameCount": 49,
+      "finite": true,
+      "minimumZ": 0.000142,
+      "heightRange": [
+        1.078217,
+        1.32869
+      ],
+      "maximumSpan": 1.32869,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "training_treat_receive",
+      "status": "pass",
+      "sampledFrameCount": 31,
+      "finite": true,
+      "minimumZ": 5.5e-05,
+      "heightRange": [
+        1.068002,
+        1.078217
+      ],
+      "maximumSpan": 1.090886,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "training_treat_eat",
+      "status": "pass",
+      "sampledFrameCount": 49,
+      "finite": true,
+      "minimumZ": 2.8e-05,
+      "heightRange": [
+        1.068002,
+        1.078217
+      ],
+      "maximumSpan": 1.090886,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "celebration_happy_hop",
+      "status": "pass",
+      "sampledFrameCount": 46,
+      "finite": true,
+      "minimumZ": 0.00012,
+      "heightRange": [
+        1.048297,
+        1.094666
+      ],
+      "maximumSpan": 1.135302,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "celebration_spin_wag",
+      "status": "pass",
+      "sampledFrameCount": 61,
+      "finite": true,
+      "minimumZ": 3.9e-05,
+      "heightRange": [
+        1.078217,
+        1.078217
+      ],
+      "maximumSpan": 1.126729,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "celebration_goofy_shimmy",
+      "status": "pass",
+      "sampledFrameCount": 67,
+      "finite": true,
+      "minimumZ": 0.00038,
+      "heightRange": [
+        1.078217,
+        1.331873
+      ],
+      "maximumSpan": 1.331873,
+      "loopClosureMaximumVertexDelta": 0.0
+    },
+    {
+      "name": "training_return_idle",
+      "status": "pass",
+      "sampledFrameCount": 25,
+      "finite": true,
+      "minimumZ": 9.2e-05,
+      "heightRange": [
+        1.078217,
+        1.101159
+      ],
+      "maximumSpan": 1.101159,
+      "loopClosureMaximumVertexDelta": 0.0
+    }
+  ]
+}

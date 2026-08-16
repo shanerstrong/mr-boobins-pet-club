@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": 2,
+  "fps": 30,
+  "presentationOnly": true,
+  "simulationMutation": false,
+  "rootMotionGameplay": false,
+  "authority": "The adapter may observe animation time and markers but may not write simulation, care, growth, persistence, or audio state.",
+  "clips": {
+    "idle": {
+      "durationMs": 3000,
+      "loop": true,
+      "markers": [{"name": "loop", "timeMs": 3000}]
+    },
+    "tail_wag": {
+      "durationMs": 1200,
+      "loop": true,
+      "markers": [{"name": "loop", "timeMs": 1200}]
+    },
+    "feed": {
+      "durationMs": 2200,
+      "loop": false,
+      "markers": [
+        {"name": "anticipate", "timeMs": 400},
+        {"name": "mouth_open", "timeMs": 800},
+        {"name": "settle", "timeMs": 1800},
+        {"name": "complete", "timeMs": 2200}
+      ]
+    },
+    "sleep": {
+      "durationMs": 3200,
+      "loop": true,
+      "markers": [
+        {"name": "rest_pose", "timeMs": 0},
+        {"name": "loop", "timeMs": 3200}
+      ]
+    },
+    "wake": {
+      "durationMs": 1400,
+      "loop": false,
+      "markers": [{"name": "complete", "timeMs": 1400}]
+    },
+    "play": {
+      "durationMs": 3000,
+      "loop": false,
+      "exactDurationRequired": true,
+      "markers": [
+        {"name": "start", "timeMs": 0},
+        {"name": "complete", "timeMs": 3000}
+      ]
+    },
+    "clean_reaction": {
+      "durationMs": 1500,
+      "loop": false,
+      "exactDurationRequired": true,
+      "markers": [
+        {"name": "water", "timeMs": 0},
+        {"name": "washout", "timeMs": 400},
+        {"name": "shake", "timeMs": 800},
+        {"name": "sparkle", "timeMs": 1150},
+        {"name": "complete", "timeMs": 1500}
+      ]
+    },
+    "boop_comfortable": {
+      "durationMs": 700,
+      "loop": false,
+      "markers": [
+        {"name": "nose_contact", "timeMs": 80},
+        {"name": "complete", "timeMs": 700}
+      ]
+    },
+    "boop_need_hunger": {
+      "durationMs": 800,
+      "loop": false,
+      "readOnlyNeedSemantic": "hunger",
+      "markers": [{"name": "complete", "timeMs": 800}]
+    },
+    "boop_need_energy": {
+      "durationMs": 800,
+      "loop": false,
+      "readOnlyNeedSemantic": "energy",
+      "markers": [{"name": "complete", "timeMs": 800}]
+    },
+    "boop_need_hygiene": {
+      "durationMs": 800,
+      "loop": false,
+      "readOnlyNeedSemantic": "hygiene",
+      "markers": [{"name": "complete", "timeMs": 800}]
+    },
+    "boop_need_happiness": {
+      "durationMs": 800,
+      "loop": false,
+      "readOnlyNeedSemantic": "happiness",
+      "markers": [{"name": "complete", "timeMs": 800}]
+    },
+    "boop_rejected": {
+      "durationMs": 300,
+      "loop": false,
+      "markers": [{"name": "complete", "timeMs": 300}]
+    },
+    "tired": {
+      "durationMs": 2000,
+      "loop": true,
+      "markers": [{"name": "loop", "timeMs": 2000}]
+    },
+    "dirty": {
+      "durationMs": 900,
+      "loop": false,
+      "markers": [{"name": "complete", "timeMs": 900}]
+    },
+    "death_rest": {
+      "durationMs": 1800,
+      "loop": false,
+      "nonGraphic": true,
+      "holdFinalPose": true,
+      "markers": [
+        {"name": "settle", "timeMs": 0},
+        {"name": "rest_still", "timeMs": 1800}
+      ]
+    }
+  },
+  "legacyNamingDeviationsResolved": {
+    "clean": "clean_reaction",
+    "boop_need": "boop_need_hunger plus explicit energy, hygiene, and happiness variants"
+  }
+}

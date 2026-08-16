@@ -5,14 +5,18 @@
   "dependencies": {
     "@expo/metro-runtime": "~57.0.9",
     "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
     "expo": "~57.0.12",
+    "expo-asset": "~57.0.11",
     "expo-audio": "~57.0.3",
     "expo-router": "~57.0.12",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.86.2",
-    "react-native-web": "^0.21.2"
+    "react-native-web": "^0.21.2",
+    "three": "^0.180.0"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
@@ -29,6 +33,7 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "check:assets": "node scripts/verify-assets.mjs",
     "smoke": "node scripts/verify-export.mjs",
     "export:web": "expo export --platform web",
     "check:deps": "npm audit --omit=dev --audit-level=critical"

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-15",
+  "source": "Mark's private Meshy Pro workspace",
+  "generationCreditsUsedForInventory": 0,
+  "apiUsed": false,
+  "privateReferencePhotosEmbedded": false,
+  "status": "remote-masters-preserved-local-byte-acquisition-pending",
+  "runtimePolicy": {
+    "normalTriangleTargetMax": 60000,
+    "hardTriangleMaxWithoutMeasuredApproval": 100000,
+    "deriveFromMasterWithoutOverwrite": true,
+    "mustMatchMobileSkeletonMorphAnchorsMaterialsAndClips": true
+  },
+  "masters": [
+    {
+      "age": "baby",
+      "meshySearchLabel": "Jack Baby",
+      "topology": "triangle",
+      "triangleCount": 1937286,
+      "vertexCount": 1012952,
+      "textured": true,
+      "remotePreserved": true,
+      "localBytesAvailable": false,
+      "plannedMasterPath": "../exports/source/desktop/jack-baby-meshy-high.glb",
+      "plannedRuntimePath": "../exports/desktop/jack-baby-desktop.glb"
+    },
+    {
+      "age": "teen",
+      "meshySearchLabel": "Jack Teen",
+      "topology": "triangle",
+      "triangleCount": 1968156,
+      "vertexCount": 1018724,
+      "textured": true,
+      "remotePreserved": true,
+      "localBytesAvailable": false,
+      "plannedMasterPath": "../exports/source/desktop/jack-teen-meshy-high.glb",
+      "plannedRuntimePath": "../exports/desktop/jack-teen-desktop.glb"
+    },
+    {
+      "age": "adult",
+      "meshySearchLabel": "Jack Adult",
+      "topology": "triangle",
+      "triangleCount": 1954788,
+      "vertexCount": 1010234,
+      "textured": true,
+      "remotePreserved": true,
+      "localBytesAvailable": false,
+      "plannedMasterPath": "../exports/source/desktop/jack-adult-meshy-high.glb",
+      "plannedRuntimePath": "../exports/desktop/jack-adult-desktop.glb"
+    }
+  ],
+  "acquisition": {
+    "downloadDialogVerified": true,
+    "browserDownloadEventMaterialized": false,
+    "regenerationPerformed": false,
+    "creditsSpent": 0,
+    "nextSafeRoute": "Acquire existing GLB bytes through a browser surface that supports persisted downloads or the already-installed official Blender Bridge; do not regenerate."
+  }
+}

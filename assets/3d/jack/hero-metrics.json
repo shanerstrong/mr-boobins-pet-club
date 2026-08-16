@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "asset": "Baby Jack hero character",
+  "status": "production-candidate",
+  "triangles": 11500,
+  "heroTriangleTarget": {
+    "min": 8000,
+    "max": 14000
+  },
+  "materials": 11,
+  "optimizedMeshPrimitives": 15,
+  "imageTextures": 0,
+  "bones": 21,
+  "morphTargets": 6,
+  "clipsExpected": 13,
+  "clipNamesExpected": [
+    "idle",
+    "tail_wag",
+    "feed",
+    "sleep",
+    "wake",
+    "play",
+    "clean",
+    "boop_comfortable",
+    "boop_need",
+    "boop_rejected",
+    "tired",
+    "dirty",
+    "death_rest"
+  ],
+  "glbBytes": 2179340,
+  "gltfBytes": 230770,
+  "binBytes": 2030044,
+  "presentationOnly": true,
+  "simulationMutation": false,
+  "rootMotionGameplay": false,
+  "privateReferencesEmbedded": false,
+  "blenderVersion": "4.5.12 LTS"
+}

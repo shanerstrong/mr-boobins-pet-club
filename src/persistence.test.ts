@@ -1,11 +1,20 @@
 import { describe, expect, it } from "vitest";
 import {
   AUDIO_PREFERENCES_KEY,
+  CARE_GUIDE_PROGRESS_KEY,
+  DEFAULT_CARE_GUIDE_PROGRESS,
+  DEFAULT_TRAINING_PROGRESS,
   PET_STORAGE_KEY,
+  TRAINING_PROGRESS_KEY,
+  completeTrainingCommand,
   loadAudioPreferences,
+  loadCareGuideProgress,
   loadPet,
+  loadTrainingProgress,
   saveAudioPreferences,
+  saveCareGuideProgress,
   savePet,
+  saveTrainingProgress,
   type StorageLike,
 } from "./persistence";
 import { createNewPet } from "./simulation";
@@ -137,5 +146,132 @@ describe("remembered audio preferences", () => {
       ),
     ).rejects.toThrow("Invalid audio preferences");
     expect(store.values.has(AUDIO_PREFERENCES_KEY)).toBe(false);
+  });
+});
+
+describe("local Training Mode progress", () => {
+  it("distinguishes missing progress and round-trips learned commands", async () => {
+    const store = memory();
+    await expect(loadTrainingProgress(store)).resolves.toEqual({ kind: "missing" });
+    const progress = {
+      version: 1 as const,
+      learned: { sit: true, paw: false, up: true },
+      celebrationCursor: 2 as const,
+    };
+    await saveTrainingProgress(progress, store);
+    await expect(loadTrainingProgress(store)).resolves.toEqual({
+      kind: "loaded",
+      progress,
+    });
+  });
+
+  it("retains malformed and schema-invalid training data", async () => {
+    const store = memory();
+    for (const raw of [
+      "{bad",
+      JSON.stringify({ ...DEFAULT_TRAINING_PROGRESS, celebrationCursor: 4 }),
+      JSON.stringify({
+        ...DEFAULT_TRAINING_PROGRESS,
+        learned: { sit: true, paw: false, up: false, rollOver: true },
+      }),
+    ]) {
+      store.values.set(TRAINING_PROGRESS_KEY, raw);
+      await expect(loadTrainingProgress(store)).resolves.toEqual({ kind: "invalid" });
+      expect(store.values.get(TRAINING_PROGRESS_KEY)).toBe(raw);
+    }
+  });
+
+  it("reports unavailable storage and rejects invalid progress before writing", async () => {
+    const bad: StorageLike = {
+      async getItem() {
+        throw new Error("training unavailable");
+      },
+      async setItem() {
+        throw new Error("training unavailable");
+      },
+    };
+    await expect(loadTrainingProgress(bad)).resolves.toEqual({ kind: "unavailable" });
+    await expect(saveTrainingProgress(DEFAULT_TRAINING_PROGRESS, bad)).rejects.toThrow(
+      "training unavailable",
+    );
+
+    const store = memory();
+    await expect(
+      saveTrainingProgress(
+        { ...DEFAULT_TRAINING_PROGRESS, celebrationCursor: 9 } as never,
+        store,
+      ),
+    ).rejects.toThrow("Invalid training progress");
+    expect(store.values.has(TRAINING_PROGRESS_KEY)).toBe(false);
+  });
+
+  it("marks commands learned and rotates celebrations without pressure counters", () => {
+    const sit = completeTrainingCommand(DEFAULT_TRAINING_PROGRESS, "sit");
+    const paw = completeTrainingCommand(sit.progress, "paw");
+    const up = completeTrainingCommand(paw.progress, "up");
+    const sitAgain = completeTrainingCommand(up.progress, "sit");
+
+    expect([sit.celebration, paw.celebration, up.celebration]).toEqual([
+      "happy-hop",
+      "spin-wag",
+      "goofy-shimmy",
+    ]);
+    expect(sitAgain.celebration).toBe("happy-hop");
+    expect(sitAgain.progress.learned).toEqual({ sit: true, paw: true, up: true });
+    expect(Object.keys(sitAgain.progress).sort()).toEqual([
+      "celebrationCursor",
+      "learned",
+      "version",
+    ]);
+  });
+});
+
+describe("first-care guide progress", () => {
+  it("distinguishes missing progress and round-trips completion", async () => {
+    const store = memory();
+    await expect(loadCareGuideProgress(store)).resolves.toEqual({ kind: "missing" });
+    const progress = { version: 1 as const, firstCareCompleted: true };
+    await saveCareGuideProgress(progress, store);
+    await expect(loadCareGuideProgress(store)).resolves.toEqual({
+      kind: "loaded",
+      progress,
+    });
+  });
+
+  it("retains malformed or non-strict care-guide data", async () => {
+    const store = memory();
+    for (const raw of [
+      "{bad",
+      JSON.stringify({ ...DEFAULT_CARE_GUIDE_PROGRESS, extra: true }),
+      JSON.stringify({ version: 1, firstCareCompleted: "yes" }),
+    ]) {
+      store.values.set(CARE_GUIDE_PROGRESS_KEY, raw);
+      await expect(loadCareGuideProgress(store)).resolves.toEqual({ kind: "invalid" });
+      expect(store.values.get(CARE_GUIDE_PROGRESS_KEY)).toBe(raw);
+    }
+  });
+
+  it("reports unavailable storage and rejects invalid progress before writing", async () => {
+    const bad: StorageLike = {
+      async getItem() {
+        throw new Error("care guide unavailable");
+      },
+      async setItem() {
+        throw new Error("care guide unavailable");
+      },
+    };
+    await expect(loadCareGuideProgress(bad)).resolves.toEqual({ kind: "unavailable" });
+    await expect(saveCareGuideProgress(DEFAULT_CARE_GUIDE_PROGRESS, bad)).rejects.toThrow(
+      "care guide unavailable",
+    );
+
+    const store = memory();
+    await expect(
+      saveCareGuideProgress(
+        { ...DEFAULT_CARE_GUIDE_PROGRESS, firstCareCompleted: "yes" } as never,
+        store,
+      ),
+    ).rejects.toThrow("Invalid care guide progress");
+    expect(store.values.has(CARE_GUIDE_PROGRESS_KEY)).toBe(false);
   });
 });

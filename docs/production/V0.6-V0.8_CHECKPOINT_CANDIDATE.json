@@ -1,0 +1,4027 @@
+{
+  "schemaVersion": 1,
+  "kind": "checkpoint-candidate-index",
+  "generatedAt": "2026-08-16T14:12:48.796Z",
+  "gitHead": "23cf28f014c2100ca31aaa408919212d9978ef72",
+  "prepolicyInventory": "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
+  "assetClassification": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+  "candidate": {
+    "fileCount": 168,
+    "bytes": 5846889,
+    "files": [
+      {
+        "path": ".gitattributes",
+        "gitState": "untracked",
+        "bytes": 782,
+        "sha256": "d20d02e29d78c0bce50f5679f43694543039caee80237b4d9f574220a42c5563",
+        "assetGroup": null
+      },
+      {
+        "path": "assets/3d/jack/README.md",
+        "gitState": "untracked",
+        "bytes": 6539,
+        "sha256": "3aa2f30ee311213efef505ee9dc865877106697b3e9325d18a08e7fd98628240",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/SOURCE_LEDGER.md",
+        "gitState": "untracked",
+        "bytes": 6427,
+        "sha256": "245f46017189ea9790f12ef3c57e4f70ee7e2577137a2ad2e536d6524eb99a9f",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/animations/animation-event-manifest.json",
+        "gitState": "untracked",
+        "bytes": 3394,
+        "sha256": "f15c7c7638876ac1c4d71544d58c87e7784fdb11ae032497d061006d5977483a",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/animations/clip-manifest.json",
+        "gitState": "untracked",
+        "bytes": 3188,
+        "sha256": "c29866e1ce1a47e6df05313b0ba4e47345f0b5d1c48a89f953707b0e5e453d24",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/animations/jack-rig-animation-metrics.json",
+        "gitState": "untracked",
+        "bytes": 4206,
+        "sha256": "0d2e731a427cf163d0db751da16a0b142a905df65f67058d73fb17f6774eab15",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/asset-manifest.json",
+        "gitState": "untracked",
+        "bytes": 8399,
+        "sha256": "ca7a195f83cdea423379d8f2425e640fdc5a336b6b62a8373ed940f83d616183",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/blockout-metrics.json",
+        "gitState": "untracked",
+        "bytes": 958,
+        "sha256": "0c0e4b348893c38626be078f02447c5a860cf0436fdeb1d6a68e3d9c95ba05ef",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/exports/source/desktop/README.md",
+        "gitState": "untracked",
+        "bytes": 1352,
+        "sha256": "e54949eaf47e50774f912d5ba07cb4d644debc2b82a2de329a71889f69fe14e6",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/hero-metrics.json",
+        "gitState": "untracked",
+        "bytes": 776,
+        "sha256": "4e88f9c6b2739a76302b4024b37791557bec3a99ee2c893d34c72a927e4c54c2",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/meshy-metrics.json",
+        "gitState": "untracked",
+        "bytes": 1313,
+        "sha256": "d278190572873139b95852899e383174e0f4ece5d2ac5eb1e99c0cd120b76d0d",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/rig/jack-rig.json",
+        "gitState": "untracked",
+        "bytes": 2349,
+        "sha256": "9bb337324b36d93229c2baa664f718d8bf7d0e87ff58cfb7ce80d1be061fd3aa",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/skins/desktop-source-inventory.json",
+        "gitState": "untracked",
+        "bytes": 2102,
+        "sha256": "b4be8ab322c4daf4af44a25295b8c335c79f301410aa5af3dd0d3ad2fe7bc967",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/skins/jack-baby-metrics.json",
+        "gitState": "untracked",
+        "bytes": 6018,
+        "sha256": "73bf71993bdf3da743d1451487442173c51dd8c18d206ac5392564aa8bb8019f",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/skins/jack-teen-metrics.json",
+        "gitState": "untracked",
+        "bytes": 6052,
+        "sha256": "7f26edb93dc519dc445b3f929f0659616c45cb034d4edfa281e474ec5e766e7f",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/build_baby_runtime_review_board.py",
+        "gitState": "untracked",
+        "bytes": 4022,
+        "sha256": "24e31cbb0c6df5acc58459c44863c93ce7a939aaacf62b1196526ee9b7b92490",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/build_blockout.py",
+        "gitState": "untracked",
+        "bytes": 18599,
+        "sha256": "84ac8fd804f2570bee47fe4d1936228d266dc9560abf1a90895b50913cea3ba8",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/build_character.py",
+        "gitState": "untracked",
+        "bytes": 24546,
+        "sha256": "cd38438af366cffef9b790edb8efe43d2a9cfc6c88a059d7c2e0c18c8226f4ef",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/build_hero_geometry.py",
+        "gitState": "untracked",
+        "bytes": 13603,
+        "sha256": "15622420749e49163d223fca926135b87caff50e2900fa20bfe9920c430f3b02",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/build_meshy_review_board.ps1",
+        "gitState": "untracked",
+        "bytes": 3282,
+        "sha256": "45aa631861cd10b26215898bf8f7d8e81b65ac62172c42e6db7ca1835bf83239",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/build_shared_rig_animations.py",
+        "gitState": "untracked",
+        "bytes": 20577,
+        "sha256": "30d5b3e4f18a1f412e684e42680baa61dd0041a00ca38ab896502a87d813b4c7",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/build_skinned_age_glb.py",
+        "gitState": "untracked",
+        "bytes": 26694,
+        "sha256": "01cd09abe6ad6bab9f0f88572fba78fa08b5c5da2bac02b357a7a0d9acef48a7",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/crop_age_review.ps1",
+        "gitState": "untracked",
+        "bytes": 1495,
+        "sha256": "b7814eac4d30eda7f67fc1e99327a138edcc02bdf32bce78673682b09f031d0a",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/crop_meshy_master_preview.py",
+        "gitState": "untracked",
+        "bytes": 744,
+        "sha256": "81c1e128f8e6deaf4a7efa2a66320358dba2ea958438d9e199adcf8f9cfdc2db",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/crop_meshy_review.ps1",
+        "gitState": "untracked",
+        "bytes": 1512,
+        "sha256": "5e61b5d019f3c1fbfeaa6d62c5ca67d1e6202248cc3a2a829611a898a9212402",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/inspect_meshy_skin.py",
+        "gitState": "untracked",
+        "bytes": 10502,
+        "sha256": "fd7d9b3b19e7bd743bb001454884ed52279913f3e6b955b3cc6205ea47960d4f",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/merge_skin_animation_preview.py",
+        "gitState": "untracked",
+        "bytes": 5514,
+        "sha256": "ec780f0618c0f0f94dad240008755ead3a8447dfcb24ec97e281d1b634b95adf",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/prepare_age_turnaround.ps1",
+        "gitState": "untracked",
+        "bytes": 3032,
+        "sha256": "c00b2479add3eec54a9ed50176e3f1501a91fa78758509be216a0c897af3d309",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/prepare_meshy_multiview.ps1",
+        "gitState": "untracked",
+        "bytes": 3023,
+        "sha256": "f497d83727141b1c3be6f7379a6f960cbdebf30d20af4df9e1b98aab59838b1b",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/receive_meshy_bridge.py",
+        "gitState": "untracked",
+        "bytes": 8617,
+        "sha256": "6b30e5dcdbf02389650ede78728d82667734905a0f26ae820d4a50c6d360833d",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/render_baby_deformation_board.py",
+        "gitState": "untracked",
+        "bytes": 3479,
+        "sha256": "af862c30eba0f986f7b1d291aac36f31a528f1b4e955ff0d73e41da5676e70c5",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/render_baby_deformation_evidence.py",
+        "gitState": "untracked",
+        "bytes": 14059,
+        "sha256": "a1e90bc7793de473c63da9477d56790d535bc539db43f27345da5c27afa32ac0",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/render_evidence.py",
+        "gitState": "untracked",
+        "bytes": 6405,
+        "sha256": "ead5d5750df0abf0662d19e5d1556efa722a168283fd01d2fdd41d3e21808a18",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/render_glb_fallback.py",
+        "gitState": "untracked",
+        "bytes": 10833,
+        "sha256": "2752f18d0392dac67dbf1bdf8745c351294458fa8ebd032ab8f1642d72b813bf",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/render_rig_validation_board.py",
+        "gitState": "untracked",
+        "bytes": 7310,
+        "sha256": "cc0124c38f7dce10a91a29b7ab9a5be32a413e9e98827283b4b8894da2f648e3",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/render_videos.py",
+        "gitState": "untracked",
+        "bytes": 2980,
+        "sha256": "eda73a7002b1b4dade8e95c6342bd13e871dced293239a9fcfa46bf56ca42331",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/upgrade_animation_adapter_contract.py",
+        "gitState": "untracked",
+        "bytes": 4398,
+        "sha256": "00b8cc3fb3e11d47b2722a06a4651b07c8627ad9c2cb393352201083b63fb817",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/validate_asset_contract.py",
+        "gitState": "untracked",
+        "bytes": 11039,
+        "sha256": "33083ef321d8436a73d5b98d79c2b31125c7c012520a57c0abeb38ad918e32e7",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/validate_blockout.py",
+        "gitState": "untracked",
+        "bytes": 4103,
+        "sha256": "01756d2f87385e8bbcdfcdcb27f9555bb9424651a003841e729bde83fd9ec5ea",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/validate_character.py",
+        "gitState": "untracked",
+        "bytes": 7631,
+        "sha256": "99bc7f3241b03656fa98fe0cfe2a301c4d65ca4e5adc4ffd5edf1113dec07d58",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/validate_shared_rig_animations.py",
+        "gitState": "untracked",
+        "bytes": 8192,
+        "sha256": "6a60257564d816225ec414304b934da97b10e82c3c88c8926741e4d8242cad32",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/tools/validate_skinned_age_glb.py",
+        "gitState": "untracked",
+        "bytes": 12429,
+        "sha256": "481d17c0886cd1538c6e76313f82718bcea3674b44f54da304f15b7e8fa2ed9d",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/README.md",
+        "gitState": "untracked",
+        "bytes": 6524,
+        "sha256": "f4d5dca237310872925f5b9ac1ca52547f8e2f1fbfea50b87327d6a7a46b06a0",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/SOURCE_LEDGER_V2.md",
+        "gitState": "untracked",
+        "bytes": 5386,
+        "sha256": "1b54665c5036515c42bb42c1450f7dc8dd4b5e9b9cae1e4e63fc27c05990b87b",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/animations/animation-event-manifest-v2.json",
+        "gitState": "untracked",
+        "bytes": 4883,
+        "sha256": "3b9f7fbf950cd5f2a3c3249f3f532aaca97a1f0f12aa3c3ea514d33a8a42b998",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/animations/clip-manifest-v2.json",
+        "gitState": "untracked",
+        "bytes": 3851,
+        "sha256": "84dac586755cdc08251b075eddadf637abb756b7833f0fdd7834b43607adf369",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/asset-manifest-v2.json",
+        "gitState": "untracked",
+        "bytes": 7737,
+        "sha256": "affb4058ab74c8cfff02af9ca44ac371aa34c3f6ddfd0b9576fc59b9bb5155cd",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb",
+        "gitState": "untracked",
+        "bytes": 2630728,
+        "sha256": "e097d15872b9a08f94604fda649a260c4ab23b57989c95f6d4b9944e778821b1",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/rig/quadruped-rig-contract-v2.json",
+        "gitState": "untracked",
+        "bytes": 2648,
+        "sha256": "8f7d927392024449d99254c0376f43a9267ffa5be6ee0cea5f7f98748a9b2078",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/third-party/quaternius-ultimate-animated-animals-cc0/License.txt",
+        "gitState": "untracked",
+        "bytes": 350,
+        "sha256": "12d80352b886d647a03f3b30d9c0869e44f91a15bf9b29d6443bc6599bb5e70d",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/third-party/quaternius-ultimate-animated-animals-cc0/README.md",
+        "gitState": "untracked",
+        "bytes": 1821,
+        "sha256": "618995abd1f2eca89e8a0c8e73e2c916760803a6dc79e576d83d520cc33145d4",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/author_quadruped_actions.py",
+        "gitState": "untracked",
+        "bytes": 17702,
+        "sha256": "d545ae0513c12d366cd89d682a96bbfbd90b86ec1a05cf857adbb181f18d1dca",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/build_age_skin_v2.py",
+        "gitState": "untracked",
+        "bytes": 16887,
+        "sha256": "c2ac839ded0d3702df9322385e210aae351717e20c345756765a8efea645e728",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/build_derived_age_skin_v2.py",
+        "gitState": "untracked",
+        "bytes": 7405,
+        "sha256": "f5d1d75d6b6326ea297e4b31167507e66a5a9eccd7d914296c50f55d3928df0a",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/build_quadruped_source.py",
+        "gitState": "untracked",
+        "bytes": 3060,
+        "sha256": "181f3d39c1b9f2d69433276acdf53b13cf3dfa022df0a4aa99bfaea9dd86caf4",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/diagnose_floor_vertices.py",
+        "gitState": "untracked",
+        "bytes": 2623,
+        "sha256": "7c3742c36144ed70a3867ff004139307b3b073f3b3e78da03e9f761a6f1dcd44",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/diagnose_pose_axes.py",
+        "gitState": "untracked",
+        "bytes": 2638,
+        "sha256": "b417712f78e8c0600e6b036a933b99ec96eaede7f71b4bb2be666fdfac7a27a8",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/export_age_skin_v2.py",
+        "gitState": "untracked",
+        "bytes": 6728,
+        "sha256": "3f2ccca77ff78b3f7b87bbcbed5bf05546ec5312868959230b8668d5e22dc4d1",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/export_quadruped_v2.py",
+        "gitState": "untracked",
+        "bytes": 7212,
+        "sha256": "765d9bbe814e0f7188f7d2e27d6d603077d17531aec7eb50f45e4975244a25d8",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/inspect_animation_donor.py",
+        "gitState": "untracked",
+        "bytes": 4265,
+        "sha256": "3aafa3c0fb848a40bb1eced2a1150794dd22895075f7788aea83b38f8c4a3425",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/inspect_quadruped_source.py",
+        "gitState": "untracked",
+        "bytes": 7718,
+        "sha256": "1dec0b808d23ac15ee599051007968ca43494a719a333f3189bc7137e67f3d16",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/inspect_skin_transfer_source.py",
+        "gitState": "untracked",
+        "bytes": 3702,
+        "sha256": "e815866bc5c0f5887917c3e45fd7fb5b62a10e18a10f6d537948acb9cf9ae6d3",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/list_blend_objects.py",
+        "gitState": "untracked",
+        "bytes": 627,
+        "sha256": "b7123931895ce25303f2c4281e32a3c8e615b1739d60a9ad34df3514dae4695f",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/render_action_pose_board.py",
+        "gitState": "untracked",
+        "bytes": 7815,
+        "sha256": "aaa891195daf313e918f2eff7155995ccc27fa48da13cd6326a63eaaed6b7aa7",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/render_meshy_walk_board.py",
+        "gitState": "untracked",
+        "bytes": 8346,
+        "sha256": "fe58d754beb54d241e96c0f934ededc710e576e37a3596ec09e257c5dd4ce409",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/render_motion_reel.py",
+        "gitState": "untracked",
+        "bytes": 6200,
+        "sha256": "5c5548ec818a48f4f536bcdb192a936ddebf4e544709f45335e27da11b1d74cd",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/render_runtime_idle_fallback.py",
+        "gitState": "untracked",
+        "bytes": 3251,
+        "sha256": "ff88d26296be4c6724f95f81068cda5153779337936038be5c7f24199023ca26",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/repair_quadruped_rig.py",
+        "gitState": "untracked",
+        "bytes": 12693,
+        "sha256": "e3f1dbb22d10e95c16125b731f821feb6c8cbbbf6e10774cebcfd4b910a549ed",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/retarget_quaternius_canine_v2.py",
+        "gitState": "untracked",
+        "bytes": 14575,
+        "sha256": "a91cecb91469a897330963d71b3dd3b31b4cfe72d8e9dfc2b1c1d1dcc17b865b",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/validate_deformation_frames.py",
+        "gitState": "untracked",
+        "bytes": 4922,
+        "sha256": "742204a88aca218ffc72e30779c875a77f1c6c99b33b5a81f15b854451e82358",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/validate_glb_contract.py",
+        "gitState": "untracked",
+        "bytes": 9109,
+        "sha256": "c7472489fd8ece38547e6973f6e46ea4f525eabc4e903835fdc0897e3b25bc84",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/validate_runtime_playback.py",
+        "gitState": "untracked",
+        "bytes": 3585,
+        "sha256": "552e3eaac4688c98864fa25b47f763447ac80eb98f31296aaff7fbeb2feed46d",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/validate_v2_contract.py",
+        "gitState": "untracked",
+        "bytes": 5611,
+        "sha256": "155b28fe07c8e9c1282a8058343109b4ccc3543835e44bf1bf8424fd82ce6236",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/audio/music-idle.wav",
+        "gitState": "untracked",
+        "bytes": 84524,
+        "sha256": "4c45b96c5cc6c4151b43590f9d641e43c1933f6699654ee46323623542eaa156",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/audio/music-play.wav",
+        "gitState": "untracked",
+        "bytes": 81964,
+        "sha256": "18b6bcfd5b84966d723279aed93e929e47dff0fed6ba2c9dd3d19a4e4f2e7a35",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/audio/music-sleep.wav",
+        "gitState": "untracked",
+        "bytes": 90284,
+        "sha256": "73c8b2bd7fe5d15dda1a6c97ccc44a4ff2270773d48cfa1df2192b6d192b514a",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/audio/v1/audio-manifest.v1.json",
+        "gitState": "untracked",
+        "bytes": 17722,
+        "sha256": "80d5375003245bcd78bb9cd7dadeef2d92e3c6c970d2fb30d54bb7b1b7b59695",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/audio/v1/ui/ui-close.v1.wav",
+        "gitState": "untracked",
+        "bytes": 18922,
+        "sha256": "84570dfe6e830a2bf519541950bde5b3b8bea04dba22f1ba14e710cb46e7da68",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/audio/v1/ui/ui-command-selected.v1.wav",
+        "gitState": "untracked",
+        "bytes": 13980,
+        "sha256": "e5f8a9786ab40323ed9d09546e9b59474ac3b53719b684700e0636ba40626fcc",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/audio/v1/ui/ui-confirm.v1.wav",
+        "gitState": "untracked",
+        "bytes": 25536,
+        "sha256": "fb171c3887c2fe79739c6c41a2daee650c7400b1e2ab67f91841d6f0f430224b",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/audio/v1/ui/ui-open.v1.wav",
+        "gitState": "untracked",
+        "bytes": 20244,
+        "sha256": "d80e247f1460f2a0e9f6ecbad3fc582b5b1900339803ae9c069ef5d812f5427a",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "assets/audio/v1/ui/ui-tap.v1.wav",
+        "gitState": "untracked",
+        "bytes": 6660,
+        "sha256": "71fabba6d6914a5d3afc2b6884a52f6a12e61af67e058280a2d0208b2f78e3a2",
+        "assetGroup": "normal-git-assets"
+      },
+      {
+        "path": "docs/GAME_PRODUCTION_PLAN.md",
+        "gitState": "untracked",
+        "bytes": 21230,
+        "sha256": "f723a35c34f7eebf9ba66077b40eebd48258a59a22e242ec8e31c4740c30f2ab",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/audio/AUDIO_LICENSE_LEDGER.v1.md",
+        "gitState": "untracked",
+        "bytes": 6935,
+        "sha256": "539792cf92b9b0171505d5cd8d5721e3aaa4323f5696122970e23c6b6c058660",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/audits/2026-08-14-3d-jack-pass1.md",
+        "gitState": "untracked",
+        "bytes": 4749,
+        "sha256": "199232f5227ca212b4efce2555adf9d52f66ccb69126c88a173d646fa9f44b33",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/design/3D_JACK_MODEL_HANDOFF.md",
+        "gitState": "untracked",
+        "bytes": 28432,
+        "sha256": "3ef838dc968b98d6d39d5cb216382977944dee04aaa8739001c5a0fd64a14e73",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/design/3D_PET_ROOM_DIRECTION.md",
+        "gitState": "untracked",
+        "bytes": 32080,
+        "sha256": "abcb953aa560074a1cd3792ed9ef53626c5eaf63116f59c1246dcbfd4e75d00a",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/ASSET_PIPELINE.md",
+        "gitState": "untracked",
+        "bytes": 7133,
+        "sha256": "7945f1777815b9089b88226c4787309bdf307d9b2ac6ec208dc11e50988d49a3",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/COMPETITOR_RATING_BENCHMARK.md",
+        "gitState": "untracked",
+        "bytes": 10404,
+        "sha256": "23f5ac80d6ae112f743b47e2ac9e51302bd1f704e88f79d5b9384715317ab661",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/CREATIVE_DIRECTION.md",
+        "gitState": "untracked",
+        "bytes": 4429,
+        "sha256": "f7d6a352d1713aaa17b3a240da1f32b670b6e8f88020107d5202a7c10efdc18a",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/EXPANSION_ARCHITECTURE.md",
+        "gitState": "untracked",
+        "bytes": 2560,
+        "sha256": "9167c5b0e47faa47ee9f5fc5fd1d96a0647ac21aee65d3ce997ba9fb57eb644f",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/PRODUCTION_DASHBOARD.md",
+        "gitState": "untracked",
+        "bytes": 7228,
+        "sha256": "375134e04f26580b8167b150da10c17081a7949ecc6bbe1971bc816a283435de",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/PROJECT_KIT_CHANGE_PROPOSALS.md",
+        "gitState": "untracked",
+        "bytes": 1520,
+        "sha256": "453f6191ad712c9758e6d53e219ff80e7b6430ed45526ce70c21f6d5e2f3b1bf",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/TOOLCHAIN_STRATEGY.md",
+        "gitState": "untracked",
+        "bytes": 9251,
+        "sha256": "ab1fd8daccb921b2be6741ee21280b3b1f6c75161737874a71d2e72dd9fff7b8",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+        "gitState": "untracked",
+        "bytes": 106333,
+        "sha256": "ec0851ebf7e886bc68c9249fc257cfda74ae5e31774932cb64767e4d87c91db3",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/V0.6-V0.8_CHECKPOINT_REPORT.md",
+        "gitState": "untracked",
+        "bytes": 14785,
+        "sha256": "1ab2f1609c0f53b36fd080406ff7267869206768230342e895aea931b854e5c5",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
+        "gitState": "untracked",
+        "bytes": 209351,
+        "sha256": "d332853029ea2f46a3f28370b20e107d717e0fe32c65b642deee17fe5e53765f",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/V0.6-V0.8_PRESERVATION_MANIFEST.json",
+        "gitState": "untracked",
+        "bytes": 13321,
+        "sha256": "e52cb511d4595ba7e4853e21fc3c74cec2c6f5f760ad60c6c4efee8bc2cc4f4d",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/V0.6-V0.8_TEXT_NORMALIZATION.json",
+        "gitState": "untracked",
+        "bytes": 11168,
+        "sha256": "284966ba2bdd29709245200cebdcd3098476a7a051d5017c812ea2f66c6d1dc2",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/production/asset-policy.v1.json",
+        "gitState": "untracked",
+        "bytes": 14076,
+        "sha256": "89f4807ef71af15405a0f82e18d595788cccf5c0f1d88b10497b7a03371df5f1",
+        "assetGroup": null
+      },
+      {
+        "path": "evidence/3d-jack/v2/contract-validation.json",
+        "gitState": "untracked",
+        "bytes": 361,
+        "sha256": "b11b3dfb1f46c8916a4c2537e2735fa75f54b892992b944bccaaf26fd700807a",
+        "assetGroup": "normal-git-evidence-contract"
+      },
+      {
+        "path": "evidence/3d-jack/v2/full-frame-deformation-validation.json",
+        "gitState": "untracked",
+        "bytes": 8476,
+        "sha256": "5334ee3863f8c347a2ef804bc70562471586762da1492ed4dd2245ab1d7fd5ba",
+        "assetGroup": "normal-git-evidence-contract"
+      },
+      {
+        "path": "evidence/3d-jack/v2/glb-contract-validation.json",
+        "gitState": "untracked",
+        "bytes": 1168,
+        "sha256": "25091c830ca1fb5c2383253e0dad7c5563e189c2bb1e5bba7db72761d545045c",
+        "assetGroup": "normal-git-evidence-contract"
+      },
+      {
+        "path": "evidence/3d-jack/v2/runtime-playback-validation.json",
+        "gitState": "untracked",
+        "bytes": 5722,
+        "sha256": "06f2dd4a46b8a7f0ab66f4033fa7ea29f4ba105b7d8d6f5a2ddd59276dd602a8",
+        "assetGroup": "normal-git-evidence-contract"
+      },
+      {
+        "path": "evidence/3d-jack/v2/v2-package-validation.json",
+        "gitState": "untracked",
+        "bytes": 296,
+        "sha256": "8ba16696c1deb8344693e545d820ccc034bf9bb70a77108f56692d9ab20ff38c",
+        "assetGroup": "normal-git-evidence-contract"
+      },
+      {
+        "path": "evidence/3d-runtime/meshy-room-1440x900.png",
+        "gitState": "untracked",
+        "bytes": 65005,
+        "sha256": "def8e0424b17d024db8b806360b872ef649445443c8b315610545efbc146ec5e",
+        "assetGroup": "normal-git-evidence-3d-runtime"
+      },
+      {
+        "path": "evidence/3d-runtime/meshy-room-320x568.png",
+        "gitState": "untracked",
+        "bytes": 22352,
+        "sha256": "be90edd5e73f7cf63e3b75c9427015dc70e153bbd9620c5079ba6e8fcaa7cf21",
+        "assetGroup": "normal-git-evidence-3d-runtime"
+      },
+      {
+        "path": "evidence/3d-runtime/meshy-room-390x844.png",
+        "gitState": "untracked",
+        "bytes": 37863,
+        "sha256": "b5c01d8f07a5f3a87fbf818e009901b9b5897ae4c46cde043a14dfa30544f7ff",
+        "assetGroup": "normal-git-evidence-3d-runtime"
+      },
+      {
+        "path": "evidence/3d-runtime/meshy-training-picker-390x844.png",
+        "gitState": "untracked",
+        "bytes": 40825,
+        "sha256": "62244f191fda989e8918c36b4e68404e406d4c6c3952426582dfeb6689cc6446",
+        "assetGroup": "normal-git-evidence-3d-runtime"
+      },
+      {
+        "path": "evidence/3d-runtime/meshy-training-result-390x844.png",
+        "gitState": "untracked",
+        "bytes": 41685,
+        "sha256": "6e6ea86f78eb1e2c8a537ac092b5fdcfe12b351a8ebccfab040d0be3007c7c59",
+        "assetGroup": "normal-git-evidence-3d-runtime"
+      },
+      {
+        "path": "evidence/3d-runtime/meshy-training-sit-held-390x844.png",
+        "gitState": "untracked",
+        "bytes": 41210,
+        "sha256": "947d6e643f757f56f6361169a708c948edb0e26c99cec1e68ae39cccdfa851de",
+        "assetGroup": "normal-git-evidence-3d-runtime"
+      },
+      {
+        "path": "evidence/3d-runtime/meshy-training-treat-390x844.png",
+        "gitState": "untracked",
+        "bytes": 36967,
+        "sha256": "3489367e6e9dfe50f4ea24a759832dcfdd2b66bf1d53912a9b770572a10886a6",
+        "assetGroup": "normal-git-evidence-3d-runtime"
+      },
+      {
+        "path": "evidence/baby-day1/VERIFICATION.md",
+        "gitState": "untracked",
+        "bytes": 3725,
+        "sha256": "ba81795e108f18279793cd6d7a540d24a7cd63007e930cda541e53067b20a86f",
+        "assetGroup": "normal-git-evidence-baby-day1"
+      },
+      {
+        "path": "evidence/baby-day1/adoption-hub-390x844.jpg",
+        "gitState": "untracked",
+        "bytes": 32427,
+        "sha256": "898ca022d7e580d2735de49b55ba24f928dfa0f303d0f8f1f2844699039348a0",
+        "assetGroup": "normal-git-evidence-baby-day1"
+      },
+      {
+        "path": "evidence/baby-day1/guided-care-room-390x844.jpg",
+        "gitState": "untracked",
+        "bytes": 39147,
+        "sha256": "57b464ee94669d5baee3956aaabbb75b4276df00537952b6a44c42c7e6bbce2a",
+        "assetGroup": "normal-git-evidence-baby-day1"
+      },
+      {
+        "path": "evidence/baby-day1/returning-hub-390x844.jpg",
+        "gitState": "untracked",
+        "bytes": 30819,
+        "sha256": "4a9b7252d599a424c3bf2b28d07e069d6e99730ba5bff75e6a6e98fc8cba8f5b",
+        "assetGroup": "normal-git-evidence-baby-day1"
+      },
+      {
+        "path": "evidence/baby-day1/room-desktop-1440x900.jpg",
+        "gitState": "untracked",
+        "bytes": 67113,
+        "sha256": "e60688d49c0f3feccddd7f31ef8b49dd3b216a9c49474dba2318df2a8cf0a1f5",
+        "assetGroup": "normal-git-evidence-baby-day1"
+      },
+      {
+        "path": "evidence/baby-day1/sleep-dialog-keyboard-390x844.jpg",
+        "gitState": "untracked",
+        "bytes": 35725,
+        "sha256": "c8888e8c7cc38ca9d9caac720da27a3d4dd5ed3f2819b1dd6ee30f8922df8fe6",
+        "assetGroup": "normal-git-evidence-baby-day1"
+      },
+      {
+        "path": "evidence/training-mode/training-happy-hop-result-390x844.png",
+        "gitState": "untracked",
+        "bytes": 47495,
+        "sha256": "98d045048797f36241ae0d0ecb294ca7113d14725862cbbdd4e76a9e95d6dfbe",
+        "assetGroup": "normal-git-evidence-training"
+      },
+      {
+        "path": "evidence/training-mode/training-picker-1440x900.png",
+        "gitState": "untracked",
+        "bytes": 18270,
+        "sha256": "a64a3dbf9fbc4c02fae20971c38ee5ddbe385b7993aad6ea0e17c0bbe8488029",
+        "assetGroup": "normal-git-evidence-training"
+      },
+      {
+        "path": "evidence/training-mode/training-picker-320x568.png",
+        "gitState": "untracked",
+        "bytes": 30350,
+        "sha256": "87e9ae4ca4d9ff85af5029d0b0d1ef5ea2905de6ae4fe9111a06a549b4c4a66e",
+        "assetGroup": "normal-git-evidence-training"
+      },
+      {
+        "path": "evidence/training-mode/training-picker-390x844.png",
+        "gitState": "untracked",
+        "bytes": 28612,
+        "sha256": "d3f740f4938a559260d5a72f8c1a58bd93c9a97cfc29282a20da1030da88922e",
+        "assetGroup": "normal-git-evidence-training"
+      },
+      {
+        "path": "evidence/training-mode/training-sit-ready-390x844.png",
+        "gitState": "untracked",
+        "bytes": 46588,
+        "sha256": "0d0c1cbc8dde1a779a0cac62a9716da38978d7ac6a5264d65834dcb184e0ee71",
+        "assetGroup": "normal-git-evidence-training"
+      },
+      {
+        "path": "evidence/training-mode/training-treat-travel-390x844.png",
+        "gitState": "untracked",
+        "bytes": 42331,
+        "sha256": "b62cc74361ae7952b8e589670b93ad8cb471e80836b24de513282974db49a2d2",
+        "assetGroup": "normal-git-evidence-training"
+      },
+      {
+        "path": "evidence/ui-mobile-implementation/VERIFICATION.md",
+        "gitState": "untracked",
+        "bytes": 1993,
+        "sha256": "bc950d2701f883daf7445c7cdabb9048c552c0f06bd1334c12109627ffd8aeae",
+        "assetGroup": "normal-git-evidence-ui"
+      },
+      {
+        "path": "evidence/ui-mobile-implementation/desktop-1440x900.png",
+        "gitState": "untracked",
+        "bytes": 70406,
+        "sha256": "791f1d5d266e23f9506fe471947ceb21c33782957ef97d613047c00e4bc777e2",
+        "assetGroup": "normal-git-evidence-ui"
+      },
+      {
+        "path": "evidence/ui-mobile-implementation/mobile-390x844.png",
+        "gitState": "untracked",
+        "bytes": 41820,
+        "sha256": "63efaa60e1f50eb98b7a5a88c3689f1da219b5e01629c044a5e57249cc5e786c",
+        "assetGroup": "normal-git-evidence-ui"
+      },
+      {
+        "path": "evidence/v06-play-mobile.png",
+        "gitState": "untracked",
+        "bytes": 51779,
+        "sha256": "3b70317cfc590953caa371ff81132bcfe994d07055e34d08c54b13045e9fe694",
+        "assetGroup": "normal-git-evidence-v06"
+      },
+      {
+        "path": "evidence/v06-room-desktop.png",
+        "gitState": "untracked",
+        "bytes": 61163,
+        "sha256": "c344d598ee3372b41826e1e2546e7077b0636cc4f1f8b0260dadbf8d20e663fc",
+        "assetGroup": "normal-git-evidence-v06"
+      },
+      {
+        "path": "evidence/v06-room-mobile.png",
+        "gitState": "untracked",
+        "bytes": 49424,
+        "sha256": "7530f20d2fb729c9f8f4bbb56cec518c2167687d3987cef08447a229752fc0ee",
+        "assetGroup": "normal-git-evidence-v06"
+      },
+      {
+        "path": "evidence/v06-sleep-mobile.png",
+        "gitState": "untracked",
+        "bytes": 46377,
+        "sha256": "04d56202fea15398855d595f52f7d49f75634449938f2a2dc9fb7f5f55d387e0",
+        "assetGroup": "normal-git-evidence-v06"
+      },
+      {
+        "path": "evidence/v06-title-mobile.png",
+        "gitState": "untracked",
+        "bytes": 7014,
+        "sha256": "7b863591c921d1b3ee107e7ad0761d7984c63aac1e8c9c12b70a072277a1f3bb",
+        "assetGroup": "normal-git-evidence-v06"
+      },
+      {
+        "path": "metro.config.js",
+        "gitState": "untracked",
+        "bytes": 224,
+        "sha256": "711b4d0c56a2490b8ebdc8025c106cfbd14c3b2ca836249a63b5e153efd73b6f",
+        "assetGroup": null
+      },
+      {
+        "path": "scripts/create-baseline-text-preservation.ps1",
+        "gitState": "untracked",
+        "bytes": 6692,
+        "sha256": "3c961b7dd1439d55871b49d9d180392378c5d918765cfc2033940584ea686706",
+        "assetGroup": null
+      },
+      {
+        "path": "scripts/create-preservation-bundles.ps1",
+        "gitState": "untracked",
+        "bytes": 13176,
+        "sha256": "c90f700f3dde0cfb3fa53530fb224d4c0ecc231393cb31f77da302c19656293c",
+        "assetGroup": null
+      },
+      {
+        "path": "scripts/generate-audio-ui-v1.cjs",
+        "gitState": "untracked",
+        "bytes": 2833,
+        "sha256": "a25dd29c4717ce47f0259043edf7786be231dc72c6f1263207cfaf084d2466b1",
+        "assetGroup": null
+      },
+      {
+        "path": "scripts/normalize-baseline-text-files.mjs",
+        "gitState": "untracked",
+        "bytes": 5923,
+        "sha256": "12cdbd5729c0bf06b7e2ee046ce5dc15113e2c881d49788bec9e25a0793a5d77",
+        "assetGroup": null
+      },
+      {
+        "path": "scripts/verify-assets.mjs",
+        "gitState": "untracked",
+        "bytes": 31752,
+        "sha256": "8142fe56772f4ccf0d4d2350edf26696f17c5ca6f192d0eaf81560ecf3d44845",
+        "assetGroup": null
+      },
+      {
+        "path": "src/assets.d.ts",
+        "gitState": "untracked",
+        "bytes": 86,
+        "sha256": "39cd7b0d11050ab4be0369f402c75a2fd95a14cada8339598556bbaea3ea1627",
+        "assetGroup": null
+      },
+      {
+        "path": "src/audio-cue-policy.test.ts",
+        "gitState": "untracked",
+        "bytes": 4666,
+        "sha256": "0742bf6aec4e7de9d5169b0a19ae5b4505dc0b2610bdb09a8ce401f1eae2fb97",
+        "assetGroup": null
+      },
+      {
+        "path": "src/audio-cue-policy.ts",
+        "gitState": "untracked",
+        "bytes": 4489,
+        "sha256": "950e4f2ff24fcf689fd86631bbcb67e6ba1a26ec9d8863c83372fcea8f33d92a",
+        "assetGroup": null
+      },
+      {
+        "path": "src/jack-3d-policy.test.ts",
+        "gitState": "untracked",
+        "bytes": 3891,
+        "sha256": "2010fd344284784ec18be96f4af029260521a04d73f017bcd32f3c2d8014eead",
+        "assetGroup": null
+      },
+      {
+        "path": "src/jack-3d-policy.ts",
+        "gitState": "untracked",
+        "bytes": 2202,
+        "sha256": "d98e5eb6d5797e64f2e0204705f6cccc934891963387b737845e5c3d0534fb91",
+        "assetGroup": null
+      },
+      {
+        "path": "src/pet-room-scene-shell.tsx",
+        "gitState": "untracked",
+        "bytes": 8507,
+        "sha256": "d545c6a1591e588cf70cfab5aa44b7853d8e416d13bf5e4d5f9fafbd0eda9e96",
+        "assetGroup": null
+      },
+      {
+        "path": "src/pet-room-scene.tsx",
+        "gitState": "untracked",
+        "bytes": 105,
+        "sha256": "a9b066ea7a3d48fe857a6a4e47d47ed9ff88ca85bf7ce048b62e3608127f9709",
+        "assetGroup": null
+      },
+      {
+        "path": "src/pet-room-scene.web.tsx",
+        "gitState": "untracked",
+        "bytes": 12046,
+        "sha256": "758e6f67fa8f8b93562539fabfeb14bf460dd3e0fe447873de9205badeb81449",
+        "assetGroup": null
+      },
+      {
+        "path": "src/return-policy.test.ts",
+        "gitState": "untracked",
+        "bytes": 3688,
+        "sha256": "8424f1d52102be597aea9d1aa67f8a19a3dc57d63f6c62478ca2789dc17fa20c",
+        "assetGroup": null
+      },
+      {
+        "path": "src/return-policy.ts",
+        "gitState": "untracked",
+        "bytes": 1852,
+        "sha256": "4ef3968fa60982205c7654802918f40ee4f65c7245bf9b1239bf6af8cbb8083a",
+        "assetGroup": null
+      },
+      {
+        "path": "src/training-policy.test.ts",
+        "gitState": "untracked",
+        "bytes": 5778,
+        "sha256": "e370d89a84db60515242774ec5d80814e25650ac4d2b644b5abeab149340b7ab",
+        "assetGroup": null
+      },
+      {
+        "path": "src/training-policy.ts",
+        "gitState": "untracked",
+        "bytes": 5514,
+        "sha256": "90487fdd05727e8fca38b22fe5eeecc7663763b3fc45c14b760beca56bae0a4a",
+        "assetGroup": null
+      },
+      {
+        "path": "AGENTS.md",
+        "gitState": "tracked-modified",
+        "bytes": 7983,
+        "sha256": "efd30bcfda70832f10c3ed9da31fac3b391b72ae03446602dcd69b2bc51f1180",
+        "assetGroup": null
+      },
+      {
+        "path": "App.tsx",
+        "gitState": "tracked-modified",
+        "bytes": 92943,
+        "sha256": "0026d4076b50149706ea136569781fb7663b7be274ffa838ca540a3c30d4629b",
+        "assetGroup": null
+      },
+      {
+        "path": "PLANS.md",
+        "gitState": "tracked-modified",
+        "bytes": 13992,
+        "sha256": "4f7c0dce88b4a3f76fb394c88cdde4b74dcd32bcc9953544e8c2265bb9532901",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/DECISIONS.md",
+        "gitState": "tracked-modified",
+        "bytes": 21474,
+        "sha256": "c7d8fa039f84b799cf86ad2db7eb5cdbe74b1e22e2159acd5519cd48dae892e7",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/PROJECT_OPERATING_MODEL.md",
+        "gitState": "tracked-modified",
+        "bytes": 4499,
+        "sha256": "46c747eacb9062e7d767b3ffb41eb72abc0503d3a8890bdfd97ea9c269cf967c",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/QUALITY_GATES.md",
+        "gitState": "tracked-modified",
+        "bytes": 7179,
+        "sha256": "c684b19625e15b69edfa807beb2976042b7300643475d4642348a85cd7dbf21d",
+        "assetGroup": null
+      },
+      {
+        "path": "docs/TOOLING_OPTIONS.md",
+        "gitState": "tracked-modified",
+        "bytes": 976,
+        "sha256": "d29ee8136c44e3779d7a30f68e01b5112723f32ec65a48fb475f63543054f649",
+        "assetGroup": null
+      },
+      {
+        "path": "package-lock.json",
+        "gitState": "tracked-modified",
+        "bytes": 483873,
+        "sha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38",
+        "assetGroup": null
+      },
+      {
+        "path": "package.json",
+        "gitState": "tracked-modified",
+        "bytes": 1222,
+        "sha256": "61ecb842099500124b30ac6b265b69eac35dd1b6f3c810e942734113f4970d90",
+        "assetGroup": null
+      },
+      {
+        "path": "scripts/generate-audio.mjs",
+        "gitState": "tracked-modified",
+        "bytes": 2585,
+        "sha256": "49ff0ed73b3682e276ce23bce5ba5f1f838850bfb144504a8f91355b69e8b230",
+        "assetGroup": null
+      },
+      {
+        "path": "scripts/verify-export.mjs",
+        "gitState": "tracked-modified",
+        "bytes": 2846,
+        "sha256": "93b0851e6841f913a5272d962a02b0ab934944be880bb66dcb49ca40b76fdab4",
+        "assetGroup": null
+      },
+      {
+        "path": "src/audio-policy.test.ts",
+        "gitState": "tracked-modified",
+        "bytes": 2640,
+        "sha256": "ca82c2c703566e893f71e7edbbbb43541bef36e1499226e0777511e0a1aab2cf",
+        "assetGroup": null
+      },
+      {
+        "path": "src/audio-policy.ts",
+        "gitState": "tracked-modified",
+        "bytes": 1425,
+        "sha256": "0aed905e6fafd8b6da530f5e7117655f728dcc19a2fda8ab6184f8d58da5b2af",
+        "assetGroup": null
+      },
+      {
+        "path": "src/interaction-policy.test.ts",
+        "gitState": "tracked-modified",
+        "bytes": 3945,
+        "sha256": "381f3c36a2925466c745d68763d75236fbae60c34e7f2a59995b30d9588e2369",
+        "assetGroup": null
+      },
+      {
+        "path": "src/interaction-policy.ts",
+        "gitState": "tracked-modified",
+        "bytes": 3928,
+        "sha256": "b4bb56a581ad364849799fa43f0bf4b8d294673c8a7c0b9b89fcf73994f1be96",
+        "assetGroup": null
+      },
+      {
+        "path": "src/persistence.test.ts",
+        "gitState": "tracked-modified",
+        "bytes": 9230,
+        "sha256": "8d3d1d4d313dee7d6aea7b66d2f156841672a5dff9da07e7af7673df2af00fd6",
+        "assetGroup": null
+      },
+      {
+        "path": "src/persistence.ts",
+        "gitState": "tracked-modified",
+        "bytes": 7003,
+        "sha256": "09ecd95377600f7284c9a3135e971a0451ef299880cf0dc679ca7eeae58c75d0",
+        "assetGroup": null
+      },
+      {
+        "path": "src/pixel-dog.tsx",
+        "gitState": "tracked-modified",
+        "bytes": 33316,
+        "sha256": "eba6c0bc4d1dda9b3fad44339ce9c23694cc375473a6c479dfb7bd2fef0c79eb",
+        "assetGroup": null
+      }
+    ]
+  },
+  "proposedArchive": {
+    "fileCount": 291,
+    "bytes": 536212240,
+    "files": [
+      {
+        "path": "assets/3d/jack/exports/jack-baby.glb",
+        "gitState": "untracked",
+        "bytes": 3285016,
+        "sha256": "6ebbafe99e140646471d1ca6852368238666eca8263cdc18999abeadb1bc21e6",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/exports/jack-blockout.glb",
+        "gitState": "untracked",
+        "bytes": 213360,
+        "sha256": "cf44f3ee8ca685b8c02c8409089e39f184449ffe62b4e88c1713aebb86f21b11",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/exports/jack-character.bin",
+        "gitState": "untracked",
+        "bytes": 2030044,
+        "sha256": "a2ea322c29de779cd6966a5b6154ee976a8e04b79caf7c0c6f02507fe3207265",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/exports/jack-character.glb",
+        "gitState": "untracked",
+        "bytes": 2179340,
+        "sha256": "61b9fd6ae3d42ebbe8c17f95a689b1321e9eaeb420c2258a718935b41c8df4dd",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/exports/jack-character.gltf",
+        "gitState": "untracked",
+        "bytes": 230770,
+        "sha256": "b0aad818704a2ffbca9f0d36cd92c55d4a1f89ae919194052d68d4260c0981cc",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/exports/jack-rig-animations.glb",
+        "gitState": "untracked",
+        "bytes": 1344804,
+        "sha256": "8eebba25fba791e1d1849b1dc355ca5382bfa652ca42cd8268ee9c5911e208a0",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/exports/jack-teen.glb",
+        "gitState": "untracked",
+        "bytes": 3048908,
+        "sha256": "c43c90113377da6534af6d67f8a4f784a4b7bbc4277cf5e9f2734ae3ba99ebde",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/exports/source/jack-baby-meshy.glb",
+        "gitState": "untracked",
+        "bytes": 17783336,
+        "sha256": "e452b59a8aa821fdd585007a2da18539ab1e6e62f9f3202f16b54cc8a641d1b5",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/exports/source/jack-rig-animations-v1-13clip.glb",
+        "gitState": "untracked",
+        "bytes": 1272552,
+        "sha256": "8440d395be9eaad99ee3e69cd656f284ffa907282c8995bcc7327aacbab779ac",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/exports/source/jack-teen-meshy.glb",
+        "gitState": "untracked",
+        "bytes": 16131420,
+        "sha256": "741f4c24f8fbe5ee76ea4bdabe92c56f0b91af20a3c291e83c9ac49545b8fc7b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/source/jack-blockout.blend",
+        "gitState": "untracked",
+        "bytes": 1030011,
+        "sha256": "62765dd2127fe56aa490e869fa80652e07ed7537edebe9d87a8a179b8e1a4ded",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/source/jack-blockout.blend1",
+        "gitState": "untracked",
+        "bytes": 1030011,
+        "sha256": "846e3b6423c99af9b850f4bfbfcd843e7297f47b05705af36516d8db296d8898",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/source/jack-character.blend1",
+        "gitState": "untracked",
+        "bytes": 2273634,
+        "sha256": "1ce6ba184dc049875133a69f7386b0b7a056c2e6e868859ea60d75a67a56e307",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/source/jack-shared-rig-animations.blend1",
+        "gitState": "untracked",
+        "bytes": 116346,
+        "sha256": "e737bb8325945be7ed90ecff1050c165164e2a692e213041add8ac4616ca9a3f",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/source/meshy/jack-baby-meshy.blend",
+        "gitState": "untracked",
+        "bytes": 18028121,
+        "sha256": "fce91d614794df9bc863fc947555004811a8b34058aaba99ad4777b6ae5c7783",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/source/meshy/jack-teen-meshy.blend",
+        "gitState": "untracked",
+        "bytes": 16400203,
+        "sha256": "0f7501564b1f3a46701da775f150d99dfc9380c176a5b9b4968481ce0217e878",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/jack-adult-v2.2.glb",
+        "gitState": "untracked",
+        "bytes": 2094340,
+        "sha256": "adf3467b180ad28ccf8b9f2a4d23e99807d21118f81a1cf950ffdbb152222df2",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/jack-adult-v2.glb",
+        "gitState": "untracked",
+        "bytes": 2094236,
+        "sha256": "8077eb81e8715e3c5f622a2e131caa5c11d0004cbb4908957e9d6fb0f611f545",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/jack-animations-v2.2.glb",
+        "gitState": "untracked",
+        "bytes": 652124,
+        "sha256": "4d6eb54f0ea8ee2ce636853332b73959d14c9ddc7172cc68d45ace82378a025b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/jack-animations-v2.glb",
+        "gitState": "untracked",
+        "bytes": 548748,
+        "sha256": "e6531bf0e42ddc1b5fdc06b2fede8f1921b72a18ff307001d37e3db8e21202f7",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/jack-baby-v2.2.glb",
+        "gitState": "untracked",
+        "bytes": 2093332,
+        "sha256": "cfe781b9288959bfc12d629888a993605ca7401ade3ea0176757d0399d584f11",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/jack-baby-v2.glb",
+        "gitState": "untracked",
+        "bytes": 2093216,
+        "sha256": "00204d94905b3bf4ef7fd8c6810d057f05e5bea5b4714287e74819a4d721a572",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/jack-teen-v2.2.glb",
+        "gitState": "untracked",
+        "bytes": 2094492,
+        "sha256": "f1dc9c80e4d647a4ceded827da038894bb370f20402cc6b1a8ee18070bdf71f7",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/jack-teen-v2.glb",
+        "gitState": "untracked",
+        "bytes": 2094384,
+        "sha256": "fa0fb6bfc76908769c5885aa3caae8d0e236432ad78ffc470ba49d4137c3b9f4",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/preview/jack-adult-v2-all-clips.glb",
+        "gitState": "untracked",
+        "bytes": 2631748,
+        "sha256": "3fd2e2d41b3f6d00f41f70841cd18f5514ec8df1c1dc7e30f1154207dbbfe70d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/preview/jack-adult-v2.2-all-clips.glb",
+        "gitState": "untracked",
+        "bytes": 2735536,
+        "sha256": "178e8fc60d97c8168d9ba8d46091e4609fad0b7656679544f3658c4ed5a2e48a",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2.2-all-clips.glb",
+        "gitState": "untracked",
+        "bytes": 2734524,
+        "sha256": "4cfcd4c4a56e4699e9c333d2fba380c703aadda2fcfab867af88907e543add15",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/preview/jack-teen-v2-all-clips.glb",
+        "gitState": "untracked",
+        "bytes": 2631900,
+        "sha256": "f0181bd3f0144c954f983e63cf5f891971f9dca6d9de660458607f7941534ad3",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/exports/preview/jack-teen-v2.2-all-clips.glb",
+        "gitState": "untracked",
+        "bytes": 2735684,
+        "sha256": "5bdcba3e428bd1c0ca0337c32724b019e8472a9832a88c2c4cd6f208ced85ed0",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-adult-quadruped-v2-derived-a.blend",
+        "gitState": "untracked",
+        "bytes": 7215409,
+        "sha256": "17fa8042398c503ff4dc077a5cf13997b2d07c9ebea1aca8bcf6905c575b5834",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-adult-quadruped-v2-derived-b-quaternius.blend1",
+        "gitState": "untracked",
+        "bytes": 8086448,
+        "sha256": "755cae29f9539f8472800e37a6757bc92762bf6bdf5fc493f45aa88975bde385",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-adult-quadruped-v2-transfer-a.blend",
+        "gitState": "untracked",
+        "bytes": 9360001,
+        "sha256": "0bf5334ce106a002be3dc68594e14a52183b5fad26b454a41827b9db3daaf9a1",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-a.blend",
+        "gitState": "untracked",
+        "bytes": 6402596,
+        "sha256": "a284da7814c538b120ddd60655eb4e8f76283dc57f7e540339cd23351e5827e9",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-a.blend1",
+        "gitState": "untracked",
+        "bytes": 6402907,
+        "sha256": "e2ffeb74785af133bc77bbdc55e3efab4030afddfa28bd2601aff5765369c53b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-b.blend",
+        "gitState": "untracked",
+        "bytes": 6670685,
+        "sha256": "991e5c63d8bc7faff3bd7dc32902d33efdc17dd924ff36e35eb1345c0efbfaa1",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-b.blend1",
+        "gitState": "untracked",
+        "bytes": 6673243,
+        "sha256": "3bf778b1122312460a3b9677bfb9dda097b1bb4e7c658f0af29ea913e8f6a55a",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-a.blend",
+        "gitState": "untracked",
+        "bytes": 7586424,
+        "sha256": "b90d5a90e1fc7d8fa8cfda7b695b812eed9dfcce98f50f7823dcb935834f48df",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-b.blend",
+        "gitState": "untracked",
+        "bytes": 7607764,
+        "sha256": "627d317a6c95eb49a0ad2ada1055d192bc0b108fea2f87bee0f9aa36ec12fcf4",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-c.blend",
+        "gitState": "untracked",
+        "bytes": 7610320,
+        "sha256": "aa3be94fc809c4cad1d5c05653fad8f0cb712571f42d36bbf80a28d659de2509",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-d.blend",
+        "gitState": "untracked",
+        "bytes": 7615425,
+        "sha256": "2a06012ae64cce235d1e834121d06273174841544d7ddbf803d4e513a8b49b1c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-e.blend",
+        "gitState": "untracked",
+        "bytes": 7611784,
+        "sha256": "81ce803449dd635d2f805ec088b0d8e6cbe29b4ebe38caa3b50ecb5b092416dc",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-f.blend",
+        "gitState": "untracked",
+        "bytes": 7631039,
+        "sha256": "74d2186a096c61fa01f8b5c682c2f921a55daf3cd3ee10a674cecc6eb95474f9",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-g.blend",
+        "gitState": "untracked",
+        "bytes": 7627427,
+        "sha256": "782fa64d2b909306d83d52dc98c3bd041c764a8ed4f8d03feacf30f54eb50405",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2.blend",
+        "gitState": "untracked",
+        "bytes": 6359606,
+        "sha256": "c68e0342bd2bff66b05436993557c070045581db17c3c3482afe5934f2791968",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-derived-a.blend",
+        "gitState": "untracked",
+        "bytes": 7214031,
+        "sha256": "b9eabe108eb84cb9511c365a341b8bbe5da14ea9811f491d2e20965c29cb534c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-derived-b-quaternius.blend1",
+        "gitState": "untracked",
+        "bytes": 8083848,
+        "sha256": "1bfc0148a476a85ed0739779914c33ead3c103d10ce9c2e7e1561276d783e965",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-transfer-a.blend",
+        "gitState": "untracked",
+        "bytes": 9344124,
+        "sha256": "2f2945b0aa81b31b5f37fe30811b954efe6d6e6e487d69ab875c6b8410cf2d72",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-transfer-b.blend",
+        "gitState": "untracked",
+        "bytes": 9343973,
+        "sha256": "28e51ab7fb4ce3d3a7412c7e9e06385774813642cf9e1b9c3057990816f6ef9c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-transfer-c.blend",
+        "gitState": "untracked",
+        "bytes": 9335914,
+        "sha256": "6e4b2b61ff4dbfbd149b6bb5a48df43fe342786aada8c678bde98150f0f1f44b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-transfer-d.blend",
+        "gitState": "untracked",
+        "bytes": 9335753,
+        "sha256": "29839e2cef144616f29c05a32b972ee5b63f65b66e7a2438031da990f5e4c819",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-transfer-e.blend",
+        "gitState": "untracked",
+        "bytes": 9332695,
+        "sha256": "31c29be404637ed1d974e6ee6058ccd30a423157239ad13f18b18dcad7916a77",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-transfer-f.blend",
+        "gitState": "untracked",
+        "bytes": 9332453,
+        "sha256": "7b3b6a6f6bc8fe68d9de04ae851835998e03646125c939e7cfb1c447b9aa2c5b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-transfer-g.blend",
+        "gitState": "untracked",
+        "bytes": 12064457,
+        "sha256": "02e23e398b551f9b73e4253581f7bbdbb3aa997a9793009dc624d264dfc3967e",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-transfer-h.blend",
+        "gitState": "untracked",
+        "bytes": 12067143,
+        "sha256": "4f8e02d1b7e946db1c899f47783223ed45673b579aa89131545ca188a42e7976",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/meshy/jack-adult-meshy-v2.glb",
+        "gitState": "untracked",
+        "bytes": 16406748,
+        "sha256": "c9ae5486ec63f68d72bfea30024b90a0918d31fbb5ae29e1d1fd950ef1d628a9",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/meshy/jack-adult-v1-intermediate.glb",
+        "gitState": "untracked",
+        "bytes": 3117456,
+        "sha256": "30685a46a301d400c86eac546eeaf30045b64f4c7027567c537ad14a791cc063",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/meshy/jack-baby-meshy-smart-rig-v2-package/Meshy_AI_Jack_Baby_Optimized_1_quadruped/Meshy_AI_Jack_Baby_Optimized_1_quadruped_Character_output.glb",
+        "gitState": "untracked",
+        "bytes": 6159644,
+        "sha256": "31dec82690e4ee95c553895dbbe1a9711f5289779d6d0a08d09ec3c75f6cabb6",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/meshy/jack-baby-meshy-smart-rig-v2-package/Meshy_AI_Jack_Baby_Optimized_1_quadruped/Meshy_AI_Jack_Baby_Optimized_1_quadruped_model_Animation_Walking_withSkin.glb",
+        "gitState": "untracked",
+        "bytes": 6173928,
+        "sha256": "7e626ad011b0aa732b7826d30ff61dfc29b70242e33e538ac5919bda83c2be75",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/meshy/jack-baby-meshy-smart-rig-v2.glb",
+        "gitState": "untracked",
+        "bytes": 6159644,
+        "sha256": "31dec82690e4ee95c553895dbbe1a9711f5289779d6d0a08d09ec3c75f6cabb6",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/meshy/jack-baby-meshy-smart-rig-v2.zip",
+        "gitState": "untracked",
+        "bytes": 11924089,
+        "sha256": "b76d1d9464fa125fed62ae0aaf8d3efe2d45641a5f8b707a831d9f566f42edd6",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/meshy/jack-baby-meshy-walking-v2.glb",
+        "gitState": "untracked",
+        "bytes": 6173928,
+        "sha256": "7e626ad011b0aa732b7826d30ff61dfc29b70242e33e538ac5919bda83c2be75",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/third-party/quaternius-ultimate-animated-animals-cc0/Husky.blend",
+        "gitState": "untracked",
+        "bytes": 2509344,
+        "sha256": "c3214271cbce42ecf0f2abf1bf9b66c3a2ddb36ba9d5d02293583320502b40db",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/third-party/quaternius-ultimate-animated-animals-cc0/Preview.mp4",
+        "gitState": "untracked",
+        "bytes": 18458498,
+        "sha256": "e24f6459023722e38652b1d7946e1fd5343bd62d12d374b41f92cf2458086655",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/third-party/quaternius-ultimate-animated-animals-cc0/ShibaInu.blend",
+        "gitState": "untracked",
+        "bytes": 2366516,
+        "sha256": "2da1c35ed46f532b8a7f1d7e92a4efc016cefb50e8c794e2969a048b16c5c44d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/third-party/quaternius-ultimate-animated-animals-cc0/Wolf.blend",
+        "gitState": "untracked",
+        "bytes": 2571200,
+        "sha256": "fe31c3829dd2a8b9dfedb2e5cb656939a1d525ebd535a62434d2d25a4399cb9e",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/3d/jack/v2/textures/jack-baby-basecolor-v2.png",
+        "gitState": "untracked",
+        "bytes": 1592239,
+        "sha256": "3352e136d5d24092c4bde50771396aebdf2da47e3405f9e522b6689c0b4b68ea",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/audio/v1/source/suno/2026-08-15/cozy-a-1fc464da-4f48-4f90-ba20-19e8af161dec.mp3",
+        "gitState": "untracked",
+        "bytes": 2600520,
+        "sha256": "06958ae88d732d7cfe03650f49994cae2ef98be0ee096f973b9ec542fa674047",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/audio/v1/source/suno/2026-08-15/cozy-b-937ceab3-21ad-4a5b-861e-4ba7971694bf.mp3",
+        "gitState": "untracked",
+        "bytes": 2250072,
+        "sha256": "3ff75148f6ee75ab26ac4dad54f9e43fdf1d12db2a0320a30330b2d70ef8ee9b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/audio/v1/source/suno/2026-08-15/play-a-e5b46055-34fa-47e7-bfd2-72867ea33dc3.mp3",
+        "gitState": "untracked",
+        "bytes": 1002216,
+        "sha256": "3c88c3fd0a57c6218667ade36a7d2377a55dde6fb199062b6ff806acc9cc27b8",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/audio/v1/source/suno/2026-08-15/play-b-511ca7b3-b9e1-437f-b9bd-b8374e418813.mp3",
+        "gitState": "untracked",
+        "bytes": 1266264,
+        "sha256": "abf2270568e010ca95466df201f170638ce65760d6c626b9263d0cc9ee4880e5",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/audio/v1/source/suno/2026-08-15/sleep-a-ca4b004a-99ad-474e-b119-efcb2ce94fb8.mp3",
+        "gitState": "untracked",
+        "bytes": 735816,
+        "sha256": "4fe69b48e296c715288909cf905016cd66f365cb04a64408adbef04b23b1d2c8",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "assets/audio/v1/source/suno/2026-08-15/sleep-b-ac47575f-d92a-43a4-b0f1-2ab3cd97e3ce.mp3",
+        "gitState": "untracked",
+        "bytes": 2368728,
+        "sha256": "7e7566312bfdcd714a895badd90cfee77da5b5d99a9bebaddecbcb6690c6dd9f",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/asset-contract-validation.json",
+        "gitState": "untracked",
+        "bytes": 1060,
+        "sha256": "976e41d2d830499a9bf8898f3787c2150fb7023b937e6e4563b0ef9a2604dc67",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/bridge/jack-baby-bridge.json",
+        "gitState": "untracked",
+        "bytes": 422,
+        "sha256": "2f1b4ca2a2cc8a89a288a8c27bfcb50a93a568cbe1ad52c0a564768017016406",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby-deformation-report.json",
+        "gitState": "untracked",
+        "bytes": 54798,
+        "sha256": "4b57e6d9b53fd3f294171deeb40bc8fa4ae8bf5354f0ab3be0d93980da4d92eb",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-boop_comfortable.png",
+        "gitState": "untracked",
+        "bytes": 427850,
+        "sha256": "2e755f00ff921c42d5c512aaba280783017f445b39f2f50e10c3f2d18ab5c9d9",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-boop_need_energy.png",
+        "gitState": "untracked",
+        "bytes": 427565,
+        "sha256": "d2b8cd1c355c3c47d07330017057536893c9e0c80d1ecbab2786bcb009d1f38e",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-boop_need_happiness.png",
+        "gitState": "untracked",
+        "bytes": 426436,
+        "sha256": "3b119612474f23269c6581387bf427d801416cdbcad0eba2553174ffcaeb2db6",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-boop_need_hunger.png",
+        "gitState": "untracked",
+        "bytes": 428876,
+        "sha256": "d96ddcc50eb1135849657c74556068b9122e7d9328f87500e874b48e040f3122",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-boop_need_hygiene.png",
+        "gitState": "untracked",
+        "bytes": 427682,
+        "sha256": "66a9df2eba905e034e96c3643b0a9a0394bf8e5d43aa4a2cd1b7219ce61a7472",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-boop_rejected.png",
+        "gitState": "untracked",
+        "bytes": 429148,
+        "sha256": "59f9939c21c90821493b82238fb920cd5d1b47b3f6cd5caaaa0841c74d7cd5d7",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-clean_reaction.png",
+        "gitState": "untracked",
+        "bytes": 428037,
+        "sha256": "e46f58639286239cd47690c75bb91e6a2c4c38766700a10a759c0f1a0db2a0e1",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-death_rest.png",
+        "gitState": "untracked",
+        "bytes": 391411,
+        "sha256": "9933474968841a103811a1de1c40f0aa63ce0d64275b2d076ec409799be4b428",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-dirty.png",
+        "gitState": "untracked",
+        "bytes": 429579,
+        "sha256": "5c9c1f96c89af0060d38f846e1ad835212aa6b5ff710375a0b0b69f01b54d5ff",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-feed.png",
+        "gitState": "untracked",
+        "bytes": 431719,
+        "sha256": "ab5d683d39703b5311aa9f06b6082c15451f5ac5c8de3f13087434671cf4e669",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-idle.png",
+        "gitState": "untracked",
+        "bytes": 427976,
+        "sha256": "bb065a6195e915cc51deafd231a2e25565cd27489025643f2a780308df40238d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-play.png",
+        "gitState": "untracked",
+        "bytes": 431700,
+        "sha256": "f959110ca833c4c9ad4f74c055f7fba8602297743fb198c3f870290f2a1d6424",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-sleep.png",
+        "gitState": "untracked",
+        "bytes": 389259,
+        "sha256": "14873f64139b0a2da7c3f64842ebd15b7b8427e4d34ba0d2d88b6bef41787d49",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-tail_wag.png",
+        "gitState": "untracked",
+        "bytes": 430517,
+        "sha256": "21f13d20e575e5f70b771205d6a4d5613ffcc7cad355aac15fffd2faa7123bfc",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-tired.png",
+        "gitState": "untracked",
+        "bytes": 433963,
+        "sha256": "a79422f8fd8a6cf300d07638070b2beca7b961d4fe7a6da46e12419b59ecc023",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/baby/baby-wake.png",
+        "gitState": "untracked",
+        "bytes": 420389,
+        "sha256": "d4112c77a9b5507ad034ce08c5f7f9b4be68ecf244141a61f5843812ad92fa34",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/jack-baby-animation-preview-report.json",
+        "gitState": "untracked",
+        "bytes": 709,
+        "sha256": "4709bd59b5a7b60a0fccce0a13a7568897f96b93a9d4a770aa4f884780ae13bc",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/jack-baby-animation-preview.glb",
+        "gitState": "untracked",
+        "bytes": 4623128,
+        "sha256": "c759c9cfdc0f6432eef716deb03bf7950c487a0ba4feddefcaf57cc314089716",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/jack-teen-animation-preview-report.json",
+        "gitState": "untracked",
+        "bytes": 709,
+        "sha256": "bb76d7a1eeff5bad314a04a127b4f79acd3252421eef77b817be9773d2dd3559",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/jack-teen-animation-preview.glb",
+        "gitState": "untracked",
+        "bytes": 4387020,
+        "sha256": "2fc85d5d1da43e522bee1779e20aa7ec73930934df9af9b960d9c758713ac878",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen-deformation-report.json",
+        "gitState": "untracked",
+        "bytes": 54867,
+        "sha256": "6c85410bb564cc9aa69726190562958d2e7dbc5828f3634040ba65d3b06ae3a8",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-boop_comfortable.png",
+        "gitState": "untracked",
+        "bytes": 409980,
+        "sha256": "f4a48f06a6c3eec4d98658b03c98e979fd2028b35b619f1b529cabb8813df286",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-boop_need_energy.png",
+        "gitState": "untracked",
+        "bytes": 410921,
+        "sha256": "9f392765fe09f399003900e052b93a8cbf08e226c4493d2be1657ba291cd5cec",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-boop_need_happiness.png",
+        "gitState": "untracked",
+        "bytes": 409902,
+        "sha256": "99fa13234f5ff466dcdfc57cd9290294c7169fc98b3944750e77602938412536",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-boop_need_hunger.png",
+        "gitState": "untracked",
+        "bytes": 410719,
+        "sha256": "f879fdcf545c2d739f7845847bf72aeca2af1271f6261007d88902406ebf8662",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-boop_need_hygiene.png",
+        "gitState": "untracked",
+        "bytes": 409694,
+        "sha256": "f511dab7d9c2b42ed0c6ca8ff09e702e5853fdfea0822cbb0a9c611efc9e15dd",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-boop_rejected.png",
+        "gitState": "untracked",
+        "bytes": 411306,
+        "sha256": "94b54d2928428a8ebb916ad570d7cafb3690bee7c6ebd4dac17567e0c1e0055d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-clean_reaction.png",
+        "gitState": "untracked",
+        "bytes": 409995,
+        "sha256": "76f9ef798842d7ad0e3f4e6b5340cc7da9e6c20bcf625f209a486f64571c54ba",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-death_rest.png",
+        "gitState": "untracked",
+        "bytes": 382587,
+        "sha256": "7d69adc6c3af5e981f5316eedf678411c2cff4abdc3b385d1b618c4d752b9801",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-dirty.png",
+        "gitState": "untracked",
+        "bytes": 412780,
+        "sha256": "c16b334b5d214b89cc04a9fbdb22250c04c8d3d8b56f1ce745202825bed192f9",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-feed.png",
+        "gitState": "untracked",
+        "bytes": 413359,
+        "sha256": "85144dd770486c961977c617146517a4709370331341e75fa87b78f539f88ac7",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-idle.png",
+        "gitState": "untracked",
+        "bytes": 410623,
+        "sha256": "989f84ea86ab8c42d51978c8c23beefd3ead5801bd9e091e5a5eaeaaf4169826",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-play.png",
+        "gitState": "untracked",
+        "bytes": 413614,
+        "sha256": "2a0796f2df7d6149a686283540e164ad0cb891ff43e46593dd0823a850846f9f",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-sleep.png",
+        "gitState": "untracked",
+        "bytes": 380208,
+        "sha256": "dff49e5da83fc79b10990ea6dc7a67196f3a7f89eb3803e4450a489e9d80bbf0",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-tail_wag.png",
+        "gitState": "untracked",
+        "bytes": 413941,
+        "sha256": "6e71b4346b1b90e6ead7f1aa608c3cf267941084fbaf74c1ab94b875352e4bde",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-tired.png",
+        "gitState": "untracked",
+        "bytes": 416097,
+        "sha256": "d74de340efdf441589dda9e187b704bdd1a0fe690abb17ec6fc0f0066925f1ac",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/deformation/teen/teen-wake.png",
+        "gitState": "untracked",
+        "bytes": 408028,
+        "sha256": "786f448ca22f8e922f316273e29d1638623ac09034ed5aa1f437866a5219c4e4",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/baby-fallback-render-report.json",
+        "gitState": "untracked",
+        "bytes": 1601,
+        "sha256": "5e4a4e56476157faedc5357d89072e9b99d6477b6fdf77e1d560df1ef4f592b4",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/baby-healthy-front.png",
+        "gitState": "untracked",
+        "bytes": 193434,
+        "sha256": "464233e565d50acf673eb95747eaf7724d90c84007ad2fec06214afac8505eb2",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/baby-healthy-rear.png",
+        "gitState": "untracked",
+        "bytes": 135102,
+        "sha256": "3c2911990bd9b5ecaa81e826d680a20945bdbba3878250e2793ee4a415104416",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/baby-healthy-side.png",
+        "gitState": "untracked",
+        "bytes": 188978,
+        "sha256": "c5ea55c3c335635e0cbec3ab644fd836cd38f1c9aa6466eafac0a23b42865123",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/baby-healthy-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 221058,
+        "sha256": "c889a0f54388bae3b85749b5158994fc55788d16b48b27cc6bb9afd3246ce65d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/baby-hungry.png",
+        "gitState": "untracked",
+        "bytes": 219844,
+        "sha256": "4a8280e53269232eca6c9a18ff256cc443b66cbde27707a0193c3ee17f1f9afc",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/baby-starving.png",
+        "gitState": "untracked",
+        "bytes": 218301,
+        "sha256": "9d48d05905fac06f770b5958bba1219e2b7a3bc4981ecb79c116f0a4e8e162d6",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/teen-fallback-render-report.json",
+        "gitState": "untracked",
+        "bytes": 1601,
+        "sha256": "08af7db80cd4c4d1ff651bf763fb1bfce1f2f28b2f2b83f64618b090f9f4cf95",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/teen-healthy-front.png",
+        "gitState": "untracked",
+        "bytes": 162844,
+        "sha256": "7a9453655c1dc5cf8c28543fdf4dddbeba320795889635b2857823b1917d0fa4",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/teen-healthy-rear.png",
+        "gitState": "untracked",
+        "bytes": 102495,
+        "sha256": "a563a1c5371762f6b5201eafb4e24bc2f343f62ef3adcfd33c318b1cdb6c1905",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/teen-healthy-side.png",
+        "gitState": "untracked",
+        "bytes": 159153,
+        "sha256": "dc993ad0ae28409eb0a15104ef06fae611f395c76027ca4961ab3df4ea05be1b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/teen-healthy-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 201987,
+        "sha256": "3f50df98a7121bc53d0a218db9fcd13331591c9f7ed90143c5151ae4139f34b1",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/teen-hungry.png",
+        "gitState": "untracked",
+        "bytes": 201597,
+        "sha256": "6011f65ae7ff1182e471bd4a22a86fc7b40168dd75516da9f24ec98cb24661de",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/fallback/teen-starving.png",
+        "gitState": "untracked",
+        "bytes": 201049,
+        "sha256": "d4b36a18ed2080bfbb0ba1baedb300045fb3440353ff8d9725b74aa6d27a2193",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-adult-meshy-pro-optimized-raw.png",
+        "gitState": "untracked",
+        "bytes": 113700,
+        "sha256": "99d0e02fc5176cea14672fa9f7ad86c6a7b4c55139beae247510fb651034c90f",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-adult-meshy-pro-optimized.png",
+        "gitState": "untracked",
+        "bytes": 152008,
+        "sha256": "79743d4ce3c8001076e7af6372cd00039a7fd6f77c2283224dbe960a70368c34",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-adult-meshy-pro-raw.png",
+        "gitState": "untracked",
+        "bytes": 115995,
+        "sha256": "d303e708deb3ecd4a4904e76ab18459a888a48769178c67cb9a19cfd26035836",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-baby-deformation-16-clip-review.png",
+        "gitState": "untracked",
+        "bytes": 970732,
+        "sha256": "950270fd3b6ba634f3967dcd8c420a806d45f2737847a366da6f30272137f053",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-baby-runtime-likeness-gate.png",
+        "gitState": "untracked",
+        "bytes": 545207,
+        "sha256": "27c643fa3520fad98e4e96a17b2500382801bc7bd79f1e50b6826b4b59378d94",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-blockout-front.png",
+        "gitState": "untracked",
+        "bytes": 975974,
+        "sha256": "9ca48e111eeb061e669e7e6c0c683cd726f78d8d5c42d892da3649ba272b5b26",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-blockout-rear.png",
+        "gitState": "untracked",
+        "bytes": 966395,
+        "sha256": "339c3a90506f2862e76b5e0e75bbaff8c75015f04302062f801f737bf28912eb",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-blockout-side.png",
+        "gitState": "untracked",
+        "bytes": 986460,
+        "sha256": "6a0e26fe84d3616ba001cb7fe2f1c87b7b7f3c6e7acd4447f2d82cb861b19dc4",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-blockout-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 1039514,
+        "sha256": "c0bac94563fda8f90bbdfe1833d446c9c3e91be2ea4b252d3ba103a8698a6d11",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-hero-front.png",
+        "gitState": "untracked",
+        "bytes": 3671824,
+        "sha256": "709d3789920929a2576d34812fa8a190de7e118d719acc61abf2a451d2256b3b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-hero-rear.png",
+        "gitState": "untracked",
+        "bytes": 961446,
+        "sha256": "8c7e04abfa3252335355f7ec9f68de9f424e23cad31d420ad27bf5d87b2eb007",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-hero-side.png",
+        "gitState": "untracked",
+        "bytes": 3664473,
+        "sha256": "aee468e2f6b23bd9b5290809ce325aedc0c178a451831cc7233ba5e55662fd82",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-hero-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 1033771,
+        "sha256": "d23d5369125abaa0a63f08ebaa3be2ef4210d0afb1ff9d37049c3fdea32f5e96",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-meshy-pro-multiview-raw-rear.png",
+        "gitState": "untracked",
+        "bytes": 111690,
+        "sha256": "052b3a7f122d1fdb5d949d317b4fe2786b52b3bc2e0dc0fb13f4de48f577d702",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-meshy-pro-multiview-raw-side.png",
+        "gitState": "untracked",
+        "bytes": 114997,
+        "sha256": "58f1c7724f3fa3633e64716f7c6fc84e692a77ddf1270a28434f6e7b5ab36d82",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-meshy-pro-multiview-raw-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 112887,
+        "sha256": "84a57adc9aac347e4e6b34cb4210c6e04b0fab6d0357ecf70a0414c4fe020dd7",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-meshy-pro-multiview-rear.png",
+        "gitState": "untracked",
+        "bytes": 154681,
+        "sha256": "cb00639fdabae347273c0ceda8be17f4a08806d513d6d3b2092d42bb30593245",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-meshy-pro-multiview-review-board.png",
+        "gitState": "untracked",
+        "bytes": 723297,
+        "sha256": "a97c329a3b7b6714043e93997add01a3c0c9e7c4f1ec1436646d9557e0f7d08c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-meshy-pro-multiview-side.png",
+        "gitState": "untracked",
+        "bytes": 189272,
+        "sha256": "28d6600f66c01c7ba96c088788ddaeb7afc67f6c6c86d99aca39d8e65b91afc3",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-meshy-pro-multiview-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 166730,
+        "sha256": "91c0030e52aa90cf7304b608343501f6dbf8734211487cd53447de064690687f",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-shared-rig-animation-validation.png",
+        "gitState": "untracked",
+        "bytes": 148098,
+        "sha256": "e1928df6b36e928e14a55156ff6767954cf900d749602e039874ed2fcb05447d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-teen-deformation-16-clip-review.png",
+        "gitState": "untracked",
+        "bytes": 883490,
+        "sha256": "06a76765fbd94561d0969577d6d33e934bce12e72c3378bd2dec0ee0d4e52a39",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-teen-meshy-pro-optimized-raw.png",
+        "gitState": "untracked",
+        "bytes": 114046,
+        "sha256": "66db32edd11a6ed1975117997ad739ec059ab9a4ae7b445acd68604b64a62c11",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-teen-meshy-pro-optimized.png",
+        "gitState": "untracked",
+        "bytes": 146167,
+        "sha256": "6aa7be0cbdfdb3928e98b7c6cf4128a92553e5d60d8b15be9dc075c498206b3d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/jack-teen-meshy-pro-raw.png",
+        "gitState": "untracked",
+        "bytes": 115252,
+        "sha256": "1a17c0a445afa0e5d0baf58c5f7865505fbd8bf04c0239e54b222a83e5ef94fb",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/meshy/adult-high-master-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 121619,
+        "sha256": "017b2f808eb45388dfac1799e8d6cb30a1dbb7bde26105af93a721b7835917ee",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/meshy/baby-high-master-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 129953,
+        "sha256": "7006c7fb72e95608d27b3d9224b03773257fa7c636e42149941339e7601b67f0",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/meshy/teen-high-master-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 115562,
+        "sha256": "4283ec7e1fa0c5b09c728561e63bf1e224bd28e34fe17e17e39a34dcf9f39b1b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/rig-animation-validation-v2.json",
+        "gitState": "untracked",
+        "bytes": 5063,
+        "sha256": "0e493f80414c58331a22c1071424ea8678e35bd97a90b17748ec020c77764b1c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/rig-animation-validation.json",
+        "gitState": "untracked",
+        "bytes": 5060,
+        "sha256": "d8c71c4b88eb241e878365321b05518e7b51f9cb17781b3ccafc066b7e1fa890",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/baby-import-renders/jack-baby-meshy-import-negative-y.png",
+        "gitState": "untracked",
+        "bytes": 1178888,
+        "sha256": "3cc2fccb02000a05d965c6e8ef6f445ff4d662b2950f9f9ea7445160fc9ac171",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/baby-import-renders/jack-baby-meshy-import-positive-y.png",
+        "gitState": "untracked",
+        "bytes": 1129418,
+        "sha256": "0d7e15f858de38f1c0678af977b4adec085983bcf1d81a9c656d243369556e35",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/baby-import-renders/jack-baby-meshy-import-side.png",
+        "gitState": "untracked",
+        "bytes": 1166480,
+        "sha256": "d3842a459ce32583771767e7bef15562b426c6a4126c0f2cc278c42664481b7a",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/baby-import-renders/jack-baby-meshy-import-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 1223787,
+        "sha256": "b53effd39fd1e9d356fc2d969883e8842ea35c4aeb2ccd93c209ee9901bd6e36",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/baby-import-report.json",
+        "gitState": "untracked",
+        "bytes": 1721,
+        "sha256": "8c15a01d027185cb4397b94ffbe1235bf81d5f78e1399138ec7d6e4d5185d5bb",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/baby-structural-validation.json",
+        "gitState": "untracked",
+        "bytes": 2346,
+        "sha256": "27edf8d199f38cbaf8837af02a6f5cb3301fc06330c8212d4a2be2eeb614b195",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/teen-import-renders/jack-teen-meshy-import-negative-y.png",
+        "gitState": "untracked",
+        "bytes": 1117906,
+        "sha256": "2df533881c19ec0316076f46ce2b48906169a2ad5e867fe184b3bd202ee24bf8",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/teen-import-renders/jack-teen-meshy-import-positive-y.png",
+        "gitState": "untracked",
+        "bytes": 1080459,
+        "sha256": "98bfbf9b928f63538677bf816114a3b08af4b74f9ddd318fb53c77df3b655677",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/teen-import-renders/jack-teen-meshy-import-side.png",
+        "gitState": "untracked",
+        "bytes": 1121175,
+        "sha256": "94262c4e09b305e21446c6ff90084097d6b721bae269c41797851673f1a39270",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/teen-import-renders/jack-teen-meshy-import-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 1167413,
+        "sha256": "5a927d1cebb4729a231cc41d4429dabfee60e26b2fda38e7d76b563076f0be06",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/teen-import-report.json",
+        "gitState": "untracked",
+        "bytes": 1724,
+        "sha256": "1f3dd45a2b1c25d2711c58ed0627bd3835b1c884687cc0fee480404ac206dfdb",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/skin-validation/teen-structural-validation.json",
+        "gitState": "untracked",
+        "bytes": 2348,
+        "sha256": "cec320f44575701f9086e6c35df5b7f4b4da558fc4daa82c072ebe90053f1be7",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-derived-a-export-report.json",
+        "gitState": "untracked",
+        "bytes": 1644,
+        "sha256": "88e9ae8feb081bad3d4a88170045cce6f1ab4561b49d1f31fce054264987d612",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-derived-a-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8857,
+        "sha256": "c49ac2720d39d400f319a2d7039d283664b864751e348e2d7cb72e851bd74fc1",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-derived-a-glb-validation.json",
+        "gitState": "untracked",
+        "bytes": 1424,
+        "sha256": "1e87e99b22464013a3cd9b3ff87640340b16ac879c7fe3211d7a27c7c93e7239",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-derived-a-report.json",
+        "gitState": "untracked",
+        "bytes": 1227,
+        "sha256": "387560c48996b786d8dab6fbf65e4f74686b1a2fa89d81ebb1e0a002079c0c58",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-derived-a-runtime-playback-validation.json",
+        "gitState": "untracked",
+        "bytes": 6017,
+        "sha256": "04ee08fe18e48d092bf282d22d4232f69d88b9a27f4cfb5160a8aff6aa1c4bbf",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-derived-b-quaternius-build.json",
+        "gitState": "untracked",
+        "bytes": 1250,
+        "sha256": "c561e7a909e7301e07090d5f127c796962b16ba5918eefcb74e690d8d71c487f",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-derived-b-quaternius-deformation.json",
+        "gitState": "untracked",
+        "bytes": 8858,
+        "sha256": "3c302aabc8e9f72d42302784fb467c99ae9cd9d470706e7883bec08e1b015a7a",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-export-report.json",
+        "gitState": "untracked",
+        "bytes": 1993,
+        "sha256": "7cb40d896b39f7af4e391b1b75879803fb83d3d2b56e74b3bb639d4c08443b12",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-glb-contract-validation.json",
+        "gitState": "untracked",
+        "bytes": 1513,
+        "sha256": "38840588ea977fb11d390fa5f7fae622b534527c93a398f4c91aa5900cdb5a80",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-runtime-playback-validation.json",
+        "gitState": "untracked",
+        "bytes": 6017,
+        "sha256": "aac4c4231cb7938f86da639c504f79d416aab4f7cb91ac93fabcba9ef45e1f6f",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-transfer-a-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8879,
+        "sha256": "5b4afa00c54a66628d79d36a928b7541ec6c8acdabaf2c4b8e516c7e164e18f9",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-transfer-a-report.json",
+        "gitState": "untracked",
+        "bytes": 1980,
+        "sha256": "5e2d6b94dd7e13221c9b60b1ae429c77f0cda9081d20f30fc0551794957e604a",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-v1-intermediate-metrics.json",
+        "gitState": "untracked",
+        "bytes": 6360,
+        "sha256": "05a365ed507596acbc09e9233a75fe00d035402948c13244ff0b115907477768",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-v2.2-glb-validation.json",
+        "gitState": "untracked",
+        "bytes": 1424,
+        "sha256": "66370ed092c310dbca47eda9c75900b5fb5a5ed50dca8fcd2075d1fdc8981d43",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-v2.2-quaternius-deformation.json",
+        "gitState": "untracked",
+        "bytes": 8852,
+        "sha256": "2d4761f180d3dc22b4901fdcc762c283643c5acf3921ab4556f060e5e10df660",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-v2.2-quaternius-export.json",
+        "gitState": "untracked",
+        "bytes": 1659,
+        "sha256": "ac3348cb017eda373f33f33135ed89dab549e676a8afb2236a8ce8dfec353e97",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/adult-v2.2-runtime-playback.json",
+        "gitState": "untracked",
+        "bytes": 6020,
+        "sha256": "814b0455ec9c4a4cc5e1cb8c78904e9c3c14402392f24f44b35c4137d91ceb65",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/baby-training-paw-floor-diagnostic.json",
+        "gitState": "untracked",
+        "bytes": 3281,
+        "sha256": "e33434ac83298175edcca1584143fc5cd7c44d83cf68bfd432c80a81d0d85625",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/baby-v2-rig-inspection.json",
+        "gitState": "untracked",
+        "bytes": 10785,
+        "sha256": "ebec2252b5d0ef557bbff92e8c8cfb08b64fc9a071199ef75fe9f71d745f9908",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/baby-v2.2-glb-validation.json",
+        "gitState": "untracked",
+        "bytes": 1424,
+        "sha256": "70e492705bae3d1239e47a1213a1ef1c9ed946e111d02fb14a46833602fcc51c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/baby-v2.2-quaternius-deformation.json",
+        "gitState": "untracked",
+        "bytes": 8856,
+        "sha256": "3b6edf653a7400a32fae026cb2c41d44afe3361f796262d62c1b0e6cf1e66785",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/baby-v2.2-quaternius-export.json",
+        "gitState": "untracked",
+        "bytes": 1817,
+        "sha256": "f4f4569d16b8a7480cac6d27685ee09756e47468ecbdc9dd587bc0aa94fdcb7f",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/baby-v2.2-runtime-playback.json",
+        "gitState": "untracked",
+        "bytes": 6018,
+        "sha256": "52768628e2827424746c22eca5f4ab00835f64b709e203cf7a5becbd4469a1d5",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/export-report.json",
+        "gitState": "untracked",
+        "bytes": 1797,
+        "sha256": "0021e1bb32337b621ca0fc61784de618c5eca065ac8a4908fd182d732ddc475c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/jack-adult-v2-derived-a-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3535779,
+        "sha256": "9d08e52cf1c613e834b545a04c274bcd00dd5e021c9c269d4b0b84576fd4767a",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/jack-adult-v2-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3517982,
+        "sha256": "c7a8babcc948b06e00e7f63a8e29fa87151782351c1975a0dc2e402657c2cef5",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/jack-baby-v2-friendly-idle.png",
+        "gitState": "untracked",
+        "bytes": 960008,
+        "sha256": "0e77c272aaa904ab2e3b24f3546898eea2f3e22f0a3aee4d36b920245c51be62",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/jack-teen-v2-derived-a-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3526536,
+        "sha256": "5dca31960c75bfeb3b3f32ff2393241eb06eca70556f56423d44cb5b306181d0",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/jack-teen-v2-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3524369,
+        "sha256": "e9800279ae3867401aa690a73fb2725f3e97b3161c15fc4f98e155634ecdc770",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/jack-v2-motion-reel-c.mp4",
+        "gitState": "untracked",
+        "bytes": 1081768,
+        "sha256": "2b3b289c5e9935f8ae436296cde3f42ecdfc5be59e117d29bcec920d1103b3fe",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/jack-v2.2-quaternius-locomotion-board.png",
+        "gitState": "untracked",
+        "bytes": 6782088,
+        "sha256": "d7fab8f243a7500406960b9308d9475491607cc9d564b7d5856fac8cd017800c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/jack-v2.2-quaternius-motion-reel.mp4",
+        "gitState": "untracked",
+        "bytes": 1084664,
+        "sha256": "53fdc02fa2a6a9db1689a4aa12ded90e2b5020d024ce9fb6f0a3bf6151ee10fe",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/jack-v2.2-quaternius-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3525952,
+        "sha256": "43665a0d7b2a87ed19f07d70bbdfdb578b009c574ff9a5ac404574b5237e9246",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/meshy-smart-rig-character-inspection.json",
+        "gitState": "untracked",
+        "bytes": 12173,
+        "sha256": "d5438707e665d52e94e26ad7dbc260a5dd928740cd296e112717e30e1097e780",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/meshy-smart-rig-checkpoint.json",
+        "gitState": "untracked",
+        "bytes": 1090,
+        "sha256": "02e79d2d581264cb70aa396d16c9db0866a54c33066a4dd8bb9a4587c379e797",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/meshy-smart-rig-walking-inspection.json",
+        "gitState": "untracked",
+        "bytes": 12229,
+        "sha256": "3c5c5319bf3bbfbb9fa9434e63bbf751ce76e4f357a79a68e7961708a69b4bc7",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/meshy-walk-baseline-board.png",
+        "gitState": "untracked",
+        "bytes": 1018740,
+        "sha256": "58754a6024ad075a0503d8f573bf1e651bc4e9348723780e472bc5a5efc9147c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/pose-axis-diagnostics.json",
+        "gitState": "untracked",
+        "bytes": 54914,
+        "sha256": "3046ccb0d88f9219600fea6f716640d35988a173264f9061a2fc921d1a07bf51",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/quaternius-husky-inspection.json",
+        "gitState": "untracked",
+        "bytes": 31411,
+        "sha256": "240627721cba6e9e7b88626e746fe579fdeba97e18c31ccb021884687a677155",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/quaternius-shiba-inspection.json",
+        "gitState": "untracked",
+        "bytes": 3266,
+        "sha256": "c50579739a84828f9987fd938ebbca2ff5533d7ffdc08b4edf709309a2de6373",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/quaternius-wolf-inspection.json",
+        "gitState": "untracked",
+        "bytes": 3352,
+        "sha256": "cd7b13338ae203563d82c472c86656f90b91d6fef2e311183115f9e5b8789dbd",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-a-rig-report.json",
+        "gitState": "untracked",
+        "bytes": 984,
+        "sha256": "69023256da7b69bd521ee6e97899fe0c671af2a64f37b76daa45ff4b5504482a",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-a-walk-board.png",
+        "gitState": "untracked",
+        "bytes": 998504,
+        "sha256": "a1c1f3f8c86828270723d2126eafa18dffe9b2f68aff2c6fc55fc6dbdc1f74a3",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-b-animation-report.json",
+        "gitState": "untracked",
+        "bytes": 11646,
+        "sha256": "bfcbbe2a7408331ce23c5afeced3f02c5b472db53e782529c848cf3c8ecf930d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-b-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3523734,
+        "sha256": "030da90df4845d5a61befe56417be8bd0c73a542a1081f0ea208511b3caa0845",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-a-report.json",
+        "gitState": "untracked",
+        "bytes": 2855,
+        "sha256": "563821f7c615d569257f5fcec5333ad2cb8d926d0b2f60bbb98438592c7a5897",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-a-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3493049,
+        "sha256": "552b0b37cbf370143f25c5475c0f4990c75ba4ac31c1c81b72826d0e25f9902c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-b-report.json",
+        "gitState": "untracked",
+        "bytes": 2855,
+        "sha256": "dd8cc57a1735232ed7976e7dc4c6ea6f936b9ee949b1e8749cb2e5a028f9deb4",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-b-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3494065,
+        "sha256": "9db59b46061d9284d71fcc85382a2836dab5411dc2b28d994e816e50d2d992b9",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-c-report.json",
+        "gitState": "untracked",
+        "bytes": 2855,
+        "sha256": "002d13f324b2d628d4a68166ed1b4c0da8708d72288810a760a0c5616e244224",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-c-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3494381,
+        "sha256": "bdb29ab8fa6932eae3142062b64fa9e5588e262212c175883fed6e0f34d40311",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-d-deformation.json",
+        "gitState": "untracked",
+        "bytes": 8870,
+        "sha256": "a8459e1db09f27bfb1eefb3a332daeab5d0fd46afab66b0039569309c16f972a",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-d-report.json",
+        "gitState": "untracked",
+        "bytes": 2855,
+        "sha256": "8ff1d1bb5904154b1cc7b0c8a868ba6d63eed223d3721188e683a275e01891a8",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-d-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3496471,
+        "sha256": "156d6366143be995e06164eccdc485ab0021735d90774479e97866fb79d451d8",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-e-deformation.json",
+        "gitState": "untracked",
+        "bytes": 8861,
+        "sha256": "7ab8a254c66a1346636fa6d4a3d66607a027dd5870f7c5fbe875889b432c6a99",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-e-report.json",
+        "gitState": "untracked",
+        "bytes": 2855,
+        "sha256": "78c2a65e19dd8093237da6e0c6feef4fc278918d94edf52d1c9e2418527643ae",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-f-report.json",
+        "gitState": "untracked",
+        "bytes": 2854,
+        "sha256": "d88d5f94d36a16eba2fa33d3cd87b1359e4230e856aff72661676198f09e45b9",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-f-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3491110,
+        "sha256": "f3cda2cd1d9574b2dfdb118b3de175f9f6b8ae76a4d12baea7b657066b05df25",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-g-report.json",
+        "gitState": "untracked",
+        "bytes": 2854,
+        "sha256": "467953896b43272068a7f5f0e193e4ababf539e70702a7ad175265d2a01d2298",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-g-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3497909,
+        "sha256": "83fb006ce6ab9aa7ab816b665c28dec12fcf9029de74d564e1b3d807fa4b3db6",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/repair-c-quaternius-h-report.json",
+        "gitState": "untracked",
+        "bytes": 2104,
+        "sha256": "2f8c18b1c617a368ee599f37c7540de34d30068b750dfa4403d34bbe00535b7c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/roundtrip-animations.json",
+        "gitState": "untracked",
+        "bytes": 16669,
+        "sha256": "55352f85851b728fe7c2d5756ed67b48f455b4d24ea6d3d38440154f2f5551e9",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/roundtrip-baby.json",
+        "gitState": "untracked",
+        "bytes": 12021,
+        "sha256": "679d00d5605834d2e2c19cc8d90d788422348a71fe262c331dbbe785a9c8d8fc",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/roundtrip-preview.json",
+        "gitState": "untracked",
+        "bytes": 17742,
+        "sha256": "bfe933c4009c99fffcce1ffed4f636abc1ff9e5f59c3cda141a58bcc40dbdc04",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/static-source-preflight.json",
+        "gitState": "untracked",
+        "bytes": 1279,
+        "sha256": "6941600313c17177da4f92ddcfa1887bc1991caa4e67fa66b51d0bb8d197e646",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-derived-a-export-report.json",
+        "gitState": "untracked",
+        "bytes": 1637,
+        "sha256": "0a54d4b997d8964a938a035f66b3d036660a11b46859c54031f2cb67cec58b54",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-derived-a-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8854,
+        "sha256": "fee9b93ad16ffe51ceeeae2941ad2a60c67bc20c020df4eb58e5fdda13eaf3d6",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-derived-a-glb-validation.json",
+        "gitState": "untracked",
+        "bytes": 1424,
+        "sha256": "939a8c203015cbf2897bd837fffeffd0ed5b0ec3645c5e9cbee673c53e3ef655",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-derived-a-report.json",
+        "gitState": "untracked",
+        "bytes": 1224,
+        "sha256": "52e0bc6a80ca8678d44a7b8421c498fd404baba967b983194ee1d3d9a36f7a27",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-derived-a-runtime-playback-validation.json",
+        "gitState": "untracked",
+        "bytes": 6016,
+        "sha256": "58f961433234a003b6c9bdab9894f5944e3e8f64268eed3d5442779082fbeb99",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-derived-b-quaternius-build.json",
+        "gitState": "untracked",
+        "bytes": 1248,
+        "sha256": "ea3df1db494e43c2670ae2b2ea104b44b2780c0d138966a93653e6488503ad69",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-derived-b-quaternius-deformation.json",
+        "gitState": "untracked",
+        "bytes": 8858,
+        "sha256": "3198caaa6268228f03644f8e41403e3617e8083e03b20e234a5ae35c04a2eec0",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-export-report.json",
+        "gitState": "untracked",
+        "bytes": 1999,
+        "sha256": "c28aa6bd829cc22859f097c11f8ff76fffd157550a8170278498a90a5fc9715b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-glb-contract-validation.json",
+        "gitState": "untracked",
+        "bytes": 1513,
+        "sha256": "3fbeac111cfd2bbf1505066bdb173a496c807073668d0b1cbccca2ca2aeda395",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-runtime-playback-validation.json",
+        "gitState": "untracked",
+        "bytes": 6016,
+        "sha256": "a99ea07340192386a03fbbe8760c0f7ade1fd2a29d7a2421211813c37012b379",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-static-source-inspection.json",
+        "gitState": "untracked",
+        "bytes": 1542,
+        "sha256": "682fda3f0a4042635319c88c3734b15b0164a8a0eddd5a44376a27b50293bb30",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-a-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8882,
+        "sha256": "958035438ddb6bc5d86c5dd3ce1199e75ef62f00bb73a52348ad6a006dc6de04",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-a-report.json",
+        "gitState": "untracked",
+        "bytes": 1821,
+        "sha256": "50d5605d56c6aac00039a12452a678a6ce24119fa6180fa3f0cf2e0b0466b199",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-b-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8886,
+        "sha256": "d716ab8432414efe6ffe08dc1cae783125280e705b7ffcdbf23041a8105b01b7",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-b-report.json",
+        "gitState": "untracked",
+        "bytes": 1821,
+        "sha256": "efaa8d4c75ad82018de9e1a7510d14a4ca0d104368b568b61275dc7edb54b4f0",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-b-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3264219,
+        "sha256": "479567a6217f252d47c71658452d8b69bf3806957c58da175c2cdf8190d68856",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-c-floor-diagnostic.json",
+        "gitState": "untracked",
+        "bytes": 22598,
+        "sha256": "b5d913c5b4401d1e039f4f764d82cc6b4b57a41f844a9e9fe1804055354c7e59",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-c-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8886,
+        "sha256": "0a3b6e00eef7fb898e32d52642d22378c8db761b9ec177132f20c5575ccdcbb4",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-c-report.json",
+        "gitState": "untracked",
+        "bytes": 1849,
+        "sha256": "b07c2a9437afd2e7560b0acbdb3dd9e52bbb1929a544251d4a640fbb3b6bc5e9",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-c-risk-pose-board.png",
+        "gitState": "untracked",
+        "bytes": 3235623,
+        "sha256": "6f360357359305d5d4a20c8ad0cd4a8b14df12890523e0b187a6151caa07e50c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-d-floor-diagnostic.json",
+        "gitState": "untracked",
+        "bytes": 3307,
+        "sha256": "8f717d14efe3d52b90578cfc5808e72227cc12f24916bea337ab8f211e4ab19c",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-d-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8887,
+        "sha256": "69f8eea96c2b7ddad755f2942d9b5b6a4f668ac558bb3eb63e8dfef7efbd12bb",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-d-report.json",
+        "gitState": "untracked",
+        "bytes": 1849,
+        "sha256": "18a639675169d369b2397d85519ab9ffa9b8887f0221ab195d35609d55eeb2de",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-e-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8885,
+        "sha256": "b6ecb42e1358cf6c96754289a692e7390aa0da9406559a5634abb2a5d149b202",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-e-report.json",
+        "gitState": "untracked",
+        "bytes": 1849,
+        "sha256": "ad05124052c315a6f3287e2f0f6b35be90365718f978af06d8cfc452c4819dd3",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-f-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8885,
+        "sha256": "c3709b7df597bbede551427f39f0dd502a04511521b598af037612ab63c7731f",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-f-report.json",
+        "gitState": "untracked",
+        "bytes": 1962,
+        "sha256": "035d4c5d92a7d101445762f0f85baeb2a905512fe595b62ac6e7e4fbbe27458d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-g-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8877,
+        "sha256": "42042ad7909485c72b23c126e79ed7f8c0bd2b684d6b683607a6a615dcedc384",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-g-report.json",
+        "gitState": "untracked",
+        "bytes": 2010,
+        "sha256": "d2432cb6ffaa09a4d46a056847caace3569fa0f1166309e15cb7568b3a0d4688",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-h-full-frame-validation.json",
+        "gitState": "untracked",
+        "bytes": 8878,
+        "sha256": "8cd50d6414c1ff670e19ac3e3b2e20451785a76eed3845ab50ddca8e2f53cf5b",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-transfer-h-report.json",
+        "gitState": "untracked",
+        "bytes": 2067,
+        "sha256": "19c765ac1807ecc98855cd18529ac5fa181a366930163aa7fddb93646a744cdd",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-v1-rig-inspection.json",
+        "gitState": "untracked",
+        "bytes": 14683,
+        "sha256": "758e72adcbbf7b88503b563365724df1a348e75660442ae76bd86b25ebf95ad4",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-v2.2-glb-validation.json",
+        "gitState": "untracked",
+        "bytes": 1424,
+        "sha256": "c034d9484df1652bc5e2f1ac491d0158bf73cb3df5de18a2cdd019f7517b7b10",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-v2.2-quaternius-deformation.json",
+        "gitState": "untracked",
+        "bytes": 8852,
+        "sha256": "2880e4c1dfe3fa30b9ea88272960b9ad8abe2a34b8efb4caf1faaf2ac71cc340",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-v2.2-quaternius-export.json",
+        "gitState": "untracked",
+        "bytes": 1652,
+        "sha256": "4736ec8d88b2ed5e74540dd9d3c749338684257a24916988eaa546c82d30e237",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/teen-v2.2-runtime-playback.json",
+        "gitState": "untracked",
+        "bytes": 6019,
+        "sha256": "3f739ecbc2f0a97c247e23edb3ed2fcedc382ae0913d13fb8f972fded2b19256",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/v2/v2.2-package-validation.json",
+        "gitState": "untracked",
+        "bytes": 308,
+        "sha256": "c233bd612d101310787fb38168f140a2a0a737cc66986ca0c6400566d130270d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/validation/jack-asset-validation.json",
+        "gitState": "untracked",
+        "bytes": 1168,
+        "sha256": "ebf300b1b9c5b10226e1ec664ee7a9dbb6172082c5f481eda970f12d3d47ff77",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/validation/jack-baby-validation.json",
+        "gitState": "untracked",
+        "bytes": 2346,
+        "sha256": "27edf8d199f38cbaf8837af02a6f5cb3301fc06330c8212d4a2be2eeb614b195",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-jack/validation/jack-rig-animation-validation.json",
+        "gitState": "untracked",
+        "bytes": 5060,
+        "sha256": "a1b7e9824873643cfd346a9009104b45e2501c0ae8494a81e5030b401ad1cc43",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-pet-room/desktop-blue-dusk.png",
+        "gitState": "untracked",
+        "bytes": 2315371,
+        "sha256": "2ce0eea91a939a3a81af076a91b3c32be96be754ea076a0830541b0c416740e0",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-pet-room/jack-character-sheet.png",
+        "gitState": "untracked",
+        "bytes": 1845022,
+        "sha256": "d7e329c26f2d4af9cc77bccaaa4a49b66e5a2e69466e13348eb990312fe72b1d",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-pet-room/mobile-cozy-morning.png",
+        "gitState": "untracked",
+        "bytes": 1799192,
+        "sha256": "db4fc159350e5ae34ef2a9a2c7decd9d13fea0b53321b99e4980772a7eba13ad",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-pet-room/scene-layout.png",
+        "gitState": "untracked",
+        "bytes": 155171,
+        "sha256": "0d39c9784f51cd0ccd419462f3afe02a9e2c486539619711a439bd2c9e2c58af",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/3d-pet-room/scene-layout.svg",
+        "gitState": "untracked",
+        "bytes": 5635,
+        "sha256": "938c10238aaa7f7b6b9545eb68e4951281cb734aec3e8211d849e4f668371653",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/meshy-ui-checkpoint/CHECKPOINT_75.md",
+        "gitState": "untracked",
+        "bytes": 3568,
+        "sha256": "b5860b326e7d2ccaf041476d7a68bf86c3f9db306df1c27fcd0f198d2d57beee",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/meshy-ui-checkpoint/actual-meshy-checkpoint-25.png",
+        "gitState": "untracked",
+        "bytes": 76969,
+        "sha256": "747d52aa54118947854628b11aa17f7f704b405d12c7e1e67b8a7aa474376a60",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/meshy-ui-checkpoint/actual-meshy-checkpoint-75-full.png",
+        "gitState": "untracked",
+        "bytes": 44681,
+        "sha256": "3f70c53a09d037198d7c578131c05dab2920305ba09139d1822433e0588f0c3f",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/meshy-ui-checkpoint/actual-meshy-checkpoint-75.png",
+        "gitState": "untracked",
+        "bytes": 55856,
+        "sha256": "532b1f55001c2098f328498e62d11d1c9c919391c5fecdc9b02d5a13db38ec58",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/meshy-ui-checkpoint/build_checkpoint_75_comparison.py",
+        "gitState": "untracked",
+        "bytes": 2761,
+        "sha256": "eafc404eb241be5a1773c71445f68b9095061804bca2913c72bc860784d10ce4",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/meshy-ui-checkpoint/mockup-vs-actual-meshy-75.png",
+        "gitState": "untracked",
+        "bytes": 428632,
+        "sha256": "af6fc8ffac3c9264380be1bf4b6cf8da002141ece104d431ff6e610017817f3e",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/meshy-ui-checkpoint/ui-meshy-checkpoint-25-390x844.png",
+        "gitState": "untracked",
+        "bytes": 653078,
+        "sha256": "64ced5f5773ff6e2f989e52f0bbf3b14d58865dc9fbb7877d710edb2124f1ae7",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/meshy-ui-checkpoint/ui-meshy-checkpoint-25-source.png",
+        "gitState": "untracked",
+        "bytes": 1757459,
+        "sha256": "2672f44e899afeda701f5c08a9f8b157d22a489eb7bf2d156cf64ced14e27bbb",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/training-mode/training-goofy-shimmy-result-390x844.png",
+        "gitState": "untracked",
+        "bytes": 47980,
+        "sha256": "e318e8d3dc75cf68e7c6a4160ad3862aa8a103e006bf5a859837088528958d63",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/training-mode/training-paw-ready-390x844.png",
+        "gitState": "untracked",
+        "bytes": 44951,
+        "sha256": "5f8db369312a00f4d9897d97b7d1560db26e2a079ee106e621ec72b8f2dd530a",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/training-mode/training-picker-430x932.png",
+        "gitState": "untracked",
+        "bytes": 42356,
+        "sha256": "6b3920bbdaac46fec6e1e0ad536e7d4a95416829c5f0f579437cdb2fbab9a0ea",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/training-mode/training-spin-wag-result-390x844.png",
+        "gitState": "untracked",
+        "bytes": 47909,
+        "sha256": "90a474aceec19b7893f950b1c27501fa47e1cc08e7d08056bb39677d62d2b0a0",
+        "assetGroup": "proposed-cold-archive"
+      },
+      {
+        "path": "evidence/training-mode/training-up-ready-390x844.png",
+        "gitState": "untracked",
+        "bytes": 47005,
+        "sha256": "3d042966a1ffb20eab13da6268123300d9b3dd883ea06dbe5632fdb9402cc54e",
+        "assetGroup": "proposed-cold-archive"
+      }
+    ]
+  },
+  "localOnly": {
+    "fileCount": 59,
+    "bytes": 22677256,
+    "files": [
+      {
+        "path": "assets/3d/device/references/device-shell-imagegen-reference.png",
+        "gitState": "untracked",
+        "bytes": 1468549,
+        "sha256": "cf962fe0ce34a820aa939f81269a087d6c96f62e688a926227c774cfef1062f1",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/device/references/device-shell-v2-imagegen-reference.png",
+        "gitState": "untracked",
+        "bytes": 1753246,
+        "sha256": "de4f05548253cf936adf1ac8d2e066c9abc9e6d3195a5b74a007fc9079030f81",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-adult-meshy-input-front.png",
+        "gitState": "untracked",
+        "bytes": 690173,
+        "sha256": "c390620ba4eaf7fad2bbd210454ab11b2d76fb66dcb491e41dee57f8c76077ab",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-adult-meshy-input-rear.png",
+        "gitState": "untracked",
+        "bytes": 674348,
+        "sha256": "bfa6d80119dc9ba68c77a46b727048723adeb6ba5350e37dcd179786bb34dd58",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-adult-meshy-input-right.png",
+        "gitState": "untracked",
+        "bytes": 1097420,
+        "sha256": "bb2f7918dfceb2f9b93693660104f52f336f5f40ff2559b1135d93c3cca64669",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-adult-meshy-input-side.png",
+        "gitState": "untracked",
+        "bytes": 1096200,
+        "sha256": "ee04a9f151f849f1e4b2f4a0c07e42d9dddd21bd4c242b9119614c6badf53736",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-adult-meshy-input-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 901587,
+        "sha256": "93aaf23f2c743cadc2a2c05e01f0de69e62cc5af17fd2bc5c5e10a08c5ebf3c1",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-adult-turnaround.png",
+        "gitState": "untracked",
+        "bytes": 1533917,
+        "sha256": "8d0b8f4a82d5d1c06d115aaf21cc77c1c47d426826864280dff627df7b6e8294",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-meshy-input-front.png",
+        "gitState": "untracked",
+        "bytes": 890270,
+        "sha256": "e8bd9fbbd4d60b6b1990da6b0352f2555741bd0aec63d05630aea542a3cc61f1",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-meshy-input-rear.png",
+        "gitState": "untracked",
+        "bytes": 905495,
+        "sha256": "581e8621cbe09da97de9a1225db6d5759aa0f836b9fc3814ec96b36a1d605243",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-meshy-input-right.png",
+        "gitState": "untracked",
+        "bytes": 1228970,
+        "sha256": "e9964f7bcc530f18cc979c366908459fb61367d647739345d68c69f4deaee8b5",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-meshy-input-side.png",
+        "gitState": "untracked",
+        "bytes": 1229296,
+        "sha256": "e91c2152b75f9e7ee82df8ae995c0ae7a51358f0fdb1342c5c6298717decc11e",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-meshy-input-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 1023291,
+        "sha256": "915bd36cede98f56b4a59ecf53a2d87f93e496ad4e23c4f1c1317e9344f03c47",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-teen-meshy-input-front.png",
+        "gitState": "untracked",
+        "bytes": 672664,
+        "sha256": "0305b591b7d6e6e7615c01ca3b00bc9d1708b8ae6faf27a7b6428daf4d4a952b",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-teen-meshy-input-rear.png",
+        "gitState": "untracked",
+        "bytes": 666275,
+        "sha256": "25bf0a4de62c214bbbddc78eb8807e2c60d3b72e985f00c6784edaf7fcadc0e9",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-teen-meshy-input-right.png",
+        "gitState": "untracked",
+        "bytes": 1081295,
+        "sha256": "408b5278a9e8e3feac32fe881936d350a67ee2ed63fe48512b6b7a77b75bd7be",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-teen-meshy-input-side.png",
+        "gitState": "untracked",
+        "bytes": 1080247,
+        "sha256": "2d3a089348711fbc75df7d0b1e61d907b543b93693951f8c11018ee4f59a2aae",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-teen-meshy-input-three-quarter.png",
+        "gitState": "untracked",
+        "bytes": 867052,
+        "sha256": "04a598eef040ebb2e3bd8608fc4f7ce64681ded03849ca7b6758b33108f97b6d",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/references/jack-teen-turnaround.png",
+        "gitState": "untracked",
+        "bytes": 1502987,
+        "sha256": "0da57808eb86948b0719b5fc95a5ac9b6ddb8af07e8b07c3e4a864f1d17d364d",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/build_baby_runtime_review_board.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 7171,
+        "sha256": "82aa15a7c57e67611abe95fc64370d941552860c270a8b9d9aab1d81dd8e42a1",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/build_blockout.cpython-311.pyc",
+        "gitState": "untracked",
+        "bytes": 28044,
+        "sha256": "e9342e88d1ea757bcc2a9cc9c1e64e982cef5819929d90639b357c3272fad385",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/build_blockout.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 30361,
+        "sha256": "99aec675a2f187fd8e06de46b1ab6ad9f5b0cc5239119bb99c5ef4aff31005a6",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/build_character.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 35787,
+        "sha256": "ed73304f78fefef4c9cd96007e89c1e60d0d268b847c9d44a1ff02beeaeaa3e1",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/build_hero_geometry.cpython-311.pyc",
+        "gitState": "untracked",
+        "bytes": 19558,
+        "sha256": "72b6feedf03a1584891a4970530f6311bb655049fe6101db8fd58b10eb5e278d",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/build_hero_geometry.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 20862,
+        "sha256": "55d74fb3333166d989c32fc5d7a9dfc8bb8c001c2a50c0031e56dfef8460d8c5",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/build_shared_rig_animations.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 27490,
+        "sha256": "e2e5c80bf41a9999bb6eadff9dd35fbdb0f564fa94842bd65b8bad628d900a88",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/build_skinned_age_glb.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 43000,
+        "sha256": "8e20cde5211ab5e35695f7501006a5fefbb1103bd49a437c4fe4c3ce82f6069d",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/crop_meshy_master_preview.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 1734,
+        "sha256": "31fe42810c6986ecf7bd7b4bfcace48582e807bfaf134c5c694dcb9e3bdd3067",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/inspect_meshy_skin.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 21359,
+        "sha256": "608fa8ae4211b3f5fc78d97225f956506ba84d669467397d4e06c9d7df2029d7",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/merge_skin_animation_preview.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 9337,
+        "sha256": "97b61a669455eb39856caa465d09200d853ebbfcbe99430058b2ddeaf1c87396",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/receive_meshy_bridge.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 18393,
+        "sha256": "af24c762dcffbacb57c7e963571bb29472c5b46dd7cf77e2cffc43e8006e3257",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/render_baby_deformation_board.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 6285,
+        "sha256": "270487dbdcdd17467f6f3be827d53a627e7516f04d01e83c6b12745f3924d6a9",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/render_baby_deformation_evidence.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 24550,
+        "sha256": "3085c9700bfbab727c3ca88971520f9f1277f95aefd0757462f8c7274a4b5a57",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/render_evidence.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 12187,
+        "sha256": "c34ef35f9811eb32fcd6e51b5de2edcf8414f4064c9ad8ecf304ddd846433eef",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/render_glb_fallback.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 21114,
+        "sha256": "8ba37f4694f403e51f0095d066ea806bf9955a9e6ea340740e18dd7c88e840e3",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/render_rig_validation_board.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 14554,
+        "sha256": "fc890a2e6cd3d81ea23aa0a8ef760985bd032cda5304c50b0f6aa4fd36f236ee",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/render_videos.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 7006,
+        "sha256": "2dc7e8131189efeeca4e63d75becb0d39107ae7e0f645e4a83a40b979ef63bdf",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/upgrade_animation_adapter_contract.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 7032,
+        "sha256": "e9111dcbf92339152f5c353aed9acd02951e78f5587ec111aa6f262235584825",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/validate_asset_contract.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 17473,
+        "sha256": "982036a40c2d97366e993d7c6fcfe2adf519dfbc2efafee7f8a63344e106bb11",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/validate_blockout.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 8323,
+        "sha256": "f90d680c764119f7528b50c13793fd1c1f02872843645f8a3fc665c8df2ca909",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/validate_character.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 15742,
+        "sha256": "12f9b2cb5080dd5a1c91a6706ff019ef77eb231dc9c8c4ac7415668ef144b35d",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/validate_shared_rig_animations.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 13972,
+        "sha256": "fff8b814b02e5c4bbbd7b6b27420e0009cb3315962f07ffad8e0f0fec46eb5fb",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/tools/__pycache__/validate_skinned_age_glb.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 20219,
+        "sha256": "c9a158fa7b8f817cfb7e865500924f9d4a60a17c82f6415f19bd94b59ac9d375",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/jack/v2/tools/__pycache__/build_age_skin_v2.cpython-314.pyc",
+        "gitState": "untracked",
+        "bytes": 26702,
+        "sha256": "91eaf33a24dee4a8249b13ba42a70f13c929e77ec0e6bd05478720309b12a27a",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "assets/3d/room/references/living-room-v1-imagegen-reference.png",
+        "gitState": "untracked",
+        "bytes": 1837450,
+        "sha256": "0ba13441baada07fe101696872f89ad381d79309bb1c0c60454cff78898aeb68",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/3d-jack/bridge/baby-import.err.log",
+        "gitState": "untracked",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/3d-jack/bridge/baby-import.log",
+        "gitState": "untracked",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/3d-jack/bridge/blender-version.err.log",
+        "gitState": "untracked",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/3d-jack/bridge/blender-version.log",
+        "gitState": "untracked",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/3d-jack/bridge/jack-baby-blender-2.err.log",
+        "gitState": "untracked",
+        "bytes": 244,
+        "sha256": "876f21edbf099981ee063ad487cdfba0aa7fab1f97781428c675e5a6feaf8e58",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/3d-jack/bridge/jack-baby-blender-2.log",
+        "gitState": "untracked",
+        "bytes": 258,
+        "sha256": "ae4196b0cacbddba46be082c116f1c5e492ed0d2d232fde0c0ee5743a8e79ca5",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/3d-jack/bridge/jack-baby-blender.err.log",
+        "gitState": "untracked",
+        "bytes": 177,
+        "sha256": "5427e5a0bac2f1cb385e5fabfd19bffec7d32bb3cc8cf192e2b1d818de20e127",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/3d-jack/bridge/jack-baby-blender.log",
+        "gitState": "untracked",
+        "bytes": 258,
+        "sha256": "f40a13dc606ce3d2521f9510f9fe307dcc455ab82a2923f331c1b8acce23fe79",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/v04-preview.err.log",
+        "gitState": "untracked",
+        "bytes": 1485,
+        "sha256": "ae7ba78fe7bc11a6a4cffab2f9aebde2e6f0f57198a45c53c12c787e7356c8c5",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/v04-preview.log",
+        "gitState": "untracked",
+        "bytes": 15847,
+        "sha256": "77ff7efcbe2879b086e67b5aebd9f69ef22c507c6efc23999fb0079992902485",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/v05-preview.err.log",
+        "gitState": "untracked",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/v05-preview.log",
+        "gitState": "untracked",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/v06-preview.err.log",
+        "gitState": "untracked",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assetGroup": "local-only-private"
+      },
+      {
+        "path": "evidence/v06-preview.log",
+        "gitState": "untracked",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assetGroup": "local-only-private"
+      }
+    ]
+  },
+  "unresolved": {
+    "fileCount": 10,
+    "bytes": 49853972,
+    "files": [
+      {
+        "path": "assets/3d/jack/source/jack-character.blend",
+        "gitState": "untracked",
+        "bytes": 2057866,
+        "sha256": "49f700d394d6509dd9c70bb8896942525ca0b4e5474f413820c79b24b89514ce",
+        "assetGroup": "canonical-editable-lfs-pending"
+      },
+      {
+        "path": "assets/3d/jack/source/jack-shared-rig-animations.blend",
+        "gitState": "untracked",
+        "bytes": 116280,
+        "sha256": "100794c6e90c6685c5b8ac4a56ac061a1f3ece499d5fc439df2a4acf40ccd794",
+        "assetGroup": "canonical-editable-lfs-pending"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-adult-quadruped-v2-derived-b-quaternius.blend",
+        "gitState": "untracked",
+        "bytes": 7744011,
+        "sha256": "14fba2d52d7015130622cfde13970a6ee53265201326cb1c646529b14f5e5fe9",
+        "assetGroup": "canonical-editable-lfs-pending"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-c-quaternius-h.blend",
+        "gitState": "untracked",
+        "bytes": 7266275,
+        "sha256": "2849b88825e1d7d1084ff809071f9bf4ea60f47c83ff70abb63fe04ec74775ec",
+        "assetGroup": "canonical-editable-lfs-pending"
+      },
+      {
+        "path": "assets/3d/jack/v2/source/jack-teen-quadruped-v2-derived-b-quaternius.blend",
+        "gitState": "untracked",
+        "bytes": 7742554,
+        "sha256": "672a3bc9b3dc1504a5e3541949ab0e1133d78562c88373f68884871890cacb1a",
+        "assetGroup": "canonical-editable-lfs-pending"
+      },
+      {
+        "path": "assets/source/jack-v1/jack-character-canonical.blend",
+        "gitState": "untracked",
+        "bytes": 2057866,
+        "sha256": "49f700d394d6509dd9c70bb8896942525ca0b4e5474f413820c79b24b89514ce",
+        "assetGroup": "canonical-editable-lfs-local-copy"
+      },
+      {
+        "path": "assets/source/jack-v1/jack-shared-rig-animations-canonical.blend",
+        "gitState": "untracked",
+        "bytes": 116280,
+        "sha256": "100794c6e90c6685c5b8ac4a56ac061a1f3ece499d5fc439df2a4acf40ccd794",
+        "assetGroup": "canonical-editable-lfs-local-copy"
+      },
+      {
+        "path": "assets/source/jack-v2/jack-adult-v2.2-quaternius-canonical.blend",
+        "gitState": "untracked",
+        "bytes": 7744011,
+        "sha256": "14fba2d52d7015130622cfde13970a6ee53265201326cb1c646529b14f5e5fe9",
+        "assetGroup": "canonical-editable-lfs-local-copy"
+      },
+      {
+        "path": "assets/source/jack-v2/jack-baby-v2.2-quaternius-canonical.blend",
+        "gitState": "untracked",
+        "bytes": 7266275,
+        "sha256": "2849b88825e1d7d1084ff809071f9bf4ea60f47c83ff70abb63fe04ec74775ec",
+        "assetGroup": "canonical-editable-lfs-local-copy"
+      },
+      {
+        "path": "assets/source/jack-v2/jack-teen-v2.2-quaternius-canonical.blend",
+        "gitState": "untracked",
+        "bytes": 7742554,
+        "sha256": "672a3bc9b3dc1504a5e3541949ab0e1133d78562c88373f68884871890cacb1a",
+        "assetGroup": "canonical-editable-lfs-local-copy"
+      }
+    ]
+  },
+  "preservationStaging": {
+    "fileCount": 37,
+    "bytes": 1567551385,
+    "files": [
+      {
+        "path": "preservation-staging/20260816T125159Z/Cold Archive/cold-archive-manifest.private.json",
+        "gitState": "untracked",
+        "bytes": 115708,
+        "sha256": "7c26f8b572e1142b6685f6636c856c8aa1bbff94d967ecc8fe89ee1675b84754",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/Cold Archive/mr-boobins-cold-archive-part-001.zip",
+        "gitState": "untracked",
+        "bytes": 112557470,
+        "sha256": "01392d1dd9a0e51e5effe9a56ecdd5372708d5ed9c0353395d557152548025a0",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/Cold Archive/mr-boobins-cold-archive-part-002.zip",
+        "gitState": "untracked",
+        "bytes": 129006854,
+        "sha256": "4abdda05e3e140c3b430ee80d0929120b7f505abfdfb54ce71145f44fa256346",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/Cold Archive/mr-boobins-cold-archive-part-003.zip",
+        "gitState": "untracked",
+        "bytes": 116352878,
+        "sha256": "41814ba1c73fed93f1aeb0331d40c703463716a2a92a3551dd752062166738e2",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/Cold Archive/mr-boobins-cold-archive-part-004.zip",
+        "gitState": "untracked",
+        "bytes": 123039555,
+        "sha256": "d513ef1d6d18a1535bebab3548866c0e2d4a9945e40d68236d5a4a6ec1ea95b2",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/Cold Archive/mr-boobins-cold-archive-part-005.zip",
+        "gitState": "untracked",
+        "bytes": 26277679,
+        "sha256": "4f29c50069f2fb6097fb5c4ccd2ac485618240107a26c3d98ce18bd6f8c8ab67",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/Private Backup/mr-boobins-private-backup.zip",
+        "gitState": "untracked",
+        "bytes": 45004614,
+        "sha256": "88056a4cd271a3294084dda6b02edddfc8487859ad8f64e776513ac0dfec18f8",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/Private Backup/private-backup-manifest.private.json",
+        "gitState": "untracked",
+        "bytes": 24446,
+        "sha256": "66755fa9d16f9a8edbe690a962644418a47cce9a1d962ab5c62dd495cc3f28ad",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-regenerated-90mb/Cold Archive/cold-archive-manifest.private.json",
+        "gitState": "untracked",
+        "bytes": 66432,
+        "sha256": "79afbfd666387a7e0a40f2a3c6d2b0531b1d3d43c23485858727bc0a59417bd7",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-regenerated-90mb/Cold Archive/mr-boobins-cold-archive-part-001.zip",
+        "gitState": "untracked",
+        "bytes": 58900726,
+        "sha256": "09725f66bf5062325756bdddf3c5d732fa8a5dc3f669401eaa8591d89a551566",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-regenerated-90mb/Cold Archive/mr-boobins-cold-archive-part-002.zip",
+        "gitState": "untracked",
+        "bytes": 69559504,
+        "sha256": "d48f8d9b48a32f6daf8d3f53706656ab9e01ad8438df6bc8d377ba973b8945bb",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-regenerated-90mb/Cold Archive/mr-boobins-cold-archive-part-003.zip",
+        "gitState": "untracked",
+        "bytes": 79350543,
+        "sha256": "288e0fbf31ef441854c4f7a959f1f6805f1f9798f8f8dacc215deab681a2ccca",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-regenerated-90mb/Cold Archive/mr-boobins-cold-archive-part-004.zip",
+        "gitState": "untracked",
+        "bytes": 71255323,
+        "sha256": "5b7aa19eb0b6a4f963f135b1b7cfd85828706e64a73236f1e3d44a623aaee87a",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-regenerated-90mb/Cold Archive/mr-boobins-cold-archive-part-005.zip",
+        "gitState": "untracked",
+        "bytes": 72778260,
+        "sha256": "89aa02e63ccedef08abfd98368e4f05b211518463fc26d2b803f7938247dae42",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-regenerated-90mb/Cold Archive/mr-boobins-cold-archive-part-006.zip",
+        "gitState": "untracked",
+        "bytes": 68730886,
+        "sha256": "1418dea3117489a28fade73c7ba04cca6021818fd3bda8fe6b3c83d81565606d",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-regenerated-90mb/Cold Archive/mr-boobins-cold-archive-part-007.zip",
+        "gitState": "untracked",
+        "bytes": 77670948,
+        "sha256": "e998e8ea4996304f3aa6ced845ee83d643a67670d84972bf3a359436bb46115f",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-regenerated-90mb/Cold Archive/mr-boobins-cold-archive-part-008.zip",
+        "gitState": "untracked",
+        "bytes": 9248510,
+        "sha256": "4af6d80d22bad2e36a3b55cbdc1a42e2ea98d157ee0affe226ff1bd2d4119c35",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/cold-archive-manifest.private.json",
+        "gitState": "untracked",
+        "bytes": 69138,
+        "sha256": "eb2263c32b8f339eb877023673154b8eeb62cdd866d7e2b242f5a5f931f9a5c2",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-001.zip",
+        "gitState": "untracked",
+        "bytes": 23968519,
+        "sha256": "3cbab38eef7be656dfdbbc89615b30ac64ab7edaef5b83861a4e44d16c9bf5c4",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-002.zip",
+        "gitState": "untracked",
+        "bytes": 16905364,
+        "sha256": "ab3b22f81f6b21f91c1711174dfd0fb8712e89d45876ab8ffccecc2edbcf1511",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-003.zip",
+        "gitState": "untracked",
+        "bytes": 36326942,
+        "sha256": "a21664f5dce4852de23e6737a2ddbe59fad1305a62422e7abb98ebbdf872c660",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-004.zip",
+        "gitState": "untracked",
+        "bytes": 27430137,
+        "sha256": "36777b72ae16327d150f0acc96e665e707cbca3d0c51b5f4e845e4d45e51320d",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-005.zip",
+        "gitState": "untracked",
+        "bytes": 36895583,
+        "sha256": "a903344e105768ebf6f42a9cac333b22b74fd8aab73f4b9fd7573a4e1583ce22",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-006.zip",
+        "gitState": "untracked",
+        "bytes": 37071544,
+        "sha256": "bb5e5196d352cbff6015c85b429b8f2d6a98020cb7a827b196c166566f804d19",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-007.zip",
+        "gitState": "untracked",
+        "bytes": 36418358,
+        "sha256": "2d7b77f38fc5ac3ad61329df96063c23c69e71d5a8c3fbf6cde9cc138b7b970b",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-008.zip",
+        "gitState": "untracked",
+        "bytes": 36074684,
+        "sha256": "5621fa662c4761725e80179407886d00cbe541792b3ed8e92cc7d98cf3217bcc",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-009.zip",
+        "gitState": "untracked",
+        "bytes": 27975075,
+        "sha256": "e0baee0d3ff9c93a2a0a751fbc12eae6e96c2e9cfe777fd28303b7a7440e44d9",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-010.zip",
+        "gitState": "untracked",
+        "bytes": 24104330,
+        "sha256": "0d5b435c08b96fecfe75764aeba6057ccb06dbbe46ecf1ba08b15043ec02f348",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-011.zip",
+        "gitState": "untracked",
+        "bytes": 30790979,
+        "sha256": "f2ba644a9f96ba674367e75deec46f284e7820c889af5ef0049e52b8636baa17",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-012.zip",
+        "gitState": "untracked",
+        "bytes": 24209584,
+        "sha256": "8c4fc0bb93ac0f7b232d4e53327d848548935e22537c668d6bd0b1955ba05379",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-013.zip",
+        "gitState": "untracked",
+        "bytes": 33470161,
+        "sha256": "ea1a5a7a51744fff0ded798f746e6dbf6c94af24d7f98b50785c10ecde46c961",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-014.zip",
+        "gitState": "untracked",
+        "bytes": 34072115,
+        "sha256": "173b60097826cf89857425cb71b14925608dd49f116803404ee36910dfc16761",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-015.zip",
+        "gitState": "untracked",
+        "bytes": 35957541,
+        "sha256": "734737b0069fc7005d87d18e2429e0dc7924bd84e0f58e17e56db4737a44be6e",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-016.zip",
+        "gitState": "untracked",
+        "bytes": 36575472,
+        "sha256": "0417cbb78fa3a458e5b4642c69271adc15c3adea3a8e2a4e6ece71bf639517a6",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T125159Z/cold-verified45/Cold Archive/mr-boobins-cold-archive-verified45-part-017.zip",
+        "gitState": "untracked",
+        "bytes": 9248510,
+        "sha256": "4af6d80d22bad2e36a3b55cbdc1a42e2ea98d157ee0affe226ff1bd2d4119c35",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T134500Z-baseline-text-originals/baseline-text-originals-manifest.private.json",
+        "gitState": "untracked",
+        "bytes": 4626,
+        "sha256": "131a6824bd4c87d6ef485a18f2f59305283647cf7139b2c5c3d8af3e129583bc",
+        "assetGroup": null
+      },
+      {
+        "path": "preservation-staging/20260816T134500Z-baseline-text-originals/mr-boobins-baseline-text-originals-pre-normalization.zip",
+        "gitState": "untracked",
+        "bytes": 42387,
+        "sha256": "93275693464e477080d7da94282b35318edaf98a7892b5c8f27ede45903a5c87",
+        "assetGroup": null
+      }
+    ]
+  },
+  "selfIndexedCandidate": {
+    "path": "docs/production/V0.6-V0.8_CHECKPOINT_CANDIDATE.json",
+    "disposition": "included",
+    "hash": null,
+    "reason": "This deterministic index cannot contain its own stable SHA-256; all other candidate paths are hashed."
+  },
+  "ignoredExcludedRoots": [
+    {
+      "path": "node_modules/",
+      "fileCount": 47788,
+      "bytes": 560138742,
+      "reason": "ignored generated/dependency output; excluded from the checkpoint candidate"
+    },
+    {
+      "path": ".expo/",
+      "fileCount": 5,
+      "bytes": 284998,
+      "reason": "ignored generated/dependency output; excluded from the checkpoint candidate"
+    },
+    {
+      "path": "dist/",
+      "fileCount": 35,
+      "bytes": 9479927,
+      "reason": "ignored generated/dependency output; excluded from the checkpoint candidate"
+    }
+  ],
+  "credentialLikeFilenames": [],
+  "limitations": [
+    "Candidate means reviewed for a proposed checkpoint; nothing is staged or committed.",
+    "Proposed-archive originals remain in place and excluded from the checkpoint; their current cold-archive bundles are authenticated-download verified in restricted Drive.",
+    "Local-only/private originals remain in place and excluded from the checkpoint; their private backup is authenticated-download verified in restricted Drive.",
+    "LFS-pending sources have not been converted and no LFS remote preservation has been verified.",
+    "Preservation-staging bundles are generated local verification material and are excluded from the commit candidate without being ignored or deleted."
+  ]
+}

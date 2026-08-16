@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "status": "baby-and-teen-runtime-deformation-qa-pass-adult-and-desktop-exports-in-progress",
+  "approval": {
+    "babyStaticLikenessApproved": true,
+    "approvedAt": "2026-08-15",
+    "approvedScope": ["face", "baby-age-read", "silhouette", "paws", "collar", "tag"],
+    "deformationAndAnimationApprovalPending": true
+  },
+  "deferredRefinements": [
+    {
+      "id": "baby-torso-length",
+      "requestedBy": "Mark",
+      "status": "deferred-by-user",
+      "intent": "lengthen Baby torso approximately 8–12% to reduce the short-spine read",
+      "applyTo": ["mobile", "desktop"],
+      "requiresWeightMorphAndEvidenceRefresh": true
+    }
+  ],
+  "presentationOnly": true,
+  "simulationMutation": false,
+  "rootMotionGameplay": false,
+  "coordinateSystem": {
+    "unit": "meter",
+    "upAxis": "Z",
+    "forwardAxis": "-Y",
+    "rootAtOrigin": true,
+    "pawSolesAtZ0": true
+  },
+  "gltfExport": {
+    "unit": "meter",
+    "upAxis": "Y",
+    "forwardAxis": "+Z",
+    "rootNode": "jack_root",
+    "rootTransformIdentity": true,
+    "groundContactY": 0.0
+  },
+  "sharedRig": {
+    "contract": "rig/jack-rig.json",
+    "source": "source/jack-shared-rig-animations.blend",
+    "animationExport": "exports/jack-rig-animations.glb",
+    "validation": "../../../evidence/3d-jack/rig-animation-validation.json",
+    "boneCount": 40,
+    "inverseBindMatrixSha256": "5ddc1e23921fbe8fc1ef32ae70671596ddf7e3e4e2902cb2a887fd742e3398ea",
+    "clipManifest": "animations/clip-manifest.json",
+    "clipCount": 16,
+    "eventManifest": "animations/animation-event-manifest.json",
+    "editableSourceMatchesExport": true,
+    "babyDeformationEvidence": "../../../evidence/3d-jack/jack-baby-deformation-16-clip-review.png",
+    "babyDeformationReport": "../../../evidence/3d-jack/deformation/baby-deformation-report.json",
+    "teenDeformationEvidence": "../../../evidence/3d-jack/jack-teen-deformation-16-clip-review.png",
+    "teenDeformationReport": "../../../evidence/3d-jack/deformation/teen-deformation-report.json",
+    "available": true
+  },
+  "stageToSkin": {
+    "baby": "baby",
+    "little-puppy": "baby",
+    "puppy": "teen",
+    "young-dog": "teen",
+    "adult": "adult"
+  },
+  "lodPolicy": {
+    "mobile": {
+      "suffix": "",
+      "triangleBudget": {"min": 8000, "max": 14000},
+      "initialPayloadTargetBytes": 3670016,
+      "purpose": "phone and constrained-device runtime"
+    },
+    "desktop": {
+      "suffix": "-desktop",
+      "sourcePolicy": "preserve-highest-available-clean-meshy-source",
+      "sourceInventory": "skins/desktop-source-inventory.json",
+      "triangleBudget": {"targetMax": 60000, "hardMax": 100000},
+      "textureMaxEdge": 2048,
+      "purpose": "desktop high-quality runtime",
+      "mustMatchMobileSkeletonMorphAnchorsAndClipContract": true,
+      "remoteMastersPreserved": true,
+      "localMasterBytesAvailable": false,
+      "available": false
+    },
+    "selectionOwnedByIntegration": true,
+    "simulationBehaviorIdenticalAcrossLods": true
+  },
+  "skins": [
+    {
+      "id": "baby",
+      "meshyAssetName": "Jack Baby Optimized 10K",
+      "growthStages": ["baby", "little-puppy"],
+      "relativeDisplayHeight": 0.82,
+      "source": "source/meshy/jack-baby-meshy.blend",
+      "rawGlb": "exports/source/jack-baby-meshy.glb",
+      "runtimeGlb": "exports/jack-baby.glb",
+      "desktopRuntimeGlb": "exports/desktop/jack-baby-desktop.glb",
+      "desktopSourceGlb": "exports/source/desktop/jack-baby-meshy-high.glb",
+      "triangleBudget": {"min": 8000, "max": 14000},
+      "rawGlbSha256": "e452b59a8aa821fdd585007a2da18539ab1e6e62f9f3202f16b54cc8a641d1b5",
+      "runtimeGlbSha256": "6ebbafe99e140646471d1ca6852368238666eca8263cdc18999abeadb1bc21e6",
+      "metrics": "skins/jack-baby-metrics.json",
+      "validation": "../../../evidence/3d-jack/skin-validation/baby-structural-validation.json",
+      "verificationStatus": "static-likeness-approved-source-structural-and-16-clip-deformation-qa-pass",
+      "editableSourceAvailable": true,
+      "available": true
+    },
+    {
+      "id": "teen",
+      "meshyAssetName": "Jack Teen Optimized 10K",
+      "growthStages": ["puppy", "young-dog"],
+      "relativeDisplayHeight": 0.92,
+      "source": "source/meshy/jack-teen-meshy.blend",
+      "rawGlb": "exports/source/jack-teen-meshy.glb",
+      "runtimeGlb": "exports/jack-teen.glb",
+      "desktopRuntimeGlb": "exports/desktop/jack-teen-desktop.glb",
+      "desktopSourceGlb": "exports/source/desktop/jack-teen-meshy-high.glb",
+      "triangleBudget": {"min": 8000, "max": 14000},
+      "rawGlbSha256": "741f4c24f8fbe5ee76ea4bdabe92c56f0b91af20a3c291e83c9ac49545b8fc7b",
+      "runtimeGlbSha256": "c43c90113377da6534af6d67f8a4f784a4b7bbc4277cf5e9f2734ae3ba99ebde",
+      "metrics": "skins/jack-teen-metrics.json",
+      "validation": "../../../evidence/3d-jack/skin-validation/teen-structural-validation.json",
+      "verificationStatus": "source-structural-and-16-clip-deformation-qa-pass-pending-mark-age-set-approval",
+      "editableSourceAvailable": true,
+      "available": true
+    },
+    {
+      "id": "adult",
+      "meshyAssetName": "Jack Adult Optimized 10K",
+      "growthStages": ["adult"],
+      "relativeDisplayHeight": 1.0,
+      "source": "source/meshy/jack-adult-meshy.blend",
+      "rawGlb": "exports/source/jack-adult-meshy.glb",
+      "runtimeGlb": "exports/jack-adult.glb",
+      "desktopRuntimeGlb": "exports/desktop/jack-adult-desktop.glb",
+      "desktopSourceGlb": "exports/source/desktop/jack-adult-meshy-high.glb",
+      "triangleBudget": {"min": 8000, "max": 14000},
+      "available": false
+    }
+  ],
+  "materialContract": {
+    "maxRenderedPrimitivesPerSkin": 3,
+    "primaryTextureMax": 2048,
+    "decodedTextureMemoryMaxBytes": 8388608,
+    "roles": {
+      "fur": "#F4F0E5",
+      "ear": "#D99B9C",
+      "eyes": "#241F24",
+      "nose": "#4A343B",
+      "mouth_tongue": "#E78F9A",
+      "collar": "#3D78A8",
+      "tag": "#D5A44D",
+      "condition_dirty": "neutral-multiply-roughness"
+    }
+  },
+  "morphContract": [
+    "condition_hungry",
+    "condition_starving",
+    "blink",
+    "lids_tired",
+    "nose_compress",
+    "smile",
+    "mouth_open",
+    "tongue_out"
+  ],
+  "semanticAnchorContract": {
+    "required": [
+      "jack_root",
+      "head",
+      "nose_visual",
+      "hit_nose",
+      "mouth_anchor",
+      "collar",
+      "tag",
+      "tail_base",
+      "paw_front_l",
+      "paw_front_r"
+    ],
+    "noseHitProxy": {
+      "node": "hit_nose",
+      "invisible": true,
+      "radiusMeters": 0.085,
+      "minimumProjectedTargetCssPixels": 56,
+      "uiOwnsAdditionalScreenSpacePadding": true
+    }
+  },
+  "adapterClipContract": {
+    "required": [
+      "idle",
+      "tail_wag",
+      "feed",
+      "sleep",
+      "wake",
+      "play",
+      "clean_reaction",
+      "boop_comfortable",
+      "boop_need_hunger",
+      "boop_need_energy",
+      "boop_need_hygiene",
+      "boop_need_happiness",
+      "boop_rejected",
+      "tired",
+      "dirty",
+      "death_rest"
+    ],
+    "playDurationMs": 3000,
+    "cleanReactionDurationMs": 1500,
+    "eventManifest": "animations/animation-event-manifest.json",
+    "presentationOnly": true,
+    "simulationMutation": false
+  },
+  "conditionMapping": {
+    "healthy": {"hungerMin": 40, "hungerMax": 100, "morphs": {}},
+    "hungry": {"hungerMin": 1, "hungerMax": 39, "morph": "condition_hungry"},
+    "starving": {
+      "hunger": 0,
+      "baseMorph": "condition_hungry",
+      "progressMorph": "condition_starving",
+      "progressSource": "existing-starvation-virtual-minutes",
+      "progressCapMinutes": 120
+    },
+    "dead": {"clip": "death_rest", "holdFinalPose": true}
+  },
+  "runtimeContract": {
+    "loadOnlySelectedAgeInitially": true,
+    "animationsStoredOnce": true,
+    "rendererReadsExistingStateOnly": true,
+    "assetAdvancesTime": false,
+    "assetChangesNeeds": false,
+    "assetChangesGrowth": false,
+    "assetChangesCareEffects": false,
+    "assetChangesPersistence": false,
+    "assetSelectsAudio": false
+  },
+  "fallbackContract": {
+    "healthyPattern": "../../../evidence/3d-jack/fallback/{skin}-healthy-three-quarter.png",
+    "hungryPattern": "../../../evidence/3d-jack/fallback/{skin}-hungry.png",
+    "starvingPattern": "../../../evidence/3d-jack/fallback/{skin}-starving.png",
+    "availableBySkin": {
+      "baby": true,
+      "teen": true,
+      "adult": false
+    },
+    "available": false
+  }
+}
