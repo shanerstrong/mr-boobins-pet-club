@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "kind": "tracked-representative-evidence-refresh",
+  "refreshId": "safe-return-baby-day1-2026-08-16",
+  "capturedAt": "2026-08-16T15:00:00.000Z",
+  "hashAlgorithm": "sha256",
+  "sourceInventory": "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
+  "sourceInventoryEvidenceSha256": "40ee3701e1046461ccf3d0e465842a82e89207c04326826c5ae67d8d0005c600",
+  "priorGitCommit": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+  "reason": "Approved Safe Return and Baby Day 1 phone/desktop evidence recapture at the same stable normal-Git representative paths. Prior bytes remain recoverable from the committed baseline; the prepolicy inventory is immutable.",
+  "entries": [
+    {
+      "path": "evidence/baby-day1/adoption-hub-390x844.jpg",
+      "priorBytes": 32427,
+      "priorSha256": "898ca022d7e580d2735de49b55ba24f928dfa0f303d0f8f1f2844699039348a0",
+      "currentBytes": 32427,
+      "currentSha256": "5ad22672a08fd83204075cf85db87b088c71c390f0ddb73473f5b3b5fc3017eb"
+    },
+    {
+      "path": "evidence/baby-day1/guided-care-room-390x844.jpg",
+      "priorBytes": 39147,
+      "priorSha256": "57b464ee94669d5baee3956aaabbb75b4276df00537952b6a44c42c7e6bbce2a",
+      "currentBytes": 39825,
+      "currentSha256": "c5df99fceb43dfe4da6fac0d289cbfca43aefa660fa09dc1a45d001dd939980a"
+    },
+    {
+      "path": "evidence/baby-day1/returning-hub-390x844.jpg",
+      "priorBytes": 30819,
+      "priorSha256": "4a9b7252d599a424c3bf2b28d07e069d6e99730ba5bff75e6a6e98fc8cba8f5b",
+      "currentBytes": 31293,
+      "currentSha256": "405476c22c01857467b26d6c94d8329c7c48a436a71dde4aa9b714d5ce196549"
+    },
+    {
+      "path": "evidence/baby-day1/room-desktop-1440x900.jpg",
+      "priorBytes": 67113,
+      "priorSha256": "e60688d49c0f3feccddd7f31ef8b49dd3b216a9c49474dba2318df2a8cf0a1f5",
+      "currentBytes": 68692,
+      "currentSha256": "0c23f58ded06c574273def072ac813342beea8ba9a61ceb2886b070c74111400"
+    },
+    {
+      "path": "evidence/baby-day1/sleep-dialog-keyboard-390x844.jpg",
+      "priorBytes": 35725,
+      "priorSha256": "c8888e8c7cc38ca9d9caac720da27a3d4dd5ed3f2819b1dd6ee30f8922df8fe6",
+      "currentBytes": 35346,
+      "currentSha256": "39c78e1d7481240c45b17ce51edbb285ee9dd09d652e15edb52321452307a0da"
+    }
+  ]
+}

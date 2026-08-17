@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   useSyncExternalStore,
@@ -9,6 +10,7 @@ import {
 import {
   AccessibilityInfo,
   Animated,
+  AppState,
   Modal,
   Platform,
   Pressable,
@@ -29,16 +31,14 @@ import {
   DEFAULT_CARE_GUIDE_PROGRESS,
   DEFAULT_TRAINING_PROGRESS,
   completeTrainingCommand,
+  createPetGuidePersistenceAuthority,
   loadAudioPreferences,
-  loadCareGuideProgress,
-  loadPet,
   loadTrainingProgress,
   saveAudioPreferences,
-  saveCareGuideProgress,
-  savePet,
   saveTrainingProgress,
   type AudioPreferences,
   type CareGuideProgress,
+  type SaveCleanCompletionResult,
   type TrainingProgress,
 } from "./src/persistence";
 import {
@@ -48,6 +48,10 @@ import {
   syncSfxPlayers,
   type MusicTrack,
 } from "./src/audio-policy";
+import {
+  getTrainingAudioTimeline,
+  scaleAudioPhaseTimeline,
+} from "./src/audio-cue-policy";
 import {
   createInteractionScheduler,
   getBoopAvailability,
@@ -86,7 +90,6 @@ import {
   CLEANING_DURATION_MS,
   DEFAULT_CLOCK_MULTIPLIER,
   GROWTH_STEP_MINUTES,
-  advancePet,
   canCareForPet,
   careForPet,
   createNewPet,
@@ -97,7 +100,6 @@ import {
   isSleeping,
   normalizeNickname,
   startSleep,
-  switchClockRate,
   wakePet,
   type CareAction,
   type CleaningPhase,
@@ -106,17 +108,55 @@ import {
   type PetState,
   type RoomTheme,
 } from "./src/simulation";
-import { getReturnSummary } from "./src/return-policy";
+import {
+  createAppTimeCoordinator,
+  type AppScreen,
+  type AppTimeEvent,
+} from "./src/app-lifecycle";
+import {
+  completeFirstCareAfterAllowedAction,
+  finishDelayedCleanDurably,
+  finishExplicitResetDurably,
+  getFirstCareGuidance,
+  getLiveReturnSummary,
+  installDialogFocusBoundary,
+  recoverDelayedCleanForPublicationDurably,
+  recoverExplicitResetForPublicationDurably,
+  type DelayedCleanCommitAdapter,
+  type ReturnContext,
+} from "./src/day-one-ui";
 
 type Mode = "loading" | "available" | "invalid" | "unavailable" | "session";
-type Screen = "title" | "hub" | "room" | "settings";
+type Screen = AppScreen;
 type PreferenceMode = "loading" | "available" | "invalid" | "session";
 type TrainingPersistenceMode = "loading" | "available" | "invalid" | "session";
 type CareGuidePersistenceMode = "loading" | "available" | "invalid" | "session";
-type SoundKind = "happy" | "sleepy" | "bark" | "shower" | "sneeze" | "huff";
-type ReturnContext = { before: PetState };
+type ExplicitResetRecoveryMode =
+  | "none"
+  | "pending"
+  | "invalid"
+  | "unavailable";
+type DelayedCleanRecoveryMode = ExplicitResetRecoveryMode;
+type SoundKind =
+  | "happy"
+  | "alert"
+  | "sleepy"
+  | "yawn"
+  | "sneeze"
+  | "huff"
+  | "wetShake"
+  | "toySqueak"
+  | "commandSelected"
+  | "success"
+  | "treatToss"
+  | "treatCatch"
+  | "treatCrunch"
+  | "celebration"
+  | "uiTap"
+  | "uiOpen"
+  | "uiClose"
+  | "uiConfirm";
 
-const rates = [1, 12, 60, 360, 3600];
 const sleepOptions = [1, 2, 4, 8];
 const growthStages: GrowthStage[] = [
   "baby",
@@ -187,6 +227,7 @@ function PetClub() {
   const [careGuideProgress, setCareGuideProgress] = useState<CareGuideProgress>(
     DEFAULT_CARE_GUIDE_PROGRESS,
   );
+  const careGuideProgressRef = useRef(careGuideProgress);
   const [careGuidePersistenceMode, setCareGuidePersistenceMode] =
     useState<CareGuidePersistenceMode>("loading");
   const [careGuideSaveFailed, setCareGuideSaveFailed] = useState(false);
@@ -195,8 +236,6 @@ function PetClub() {
   );
   const trainingStateRef = useRef(trainingState);
   const [audioGestureGranted, setAudioGestureGranted] = useState(false);
-  const [rate, setRate] = useState(DEFAULT_CLOCK_MULTIPLIER);
-  const rateRef = useRef(DEFAULT_CLOCK_MULTIPLIER);
   const [nicknameDraft, setNicknameDraft] = useState("Jack");
   const [nicknameError, setNicknameError] = useState("");
   const [returnContext, setReturnContext] = useState<ReturnContext | null>(null);
@@ -213,6 +252,15 @@ function PetClub() {
   const [reduced, setReduced] = useState(false);
   const [sleepMenuOpen, setSleepMenuOpen] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
+  const [resetPending, setResetPending] = useState(false);
+  const [resetError, setResetError] = useState("");
+  const resetRequestRevision = useRef(0);
+  const [explicitResetRecoveryMode, setExplicitResetRecoveryMode] =
+    useState<ExplicitResetRecoveryMode>("none");
+  const explicitResetRecoveryRef = useRef<ExplicitResetRecoveryMode>("none");
+  const [delayedCleanRecoveryMode, setDelayedCleanRecoveryMode] =
+    useState<DelayedCleanRecoveryMode>("none");
+  const delayedCleanRecoveryRef = useRef<DelayedCleanRecoveryMode>("none");
   const [bob] = useState(() => new Animated.Value(0));
   const [wag] = useState(() => new Animated.Value(0));
   const [pulse] = useState(() => new Animated.Value(0));
@@ -221,17 +269,87 @@ function PetClub() {
   const [trainingAnimation] = useState(() => new Animated.Value(0));
   const [trainingAnimationRevision, setTrainingAnimationRevision] = useState(0);
   const [trainingTreatProgress] = useState(() => new Animated.Value(0));
-  const happyPlayer = useAudioPlayer(require("./assets/audio/happy.wav"));
-  const sleepyPlayer = useAudioPlayer(require("./assets/audio/sleepy.wav"));
-  const barkPlayer = useAudioPlayer(require("./assets/audio/bark.wav"));
-  const showerPlayer = useAudioPlayer(require("./assets/audio/shower.wav"));
-  const sneezePlayer = useAudioPlayer(require("./assets/audio/sneeze.wav"));
-  const huffPlayer = useAudioPlayer(require("./assets/audio/huff.wav"));
-  const idleMusicPlayer = useAudioPlayer(require("./assets/audio/music-idle.wav"));
-  const playMusicPlayer = useAudioPlayer(require("./assets/audio/music-play.wav"));
-  const sleepMusicPlayer = useAudioPlayer(require("./assets/audio/music-sleep.wav"));
+  const happyPlayer = useAudioPlayer(require("./assets/audio/v1/jack/jack-happy-bark.v1.wav"));
+  const alertPlayer = useAudioPlayer(require("./assets/audio/v1/jack/jack-alert-bark.v1.wav"));
+  const sleepyPlayer = useAudioPlayer(require("./assets/audio/v1/jack/jack-sleepy-grumble.v1.wav"));
+  const yawnPlayer = useAudioPlayer(require("./assets/audio/v1/jack/jack-yawn.v1.wav"));
+  const sneezePlayer = useAudioPlayer(require("./assets/audio/v1/jack/jack-sneeze.v1.wav"));
+  const huffPlayer = useAudioPlayer(require("./assets/audio/v1/jack/jack-huff.v1.wav"));
+  const wetShakePlayer = useAudioPlayer(require("./assets/audio/v1/jack/jack-wet-shake.v1.wav"));
+  const toySqueakPlayer = useAudioPlayer(require("./assets/audio/v1/jack/jack-toy-squeak.v1.wav"));
+  const commandSelectedPlayer = useAudioPlayer(require("./assets/audio/v1/ui/ui-command-selected.master.v1.wav"));
+  const successPlayer = useAudioPlayer(require("./assets/audio/v1/training/training-success-chime.v1.wav"));
+  const treatTossPlayer = useAudioPlayer(require("./assets/audio/v1/training/training-treat-toss.v1.wav"));
+  const treatCatchPlayer = useAudioPlayer(require("./assets/audio/v1/training/training-treat-catch.v1.wav"));
+  const treatCrunchPlayer = useAudioPlayer(require("./assets/audio/v1/jack/jack-treat-crunch.v1.wav"));
+  const celebrationPlayer = useAudioPlayer(require("./assets/audio/v1/training/training-celebration-accent.v1.wav"));
+  const uiTapPlayer = useAudioPlayer(require("./assets/audio/v1/ui/ui-tap.master.v1.wav"));
+  const uiOpenPlayer = useAudioPlayer(require("./assets/audio/v1/ui/ui-open.master.v1.wav"));
+  const uiClosePlayer = useAudioPlayer(require("./assets/audio/v1/ui/ui-close.master.v1.wav"));
+  const uiConfirmPlayer = useAudioPlayer(require("./assets/audio/v1/ui/ui-confirm.master.v1.wav"));
+  const soundPlayers = useMemo(
+    () => ({
+      happy: happyPlayer,
+      alert: alertPlayer,
+      sleepy: sleepyPlayer,
+      yawn: yawnPlayer,
+      sneeze: sneezePlayer,
+      huff: huffPlayer,
+      wetShake: wetShakePlayer,
+      toySqueak: toySqueakPlayer,
+      commandSelected: commandSelectedPlayer,
+      success: successPlayer,
+      treatToss: treatTossPlayer,
+      treatCatch: treatCatchPlayer,
+      treatCrunch: treatCrunchPlayer,
+      celebration: celebrationPlayer,
+      uiTap: uiTapPlayer,
+      uiOpen: uiOpenPlayer,
+      uiClose: uiClosePlayer,
+      uiConfirm: uiConfirmPlayer,
+    }),
+    [
+      alertPlayer,
+      celebrationPlayer,
+      commandSelectedPlayer,
+      happyPlayer,
+      huffPlayer,
+      sleepyPlayer,
+      sneezePlayer,
+      successPlayer,
+      toySqueakPlayer,
+      treatCatchPlayer,
+      treatCrunchPlayer,
+      treatTossPlayer,
+      uiClosePlayer,
+      uiConfirmPlayer,
+      uiOpenPlayer,
+      uiTapPlayer,
+      wetShakePlayer,
+      yawnPlayer,
+    ],
+  );
+  const idleMusicPlayer = useAudioPlayer(require("./assets/audio/v1/music/pet-room-cozy.v1.wav"));
+  const playMusicPlayer = useAudioPlayer(require("./assets/audio/v1/music/pet-room-play.v1.wav"));
+  const sleepMusicPlayer = useAudioPlayer(require("./assets/audio/v1/music/pet-room-sleep.v1.wav"));
   const musicTrackRef = useRef<MusicTrack>(null);
   const petRef = useRef<PetState | null>(null);
+  const petGuidePersistenceRef = useRef(
+    createPetGuidePersistenceAuthority(),
+  );
+  const screenRef = useRef<Screen>("title");
+  const initialForeground =
+    Platform.OS === "web"
+      ? typeof document === "undefined" || document.visibilityState !== "hidden"
+      : AppState.currentState === "active";
+  const foregroundRef = useRef(initialForeground);
+  const timeCoordinatorRef = useRef(
+    createAppTimeCoordinator({
+      screen: "title",
+      foreground: initialForeground,
+      careReachable: false,
+    }),
+  );
   const native = Platform.OS !== "web";
   const sleeping = pet ? isSleeping(pet) : false;
   const playing = emote === "toy";
@@ -274,28 +392,168 @@ function PetClub() {
       return next;
     });
     manualWakeRef.current = false;
-    [happyPlayer, sleepyPlayer, barkPlayer, showerPlayer, sneezePlayer, huffPlayer].forEach(
-      (player) => player.pause(),
-    );
+    Object.values(soundPlayers).forEach((player) => player.pause());
     [idleMusicPlayer, playMusicPlayer, sleepMusicPlayer].forEach((player) => player.pause());
     musicTrackRef.current = null;
   }, [
-    barkPlayer,
     feedProgress,
-    happyPlayer,
-    huffPlayer,
     messageOpacity,
     idleMusicPlayer,
     pulse,
     playMusicPlayer,
-    showerPlayer,
-    sleepyPlayer,
-    sneezePlayer,
     sleepMusicPlayer,
+    soundPlayers,
     trainingAnimation,
     trainingTreatProgress,
     zoom,
   ]);
+
+  const recordExplicitResetRecovery = useCallback(
+    (next: ExplicitResetRecoveryMode) => {
+      explicitResetRecoveryRef.current = next;
+      setExplicitResetRecoveryMode(next);
+    },
+    [],
+  );
+
+  const recordDelayedCleanRecovery = useCallback(
+    (next: DelayedCleanRecoveryMode) => {
+      delayedCleanRecoveryRef.current = next;
+      setDelayedCleanRecoveryMode(next);
+    },
+    [],
+  );
+
+  const applyTimeEvent = useCallback(
+    (event: AppTimeEvent) => {
+      if (
+        explicitResetRecoveryRef.current !== "none" ||
+        delayedCleanRecoveryRef.current !== "none"
+      ) {
+        return null;
+      }
+      const current = petRef.current;
+      if (current) timeCoordinatorRef.current.replacePet(current);
+      const before = timeCoordinatorRef.current.snapshot().pet;
+      const next = timeCoordinatorRef.current.apply(event);
+      screenRef.current = next.screen;
+      foregroundRef.current = next.foreground;
+      setScreen(next.screen);
+      if (!next.pet) return null;
+      petRef.current = next.pet;
+      setPet(next.pet);
+      if (before && !before.isDead && next.pet.isDead) {
+        cancelActiveInteractions();
+        screenRef.current = "room";
+        setScreen("room");
+      }
+      return next.pet;
+    },
+    [cancelActiveInteractions],
+  );
+
+  const setCareReachability = useCallback(
+    (reachable: boolean, now = interactionNow()) => {
+      applyTimeEvent({
+        type: "CARE_REACHABILITY",
+        now,
+        reachable,
+      });
+    },
+    [applyTimeEvent],
+  );
+
+  const applyFreshState = useCallback(
+    (
+      current: PetState,
+      session: boolean,
+      recoveryPending = false,
+    ) => {
+      cancelActiveInteractions();
+      recordExplicitResetRecovery("none");
+      recordDelayedCleanRecovery("none");
+      const now = current.createdAt;
+      petRef.current = current;
+      timeCoordinatorRef.current.replacePet(current);
+      timeCoordinatorRef.current.apply({
+        type: "NAVIGATE",
+        now,
+        screen: "title",
+      });
+      setMode(session ? "session" : "available");
+      setSaveFailed(recoveryPending);
+      setHydrated(true);
+      setPet(current);
+      setNicknameDraft(current.name);
+      screenRef.current = "title";
+      setScreen("title");
+      setMessage("");
+      setEmote(null);
+      setReturnContext(null);
+      setTrainingProgress(DEFAULT_TRAINING_PROGRESS);
+      setTrainingSaveFailed(false);
+      careGuideProgressRef.current = DEFAULT_CARE_GUIDE_PROGRESS;
+      setCareGuideProgress(DEFAULT_CARE_GUIDE_PROGRESS);
+      setCareGuidePersistenceMode(session ? "session" : "available");
+      setCareGuideSaveFailed(recoveryPending);
+      setAudioGestureGranted(false);
+    },
+    [
+      cancelActiveInteractions,
+      recordDelayedCleanRecovery,
+      recordExplicitResetRecovery,
+    ],
+  );
+
+  const retainExplicitResetRecovery = useCallback(
+    (reason: "pending" | "invalid" | "unavailable") => {
+      cancelActiveInteractions();
+      recordExplicitResetRecovery(reason);
+      petRef.current = null;
+      setPet(null);
+      setHydrated(true);
+      setMode(reason === "unavailable" ? "unavailable" : "invalid");
+      setCareGuidePersistenceMode(
+        reason === "unavailable" ? "session" : "invalid",
+      );
+      setSaveFailed(true);
+      setCareGuideSaveFailed(true);
+      setResetPending(false);
+      setResetError(
+        petGuidePersistenceRef.current.pendingExplicitResetTarget() !== null &&
+          reason !== "pending"
+          ? "The reset save outcome is still being safely checked. Restore local storage access, then retry recovery."
+          : reason === "pending"
+          ? "New Baby is safely queued, but recovery is not finished. Please try again."
+          : reason === "unavailable"
+            ? "Local saves are unavailable. Reopen storage access, then retry recovery."
+            : "The saved reset no longer matches its recovery record. Start fresh only if you want to replace it.",
+      );
+    },
+    [cancelActiveInteractions, recordExplicitResetRecovery],
+  );
+
+  const retainDelayedCleanRecovery = useCallback(
+    (reason: "pending" | "invalid" | "unavailable") => {
+      cancelActiveInteractions();
+      recordDelayedCleanRecovery(reason);
+      setCareLocked(true);
+      setSaveFailed(true);
+      setCareGuideSaveFailed(true);
+      setResetPending(false);
+      setMessage(
+        "The Clean save outcome is still being safely checked. Restore local storage access, then retry.",
+      );
+      if (!petRef.current) {
+        setHydrated(true);
+        setMode(reason === "unavailable" ? "unavailable" : "invalid");
+        setCareGuidePersistenceMode(
+          reason === "unavailable" ? "session" : "invalid",
+        );
+      }
+    },
+    [cancelActiveInteractions, recordDelayedCleanRecovery],
+  );
 
   useEffect(() => {
     let alive = true;
@@ -315,35 +573,72 @@ function PetClub() {
   useEffect(() => {
     let alive = true;
     void Promise.all([
-      loadPet(),
+      petGuidePersistenceRef.current.loadAndRecover(),
       loadAudioPreferences(),
       loadTrainingProgress(),
-      loadCareGuideProgress(),
     ]).then(
-      ([petResult, preferenceResult, trainingResult, careGuideResult]) => {
+      ([petAndGuideResult, preferenceResult, trainingResult]) => {
         if (!alive) return;
+        const { petResult, careGuideResult } = petAndGuideResult;
+        const blockedResetRecovery =
+          petAndGuideResult.explicitResetRecovery === "pending" ||
+          petAndGuideResult.explicitResetRecovery === "invalid" ||
+          petAndGuideResult.explicitResetRecovery === "unavailable"
+            ? petAndGuideResult.explicitResetRecovery
+            : null;
+        const blockedCleanRecovery =
+          petAndGuideResult.delayedCleanRecovery === "pending" ||
+          petAndGuideResult.delayedCleanRecovery === "invalid" ||
+          petAndGuideResult.delayedCleanRecovery === "unavailable"
+            ? petAndGuideResult.delayedCleanRecovery
+            : null;
         const now = Date.now();
-        if (petResult.kind === "loaded") {
+        const foreground =
+          Platform.OS === "web"
+            ? typeof document === "undefined" ||
+              document.visibilityState !== "hidden"
+            : AppState.currentState === "active";
+        const visibility = timeCoordinatorRef.current.apply({
+          type: "VISIBILITY",
+          now,
+          foreground,
+        });
+        foregroundRef.current = visibility.foreground;
+        if (blockedResetRecovery) {
+          previousSleepingRef.current = false;
+          retainExplicitResetRecovery(blockedResetRecovery);
+        } else if (blockedCleanRecovery) {
+          previousSleepingRef.current = false;
+          retainDelayedCleanRecovery(blockedCleanRecovery);
+        } else if (petResult.kind === "loaded") {
           const wasSleeping = isSleeping(petResult.pet);
-          const elapsedRealMs = Math.max(0, now - petResult.pet.lastUpdatedAt);
-          const current = advancePet(
+          const current = timeCoordinatorRef.current.hydrateLoadedPet(
             petResult.pet,
             now,
-            DEFAULT_CLOCK_MULTIPLIER,
-          );
+          ).pet!;
           previousSleepingRef.current = wasSleeping;
+          petRef.current = current;
           setPet(current);
           setNicknameDraft(current.name);
-          const summary = getReturnSummary({
-            before: petResult.pet,
-            after: current,
-            elapsedRealMs,
-          });
+          const summary = getLiveReturnSummary(
+            { before: petResult.pet },
+            current,
+          );
           setReturnContext(summary ? { before: petResult.pet } : null);
           setMode("available");
+          if (petAndGuideResult.delayedCleanRecovery === "recovered") {
+            petGuidePersistenceRef.current.acknowledgeCleanPublication(
+              petResult.pet,
+              careGuideResult.kind === "loaded"
+                ? careGuideResult.progress
+                : DEFAULT_CARE_GUIDE_PROGRESS,
+            );
+          }
         } else if (petResult.kind === "missing") {
           const current = createNewPet(now);
+          timeCoordinatorRef.current.replacePet(current);
           previousSleepingRef.current = false;
+          petRef.current = current;
           setPet(current);
           setNicknameDraft(current.name);
           setReturnContext(null);
@@ -376,34 +671,47 @@ function PetClub() {
             trainingResult.kind === "invalid" ? "invalid" : "session",
           );
         }
-        if (careGuideResult.kind === "loaded") {
+        if (blockedResetRecovery || blockedCleanRecovery) {
+          careGuideProgressRef.current = DEFAULT_CARE_GUIDE_PROGRESS;
+          setCareGuideProgress(DEFAULT_CARE_GUIDE_PROGRESS);
+        } else if (careGuideResult.kind === "loaded") {
+          careGuideProgressRef.current = careGuideResult.progress;
           setCareGuideProgress(careGuideResult.progress);
           setCareGuidePersistenceMode("available");
         } else if (careGuideResult.kind === "missing") {
+          careGuideProgressRef.current = DEFAULT_CARE_GUIDE_PROGRESS;
           setCareGuideProgress(DEFAULT_CARE_GUIDE_PROGRESS);
           setCareGuidePersistenceMode("available");
         } else {
+          careGuideProgressRef.current = DEFAULT_CARE_GUIDE_PROGRESS;
           setCareGuideProgress(DEFAULT_CARE_GUIDE_PROGRESS);
           setCareGuidePersistenceMode(
             careGuideResult.kind === "invalid" ? "invalid" : "session",
           );
         }
-        setScreen("title");
+        const coordinated = timeCoordinatorRef.current.apply({
+          type: "NAVIGATE",
+          now,
+          screen: "title",
+        });
+        screenRef.current = coordinated.screen;
+        foregroundRef.current = coordinated.foreground;
+        setScreen(coordinated.screen);
         setHydrated(true);
       },
     );
     return () => {
       alive = false;
     };
-  }, []);
+  }, [retainDelayedCleanRecovery, retainExplicitResetRecovery]);
 
   useEffect(() => {
-    if (!pet || !hydrated || mode !== "available") return;
-    void savePet(pet).then(
+    if (!pet || !hydrated || mode !== "available" || careLocked) return;
+    void petGuidePersistenceRef.current.savePet(pet).then(
       () => setSaveFailed(false),
       () => setSaveFailed(true),
     );
-  }, [hydrated, mode, pet]);
+  }, [careLocked, hydrated, mode, pet]);
 
   useEffect(() => {
     if (!hydrated || trainingPersistenceMode !== "available") return;
@@ -417,35 +725,221 @@ function PetClub() {
   }, [hydrated, trainingPersistenceMode, trainingProgress]);
 
   useEffect(() => {
-    if (!hydrated || careGuidePersistenceMode !== "available") return;
-    void saveCareGuideProgress(careGuideProgress).then(
+    if (
+      !hydrated ||
+      careGuidePersistenceMode !== "available" ||
+      careLocked
+    ) {
+      return;
+    }
+    void petGuidePersistenceRef.current.saveGuide(careGuideProgress).then(
       () => setCareGuideSaveFailed(false),
       () => {
         setCareGuideSaveFailed(true);
         setCareGuidePersistenceMode("session");
       },
     );
-  }, [careGuidePersistenceMode, careGuideProgress, hydrated]);
+  }, [careGuidePersistenceMode, careGuideProgress, careLocked, hydrated]);
 
   useEffect(() => {
     petRef.current = pet;
   }, [pet]);
 
   useEffect(() => {
+    careGuideProgressRef.current = careGuideProgress;
+  }, [careGuideProgress]);
+
+  const observeSupersedingSave = useCallback(
+    (save: Promise<SaveCleanCompletionResult> | null) => {
+      if (!save) return;
+      void save.then(
+        (result) => {
+          setSaveFailed(result.recoveryPending);
+          setCareGuideSaveFailed(result.recoveryPending);
+          if (!result.recoveryPending) {
+            setCareGuidePersistenceMode("available");
+          }
+        },
+        () => {
+          setSaveFailed(true);
+          setCareGuideSaveFailed(true);
+        },
+      );
+    },
+    [],
+  );
+
+  const recoverCleanBeforeForeground = useCallback(
+    (now: number) => {
+      const recoveryGeneration = uiGeneration.current;
+      setResetPending(true);
+      const adapter: DelayedCleanCommitAdapter = {
+        applyCommitted: (completion) => {
+          recordDelayedCleanRecovery("none");
+          petRef.current = completion.pet;
+          timeCoordinatorRef.current.replacePet(completion.pet);
+          careGuideProgressRef.current = completion.progress;
+          setPet(completion.pet);
+          setNicknameDraft(completion.pet.name);
+          setCareGuideProgress(completion.progress);
+          setMode("available");
+          setCareGuidePersistenceMode("available");
+          setSaveFailed(false);
+          setCareGuideSaveFailed(false);
+          setCleaningPhase(null);
+          setCareLocked(false);
+          setHydrated(true);
+          setResetPending(false);
+          setMessage("Fresh and fluffy! Jack sparkles.");
+          applyTimeEvent({ type: "VISIBILITY", now, foreground: true });
+          applyTimeEvent({
+            type: "CARE_REACHABILITY",
+            now,
+            reachable: screenRef.current === "room",
+          });
+        },
+        restoreForRetry: () => {
+          recordDelayedCleanRecovery("none");
+          setCleaningPhase(null);
+          setCareLocked(false);
+          setSaveFailed(true);
+          setCareGuideSaveFailed(true);
+          setResetPending(false);
+          setMessage("Clean couldn't be saved. Please try again.");
+          applyTimeEvent({
+            type: "CARE_REACHABILITY",
+            now,
+            reachable: screenRef.current === "room",
+          });
+        },
+        retainForRecovery: retainDelayedCleanRecovery,
+        isCurrent: () => recoveryGeneration === uiGeneration.current,
+      };
+      void recoverDelayedCleanForPublicationDurably(
+        petGuidePersistenceRef.current,
+        adapter,
+      ).then(
+        (result) => {
+          if (result === "superseded" || result === "none") {
+            setResetPending(false);
+          }
+        },
+        () => retainDelayedCleanRecovery("unavailable"),
+      );
+    },
+    [
+      applyTimeEvent,
+      recordDelayedCleanRecovery,
+      retainDelayedCleanRecovery,
+    ],
+  );
+
+  const recoverResetBeforeForeground = useCallback(
+    (now: number) => {
+      const recoveryGeneration = uiGeneration.current;
+      setResetPending(true);
+      void recoverExplicitResetForPublicationDurably(
+        petGuidePersistenceRef.current,
+        {
+          applyPrepared: ({ pet: recoveredPet }) => {
+            setResetError("");
+            applyFreshState(recoveredPet, false);
+            setResetPending(false);
+            applyTimeEvent({ type: "VISIBILITY", now, foreground: true });
+          },
+          restoreForRetry: () => retainExplicitResetRecovery("unavailable"),
+          retainForRecovery: retainExplicitResetRecovery,
+          isCurrent: () => recoveryGeneration === uiGeneration.current,
+        },
+      ).then(
+        (result) => {
+          if (result === "superseded" || result === "none") {
+            setResetPending(false);
+          }
+        },
+        () => retainExplicitResetRecovery("unavailable"),
+      );
+    },
+    [applyFreshState, applyTimeEvent, retainExplicitResetRecovery],
+  );
+
+  useEffect(() => {
     const id = setInterval(() => {
-      const now = Date.now();
-      const current = petRef.current;
-      if (!current) return;
-      const next = advancePet(current, now, rateRef.current);
-      petRef.current = next;
-      setPet(next);
-      if (!current.isDead && next.isDead) {
-        cancelActiveInteractions();
-        setScreen((active) => active === "settings" ? "room" : active);
-      }
+      applyTimeEvent({ type: "TICK", now: Date.now() });
     }, 1000);
     return () => clearInterval(id);
-  }, [cancelActiveInteractions]);
+  }, [applyTimeEvent]);
+
+  useEffect(() => {
+    const updateVisibility = (foreground: boolean) => {
+      const now = Date.now();
+      if (
+        foreground &&
+        (petGuidePersistenceRef.current.pendingExplicitResetTarget() !== null ||
+          explicitResetRecoveryRef.current === "pending")
+      ) {
+        recoverResetBeforeForeground(now);
+        return;
+      }
+      if (
+        foreground &&
+        (petGuidePersistenceRef.current.pendingCleanCompletionTarget() !==
+          null ||
+          delayedCleanRecoveryRef.current !== "none")
+      ) {
+        recoverCleanBeforeForeground(now);
+        return;
+      }
+      const before = petRef.current;
+      const after = applyTimeEvent({ type: "VISIBILITY", now, foreground });
+      if (foreground && before && after) {
+        const summary = getLiveReturnSummary({ before }, after);
+        setReturnContext(summary ? { before } : null);
+      }
+      if (foreground) {
+        observeSupersedingSave(
+          petGuidePersistenceRef.current.retryPendingSupersession(),
+        );
+      }
+      if (!foreground) {
+        cancelActiveInteractions();
+        if (after) {
+          observeSupersedingSave(
+            petGuidePersistenceRef.current.supersedePendingCleanWithPair(
+              after,
+              careGuideProgressRef.current,
+            ),
+          );
+        } else {
+          petGuidePersistenceRef.current.invalidateCleanPublication();
+        }
+        applyTimeEvent({
+          type: "CARE_REACHABILITY",
+          now,
+          reachable: screenRef.current === "room",
+        });
+      }
+    };
+
+    if (Platform.OS === "web") {
+      const onVisibilityChange = () =>
+        updateVisibility(document.visibilityState !== "hidden");
+      document.addEventListener("visibilitychange", onVisibilityChange);
+      return () =>
+        document.removeEventListener("visibilitychange", onVisibilityChange);
+    }
+
+    const subscription = AppState.addEventListener("change", (nextState) => {
+      updateVisibility(nextState === "active");
+    });
+    return () => subscription.remove();
+  }, [
+    applyTimeEvent,
+    cancelActiveInteractions,
+    observeSupersedingSave,
+    recoverCleanBeforeForeground,
+    recoverResetBeforeForeground,
+  ]);
 
   useEffect(() => {
     if (reduced || sleeping || pet?.isDead || trainingAnimating) {
@@ -493,24 +987,12 @@ function PetClub() {
       audioGestureGranted,
       !!pet?.isDead,
     );
-    syncSfxPlayers([
-      happyPlayer,
-      sleepyPlayer,
-      barkPlayer,
-      showerPlayer,
-      sneezePlayer,
-      huffPlayer,
-    ], allowSfx);
+    syncSfxPlayers(Object.values(soundPlayers), allowSfx);
   }, [
     audioGestureGranted,
-    barkPlayer,
-    happyPlayer,
-    huffPlayer,
     pet?.isDead,
     preferences.sfxEnabled,
-    showerPlayer,
-    sleepyPlayer,
-    sneezePlayer,
+    soundPlayers,
   ]);
 
   useEffect(() => {
@@ -572,19 +1054,15 @@ function PetClub() {
     ) {
       return;
     }
-    const player =
-      kind === "happy"
-        ? happyPlayer
-        : kind === "sleepy"
-          ? sleepyPlayer
-          : kind === "bark"
-            ? barkPlayer
-            : kind === "shower"
-              ? showerPlayer
-              : kind === "sneeze"
-                ? sneezePlayer
-                : huffPlayer;
-    playFromStart(player);
+    playFromStart(soundPlayers[kind]);
+  };
+
+  const scheduleSound = (token: number, delayMs: number, kind: SoundKind) => {
+    if (delayMs <= 0) {
+      playSound(kind);
+      return;
+    }
+    interactionScheduler.current.schedule(token, delayMs, () => playSound(kind));
   };
 
   const setTransientMessage = useCallback(
@@ -659,8 +1137,12 @@ function PetClub() {
   };
 
   const closeTraining = () => {
+    const now = interactionNow();
+    interactionScheduler.current.cancel();
     stopTrainingAnimations();
     sendTrainingEvent({ type: "CLOSE" });
+    setCareReachability(true, now);
+    playSound("uiClose");
   };
 
   const runTrainingMotion = (
@@ -699,7 +1181,20 @@ function PetClub() {
     session: number,
     celebration: TrainingCelebration,
   ) => {
-    playSound("happy");
+    const current = trainingStateRef.current;
+    const command = current.command ?? "sit";
+    const duration = getTrainingMotionDuration(
+      reduced,
+      TRAINING_CELEBRATION_DURATION_MS[celebration],
+    );
+    const timeline = scaleAudioPhaseTimeline(
+      getTrainingAudioTimeline(command, celebration).celebration,
+      duration,
+    );
+    const token = interactionScheduler.current.begin();
+    for (const cue of timeline.cues) {
+      scheduleSound(token, cue.timeMs, "celebration");
+    }
     runTrainingMotion(
       TRAINING_CELEBRATION_DURATION_MS[celebration],
       () => finishCelebration(session, celebration),
@@ -708,7 +1203,8 @@ function PetClub() {
   };
 
   const beginTraining = () => {
-    const current = currentAliveSnapshot();
+    const now = interactionNow();
+    const current = currentAliveSnapshot(now);
     if (!current || isSleeping(current) || careLocked) return;
     setReturnContext(null);
     interactionScheduler.current.begin();
@@ -723,7 +1219,9 @@ function PetClub() {
     setMessage("");
     setEmote(null);
     setAudioGestureGranted(true);
+    playSound("uiOpen");
     stopTrainingAnimations();
+    setCareReachability(false, now);
     sendTrainingEvent({ type: "OPEN" });
   };
 
@@ -731,7 +1229,21 @@ function PetClub() {
     const next = sendTrainingEvent({ type: "SELECT_COMMAND", command });
     if (next.phase !== "performing" || next.command !== command) return;
     const session = next.session;
+    const duration = getTrainingMotionDuration(
+      reduced,
+      TRAINING_COMMAND_DURATION_MS[command],
+    );
+    const timeline = scaleAudioPhaseTimeline(
+      getTrainingAudioTimeline(command, "happy-hop").command,
+      duration,
+    );
+    const selected = timeline.cues.find(
+      (cue) => cue.cue === "training.command-selected",
+    );
+    const token = interactionScheduler.current.begin();
+    if (selected) scheduleSound(token, selected.timeMs, "commandSelected");
     runTrainingMotion(TRAINING_COMMAND_DURATION_MS[command], () => {
+      playSound("success");
       sendTrainingEvent({
         type: "COMMAND_COMPLETE",
         session,
@@ -767,6 +1279,9 @@ function PetClub() {
     const next = sendTrainingEvent({ type: "GIVE_TREAT" });
     if (next.phase !== "treat-in-flight") return;
     const session = next.session;
+    const command = next.command ?? "sit";
+    interactionScheduler.current.begin();
+    playSound("treatToss");
     trainingTreatProgress.stopAnimation();
     trainingTreatProgress.setValue(0);
     Animated.timing(trainingTreatProgress, {
@@ -777,7 +1292,16 @@ function PetClub() {
       if (!finished) return;
       const contacted = sendTrainingEvent({ type: "TREAT_CONTACT", session });
       if (contacted.phase !== "eating") return;
-      playSound("bark");
+      playSound("treatCatch");
+      const eatingDuration = getTrainingMotionDuration(reduced, TRAINING_EAT_DURATION_MS);
+      const eatingTimeline = scaleAudioPhaseTimeline(
+        getTrainingAudioTimeline(command, "happy-hop").eating,
+        eatingDuration,
+      );
+      const eatingToken = interactionScheduler.current.begin();
+      for (const cue of eatingTimeline.cues) {
+        scheduleSound(eatingToken, cue.timeMs, "treatCrunch");
+      }
       runTrainingMotion(TRAINING_EAT_DURATION_MS, () =>
         finishTrainingEat(session),
       );
@@ -795,18 +1319,19 @@ function PetClub() {
     cancelActiveInteractions();
     petRef.current = current;
     setPet(current);
+    screenRef.current = "room";
     setScreen("room");
   };
 
   const prepareInteraction = (interaction: PetInteraction) => {
-    const current = petRef.current ?? pet;
-    if (!current) return null;
     const now = interactionNow();
+    const current = applyTimeEvent({ type: "TICK", now }) ?? pet;
+    if (!current) return null;
     const resolution = resolvePetInteraction({
       pet: current,
       interaction,
       now,
-      multiplier: rateRef.current,
+      multiplier: DEFAULT_CLOCK_MULTIPLIER,
       careLocked,
       cooldownUntil: boopCooldownUntil,
     });
@@ -817,12 +1342,9 @@ function PetClub() {
     return { ...resolution, now };
   };
 
-  const currentAliveSnapshot = () => {
-    const current = petRef.current ?? pet;
-    if (!current) return null;
-    const next = advancePet(current, interactionNow(), rateRef.current);
-    petRef.current = next;
-    setPet(next);
+  const currentAliveSnapshot = (now = interactionNow()) => {
+    const next = applyTimeEvent({ type: "TICK", now });
+    if (!next) return null;
     if (next.isDead) {
       commitTerminalState(next);
       return null;
@@ -830,15 +1352,15 @@ function PetClub() {
     return next;
   };
 
-  const runCleaning = (currentPet: PetState) => {
+  const runCleaning = (currentPet: PetState, startedAt: number) => {
     const token = interactionScheduler.current.begin();
     resetTransientAnimations([feedProgress, zoom, pulse]);
     messageTimer.current = restoreMessagePresentation(messageTimer.current, messageOpacity);
+    setCareReachability(false, startedAt);
     setCareLocked(true);
     setCleaningPhase("water");
     setEmote("cleaning");
     setMessage("Cleaning: water → dirt washout → shake → sparkle.");
-    playSound("shower");
     const schedule = (delay: number, callback: () => void) => {
       interactionScheduler.current.schedule(token, delay, callback);
     };
@@ -846,44 +1368,87 @@ function PetClub() {
     schedule(800, () => {
       setCleaningPhase("shake");
       animatePulse();
+      playSound("wetShake");
     });
     schedule(1150, () => setCleaningPhase("sparkle"));
     schedule(CLEANING_DURATION_MS, () => {
+      const completionGeneration = uiGeneration.current;
       const now = interactionNow();
-      const livePet = petRef.current ?? currentPet;
+      const livePet = applyTimeEvent({ type: "TICK", now }) ?? currentPet;
       const resolution = resolvePetInteraction({
         pet: livePet,
         interaction: "clean",
         now,
-        multiplier: rateRef.current,
+        multiplier: DEFAULT_CLOCK_MULTIPLIER,
       });
       if (resolution.reason === "dead") {
         commitTerminalState(resolution.pet);
         return;
       }
-      const cleaned = careForPet(resolution.pet, "clean", now, rateRef.current);
-      petRef.current = cleaned;
-      setPet(cleaned);
-      setCleaningPhase(null);
-      setCareLocked(false);
-      setTransientMessage("Fresh and fluffy! Jack sparkles.", "sparkle");
+      const finishCleaning = (cleaned: PetState) => {
+        const unlockedAt = interactionNow();
+        petRef.current = cleaned;
+        setPet(cleaned);
+        setCleaningPhase(null);
+        setCareLocked(false);
+        setCareReachability(true, unlockedAt);
+        setTransientMessage("Fresh and fluffy! Jack sparkles.", "sparkle");
+      };
+      const cleanAdapter: DelayedCleanCommitAdapter = {
+        applyCommitted: (completion) => {
+          recordDelayedCleanRecovery("none");
+          careGuideProgressRef.current = completion.progress;
+          setCareGuideProgress(completion.progress);
+          setCareGuideSaveFailed(false);
+          finishCleaning(completion.pet);
+        },
+        restoreForRetry: () => {
+          recordDelayedCleanRecovery("none");
+          const unlockedAt = interactionNow();
+          setCleaningPhase(null);
+          setCareLocked(false);
+          setCareReachability(true, unlockedAt);
+          setCareGuideSaveFailed(true);
+          setTransientMessage(
+            "Clean couldn't be saved. Please try again.",
+            null,
+          );
+        },
+        retainForRecovery: retainDelayedCleanRecovery,
+        isCurrent: () => completionGeneration === uiGeneration.current,
+      };
+      void finishDelayedCleanDurably(
+        resolution.pet,
+        careGuideProgressRef.current,
+        now,
+        cleanAdapter,
+        { authority: petGuidePersistenceRef.current },
+      );
     });
   };
 
   const care = (action: CareAction) => {
     const resolution = prepareInteraction(action);
     if (!resolution?.allowed) return;
-    setCareGuideProgress((current) =>
-      current.firstCareCompleted
-        ? current
-        : { ...current, firstCareCompleted: true },
-    );
     if (action === "clean") {
-      runCleaning(resolution.pet);
+      runCleaning(resolution.pet, resolution.now);
       return;
     }
+    setCareGuideProgress((current) => {
+      const next = completeFirstCareAfterAllowedAction(
+        current,
+        resolution.allowed,
+      );
+      careGuideProgressRef.current = next;
+      return next;
+    });
     const now = resolution.now;
-    const nextPet = careForPet(resolution.pet, action, now, rateRef.current);
+    const nextPet = careForPet(
+      resolution.pet,
+      action,
+      now,
+      DEFAULT_CLOCK_MULTIPLIER,
+    );
     petRef.current = nextPet;
     setPet(nextPet);
     const token = interactionScheduler.current.begin();
@@ -892,6 +1457,7 @@ function PetClub() {
     zoom.stopAnimation();
     zoom.setValue(0);
     if (action === "feed") {
+      playSound("treatToss");
       setTransientMessage(
         "A crunchy pixel treat is headed for Jack’s open mouth!",
         "feeding",
@@ -900,7 +1466,8 @@ function PetClub() {
       if (reduced) {
         feedProgress.setValue(1);
         setTransientMessage("Jack caught the treat — WOOF!", "fed");
-        playSound("bark");
+        playSound("treatCatch");
+        playSound("treatCrunch");
       } else {
         Animated.timing(feedProgress, {
           toValue: 1,
@@ -909,7 +1476,8 @@ function PetClub() {
         }).start(({ finished }) => {
           if (finished && interactionScheduler.current.isCurrent(token)) {
             setTransientMessage("Jack caught the treat — WOOF!", "fed");
-            playSound("bark");
+            playSound("treatCatch");
+            scheduleSound(token, 160, "treatCrunch");
           }
         });
       }
@@ -937,7 +1505,7 @@ function PetClub() {
           }),
         ]).start();
       }
-      playSound("happy");
+      playSound("toySqueak");
     }
     animatePulse();
   };
@@ -959,7 +1527,7 @@ function PetClub() {
     setTransientMessage(reaction.message, reaction.kind, 2200);
     if (reaction.kind === "bark") {
       animatePulse();
-      playSound("bark");
+      playSound("happy");
     } else if (reaction.kind === "sneeze") {
       playSound("sneeze");
     } else if (reaction.kind === "huff") {
@@ -969,37 +1537,39 @@ function PetClub() {
     }
   };
 
-  const changeRate = (direction: number) => {
-    const currentPet = petRef.current ?? pet;
-    if (!currentPet) return;
-    const currentRate = rateRef.current;
-    const index = rates.indexOf(currentRate);
-    const next = rates[Math.max(0, Math.min(rates.length - 1, index + direction))];
-    if (next === currentRate) return;
+  const openSleepMenu = () => {
     const now = interactionNow();
-    const switched = switchClockRate(currentPet, now, currentRate, next).pet;
-    petRef.current = switched;
-    setPet(switched);
-    if (switched.isDead) {
-      commitTerminalState(switched);
-      return;
-    }
-    rateRef.current = next;
-    setRate(next);
+    setCareReachability(false, now);
+    setSleepMenuOpen(true);
+    playSound("uiOpen");
+  };
+
+  const closeSleepMenu = () => {
+    const now = interactionNow();
+    setSleepMenuOpen(false);
+    setCareReachability(true, now);
+    playSound("uiClose");
   };
 
   const beginSleep = (hours: number) => {
     const resolution = prepareInteraction("sleep");
     if (!resolution?.allowed) return;
     const now = resolution.now;
-    const next = startSleep(resolution.pet, hours, now, rateRef.current);
+    const next = startSleep(
+      resolution.pet,
+      hours,
+      now,
+      DEFAULT_CLOCK_MULTIPLIER,
+    );
     petRef.current = next;
     setPet(next);
     setSleepMenuOpen(false);
+    setCareReachability(true, now);
     setTransientMessage(
       `Jack is sleeping for ${hours} pet hour${hours === 1 ? "" : "s"}.`,
       null,
     );
+    playSound("uiConfirm");
     playSound("sleepy");
   };
 
@@ -1008,15 +1578,20 @@ function PetClub() {
     if (!resolution?.allowed) return;
     const now = resolution.now;
     manualWakeRef.current = true;
-    const next = wakePet(resolution.pet, now, rateRef.current);
+    const next = wakePet(
+      resolution.pet,
+      now,
+      DEFAULT_CLOCK_MULTIPLIER,
+    );
     petRef.current = next;
     setPet(next);
     setTransientMessage("Good morning, Jack! A gentle stretch and wag.", "happy");
-    playSound("happy");
+    playSound("yawn");
   };
 
   const persistPreferences = (next: AudioPreferences) => {
     if (!currentAliveSnapshot()) return;
+    playSound("uiTap");
     setPreferences(next);
     setAudioGestureGranted(true);
     void saveAudioPreferences(next).then(
@@ -1035,13 +1610,14 @@ function PetClub() {
 
   const enter = () => {
     setAudioGestureGranted(true);
-    setScreen("hub");
+    applyTimeEvent({ type: "NAVIGATE", now: interactionNow(), screen: "hub" });
   };
 
   const enterRoom = () => {
-    if (!pet) return;
-    if (pet.isDead) {
-      setScreen("room");
+    const current = petRef.current ?? pet;
+    if (!current) return;
+    if (current.isDead) {
+      applyTimeEvent({ type: "NAVIGATE", now: interactionNow(), screen: "room" });
       return;
     }
     const name = normalizeNickname(nicknameDraft);
@@ -1051,34 +1627,73 @@ function PetClub() {
     }
     setNicknameError("");
     setAudioGestureGranted(true);
-    const firstAdoption = !pet.adoptionCompleted;
-    const next = { ...pet, name, adoptionCompleted: true };
-    petRef.current = next;
-    setPet(next);
+    const firstAdoption = !current.adoptionCompleted;
+    const renamed = { ...current, name };
+    petRef.current = renamed;
+    setPet(renamed);
+    applyTimeEvent({ type: "ADOPT_AND_ENTER_ROOM", now: interactionNow() });
     setNicknameDraft(name);
     if (firstAdoption) setReturnContext(null);
-    setScreen("room");
   };
 
   const fresh = (session = false) => {
-    cancelActiveInteractions();
-    const current = createNewPet(interactionNow());
-    petRef.current = current;
-    setMode(session ? "session" : "available");
-    setSaveFailed(false);
-    setHydrated(true);
-    setPet(current);
-    setNicknameDraft(current.name);
-    setScreen("title");
-    setMessage("");
-    setEmote(null);
-    setReturnContext(null);
-    setTrainingProgress(DEFAULT_TRAINING_PROGRESS);
-    setTrainingSaveFailed(false);
-    setCareGuideProgress(DEFAULT_CARE_GUIDE_PROGRESS);
-    setCareGuidePersistenceMode(session ? "session" : "available");
-    setCareGuideSaveFailed(false);
-    setAudioGestureGranted(false);
+    if (resetPending) return;
+    const now = interactionNow();
+    const current = createNewPet(now);
+    if (session) {
+      petGuidePersistenceRef.current.invalidateCleanPublication();
+      setResetError("");
+      applyFreshState(current, true);
+      return;
+    }
+
+    const requestRevision = ++resetRequestRevision.current;
+    const requestedUiGeneration = uiGeneration.current;
+    setResetPending(true);
+    setResetError("");
+    void finishExplicitResetDurably(
+      current,
+      DEFAULT_CARE_GUIDE_PROGRESS,
+      petGuidePersistenceRef.current,
+      {
+        applyPrepared: ({ pet: preparedPet }) => {
+          applyFreshState(preparedPet, false);
+          setResetPending(false);
+        },
+        restoreForRetry: () => {
+          setResetPending(false);
+          setResetError(
+            "New Baby couldn't be saved. Nothing was replaced. Please try again.",
+          );
+        },
+        retainForRecovery: retainExplicitResetRecovery,
+        isCurrent: () =>
+          requestRevision === resetRequestRevision.current &&
+          requestedUiGeneration === uiGeneration.current,
+      },
+    ).then((result) => {
+      if (
+        result === "superseded" &&
+        requestRevision === resetRequestRevision.current
+      ) {
+        setResetPending(false);
+      }
+    });
+  };
+
+  const openRestartDialog = () => {
+    const now = interactionNow();
+    setResetError("");
+    setCareReachability(false, now);
+    setRestartOpen(true);
+  };
+
+  const closeRestartDialog = () => {
+    if (resetPending) return;
+    const now = interactionNow();
+    setResetError("");
+    setRestartOpen(false);
+    setCareReachability(true, now);
   };
 
   if (!pet) {
@@ -1087,6 +1702,8 @@ function PetClub() {
         <Text style={s.pixelTitle}>
           {mode === "loading"
             ? "Opening Jack’s pet club…"
+            : delayedCleanRecoveryMode !== "none"
+              ? "Saved Clean needs recovery"
             : mode === "invalid"
               ? "Saved pet needs recovery"
               : "Local saves are unavailable"}
@@ -1094,13 +1711,41 @@ function PetClub() {
         {mode !== "loading" && (
           <View style={s.recoveryCard}>
             <Text style={s.bodyText}>
-              {mode === "invalid"
+              {delayedCleanRecoveryMode !== "none"
+                ? "The Clean save outcome is still being safely checked. Restore local storage access, then retry recovery."
+                : explicitResetRecoveryMode === "pending"
+                ? "A deliberate reset is prepared. Finish its safe recovery before continuing."
+                : explicitResetRecoveryMode === "unavailable"
+                  ? "The prepared reset was preserved. Restore local storage access, then retry recovery."
+                  : explicitResetRecoveryMode === "invalid"
+                    ? "The reset save outcome is still being safely checked. Restore local storage access, then retry recovery."
+                  : mode === "invalid"
                 ? "This save was not changed. Start fresh only if you want to replace it."
                 : "You can play, but this session will not be saved."}
             </Text>
+            {resetError ? <Text style={s.errorText}>{resetError}</Text> : null}
             <ActionButton
-              label={mode === "invalid" ? "START FRESH" : "START SESSION ONLY"}
-              onPress={() => fresh(mode !== "invalid")}
+              disabled={resetPending}
+              label={
+                resetPending
+                  ? delayedCleanRecoveryMode !== "none" ||
+                    explicitResetRecoveryMode !== "none"
+                    ? "FINISHING RECOVERY…"
+                    : "SAVING NEW BABY…"
+                  : delayedCleanRecoveryMode !== "none" ||
+                      explicitResetRecoveryMode !== "none"
+                    ? "RETRY RECOVERY"
+                  : mode === "invalid"
+                    ? "START FRESH"
+                    : "START SESSION ONLY"
+              }
+              onPress={() =>
+                delayedCleanRecoveryMode !== "none"
+                  ? recoverCleanBeforeForeground(interactionNow())
+                  : explicitResetRecoveryMode !== "none"
+                  ? recoverResetBeforeForeground(interactionNow())
+                  : fresh(mode !== "invalid")
+              }
             />
           </View>
         )}
@@ -1109,18 +1754,12 @@ function PetClub() {
   }
 
   const clock = getVirtualClock(pet.ageVirtualMinutes);
-  const returnSummary = returnContext
-    ? getReturnSummary({
-        before: returnContext.before,
-        after: pet,
-        elapsedRealMs: Math.max(
-          0,
-          pet.lastUpdatedAt - returnContext.before.lastUpdatedAt,
-        ),
-      })
-    : null;
-  const firstCareHint =
-    pet.adoptionCompleted && !careGuideProgress.firstCareCompleted;
+  const returnSummary = getLiveReturnSummary(returnContext, pet);
+  const firstCareGuidance = getFirstCareGuidance(
+    pet,
+    careGuideProgress,
+    careLocked,
+  );
   const terminalPolicy = getTerminalUiPolicy(pet);
   const stage = getGrowthStage(pet);
   const stageIndex = growthStages.indexOf(stage);
@@ -1155,8 +1794,8 @@ function PetClub() {
     ? "Oh no — Jack’s story ended."
     : sleeping
       ? `Jack is sleeping • ${sleepRemaining} pet min left`
-      : firstCareHint
-        ? "Jack is home! Try FEED, PLAY, or CLEAN."
+      : firstCareGuidance
+        ? firstCareGuidance
         : returnSummary
           ? returnSummary
           : pet.needs.hunger <= 20
@@ -1208,9 +1847,7 @@ function PetClub() {
         desktop={desktop}
         preferences={preferences}
         preferenceMode={preferenceMode}
-        rate={rate}
         roomTheme={pet.roomTheme}
-        onChangeRate={changeRate}
         onChooseTheme={chooseTheme}
         onToggleMusic={() =>
           persistPreferences({
@@ -1226,7 +1863,8 @@ function PetClub() {
         }
         onVisit={() => {
           setAudioGestureGranted(true);
-          setScreen("room");
+          playSound("uiClose");
+          applyTimeEvent({ type: "NAVIGATE", now: interactionNow(), screen: "room" });
         }}
       />
     );
@@ -1250,9 +1888,12 @@ function PetClub() {
         onBoop={boop}
         onCare={care}
         onOpenSettings={() => {
-          if (!terminalPolicy.settingsDisabled && !careLocked && !trainingOpen) setScreen("settings");
+          if (!terminalPolicy.settingsDisabled && !careLocked && !trainingOpen) {
+            playSound("uiOpen");
+            applyTimeEvent({ type: "NAVIGATE", now: interactionNow(), screen: "settings" });
+          }
         }}
-        onSleep={sleeping ? wakeUp : () => setSleepMenuOpen(true)}
+        onSleep={sleeping ? wakeUp : openSleepMenu}
         onTrain={beginTraining}
         pet={pet}
         pulse={pulse}
@@ -1315,7 +1956,7 @@ function PetClub() {
             </Text>
             <FocusableButton
               accessibilityLabel="Start a new Baby Jack game"
-              onPress={() => setRestartOpen(true)}
+              onPress={openRestartDialog}
               style={() => s.textButton}
             >
               <Text style={s.textButtonLabel}>NEW BABY</Text>
@@ -1326,7 +1967,7 @@ function PetClub() {
       <SleepDialog
         reduced={reduced}
         visible={sleepMenuOpen}
-        onCancel={() => setSleepMenuOpen(false)}
+        onCancel={closeSleepMenu}
         onChoose={beginSleep}
       />
       <TrainingDialog
@@ -1340,13 +1981,12 @@ function PetClub() {
         state={trainingState}
       />
       <RestartDialog
+        error={resetError}
+        pending={resetPending}
         reduced={reduced}
         visible={restartOpen}
-        onCancel={() => setRestartOpen(false)}
-        onConfirm={() => {
-          setRestartOpen(false);
-          fresh(false);
-        }}
+        onCancel={closeRestartDialog}
+        onConfirm={() => fresh(false)}
       />
     </SafeAreaView>
   );
@@ -1470,9 +2110,7 @@ function SettingsScreen({
   disabled,
   preferences,
   preferenceMode,
-  rate,
   roomTheme,
-  onChangeRate,
   onChooseTheme,
   onToggleMusic,
   onToggleSfx,
@@ -1482,9 +2120,7 @@ function SettingsScreen({
   disabled: boolean;
   preferences: AudioPreferences;
   preferenceMode: PreferenceMode;
-  rate: number;
   roomTheme: RoomTheme;
-  onChangeRate: (direction: number) => void;
   onChooseTheme: (theme: RoomTheme) => void;
   onToggleMusic: () => void;
   onToggleSfx: () => void;
@@ -1510,10 +2146,8 @@ function SettingsScreen({
         ))}
       </View>
       <View style={s.settingRow}>
-        <Text style={s.settingLabel}>Session clock speed</Text>
-        <UtilityButton label="−" accessibilityLabel="Slower test clock" disabled={disabled} onPress={() => onChangeRate(-1)} />
-        <Text style={s.rateLabel}>{rate}×</Text>
-        <UtilityButton label="+" accessibilityLabel="Faster test clock" disabled={disabled} onPress={() => onChangeRate(1)} />
+        <Text style={s.settingLabel}>Player time</Text>
+        <Text style={s.rateLabel}>1× • SAFE RETURN</Text>
       </View>
       <Text style={s.daylightNote}>
         AUTOMATIC DAYLIGHT{`\n`}Morning 6–10 • Day 10–5 • Dusk 5–8 • Night 8–6
@@ -2110,11 +2744,13 @@ function SettingsToggle({
 function FocusableButton({
   accessibilityLabel,
   children,
+  disabled = false,
   onPress,
   style,
 }: {
   accessibilityLabel: string;
   children: ReactNode;
+  disabled?: boolean;
   onPress: () => void;
   style: (pressed: boolean) => StyleProp<ViewStyle>;
 }) {
@@ -2123,10 +2759,16 @@ function FocusableButton({
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
       onBlur={() => setFocused(false)}
       onFocus={() => setFocused(true)}
       onPress={onPress}
-      style={({ pressed }) => [style(pressed), focused && s.focusRing]}
+      style={({ pressed }) => [
+        style(pressed),
+        focused && !disabled && s.focusRing,
+        disabled && s.actionDisabled,
+      ]}
     >
       {children}
     </Pressable>
@@ -2315,12 +2957,64 @@ function SleepDialog({
   onCancel: () => void;
   onChoose: (hours: number) => void;
 }) {
+  const dialogRef = useRef<View>(null);
+  const cancelRef = useRef(onCancel);
+  useEffect(() => {
+    cancelRef.current = onCancel;
+  }, [onCancel]);
+  useEffect(() => {
+    if (!visible || Platform.OS !== "web") return;
+    const dialog = dialogRef.current as unknown as HTMLElement | null;
+    const focusableSelector =
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    return installDialogFocusBoundary(
+      {
+        getActiveElement: () =>
+          document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null,
+        getFocusableElements: () =>
+          dialog
+            ? Array.from(
+                dialog.querySelectorAll<HTMLElement>(focusableSelector),
+              )
+            : [],
+        contains: (element) =>
+          Boolean(
+            dialog &&
+              element &&
+              dialog.contains(element as unknown as Node),
+          ),
+        addKeydownListener: (listener) =>
+          document.addEventListener(
+            "keydown",
+            listener as unknown as (event: KeyboardEvent) => void,
+          ),
+        removeKeydownListener: (listener) =>
+          document.removeEventListener(
+            "keydown",
+            listener as unknown as (event: KeyboardEvent) => void,
+          ),
+        scheduleInitialFocus: (callback) => setTimeout(callback, 0),
+        cancelInitialFocus: (handle) =>
+          clearTimeout(handle as ReturnType<typeof setTimeout>),
+      },
+      () => cancelRef.current(),
+    );
+  }, [visible]);
+
   return (
     <Modal transparent animationType={reduced ? "none" : "fade"} visible={visible} onRequestClose={onCancel}>
       <View style={s.overlay}>
-        <View accessibilityViewIsModal accessibilityLabel="Choose Jack's sleep duration" style={s.dialog}>
+        <View
+          ref={dialogRef}
+          role="dialog"
+          accessibilityViewIsModal
+          accessibilityLabel="Choose Jack's sleep duration"
+          style={s.dialog}
+        >
           <Text style={s.pixelTitle}>SLEEP TIMER</Text>
-          <Text style={s.bodyText}>Choose a duration in accelerated pet hours.</Text>
+          <Text style={s.bodyText}>Choose a duration in pet hours.</Text>
           <View style={s.sleepOptions}>
             {sleepOptions.map((hours) => (
               <ChoiceButton
@@ -2328,7 +3022,7 @@ function SleepDialog({
                 label={`${hours} HOUR${hours === 1 ? "" : "S"}`}
                 selected={false}
                 initialFocus={visible && hours === sleepOptions[0]}
-                accessibilityLabel={`Sleep for ${hours} accelerated hour${hours === 1 ? "" : "s"}`}
+                accessibilityLabel={`Sleep for ${hours} pet hour${hours === 1 ? "" : "s"}`}
                 onPress={() => onChoose(hours)}
               />
             ))}
@@ -2343,24 +3037,45 @@ function SleepDialog({
 }
 
 function RestartDialog({
+  error,
+  pending,
   reduced,
   visible,
   onCancel,
   onConfirm,
 }: {
+  error: string;
+  pending: boolean;
   reduced: boolean;
   visible: boolean;
   onCancel: () => void;
   onConfirm: () => void;
 }) {
   return (
-    <Modal transparent animationType={reduced ? "none" : "fade"} visible={visible} onRequestClose={onCancel}>
+    <Modal
+      transparent
+      animationType={reduced ? "none" : "fade"}
+      visible={visible}
+      onRequestClose={pending ? () => {} : onCancel}
+    >
       <View style={s.overlay}>
         <View accessibilityViewIsModal accessibilityLabel="Start a new Baby Jack" style={s.dialog}>
           <Text style={s.pixelTitle}>START A NEW BABY JACK?</Text>
           <Text style={s.bodyText}>This replaces this local pet’s age, needs, room, and sleep timer.</Text>
-          <ActionButton label="NEW BABY" tone="danger" onPress={onConfirm} wide />
-          <FocusableButton accessibilityLabel="Keep current Jack" onPress={onCancel} style={() => s.textButton}>
+          {error ? <Text style={s.errorText}>{error}</Text> : null}
+          <ActionButton
+            disabled={pending}
+            label={pending ? "SAVING NEW BABY…" : "NEW BABY"}
+            tone="danger"
+            onPress={onConfirm}
+            wide
+          />
+          <FocusableButton
+            accessibilityLabel="Keep current Jack"
+            disabled={pending}
+            onPress={onCancel}
+            style={() => s.textButton}
+          >
             <Text style={s.textButtonLabel}>KEEP JACK</Text>
           </FocusableButton>
         </View>

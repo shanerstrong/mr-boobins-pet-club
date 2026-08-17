@@ -1,0 +1,510 @@
+{
+  "schemaVersion": 1,
+  "kind": "post-baseline-asset-intake-delta",
+  "intakeId": "2026-08-16-audio-mastered-runtime-95-to-125-reconciliation",
+  "status": "inventory-complete-runtime-routing-recorded-preservation-pending",
+  "observedAtUtc": "2026-08-16T23:23:02.7146535Z",
+  "baselineCommit": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+  "hashAlgorithm": "sha256",
+  "aggregateFormat": "ordinal-case-sensitive path<TAB>bytes<TAB>lowercase-sha256<LF>, hashed as UTF-8",
+  "predecessor": {
+    "record": "docs/production/POST_BASELINE_ASSET_INTAKE_75_TO_95_DELTA_2026-08-16.json",
+    "recordSha256": "32dada5d7a6a3c075ed29939ca4bab0b8e1db87d773a1265429c2463311c1a23",
+    "immutable": true,
+    "fileCount": 95,
+    "bytes": 426541670,
+    "aggregateSha256": "89c8e9aac0fe19981737ce37645257f916abf44dfe2443e16ca3d87f22823d24",
+    "rehashPasses": 2,
+    "missingFiles": 0,
+    "driftedFiles": 0
+  },
+  "appendOnlyHistory": {
+    "original75": {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+      "recordSha256": "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6",
+      "immutable": true,
+      "fileCount": 75,
+      "bytes": 418860110,
+      "aggregateSha256": "b0e16debbb690987ad84c168a3b84f8986f98263d44b4ff6c1502e872e9152a4"
+    },
+    "sourceAddition20": {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_75_TO_95_DELTA_2026-08-16.json",
+      "recordSha256": "32dada5d7a6a3c075ed29939ca4bab0b8e1db87d773a1265429c2463311c1a23",
+      "immutable": true,
+      "fileCount": 20,
+      "bytes": 7681560,
+      "aggregateSha256": "0691600367d637c1da18aee7bdcd17f4ebf79ce10b5a15674cf3d1af14a1180b"
+    }
+  },
+  "scope": {
+    "selection": "The exact 30 current audio-manifest masterCandidate.file WAV paths that are absent from the immutable prepolicy inventory and the immutable 95-file post-baseline history.",
+    "roots": [
+      "assets/audio/v1/jack",
+      "assets/audio/v1/music",
+      "assets/audio/v1/training",
+      "assets/audio/v1/ui"
+    ],
+    "additionFileCount": 30,
+    "additionBytes": 22135008,
+    "additionAggregateSha256": "de71338c2fb05e78a16eb0c7adb727c00f48756a06ba77201f3031215f9ca49f",
+    "rehashPasses": 2,
+    "manifestMasterCount": 30,
+    "manifestIdentityMismatches": 0,
+    "unexpectedNewAudioFiles": 0,
+    "missingMasterFiles": 0
+  },
+  "resultingGovernedSet": {
+    "fileCount": 125,
+    "bytes": 448676678,
+    "aggregateSha256": "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b",
+    "unexpectedFiles": 0,
+    "missingFiles": 0
+  },
+  "classifications": [
+    {
+      "id": "postbaseline-audio-runtime-normal-git",
+      "tier": "normal-git",
+      "status": "existing-runtime-routing-only-awaiting-Mark-audible-review",
+      "fileCount": 21,
+      "bytes": 19077012,
+      "aggregateSha256": "f9c24038361d8efa9841dc5017f8b694e4e6a20c7c01224b596b499240fa63c1",
+      "appImportCount": 21,
+      "appPath": "App.tsx",
+      "appSha256": "8db9fb4de855a4bf632df0c599a4075badcd9ab480ac1831815821a39a49994f",
+      "reason": "These exact bytes are already imported by the frozen App and are therefore current GitHub Pages runtime dependencies. Normal-Git routing is technical only and grants no subjective acceptance, lock, selection, mastering approval, release readiness, or new promotion."
+    },
+    {
+      "id": "postbaseline-audio-master-preservation-pending",
+      "tier": "cold-archive-pending",
+      "status": "unapproved-preservation-pending",
+      "fileCount": 9,
+      "bytes": 3057996,
+      "aggregateSha256": "ad3e5d2ab87f0c66f018ed51e6b4f8cfe64bb3353ae41849a1e31e255c48185c",
+      "appImportCount": 0,
+      "reason": "These mastered but unwired candidates remain unapproved and checksum-indexed only. They are not cold-archive-verified, normal-Git runtime dependencies, accepted, locked, selected, or release-ready."
+    }
+  ],
+  "preservation": {
+    "checksumIsBackup": false,
+    "backupVerified": false,
+    "archiveUploaded": false,
+    "lfsConfiguredOrUploaded": false,
+    "originalsDeleted": false,
+    "originalsMoved": false,
+    "originalsRenamed": false,
+    "originalsRewritten": false,
+    "decision": "The nine unwired candidates remain in place, unapproved, excluded, and preservation-pending. The 21 current runtime dependencies remain in place and technically routed to normal Git because the existing App already imports them."
+  },
+  "managedContext": [
+    {
+      "path": "App.tsx",
+      "bytes": 107337,
+      "sha256": "8db9fb4de855a4bf632df0c599a4075badcd9ab480ac1831815821a39a49994f",
+      "lastWriteTimeUtc": "2026-08-16T19:46:22.3869550Z",
+      "gitState": "tracked-modified",
+      "role": "runtime-import-authority-and-frozen-v4-app",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "assets/audio/v1/audio-manifest.v1.json",
+      "bytes": 53333,
+      "sha256": "55faccd935f28c20dde4bc814377a944406221f01150d1f2ab8c8977f088b3c1",
+      "lastWriteTimeUtc": "2026-08-16T19:40:30.4760654Z",
+      "gitState": "tracked-modified",
+      "role": "audio-master-and-review-status-authority",
+      "jsonValid": true,
+      "releaseStatus": "planned",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "docs/audio/AUDIO_LICENSE_LEDGER.v1.md",
+      "bytes": 13374,
+      "sha256": "72e628e971ed7d6d46a5dc02127160a604911948e6be1a2a4bc68bb90175dd7c",
+      "lastWriteTimeUtc": "2026-08-16T19:46:52.0488780Z",
+      "gitState": "tracked-modified",
+      "role": "audio-rights-and-production-context",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "src/audio-cue-policy.test.ts",
+      "bytes": 9709,
+      "sha256": "5f3a529c727d38fe97ac307b485b12056d234eadf49a2e2ee7520eb19b875ce5",
+      "lastWriteTimeUtc": "2026-08-16T19:40:50.0325823Z",
+      "gitState": "tracked-modified",
+      "role": "audio-runtime-test-context",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "scripts/verify-audio-v1.mjs",
+      "bytes": 10279,
+      "sha256": "1799cdc81f4e27622b320f91823c09ff14efaadf1b29c9e802d048c75d1198f0",
+      "lastWriteTimeUtc": "2026-08-16T19:40:48.7410259Z",
+      "gitState": "untracked",
+      "role": "audio-verifier-context",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "scripts/verify-export.mjs",
+      "bytes": 3898,
+      "sha256": "fc39c7789295250db3cda97f990cb8d0a7f200fcc27abc4fb94e0a206a4de922",
+      "lastWriteTimeUtc": "2026-08-16T19:54:59.7839206Z",
+      "gitState": "tracked-modified",
+      "role": "export-verifier-context",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "scripts/master-audio-v1.mjs",
+      "bytes": 10068,
+      "sha256": "e6f29b6a7f8d19cfc1fb779eaff41279c05deeb4b155658ea58f565e55642063",
+      "lastWriteTimeUtc": "2026-08-16T19:47:58.7117694Z",
+      "gitState": "untracked",
+      "role": "read-only-audio-pipeline-context",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "scripts/master-audio-music-v1.mjs",
+      "bytes": 15349,
+      "sha256": "e5c7d8722e5fb27f57ec00d0a10755e64fd388f89383289d901967d389d6c6aa",
+      "lastWriteTimeUtc": "2026-08-16T19:47:57.3972727Z",
+      "gitState": "untracked",
+      "role": "read-only-audio-pipeline-context",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "scripts/record-audio-source-evidence-v1.mjs",
+      "bytes": 3462,
+      "sha256": "c998ad8e664e94b185231c505ae1c9985e135422567db2c43b1875d7bbdf0aaa",
+      "lastWriteTimeUtc": "2026-08-16T19:29:11.5644029Z",
+      "gitState": "untracked",
+      "role": "read-only-audio-pipeline-context",
+      "editedByThisMilestone": false
+    }
+  ],
+  "frozenV4": [
+    {
+      "path": "App.tsx",
+      "bytes": 107337,
+      "sha256": "8db9fb4de855a4bf632df0c599a4075badcd9ab480ac1831815821a39a49994f"
+    },
+    {
+      "path": "src/persistence.ts",
+      "bytes": 28174,
+      "sha256": "5d448dad68e5fecda993bff898df6af03bcee05e246d3ff8b067648de8aee8d2"
+    },
+    {
+      "path": "src/persistence.test.ts",
+      "bytes": 55113,
+      "sha256": "fe62003127c9173a6224fb178f11da56cdde3cd46c62b7343e75ce51cc4e2e86"
+    }
+  ],
+  "files": [
+    {
+      "assetId": "jack.alert-bark",
+      "path": "assets/audio/v1/jack/jack-alert-bark.v1.wav",
+      "bytes": 192044,
+      "sha256": "95161b96c3337f34bf2a85afa36e16a9108d347da226a675b5e78e07b8830bfb",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.674Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.calm-pant",
+      "path": "assets/audio/v1/jack/jack-calm-pant.v1.wav",
+      "bytes": 667244,
+      "sha256": "30ce9c80b9161800ed8bf15b856d2907c2ea40eb145146961ba568a2a4cb892b",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.747Z",
+      "classificationRuleId": "postbaseline-audio-master-preservation-pending",
+      "appImported": false,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.collar-jingle",
+      "path": "assets/audio/v1/jack/jack-collar-jingle.v1.wav",
+      "bytes": 96044,
+      "sha256": "309f656521cd7992a416edc7996483ba6af6345288774070dfcc37383d6b2a53",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.049Z",
+      "classificationRuleId": "postbaseline-audio-master-preservation-pending",
+      "appImported": false,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.drinking",
+      "path": "assets/audio/v1/jack/jack-drinking.v1.wav",
+      "bytes": 96044,
+      "sha256": "eaf77957a93ee5b3c1be44ea5f5617845479aaaef137b1666c3e6dc94370cd3b",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.991Z",
+      "classificationRuleId": "postbaseline-audio-master-preservation-pending",
+      "appImported": false,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.eating",
+      "path": "assets/audio/v1/jack/jack-eating.v1.wav",
+      "bytes": 192044,
+      "sha256": "54ab34193adc2c0ad20e2392d6b9b2f782c6834e1bb79bfbb44af39360c44310",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.980Z",
+      "classificationRuleId": "postbaseline-audio-master-preservation-pending",
+      "appImported": false,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.excited-pant",
+      "path": "assets/audio/v1/jack/jack-excited-pant.v1.wav",
+      "bytes": 475244,
+      "sha256": "d510a6b240684160c66ca9589ee480125f695a0cfbd25aad798e496edd756e17",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.795Z",
+      "classificationRuleId": "postbaseline-audio-master-preservation-pending",
+      "appImported": false,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.gentle-whine",
+      "path": "assets/audio/v1/jack/jack-gentle-whine.v1.wav",
+      "bytes": 192044,
+      "sha256": "57f0058da3bd29134dfb61d96444418a9d006850f306d11249b6acf8e227e194",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.698Z",
+      "classificationRuleId": "postbaseline-audio-master-preservation-pending",
+      "appImported": false,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.happy-bark",
+      "path": "assets/audio/v1/jack/jack-happy-bark.v1.wav",
+      "bytes": 192044,
+      "sha256": "ece9d64e0fed4d49100ca1949cbc1bc2bc7b2b6b949370db7d30de916c48c9ce",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.648Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.huff",
+      "path": "assets/audio/v1/jack/jack-huff.v1.wav",
+      "bytes": 96044,
+      "sha256": "d81c435b027dee0671ffae60f74d7eddd125cc41a1bd7082ef4aef7357655691",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.085Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.paw-steps",
+      "path": "assets/audio/v1/jack/jack-paw-steps.v1.wav",
+      "bytes": 192044,
+      "sha256": "5f1797594e00c6e0164be29cfe266266b4d426da49365a49c53bcb51e7aca25e",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.037Z",
+      "classificationRuleId": "postbaseline-audio-master-preservation-pending",
+      "appImported": false,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.sleep-breathing",
+      "path": "assets/audio/v1/jack/jack-sleep-breathing.v1.wav",
+      "bytes": 955244,
+      "sha256": "6936d1ae59961e01cbbd80be40ffdb679990174183bc99ec849cde0587f1d604",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.933Z",
+      "classificationRuleId": "postbaseline-audio-master-preservation-pending",
+      "appImported": false,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.sleepy-grumble",
+      "path": "assets/audio/v1/jack/jack-sleepy-grumble.v1.wav",
+      "bytes": 96044,
+      "sha256": "a8e8f659b56839b5ddad19099c76291d4ad19045cd09c7d7d41645877c88c9f8",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.093Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.sneeze",
+      "path": "assets/audio/v1/jack/jack-sneeze.v1.wav",
+      "bytes": 96044,
+      "sha256": "88c878e11c2e7a83f0b5c9f7aaa06eff8ff98aafc511e6cbf58cca9aaf3a5198",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.839Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.sniff",
+      "path": "assets/audio/v1/jack/jack-sniff.v1.wav",
+      "bytes": 192044,
+      "sha256": "a8031c3065bd8328038b1b12ae44e1553ab31fb063611b49a7aa24ce1644165b",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.824Z",
+      "classificationRuleId": "postbaseline-audio-master-preservation-pending",
+      "appImported": false,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.toy-squeak",
+      "path": "assets/audio/v1/jack/jack-toy-squeak.v1.wav",
+      "bytes": 192044,
+      "sha256": "36856ac5d494f2d6c808c0305c0742e6e3d50930f40cb6e8772b263389323e35",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.074Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.treat-crunch",
+      "path": "assets/audio/v1/jack/jack-treat-crunch.v1.wav",
+      "bytes": 192044,
+      "sha256": "12f3fe397b41027dde4ab8f510b24036c61209d33608f8623770388adaa36101",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.010Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.wet-shake",
+      "path": "assets/audio/v1/jack/jack-wet-shake.v1.wav",
+      "bytes": 96044,
+      "sha256": "25f1a1d72d38acf1a22198d2295a7af3299cbe6c24d606b4d8dea76e3f0f8073",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.059Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "jack.yawn",
+      "path": "assets/audio/v1/jack/jack-yawn.v1.wav",
+      "bytes": 96044,
+      "sha256": "d7c704730ce0294b420d62f8471b3c92125c6dc8192363dad9ea307335f837b6",
+      "lastWriteTimeUtc": "2026-08-16T19:32:51.850Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "music.cozy",
+      "path": "assets/audio/v1/music/pet-room-cozy.v1.wav",
+      "bytes": 4447686,
+      "sha256": "085960620c263f35b9b12909aa973448705bbdf3fe907e292a4e2d79b44641de",
+      "lastWriteTimeUtc": "2026-08-16T19:40:18.631Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "music.play",
+      "path": "assets/audio/v1/music/pet-room-play.v1.wav",
+      "bytes": 6307942,
+      "sha256": "1950fb713f796a7eb9e2cb8ec1a98357039d61b8359f905a068e3285da3c0fa0",
+      "lastWriteTimeUtc": "2026-08-16T19:40:23.005Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "music.sleep",
+      "path": "assets/audio/v1/music/pet-room-sleep.v1.wav",
+      "bytes": 6307942,
+      "sha256": "9bc2917bb4f82aa1a0489c3e9ba1cc07ce7f29d8c4fdfa83d50e1c27efaf3208",
+      "lastWriteTimeUtc": "2026-08-16T19:40:28.358Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "training.celebration-accent",
+      "path": "assets/audio/v1/training/training-celebration-accent.v1.wav",
+      "bytes": 192044,
+      "sha256": "a091c5194de5a4a124dcd6675a04be3236ff8a7bc57af83c00667148c9ec2e71",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.168Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "training.success-chime",
+      "path": "assets/audio/v1/training/training-success-chime.v1.wav",
+      "bytes": 192044,
+      "sha256": "f697c077a5344686b23ae51be900599c6a5bb96ee554eb1fa01aa76f4135cddf",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.126Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "training.treat-catch",
+      "path": "assets/audio/v1/training/training-treat-catch.v1.wav",
+      "bytes": 96044,
+      "sha256": "b9a9d35519084444b710f7c569edbe31c3259208639e6a6c5d82bf8010cd6832",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.152Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "training.treat-toss",
+      "path": "assets/audio/v1/training/training-treat-toss.v1.wav",
+      "bytes": 192044,
+      "sha256": "8ba75cf5e226e3ce94b909abc83ceb7b11a30887453ad9de2bae4d65d44c69e4",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.143Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "ui.close",
+      "path": "assets/audio/v1/ui/ui-close.master.v1.wav",
+      "bytes": 20592,
+      "sha256": "b190ee79880c3a9e5c24ace580c68a105d447fabcdaf8ec9e4dc9875e9149acd",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.188Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "ui.command-selected",
+      "path": "assets/audio/v1/ui/ui-command-selected.master.v1.wav",
+      "bytes": 15212,
+      "sha256": "a829692ac6a4b251b4c92ca845c9ca42fe81f38623706fa59e300f51f41c7d53",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.178Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "ui.confirm",
+      "path": "assets/audio/v1/ui/ui-confirm.master.v1.wav",
+      "bytes": 27790,
+      "sha256": "0a87f45bccb7605483436203e8bafb13c9b1fdbcd7f81eb2984e2712c7b56b56",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.192Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "ui.open",
+      "path": "assets/audio/v1/ui/ui-open.master.v1.wav",
+      "bytes": 22030,
+      "sha256": "8d8b1d6d8fdb5da858f9f9b519c5f76235d81cbe2ac9b486ae4ebb80b40fbe5f",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.185Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    },
+    {
+      "assetId": "ui.tap",
+      "path": "assets/audio/v1/ui/ui-tap.master.v1.wav",
+      "bytes": 7246,
+      "sha256": "c477cdf761ac3389e57fef1e053fda50526516dcbc67279884f99856bb13be6e",
+      "lastWriteTimeUtc": "2026-08-16T19:32:52.182Z",
+      "classificationRuleId": "postbaseline-audio-runtime-normal-git",
+      "appImported": true,
+      "manifestReviewStatus": "awaiting-Mark-audible-review"
+    }
+  ],
+  "limitations": [
+    "This append-only delta preserves the accepted 75-file intake and 75-to-95 delta byte-identically and records only the exact 30-path addition plus frozen managed context.",
+    "Checksums prove identity and stability; they are not a backup.",
+    "Normal-Git routing for the exact 21 App-imported WAVs is required by the current GitHub Pages build and does not imply Mark's audible acceptance, creative lock, release selection, mastering approval, or new runtime promotion.",
+    "The nine unimported candidates remain unapproved and preservation-pending; they are not cold-archive-verified, normal-Git runtime, accepted, locked, selected, or release-ready.",
+    "No audio or managed context file was generated, modified, auditioned, selected, mastered, normalized, promoted, wired, unwired, moved, deleted, uploaded, or published by this reconciliation.",
+    "The repository remains the development source of truth; no external or Git state changed."
+  ]
+}

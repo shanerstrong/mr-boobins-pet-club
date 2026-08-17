@@ -97,7 +97,7 @@ describe("return policy", () => {
     );
   });
 
-  it("announces an in-progress nap and terminal state explicitly", () => {
+  it("announces an in-progress nap and never creates an away-death message", () => {
     const before = adoptedPet();
     const sleeping = adoptedPet({ sleepUntilVirtualMinutes: 60 });
     expect(
@@ -119,7 +119,7 @@ describe("return policy", () => {
         after: dead,
         elapsedRealMs: RETURN_SUMMARY_MIN_REAL_MS,
       }),
-    ).toBe("While you were away, Jack’s story ended.");
+    ).toBeNull();
 
     expect(
       getReturnSummary({

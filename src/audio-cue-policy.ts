@@ -4,6 +4,7 @@ import {
   type TrainingCelebration,
   type TrainingCommand,
 } from "./training-policy";
+import animationManifest from "../assets/3d/jack/v2/animations/animation-event-manifest-v2.json";
 
 export const AUDIO_ASSET_IDS = [
   "jack.happy-bark",
@@ -110,11 +111,71 @@ export const AUDIO_CUE_ASSETS: Record<AudioCueId, AudioAssetId> = {
   "music.sleep": "music.sleep",
 };
 
-type TimelineMarker = {
+export type TimelineMarker = {
   cue: AudioCueId;
   clip: string;
   marker: string;
 };
+
+type AnimationClip = {
+  durationMs: number;
+  markers: { name: string; timeMs: number }[];
+};
+
+export type ScheduledAudioCue = {
+  cue: AudioCueId;
+  timeMs: number;
+};
+
+export type AudioPhaseTimeline = {
+  authoredDurationMs: number;
+  cues: ScheduledAudioCue[];
+};
+
+export type TrainingAudioTimeline = {
+  command: AudioPhaseTimeline;
+  treatFlight: AudioPhaseTimeline;
+  eating: AudioPhaseTimeline;
+  celebration: AudioPhaseTimeline;
+};
+
+const animationClips = animationManifest.clips as Record<string, AnimationClip>;
+
+export function resolveAudioMarker(marker: TimelineMarker) {
+  const clip = animationClips[marker.clip];
+  if (!clip) throw new Error(`Unknown audio animation clip: ${marker.clip}`);
+  if (marker.marker === "start") {
+    return { cue: marker.cue, timeMs: 0, clipDurationMs: clip.durationMs };
+  }
+  const match = clip.markers.find((candidate) => candidate.name === marker.marker);
+  if (!match) {
+    throw new Error(`Unknown audio animation marker: ${marker.clip}:${marker.marker}`);
+  }
+  return {
+    cue: marker.cue,
+    timeMs: match.timeMs,
+    clipDurationMs: clip.durationMs,
+  };
+}
+
+export function scaleAudioPhaseTimeline(
+  timeline: AudioPhaseTimeline,
+  actualDurationMs: number,
+): AudioPhaseTimeline {
+  if (!Number.isFinite(actualDurationMs) || actualDurationMs < 0) {
+    throw new Error("Audio phase duration must be a finite non-negative number");
+  }
+  const scale = timeline.authoredDurationMs > 0
+    ? actualDurationMs / timeline.authoredDurationMs
+    : 0;
+  return {
+    authoredDurationMs: actualDurationMs,
+    cues: timeline.cues.map((cue) => ({
+      ...cue,
+      timeMs: Math.round(cue.timeMs * scale),
+    })),
+  };
+}
 
 export type TrainingAudioPlan = {
   commandSelected: TimelineMarker;
@@ -165,6 +226,44 @@ export function getTrainingAudioPlan(
       cue: "training.celebration",
       clip: trainingCelebrationClips[celebration],
       marker: celebrationAccentMarkers[celebration],
+    },
+  };
+}
+
+export function getTrainingAudioTimeline(
+  command: TrainingCommand,
+  celebration: TrainingCelebration,
+): TrainingAudioTimeline {
+  const plan = getTrainingAudioPlan(command, celebration);
+  const commandSelected = resolveAudioMarker(plan.commandSelected);
+  const commandSuccess = resolveAudioMarker(plan.commandSuccess);
+  const treatToss = resolveAudioMarker(plan.treatToss);
+  const treatCatch = resolveAudioMarker(plan.treatCatch);
+  const treatCrunch = resolveAudioMarker(plan.treatCrunch);
+  const celebrationAccent = resolveAudioMarker(plan.celebration);
+
+  return {
+    command: {
+      authoredDurationMs: commandSuccess.clipDurationMs,
+      cues: [
+        { cue: commandSelected.cue, timeMs: commandSelected.timeMs },
+        { cue: commandSuccess.cue, timeMs: commandSuccess.timeMs },
+      ],
+    },
+    treatFlight: {
+      authoredDurationMs: treatCatch.timeMs,
+      cues: [
+        { cue: treatToss.cue, timeMs: treatToss.timeMs },
+        { cue: treatCatch.cue, timeMs: treatCatch.timeMs },
+      ],
+    },
+    eating: {
+      authoredDurationMs: treatCrunch.clipDurationMs,
+      cues: [{ cue: treatCrunch.cue, timeMs: treatCrunch.timeMs }],
+    },
+    celebration: {
+      authoredDurationMs: celebrationAccent.clipDurationMs,
+      cues: [{ cue: celebrationAccent.cue, timeMs: celebrationAccent.timeMs }],
     },
   };
 }

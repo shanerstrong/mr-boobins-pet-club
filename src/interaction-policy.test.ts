@@ -20,7 +20,7 @@ afterEach(() => vi.useRealTimers());
 
 describe("interaction-time policy", () => {
   it("gives death precedence over every care, sleep, wake, and Boop side effect", () => {
-    const start = createNewPet(0);
+    const start = { ...createNewPet(0), adoptionCompleted: true };
     const crossing = {
       ...start,
       needs: { ...start.needs, hunger: 0 },

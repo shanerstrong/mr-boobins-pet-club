@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-16T14:12:38.998Z",
+  "generatedAt": "2026-08-16T23:33:15.217Z",
   "sourceInventory": "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
   "sourceInventoryAssetsSha256": "30d0685dfb16000426ccd7bfcfa74f074a7d4072175e2670e34355969b1c6292",
   "sourceInventoryEvidenceSha256": "40ee3701e1046461ccf3d0e465842a82e89207c04326826c5ae67d8d0005c600",
@@ -314,7 +314,7 @@
       "tier": "normal-git",
       "disposition": "Include as code, documentation, manifest, license, small runtime asset, or current GitHub Pages runtime dependency.",
       "fileCount": 94,
-      "bytes": 4089253,
+      "bytes": 4124864,
       "files": [
         {
           "path": "assets/3d/jack/README.md",
@@ -743,8 +743,8 @@
         },
         {
           "path": "assets/audio/v1/audio-manifest.v1.json",
-          "bytes": 17722,
-          "sha256": "80d5375003245bcd78bb9cd7dadeef2d92e3c6c970d2fb30d54bb7b1b7b59695"
+          "bytes": 53333,
+          "sha256": "55faccd935f28c20dde4bc814377a944406221f01150d1f2ab8c8977f088b3c1"
         },
         {
           "path": "assets/audio/v1/ui/ui-close.v1.wav",
@@ -2287,6 +2287,499 @@
       ]
     },
     {
+      "id": "postbaseline-v3-reproducibility-normal-git",
+      "tier": "normal-git",
+      "disposition": "Propose the bounded Jack V3 research README, provenance ledger, and project-authored reproducibility scripts for ordinary Git. This is not staging, preservation, runtime promotion, or subjective visual acceptance.",
+      "fileCount": 10,
+      "bytes": 55891,
+      "files": [
+        {
+          "path": "assets/3d/jack/v3/README.md",
+          "bytes": 1553,
+          "sha256": "deb50c2968e148413b50251b461cd728f15a74d07687032d557ca1e8082298c3"
+        },
+        {
+          "path": "assets/3d/jack/v3/SOURCE_LEDGER_V3.md",
+          "bytes": 1545,
+          "sha256": "c655601ef3dd32a81a4e9b30ce03d87d9091dca195a687d13f2705eea5ded7e0"
+        },
+        {
+          "path": "assets/3d/jack/v3/tools/analyze_shepherd_components.py",
+          "bytes": 3501,
+          "sha256": "9a1160ac615cd5b37caa41c214ebb75043c7c5d4ca8d19c3b1234404e8887c01"
+        },
+        {
+          "path": "assets/3d/jack/v3/tools/build_jack_shepherd_prototype.py",
+          "bytes": 8717,
+          "sha256": "7f453565316f07c168b85397aa035314486dba1e0d7ee522cec7c525a1117476"
+        },
+        {
+          "path": "assets/3d/jack/v3/tools/build_meshy_native_rig_prototype.py",
+          "bytes": 7095,
+          "sha256": "fb4abae0a1876082bc1d39d1ec5a46fdb30446d83a437048ad1044b9cd38ccc4"
+        },
+        {
+          "path": "assets/3d/jack/v3/tools/build_v3_action_library.py",
+          "bytes": 12137,
+          "sha256": "f8150b02bf001ded15b5c77569e732d55ced0fd6032579402fd3e5a8fa6dfe48"
+        },
+        {
+          "path": "assets/3d/jack/v3/tools/inspect_shepherd_source.py",
+          "bytes": 4607,
+          "sha256": "e12d7dd88ca70224a4dda44075246c5876c50e89de70f6324ec3a7b3e82cd1ba"
+        },
+        {
+          "path": "assets/3d/jack/v3/tools/render_jack_shepherd_prototype_board.py",
+          "bytes": 5676,
+          "sha256": "c8133a2154a8ff25b81dc19f43efd52f0fbfa6ec574d795913131b6e41f5e4a9"
+        },
+        {
+          "path": "assets/3d/jack/v3/tools/render_shepherd_compatibility_board.py",
+          "bytes": 5652,
+          "sha256": "da7509ec6ca6640ca27e74e46d1b5eb6c7c3a000570766e41b80ddb760d8e854"
+        },
+        {
+          "path": "assets/3d/jack/v3/tools/render_v3_contract_board.py",
+          "bytes": 5408,
+          "sha256": "544f2a8cdcc0a80242628d57bc15cfbccfa26060cde1de27ebf8d565fa3e1218"
+        }
+      ]
+    },
+    {
+      "id": "postbaseline-v3-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Rejected/research-only editable sources, donor binaries, and derivatives are hash-inventoried but not backed up. Keep originals untouched and exclude them until a preservation destination is separately approved and verified; CC BY 3.0 attribution remains required for any distribution.",
+      "fileCount": 10,
+      "bytes": 267598893,
+      "files": [
+        {
+          "path": "assets/3d/jack/v3/source/jack-baby-meshy-native-rig-v3-prototype-a.blend",
+          "bytes": 29504937,
+          "sha256": "ac742607ca86ee3644fa8c7351bcb3c121ac019a5fee4c5d255df2945807236a"
+        },
+        {
+          "path": "assets/3d/jack/v3/source/jack-baby-meshy-native-rig-v3-prototype-b.blend",
+          "bytes": 29352649,
+          "sha256": "e3cb3475badad0271d2afdbe1a5840e44604d747d5fcbaa67318d960eb467c4e"
+        },
+        {
+          "path": "assets/3d/jack/v3/source/jack-baby-shepherd-v3-actions-a.blend",
+          "bytes": 22698159,
+          "sha256": "004844767e13e75a1753f2becbb999f58f6e429f782eb89547e672d25043aef9"
+        },
+        {
+          "path": "assets/3d/jack/v3/source/jack-baby-shepherd-v3-actions-b.blend",
+          "bytes": 87579589,
+          "sha256": "5336440aa685557f3c1b9bc34ce4a67b3b6c92a39c5ad7c22de8ce595b1ff8e6"
+        },
+        {
+          "path": "assets/3d/jack/v3/source/jack-baby-shepherd-v3-prototype-a.blend",
+          "bytes": 22659784,
+          "sha256": "8cd7fb2783e2810a5f6ed97d20b04a11efcc50440bea6b7a6a0fd42cd3daebe4"
+        },
+        {
+          "path": "assets/3d/jack/v3/source/jack-baby-shepherd-v3-prototype-b.blend",
+          "bytes": 22671040,
+          "sha256": "202fc88428e6b4847d6a54f57aa7c5b49336a081f07eab40313e9c60c29bb552"
+        },
+        {
+          "path": "assets/3d/jack/v3/source/jack-baby-shepherd-v3-prototype-c.blend",
+          "bytes": 22707359,
+          "sha256": "fbeb215b22dc8a2770551988836fc3b8b6f7a88553e7fe43de4e5ef9fe400c0f"
+        },
+        {
+          "path": "assets/3d/jack/v3/source/third-party/quaternius-german-shepherd-cc-by-3.0/fbx/Characters_GermanShepherd.fbx",
+          "bytes": 6262556,
+          "sha256": "6d4c9194552703ad6ab00a6196bdadd603baf462a5f3b8e2386a8bdae892c8e5"
+        },
+        {
+          "path": "assets/3d/jack/v3/source/third-party/quaternius-german-shepherd-cc-by-3.0/quaternius-german-shepherd-import.blend",
+          "bytes": 22685775,
+          "sha256": "7d910ca3138d8d13bb49b1dbe8e0a01d5574e7e7ac8b31858c27d25684e7fe6e"
+        },
+        {
+          "path": "assets/3d/jack/v3/source/third-party/quaternius-german-shepherd-cc-by-3.0/quaternius-german-shepherd-poly-pizza-Hssa6NPc6W.zip",
+          "bytes": 1477045,
+          "sha256": "034a05c1dea4d4d33cf480fd110e77c47af5e773e40adfc94dc08ee6bd027320"
+        }
+      ]
+    },
+    {
+      "id": "postbaseline-v4-reproducibility-normal-git",
+      "tier": "normal-git",
+      "disposition": "Propose the bounded Jack V4 exploratory README, likeness specification, source ledger, and project-authored reproducibility scripts for ordinary Git. Candidate D remains unapproved, unrigged, and non-runtime.",
+      "fileCount": 7,
+      "bytes": 38087,
+      "files": [
+        {
+          "path": "assets/3d/jack/v4/ADULT_LIKENESS_SPEC_V4.md",
+          "bytes": 3252,
+          "sha256": "555bb30734df9a642b0b574ffc11e2656b7bebb0966d4cf6221a14355165b071"
+        },
+        {
+          "path": "assets/3d/jack/v4/README.md",
+          "bytes": 2629,
+          "sha256": "801563a3bb518e5fc1cb7c88d99a53dcb740a224ca55ac3d8faa1afaea6703dc"
+        },
+        {
+          "path": "assets/3d/jack/v4/SOURCE_LEDGER_V4.md",
+          "bytes": 1582,
+          "sha256": "c743ccb0bc2c0422177bef82740f94c6c6aa61c85c96f68b34811a0220aa8a6a"
+        },
+        {
+          "path": "assets/3d/jack/v4/tools/analyze_adult_components.py",
+          "bytes": 2919,
+          "sha256": "ba41ea722a0dcbc0f8867c1c700874951e5e78422eb1f61c9ba051066d4ce2ff"
+        },
+        {
+          "path": "assets/3d/jack/v4/tools/build_adult_likeness_candidate.py",
+          "bytes": 16099,
+          "sha256": "9b06d6ed972f0fde3935e2ba5562d4bad392664e971c0cfbb4c96c7a97a7d92e"
+        },
+        {
+          "path": "assets/3d/jack/v4/tools/inspect_render_adult_source.py",
+          "bytes": 7392,
+          "sha256": "ecbeb8407717be966a21d326524ee17214b995d6f2ff99a416dce61315fe46e7"
+        },
+        {
+          "path": "assets/3d/jack/v4/tools/render_adult_single_views.py",
+          "bytes": 4214,
+          "sha256": "a62379701ee00280f2984c0e38713615b3ec5dea539048afc0c199970a3244cc"
+        }
+      ]
+    },
+    {
+      "id": "postbaseline-v4-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Unapproved/rejected exploratory editable sources and redundant Blender checkpoints are hash-inventoried but not backed up. Keep originals untouched and exclude them until preservation is separately approved and verified; no source is a runtime candidate.",
+      "fileCount": 7,
+      "bytes": 116717183,
+      "files": [
+        {
+          "path": "assets/3d/jack/v4/source/jack-adult-v4-candidate-a.blend",
+          "bytes": 16672604,
+          "sha256": "169c3efaf4c672bb1acbf89d67f232c2c3aa7e9173836264c786e354a9ddb1a3"
+        },
+        {
+          "path": "assets/3d/jack/v4/source/jack-adult-v4-candidate-a.blend1",
+          "bytes": 16672632,
+          "sha256": "5fbfb0c486212ce365177fdac81298862b646e88fcca73328e439570a2287cfe"
+        },
+        {
+          "path": "assets/3d/jack/v4/source/jack-adult-v4-candidate-b.blend",
+          "bytes": 16678060,
+          "sha256": "86deb303e04b08a4e894da212a70560644a914863d7881f101a6ebb115c9583e"
+        },
+        {
+          "path": "assets/3d/jack/v4/source/jack-adult-v4-candidate-c.blend",
+          "bytes": 16675117,
+          "sha256": "d4f885a2eb8f9428b048b51e50aadf1e2efa4d78ca8645beab6ebe03c11af709"
+        },
+        {
+          "path": "assets/3d/jack/v4/source/jack-adult-v4-candidate-d.blend",
+          "bytes": 16672734,
+          "sha256": "2af5d2cacfc50cf94ec28653775321ce179879bb94ed905e8db57abd1c5ec69f"
+        },
+        {
+          "path": "assets/3d/jack/v4/source/jack-adult-v4-reference-a.blend",
+          "bytes": 16673040,
+          "sha256": "6d2b463ff263cc7101669eed54b09193640e02d901aa87de15c0deb06a9815df"
+        },
+        {
+          "path": "assets/3d/jack/v4/source/jack-adult-v4-reference-a.blend1",
+          "bytes": 16672996,
+          "sha256": "e52794c4a6bd5145ad1bec01e7a4de01f9eed3134d8bbec9f2578a9e891c4eb3"
+        }
+      ]
+    },
+    {
+      "id": "postbaseline-audio-runtime-normal-git",
+      "tier": "normal-git",
+      "disposition": "Exact existing WAV bytes already imported by the frozen App and required by the current GitHub Pages export. This technical normal-Git routing grants no subjective acceptance, lock, selection, mastering approval, release readiness, or new promotion; every file remains awaiting Mark audible review.",
+      "fileCount": 21,
+      "bytes": 19077012,
+      "files": [
+        {
+          "path": "assets/audio/v1/jack/jack-alert-bark.v1.wav",
+          "bytes": 192044,
+          "sha256": "95161b96c3337f34bf2a85afa36e16a9108d347da226a675b5e78e07b8830bfb"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-happy-bark.v1.wav",
+          "bytes": 192044,
+          "sha256": "ece9d64e0fed4d49100ca1949cbc1bc2bc7b2b6b949370db7d30de916c48c9ce"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-huff.v1.wav",
+          "bytes": 96044,
+          "sha256": "d81c435b027dee0671ffae60f74d7eddd125cc41a1bd7082ef4aef7357655691"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-sleepy-grumble.v1.wav",
+          "bytes": 96044,
+          "sha256": "a8e8f659b56839b5ddad19099c76291d4ad19045cd09c7d7d41645877c88c9f8"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-sneeze.v1.wav",
+          "bytes": 96044,
+          "sha256": "88c878e11c2e7a83f0b5c9f7aaa06eff8ff98aafc511e6cbf58cca9aaf3a5198"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-toy-squeak.v1.wav",
+          "bytes": 192044,
+          "sha256": "36856ac5d494f2d6c808c0305c0742e6e3d50930f40cb6e8772b263389323e35"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-treat-crunch.v1.wav",
+          "bytes": 192044,
+          "sha256": "12f3fe397b41027dde4ab8f510b24036c61209d33608f8623770388adaa36101"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-wet-shake.v1.wav",
+          "bytes": 96044,
+          "sha256": "25f1a1d72d38acf1a22198d2295a7af3299cbe6c24d606b4d8dea76e3f0f8073"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-yawn.v1.wav",
+          "bytes": 96044,
+          "sha256": "d7c704730ce0294b420d62f8471b3c92125c6dc8192363dad9ea307335f837b6"
+        },
+        {
+          "path": "assets/audio/v1/music/pet-room-cozy.v1.wav",
+          "bytes": 4447686,
+          "sha256": "085960620c263f35b9b12909aa973448705bbdf3fe907e292a4e2d79b44641de"
+        },
+        {
+          "path": "assets/audio/v1/music/pet-room-play.v1.wav",
+          "bytes": 6307942,
+          "sha256": "1950fb713f796a7eb9e2cb8ec1a98357039d61b8359f905a068e3285da3c0fa0"
+        },
+        {
+          "path": "assets/audio/v1/music/pet-room-sleep.v1.wav",
+          "bytes": 6307942,
+          "sha256": "9bc2917bb4f82aa1a0489c3e9ba1cc07ce7f29d8c4fdfa83d50e1c27efaf3208"
+        },
+        {
+          "path": "assets/audio/v1/training/training-celebration-accent.v1.wav",
+          "bytes": 192044,
+          "sha256": "a091c5194de5a4a124dcd6675a04be3236ff8a7bc57af83c00667148c9ec2e71"
+        },
+        {
+          "path": "assets/audio/v1/training/training-success-chime.v1.wav",
+          "bytes": 192044,
+          "sha256": "f697c077a5344686b23ae51be900599c6a5bb96ee554eb1fa01aa76f4135cddf"
+        },
+        {
+          "path": "assets/audio/v1/training/training-treat-catch.v1.wav",
+          "bytes": 96044,
+          "sha256": "b9a9d35519084444b710f7c569edbe31c3259208639e6a6c5d82bf8010cd6832"
+        },
+        {
+          "path": "assets/audio/v1/training/training-treat-toss.v1.wav",
+          "bytes": 192044,
+          "sha256": "8ba75cf5e226e3ce94b909abc83ceb7b11a30887453ad9de2bae4d65d44c69e4"
+        },
+        {
+          "path": "assets/audio/v1/ui/ui-close.master.v1.wav",
+          "bytes": 20592,
+          "sha256": "b190ee79880c3a9e5c24ace580c68a105d447fabcdaf8ec9e4dc9875e9149acd"
+        },
+        {
+          "path": "assets/audio/v1/ui/ui-command-selected.master.v1.wav",
+          "bytes": 15212,
+          "sha256": "a829692ac6a4b251b4c92ca845c9ca42fe81f38623706fa59e300f51f41c7d53"
+        },
+        {
+          "path": "assets/audio/v1/ui/ui-confirm.master.v1.wav",
+          "bytes": 27790,
+          "sha256": "0a87f45bccb7605483436203e8bafb13c9b1fdbcd7f81eb2984e2712c7b56b56"
+        },
+        {
+          "path": "assets/audio/v1/ui/ui-open.master.v1.wav",
+          "bytes": 22030,
+          "sha256": "8d8b1d6d8fdb5da858f9f9b519c5f76235d81cbe2ac9b486ae4ebb80b40fbe5f"
+        },
+        {
+          "path": "assets/audio/v1/ui/ui-tap.master.v1.wav",
+          "bytes": 7246,
+          "sha256": "c477cdf761ac3389e57fef1e053fda50526516dcbc67279884f99856bb13be6e"
+        }
+      ]
+    },
+    {
+      "id": "postbaseline-audio-master-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Exact mastered but unwired audio candidates that remain unapproved and checksum-indexed only. Keep them untouched and excluded pending separately approved recoverable preservation; they are not cold-archive-verified, normal-Git runtime, accepted, locked, selected, or release-ready.",
+      "fileCount": 9,
+      "bytes": 3057996,
+      "files": [
+        {
+          "path": "assets/audio/v1/jack/jack-calm-pant.v1.wav",
+          "bytes": 667244,
+          "sha256": "30ce9c80b9161800ed8bf15b856d2907c2ea40eb145146961ba568a2a4cb892b"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-collar-jingle.v1.wav",
+          "bytes": 96044,
+          "sha256": "309f656521cd7992a416edc7996483ba6af6345288774070dfcc37383d6b2a53"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-drinking.v1.wav",
+          "bytes": 96044,
+          "sha256": "eaf77957a93ee5b3c1be44ea5f5617845479aaaef137b1666c3e6dc94370cd3b"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-eating.v1.wav",
+          "bytes": 192044,
+          "sha256": "54ab34193adc2c0ad20e2392d6b9b2f782c6834e1bb79bfbb44af39360c44310"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-excited-pant.v1.wav",
+          "bytes": 475244,
+          "sha256": "d510a6b240684160c66ca9589ee480125f695a0cfbd25aad798e496edd756e17"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-gentle-whine.v1.wav",
+          "bytes": 192044,
+          "sha256": "57f0058da3bd29134dfb61d96444418a9d006850f306d11249b6acf8e227e194"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-paw-steps.v1.wav",
+          "bytes": 192044,
+          "sha256": "5f1797594e00c6e0164be29cfe266266b4d426da49365a49c53bcb51e7aca25e"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-sleep-breathing.v1.wav",
+          "bytes": 955244,
+          "sha256": "6936d1ae59961e01cbbd80be40ffdb679990174183bc99ec849cde0587f1d604"
+        },
+        {
+          "path": "assets/audio/v1/jack/jack-sniff.v1.wav",
+          "bytes": 192044,
+          "sha256": "a8031c3065bd8328038b1b12ae44e1553ab31fb063611b49a7aa24ce1644165b"
+        }
+      ]
+    },
+    {
+      "id": "postbaseline-audio-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Raw ElevenLabs paid-plan source candidates with documented commercial-use status, hashes, and generation IDs. Keep untouched and excluded until preservation is separately approved and verified; they are not mastered runtime assets.",
+      "fileCount": 22,
+      "bytes": 9985716,
+      "files": [
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-alert-bark-IqOz1ZnOkF1hVM3plUoA-c1.wav",
+          "bytes": 384078,
+          "sha256": "7f3c2ea86ef2ae9ddd7faa28f19b7181baee0416651adf11a3f7a34f475efe7c"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-calm-pant-AQNUgqzxYvEErVaR8CMR-c1.wav",
+          "bytes": 1344078,
+          "sha256": "d05d23ca3529a185b5a7e8e2e8f75cb2c574f8833bf028e97114037538dce88e"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-collar-jingle-ScG14PJsJZNEU1nXKtpn-c1.wav",
+          "bytes": 192078,
+          "sha256": "2ea4d329fbdf2046255c4cd04768b3e32df72b58f195903cb6dfb465af991bcc"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-drinking-0j1IE6wXTl8TdAVh99RI-c1.wav",
+          "bytes": 192078,
+          "sha256": "54327b5b4efdd944c60890cfe8a38cf75870b7dc82ef84d618bf47278ab3f1e7"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-eating-aZur6ellw5MYMqn6loxR-c1.wav",
+          "bytes": 384078,
+          "sha256": "5e9a710d36ccd462e3b3d1a1c18d4713a29136a7c0ebb056b72f6174bdda3759"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-excited-pant-IrArENQjy2bdHEWUyjtQ-c1.wav",
+          "bytes": 960078,
+          "sha256": "bba2d29e3fb6cb640118fd0c3c87f24b13a929653df4000317f350d988c6b6bf"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-gentle-whine-HdjNJzofJy1ufcsTniz9-c1.wav",
+          "bytes": 384078,
+          "sha256": "f26cf901d4f327c8c0b32d6c1897278e5a733f420a5e67810f8ec647f9228c9c"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-happy-bark-9c3G8W7UW5Vu60s3bTz2-c1.wav",
+          "bytes": 384078,
+          "sha256": "a504810cae473c3f514e3bf6ab52ef791d40b9fd4524e169eaddb9dc72f38ff7"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-huff-6jT5aOIlMaupszkYBjEE-c1.wav",
+          "bytes": 192078,
+          "sha256": "ad1fc039175f7455bada0ba5c6bb4f3def3b9de747bbe909c61cad4e680b14d3"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-paw-steps-8zXYJxveRDsKPALWMhjA-c1.wav",
+          "bytes": 384078,
+          "sha256": "15fbd379e8e6cb7735a330f01cb9d067806124efd9a996642a567aa29740b92e"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-sleep-breathing-89NIyvOHRLR6rcsEgBQl-c1.wav",
+          "bytes": 1920078,
+          "sha256": "5c99102d59d1c3be56c1a38367522684257d7c9dc750035547e15325a901a461"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-sleepy-grumble-7xquqejnKWlY0iQ4o9HJ-c1.wav",
+          "bytes": 192078,
+          "sha256": "42da832e22847af8ab93a2b429063d97c53cc4a98e2279e3fee9ce0d67af9b8a"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-sneeze-CE6efjWCS5y6WCjnVu25-c1.wav",
+          "bytes": 192078,
+          "sha256": "bc973a6d08c11900d49c8a811fb4212ccf7a80706d42b7ff1e49b2074e98f4d3"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-sniff-3UkQOti6fyhMGqS46GpP-c1.wav",
+          "bytes": 384078,
+          "sha256": "ebb18283d70aa0f5f63000cff720420658530b71596a902cb6b23f8edb38665b"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-toy-squeak-HIjSVesu07UZCnWHQGgn-c1.wav",
+          "bytes": 384078,
+          "sha256": "06fa64f398df9f69c7fe6d461cda85de37b0b8f2b584104ea1c32fbb4248d715"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-treat-crunch-QZSXVH8eVqQ2nF47dowd-c1.wav",
+          "bytes": 384078,
+          "sha256": "aebfe1cabc57824c4339c3264df525a0024d333c652c8522578a2157a373d0aa"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-wet-shake-aNRLtMrr2uXYihbhnHcu-c1.wav",
+          "bytes": 192078,
+          "sha256": "422865b9933fb51c4607b6f16a2b676f44beb4abf06dce8549ca69264146138c"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-yawn-LlZNp482epMUT7Nr1s0C-c1.wav",
+          "bytes": 192078,
+          "sha256": "f4052dcbffa1bcc3611a7e0a216ef123bf70b912ba762383b293a67a67c94de7"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/training-celebration-accent-POO70EOC52nkYnCVbSh7-c1.wav",
+          "bytes": 384078,
+          "sha256": "c033dc2dd8805f9ffda8db58643d4366eb04fa65de2974927eeefc7e30bf779e"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/training-success-chime-KC33MVO6E0iGATBmj5ZO-c1.wav",
+          "bytes": 384078,
+          "sha256": "b97a6d3c66ae3637dad094434ca698c75033ee4d45ff7b6d7ee99272e5ca9930"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/training-treat-catch-ahdLRdTwDE4IKSvFxYM2-c1.wav",
+          "bytes": 192078,
+          "sha256": "3b4257876d1405469eb0df3c6d210697dcd29687947e4de95f78ce3dc75e79fe"
+        },
+        {
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/training-treat-toss-fTzEuwGcfE7MdOLTQfAG-c1.wav",
+          "bytes": 384078,
+          "sha256": "257e2292c2ffd9571075752606bdd49750657fd5fdd103ae85cfd1f4f7c7138d"
+        }
+      ]
+    },
+    {
       "id": "canonical-editable-lfs-local-copy",
       "tier": "lfs-ready-local",
       "disposition": "Byte-identical canonical copy under the attributed assets/source convention. Its source bytes are preserved in the verified private backup and the expected pointer/OID is recorded locally; exclude until remote LFS no-charge capacity and fetch-back verification are proven.",
@@ -2355,6 +2848,228 @@
       ]
     },
     {
+      "id": "postbaseline-v3-evidence-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Bulk/rejected Jack V3 research evidence is hash-inventoried but not backed up or selected as representative evidence. Keep originals untouched and exclude them pending a separately approved and verified preservation decision.",
+      "fileCount": 17,
+      "bytes": 10030939,
+      "files": [
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-meshy-native-rig-v3-prototype-a-build.json",
+          "bytes": 1592,
+          "sha256": "25784db9a8750a61dc0b8091d8ff741c20c94b7a9a25b95710ba06291eabd356"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-meshy-native-rig-v3-prototype-b-board.png",
+          "bytes": 1157860,
+          "sha256": "e4204d15b272ba6f3edf3c516cf18dd2cbcfeead49c71c516838300fbe5cfc70"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-meshy-native-rig-v3-prototype-b-build.json",
+          "bytes": 1139,
+          "sha256": "d86e36b426ee71226753c129abf478ec69f95b97671280da5f4c3160e1f1e38b"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-actions-a-build.json",
+          "bytes": 3849,
+          "sha256": "ccaae2cd2e8f14a4a57ffa9655945c22410edf2332425fe0966b5af60ac6c49e"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-actions-b-build.json",
+          "bytes": 3849,
+          "sha256": "0931429513d5ce5f7149b3cfa3433adb846d1e73d984f651377d0ed6c55dd737"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-actions-b-contract-board.png",
+          "bytes": 1320110,
+          "sha256": "96482679aa9f1c31e08333caa3f8de0baebc6f7235ce0167a5b4bb8afa4dc294"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-a-board.png",
+          "bytes": 1141551,
+          "sha256": "db7bdfd0bb1c0e3e1413ade07117f7dcd00ed0ec5db3eb0731af48107313e1c8"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-a-build.json",
+          "bytes": 661,
+          "sha256": "20a354bff8bbe1ad075beb23548cc5bf59193b5e2c40c5998d89ad451c4820f8"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-b-board.png",
+          "bytes": 1270136,
+          "sha256": "4a735f0e572c6823bd54c48189eed3e7421315977126d52a7eb25ff8a791204d"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-b-build.json",
+          "bytes": 661,
+          "sha256": "2ff5262e15865e2d4a287666fb869d97526bd65c36c968f11fff828d7f542169"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-c-board.png",
+          "bytes": 1274175,
+          "sha256": "4cac4b617c979d8a0fc227e19882f209697a90ce7e8cade8bd0f1ad6e05c33a2"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-c-build.json",
+          "bytes": 683,
+          "sha256": "682dddb1abbd0b2474ef85c8f7fa74647183e566fe0f21ebdf7e852b87d811fb"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-v3-meshy-transfer-failure.png",
+          "bytes": 1157860,
+          "sha256": "e4204d15b272ba6f3edf3c516cf18dd2cbcfeead49c71c516838300fbe5cfc70"
+        },
+        {
+          "path": "evidence/3d-jack/v3/jack-v3-native-shepherd-motion-check.png",
+          "bytes": 1320110,
+          "sha256": "96482679aa9f1c31e08333caa3f8de0baebc6f7235ce0167a5b4bb8afa4dc294"
+        },
+        {
+          "path": "evidence/3d-jack/v3/quaternius-german-shepherd-compatibility-board.png",
+          "bytes": 1312866,
+          "sha256": "42c1637816060eccd1f6457a597bb7592a65835b354aa49555f73b5941cb2385"
+        },
+        {
+          "path": "evidence/3d-jack/v3/quaternius-german-shepherd-components.json",
+          "bytes": 57446,
+          "sha256": "723444f8ba2d2badfdc1134b92713ae6737a55de90bd21916128cef8f034c230"
+        },
+        {
+          "path": "evidence/3d-jack/v3/quaternius-german-shepherd-inspection.json",
+          "bytes": 6391,
+          "sha256": "2bf18ebfa711a8ecdd1993bd0f9153b1a0f56f4e040098640af1b5f170fa8c68"
+        }
+      ]
+    },
+    {
+      "id": "postbaseline-v4-evidence-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Rejected iterations, redundant single views, source diagnostics, and bulk Jack V4 evidence are hash-inventoried but not backed up. Keep originals untouched and exclude them pending separately approved and verified preservation.",
+      "fileCount": 20,
+      "bytes": 19908666,
+      "files": [
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-a-board.png",
+          "bytes": 2156135,
+          "sha256": "724d883abb4b71304f230ddc57bf4130756be2130fcef1e9dd2793e249e2e574"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-a-front.png",
+          "bytes": 1077427,
+          "sha256": "38ab01d6bb35cb2fbf57aea31780dda5a551bbdfc7ecd1b0355537de59ceb251"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-a-report.json",
+          "bytes": 1647,
+          "sha256": "0c0ab4202fe0e786162053494a038b28feabe7904c5bd135f1362a81feb30171"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-a-side.png",
+          "bytes": 1077402,
+          "sha256": "60e2370219ef123dfda95c30b9acfe47109421c68b7a340098fafaeb184d7de1"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-a-three-quarter.png",
+          "bytes": 1129779,
+          "sha256": "5291bd4c91d209351e167ad6517c052a3f3a1f630b81538ab1884ca01d30d015"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-b-board.png",
+          "bytes": 2164351,
+          "sha256": "88318846a4734f1d036ecfe62d59f289add2278ed322fd8a6cd9075075f7d9cd"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-b-front.png",
+          "bytes": 1081957,
+          "sha256": "1fc206614dc20b359046afb535a3ad9703dec16635691a6c54c904a1c265f874"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-b-report.json",
+          "bytes": 1944,
+          "sha256": "09d26ab7660298aa6bd5d1b5d7e7a38d7869f8695c814cc5b33cab3567e67325"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-b-side.png",
+          "bytes": 1084659,
+          "sha256": "fda75ec51566dca59db80cc7e838eddb8f1deb6f0ad60cc0c262679c6bede48e"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-b-three-quarter.png",
+          "bytes": 1136747,
+          "sha256": "845ecdeebe9d391e02d2b592581a8d45d57a7da9eff4e11b967b1540bcf2311a"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-c-front.png",
+          "bytes": 1078368,
+          "sha256": "e75aa6b32a64ce36ed34967300473a37b2450a80c83a8997b535e521e9791dba"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-c-report.json",
+          "bytes": 1877,
+          "sha256": "919d79f726c34dc88dfd0380ace19243b71aa03ba11f118afd3a57750283d716"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-c-side.png",
+          "bytes": 1078718,
+          "sha256": "9abb05cb9b237906a8d921cff60e60e2274d15f0aa8108aa40910da372c5713c"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-c-three-quarter.png",
+          "bytes": 1131631,
+          "sha256": "1cdc71d06ceb4b4962e966191f7c4353ee418adc383e25abb0995dbf540f3c49"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-d-front.png",
+          "bytes": 1079738,
+          "sha256": "2bcc66366fbfb529cfae3a788f820998a5bcc20ce85d110da253461d4660f3e0"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-d-side.png",
+          "bytes": 1078734,
+          "sha256": "3eef15966df5611c8f3152f49428c8f8cb5723e862d843fc11debfd931c65f10"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-d-three-quarter.png",
+          "bytes": 1132816,
+          "sha256": "12eb1679a260e2c01881255cef96110b600daeccf3697280e525b61d280461a6"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-reference-a-board.png",
+          "bytes": 2171820,
+          "sha256": "1d199ded7ea383a80bc30ebd763ad26a9ef963f5e5988cc0079d7936697e2bd5"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-reference-a-components.json",
+          "bytes": 242202,
+          "sha256": "908f694211d82b098385ac868548e637307758499738020ecec79b94c459ad20"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-reference-a-report.json",
+          "bytes": 714,
+          "sha256": "c8cd43b1f39112abe58ee90123c3292b4aef91e62620666965ea734eb7fbf7d0"
+        }
+      ]
+    },
+    {
+      "id": "postbaseline-v4-review-evidence-normal-git",
+      "tier": "normal-git",
+      "disposition": "Bounded phone-viewable Candidate D review board plus its objective build report. Retention supports Mark's cheapest useful likeness gate and does not imply visual acceptance, rig approval, or runtime promotion.",
+      "fileCount": 2,
+      "bytes": 2206289,
+      "files": [
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-d-phone-board.png",
+          "bytes": 2204449,
+          "sha256": "9092e81681916e212d5ffbc700c42da5ee82730caf5e1abf3b581a4565d5603b"
+        },
+        {
+          "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-d-report.json",
+          "bytes": 1840,
+          "sha256": "6ffb9d834a04e65588eed1411d158e3e9241e377c77a146f7ca63142801121f6"
+        }
+      ]
+    },
+    {
       "id": "normal-git-evidence-3d-runtime",
       "tier": "normal-git",
       "disposition": "Representative integrated 3D room and training evidence retained in Git.",
@@ -2403,7 +3118,7 @@
       "tier": "normal-git",
       "disposition": "Representative Baby Day 1 evidence retained in Git.",
       "fileCount": 6,
-      "bytes": 208956,
+      "bytes": 211308,
       "files": [
         {
           "path": "evidence/baby-day1/VERIFICATION.md",
@@ -2413,27 +3128,27 @@
         {
           "path": "evidence/baby-day1/adoption-hub-390x844.jpg",
           "bytes": 32427,
-          "sha256": "898ca022d7e580d2735de49b55ba24f928dfa0f303d0f8f1f2844699039348a0"
+          "sha256": "5ad22672a08fd83204075cf85db87b088c71c390f0ddb73473f5b3b5fc3017eb"
         },
         {
           "path": "evidence/baby-day1/guided-care-room-390x844.jpg",
-          "bytes": 39147,
-          "sha256": "57b464ee94669d5baee3956aaabbb75b4276df00537952b6a44c42c7e6bbce2a"
+          "bytes": 39825,
+          "sha256": "c5df99fceb43dfe4da6fac0d289cbfca43aefa660fa09dc1a45d001dd939980a"
         },
         {
           "path": "evidence/baby-day1/returning-hub-390x844.jpg",
-          "bytes": 30819,
-          "sha256": "4a9b7252d599a424c3bf2b28d07e069d6e99730ba5bff75e6a6e98fc8cba8f5b"
+          "bytes": 31293,
+          "sha256": "405476c22c01857467b26d6c94d8329c7c48a436a71dde4aa9b714d5ce196549"
         },
         {
           "path": "evidence/baby-day1/room-desktop-1440x900.jpg",
-          "bytes": 67113,
-          "sha256": "e60688d49c0f3feccddd7f31ef8b49dd3b216a9c49474dba2318df2a8cf0a1f5"
+          "bytes": 68692,
+          "sha256": "0c23f58ded06c574273def072ac813342beea8ba9a61ceb2886b070c74111400"
         },
         {
           "path": "evidence/baby-day1/sleep-dialog-keyboard-390x844.jpg",
-          "bytes": 35725,
-          "sha256": "c8888e8c7cc38ca9d9caac720da27a3d4dd5ed3f2819b1dd6ee30f8922df8fe6"
+          "bytes": 35346,
+          "sha256": "39c78e1d7481240c45b17ce51edbb285ee9dd09d652e15edb52321452307a0da"
         }
       ]
     },

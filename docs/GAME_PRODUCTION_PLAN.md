@@ -1,7 +1,7 @@
 # Mr. Boobins' Pet Club — studio production plan
 
 Status: active production roadmap<br>
-Baseline assessed: 2026-08-15 working tree (V0.8 representative slice)<br>
+Baseline assessed: 2026-08-16 committed V0.6–V0.8 checkpoint plus bounded Safe Return working tranche<br>
 Product source of truth: `docs/PROJECT_BRIEF.md` and `docs/DECISIONS.md`
 
 ## 1. Executive production call
@@ -66,15 +66,15 @@ Before additional pets or rooms enter production, supervised players should unde
 
 | System | V0.8 state | Required next state |
 | --- | --- | --- |
-| Adoption and return | Title and hub always appear; ADOPT and VISIT have the same result | One context-aware CTA, first-session guidance, useful return summary |
+| Adoption and return | One context-aware CTA, reload-persistent first-care guidance, live return summary, explicit lifecycle authority, and safe fixed-1× offline catch-up | Retain regressions while the first reviewable milestone adds the remaining systems |
 | Needs | Hunger, happiness, energy, hygiene | Add health and attention with deterministic, comprehensible rules |
 | Care | Feed, Play, Clean, Rest/Wake, Training, Boop | Add Status and Health/Medicine; define discipline's relationship to Training |
-| Persistence | Strict V6 pet record plus separate audio/training records | V7 migration for new needs; interrupted-write and golden-path browser coverage |
+| Persistence | Strict V6 pet record plus separate audio/training/first-care records; V1–V5 migration and malformed-save retention preserved | Strict migration for new needs; interrupted-write and expanded golden-path browser coverage |
 | Controls | Direct touch/mouse/semantic controls | Shared action contract plus classic three-button parity |
 | Presentation | Color room, 3D early-stage web default, pixel fallback | LCD plus color-pixel switch over one state; explicitly classify 3D |
 | Character art | V2 runtime Baby; validated V2.2 age outputs exist | Reconcile V2/V2.2 and integrate only after slice/performance gates |
 | Audio | Functional provisional SFX/music plus cue contract | Route the app through the versioned cue manifest and finish provenance/mastering |
-| Accessibility | Reduced motion, labels, target sizes, muted default | Focus-visible states, consistent modal isolation, keyboard parity, intended-player observation |
+| Accessibility | Reduced motion, labels, target sizes, muted default, sleep-modal initial focus/isolation/trap/restore | Complete keyboard parity and intended-player observation |
 | QA | Strong pure unit tests; manual visual evidence | Browser golden path, save fixtures, device matrix, performance and long-session measurements |
 | Release | Static export and Pages workflow | Version policy, artifact policy, RC checklist; deployment remains human-gated |
 
@@ -106,7 +106,7 @@ Outcome: a first-time child can adopt Jack, understand one need, act, Boop the a
 
 Exit: five-minute uncoached playtest at 390×844, complete keyboard run on desktop, deterministic safe-return evidence, no critical/high defect.
 
-Implementation checkpoint — 2026-08-15: the context-aware hub, persisted first-care guide, live return summary, authored nose-only Boop, deferred GLB request, modal isolation/initial focus, export verifier, representative browser checks, and independent review are complete. The exit gate remains blocked because the 12× player clock/offline-death policy is still awaiting Mark's decision; this checkpoint is not being called a completed M1.
+Implementation checkpoint — 2026-08-16: the context-aware hub, persisted first-care guide, live return summary, authored nose-only Boop, deferred GLB request, modal isolation/focus behavior, export verifier, and representative browser checks are implemented. Safe Return now uses 1× player time, test-injected acceleration only, no pre-adoption decay, no active starvation outside actually reachable foreground care, a once-per-resume four-pet-hour fixed-1× offline cap, and no alive→dead offline transition. Sleep, Training, Restart, and cleaning locks are exact access boundaries; visibility remains authoritative before hydration; interrupted Clean cannot complete either hygiene or guidance. Successful delayed Clean writes a recoverable pet-plus-guide journal before the legacy keys, so partial storage failure cannot reload completed guidance without its exact hygiene mutation; strict V6 and legacy separate-guide saves remain compatible. Deterministic and live-browser closure is recorded in `docs/production/SAFE_RETURN_VERIFICATION.md`; the remaining M1 exit activity is the human uncoached playtest, not an unresolved clock/death policy.
 
 ### M2 — First reviewable milestone / interaction parity
 
@@ -240,7 +240,7 @@ These choices materially change the product and must be explicit before their de
 
 1. **Release posture:** private family web build first, or a public child-directed mobile/store product.
 2. **Age band and devices:** intended player age range and named minimum/reference devices.
-3. **Return/death policy:** normal player clock, offline decay cap or grace, and whether neglect can cause permanent death while the app is closed.
+3. **Return/death policy (resolved 2026-08-16):** 1× player time, four-pet-hour offline cap, and no alive→dead transition while closed; active cartoony death remains limited to reachable foreground care-room play.
 4. **Presentation hierarchy:** 3D as additive, new default, or replacement; the current brief still promises LCD and color pixel.
 5. **Discipline semantics:** Training Mode as the positive replacement for discipline, or a separate non-punitive discipline system.
 6. **Repository asset policy:** Git, Git LFS, external archive, and retention rules for large editable 3D sources and generated evidence.
@@ -251,12 +251,12 @@ Until resolved, implementation must preserve reversibility and must not claim pu
 
 | Risk | Severity | Current mitigation / next action |
 | --- | --- | --- |
-| Default 12× offline advancement can kill a fresh Jack in about 32 real minutes | Critical product risk | Separate QA acceleration from player time; obtain explicit return/death policy before claiming safe return |
-| Dirty V0.6–V0.8 baseline and large untracked asset/evidence set | High delivery risk | Preserve, inventory, decide storage policy, then baseline through a separately approved Git action |
+| Former 12× player clock and offline death | Resolved in current tranche | Player time is 1×; QA acceleration is injection-only; fixed-1× offline advancement is capped at four pet-hours and cannot turn an alive pet dead |
+| V0.6–V0.8 baseline and large excluded asset/evidence set | Controlled delivery risk | Baseline `9c8a821`, immutable inventory, restricted-Drive preservation, and deterministic classification are in place; retain originals and keep LFS/cleanup separately gated |
 | Full-body 3D click triggered signature nose Boop | Resolved in current tranche | Runtime Boop is restricted to the semantic nose target; retain browser regression coverage |
 | Brief and 3D/pixel documentation disagree | High scope risk | Resolve presentation hierarchy and update durable decisions before large art production |
 | V2 runtime versus promoted V2.2 assets | High asset-integration risk | Reconcile manifests, performance, and age-stage support before switching runtime files |
-| No browser/component end-to-end suite | High regression risk | Add a golden-path browser test after interaction seams are extracted |
+| Browser golden path is evidence-driven rather than continuously automated | Medium regression risk | Keep App-level lifecycle/component tests deterministic; expand browser automation after typed interaction seams are extracted |
 | 6.3 MB main web entry remains large | Medium performance risk | Eager GLB fetch is removed; measure named devices, then split/lazy-load where evidence warrants |
 | Per-second state save | Medium storage/performance risk | Measure churn; separate display ticks from meaningful persistence commits |
 | Provisional/unversioned audio remains wired directly | Medium provenance/release risk | Route final app cues through the versioned audio manifest and finish the ledger |

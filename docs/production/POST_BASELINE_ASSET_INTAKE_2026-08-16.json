@@ -1,0 +1,821 @@
+{
+  "schemaVersion": 1,
+  "kind": "post-baseline-asset-intake",
+  "intakeId": "2026-08-16-safe-return-outside-lane-collision",
+  "status": "inventory-complete-preservation-pending",
+  "observedAtUtc": "2026-08-16T16:58:39.0000000Z",
+  "baselineCommit": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+  "hashAlgorithm": "sha256",
+  "aggregateFormat": "ordinal-case-sensitive path<TAB>bytes<TAB>lowercase-sha256<LF>, hashed as UTF-8",
+  "collision": {
+    "detectedDuring": "Safe Return deterministic gates",
+    "description": "A separate/outside lane created unmanaged files while the authorized Safe Return writer was active.",
+    "receivedAsUnmanagedUserWork": true,
+    "subjectiveAcceptanceInferred": false,
+    "runtimePromotionInferred": false
+  },
+  "scope": {
+    "roots": [
+      "assets/3d/jack/v3",
+      "assets/3d/jack/v4",
+      "assets/audio/v1/source/elevenlabs/2026-08-16",
+      "evidence/3d-jack/v3",
+      "evidence/3d-jack/v4"
+    ],
+    "fileCount": 75,
+    "bytes": 418860110,
+    "aggregateSha256": "b0e16debbb690987ad84c168a3b84f8986f98263d44b4ff6c1502e872e9152a4",
+    "latestObservedMtimeUtc": "2026-08-16T16:55:30.3105151Z"
+  },
+  "preservation": {
+    "checksumIsBackup": false,
+    "backupVerified": false,
+    "archiveUploaded": false,
+    "lfsConfiguredOrUploaded": false,
+    "originalsDeleted": false,
+    "originalsMoved": false,
+    "originalsRenamed": false,
+    "originalsRewritten": false,
+    "decision": "All raw/source/bulk files remain excluded and preservation-pending until Mark separately approves a destination and authenticated verification completes."
+  },
+  "creativeStatus": {
+    "v3Research": "rejected-as-beta-replacement",
+    "v4CandidateA": "exploratory-history-preserved",
+    "v4CandidatesBAndC": "rejected",
+    "v4CandidateD": "exploratory-pending-mark-likeness-review",
+    "v4CandidateDRigBound": false,
+    "v4CandidateDRuntimeCandidate": false,
+    "acceptedOrLockedByMark": false,
+    "authoritativeRecord": "docs/production/CREATIVE_DIRECTION.md",
+    "authoritativeRecordSha256": "f7d6a352d1713aaa17b3a240da1f32b670b6e8f88020107d5202a7c10efdc18a",
+    "note": "Technical wording such as approved inside the received V3 research files does not confer subjective acceptance; the current Meshy V2 asset remains provisional under the authoritative creative-direction record."
+  },
+  "provenance": {
+    "v3Donor": {
+      "asset": "German Shepard by Quaternius",
+      "sourceUrl": "https://poly.pizza/m/Hssa6NPc6W",
+      "license": "CC-BY-3.0",
+      "requiredAttribution": "German Shepard by Quaternius (poly.pizza), CC BY 3.0",
+      "record": "assets/3d/jack/v3/SOURCE_LEDGER_V3.md",
+      "recordSha256": "cb5d9cd447f6b2349870539e4275f2a0d1ed1a14021367f025bcba90adca5432",
+      "licenseTextPresentInIntakeRoots": false,
+      "distributionAllowedBeforeLicenseAndAttributionDecision": false
+    },
+    "v3ProjectDerivatives": {
+      "record": "assets/3d/jack/v3/SOURCE_LEDGER_V3.md",
+      "status": "rejected-or-research-only",
+      "privateReferenceUploadUsed": false
+    },
+    "v4ProjectResearch": {
+      "sourceLedger": "assets/3d/jack/v4/SOURCE_LEDGER_V4.md",
+      "sourceLedgerSha256": "117aa74fc4cff0aff0bf47d9dca0e9b159c73e41861b280a240ba2af53b01a7f",
+      "likenessSpec": "assets/3d/jack/v4/ADULT_LIKENESS_SPEC_V4.md",
+      "likenessSpecSha256": "c7362259708497838cfe9213744f041c2360a40ce70da6aca4b3fcc573e4640e",
+      "privateReferenceCount": 10,
+      "privateReferencesCopiedEmbeddedOrUploaded": false,
+      "newThirdPartyAssetUsed": false,
+      "candidateDStatus": "unapproved-unrigged-static-review-candidate"
+    },
+    "elevenLabsCandidates": {
+      "plan": "Starter paid plan",
+      "commercialLicenseStatus": "verified-commercial-use-candidate",
+      "generationBatchCount": 23,
+      "generatedCandidateCount": 92,
+      "locallyDownloadedRawCount": 2,
+      "remainingDownloadsPending": true,
+      "licenseRecord": "docs/audio/AUDIO_LICENSE_LEDGER.v1.md",
+      "licenseRecordSha256": "edaa9c9688569a2c176ecd27ed5af29b209bb59f61880d03522dc05fd2c7d961",
+      "manifest": "assets/audio/v1/audio-manifest.v1.json",
+      "manifestSha256": "386c1de41ddc2da7a4c4b3ad90f9ce3f95ff31c6a1f4ba66e8afc0a12ce7b2c9",
+      "downloaded": [
+        {
+          "assetId": "jack.happy-bark",
+          "generationId": "9c3G8W7UW5Vu60s3bTz2",
+          "candidate": 1,
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-happy-bark-9c3G8W7UW5Vu60s3bTz2-c1.wav",
+          "bytes": 384078,
+          "sha256": "a504810cae473c3f514e3bf6ab52ef791d40b9fd4524e169eaddb9dc72f38ff7"
+        },
+        {
+          "assetId": "jack.sleep-breathing",
+          "generationId": "89NIyvOHRLR6rcsEgBQl",
+          "candidate": 1,
+          "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-sleep-breathing-89NIyvOHRLR6rcsEgBQl-c1.wav",
+          "bytes": 1920078,
+          "sha256": "5c99102d59d1c3be56c1a38367522684257d7c9dc750035547e15325a901a461"
+        }
+      ],
+      "runtimeOrMastered": false
+    }
+  },
+  "managedAssetRefreshes": [
+    {
+      "path": "assets/audio/v1/audio-manifest.v1.json",
+      "kind": "exact-baseline-to-current-managed-asset-refresh",
+      "baselineCommit": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+      "priorBytes": 17722,
+      "priorSha256": "80d5375003245bcd78bb9cd7dadeef2d92e3c6c970d2fb30d54bb7b1b7b59695",
+      "priorJsonValid": true,
+      "currentBytes": 24679,
+      "currentSha256": "386c1de41ddc2da7a4c4b3ad90f9ce3f95ff31c6a1f4ba66e8afc0a12ce7b2c9",
+      "currentJsonValid": true,
+      "tracked": true,
+      "gitState": "tracked-modified",
+      "scope": "Only the two locally downloaded ElevenLabs raw-source candidate records are accepted as a deterministic managed-manifest refresh; this does not promote either WAV to runtime or preserved status."
+    }
+  ],
+  "managedCollisionContext": [
+    {
+      "path": "assets/audio/v1/audio-manifest.v1.json",
+      "bytes": 24679,
+      "sha256": "386c1de41ddc2da7a4c4b3ad90f9ce3f95ff31c6a1f4ba66e8afc0a12ce7b2c9",
+      "lastWriteTimeUtc": "2026-08-16T16:32:14.3861796Z",
+      "gitState": "tracked-modified",
+      "gatePromotion": "exact-refresh-mapping-only"
+    },
+    {
+      "path": "docs/audio/AUDIO_LICENSE_LEDGER.v1.md",
+      "bytes": 10921,
+      "sha256": "edaa9c9688569a2c176ecd27ed5af29b209bb59f61880d03522dc05fd2c7d961",
+      "lastWriteTimeUtc": "2026-08-16T16:33:53.6433408Z",
+      "gitState": "tracked-modified",
+      "gatePromotion": "none-context-only"
+    },
+    {
+      "path": "docs/design/3D_JACK_MODEL_HANDOFF.md",
+      "bytes": 31589,
+      "sha256": "9a2b1a1e896d9fd1b0796946d64d6cfa70d7ddd1ec5fd7980b35c779aad2f070",
+      "lastWriteTimeUtc": "2026-08-16T16:55:54.1065789Z",
+      "gitState": "tracked-modified",
+      "gatePromotion": "none-context-only"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1277,
+      "sha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa",
+      "lastWriteTimeUtc": "2026-08-16T16:33:52.4415557Z",
+      "gitState": "tracked-modified",
+      "gatePromotion": "none-context-only"
+    },
+    {
+      "path": "src/audio-cue-policy.ts",
+      "bytes": 7617,
+      "sha256": "8bfab5895f5204de2473a401543a2e4cf191363b3b85752a5aa3c81010f87bf5",
+      "lastWriteTimeUtc": "2026-08-16T16:38:40.2875642Z",
+      "gitState": "tracked-modified",
+      "gatePromotion": "none-context-only"
+    },
+    {
+      "path": "src/audio-cue-policy.test.ts",
+      "bytes": 8207,
+      "sha256": "9c682d5f65a0d6303fd6d0857ed3bd3de5ed2b49266386d14a24678baba82fdf",
+      "lastWriteTimeUtc": "2026-08-16T16:38:41.4634279Z",
+      "gitState": "tracked-modified",
+      "gatePromotion": "none-context-only"
+    },
+    {
+      "path": "scripts/verify-audio-v1.mjs",
+      "bytes": 8299,
+      "sha256": "114c4b115e82d508449a364ded5d6852fad19cb2e0ab3ad020a4dd8573196bbc",
+      "lastWriteTimeUtc": "2026-08-16T16:34:45.8249702Z",
+      "gitState": "untracked",
+      "gatePromotion": "none-context-only"
+    }
+  ],
+  "classificationGroups": [
+    {
+      "id": "postbaseline-v3-reproducibility-normal-git",
+      "tier": "normal-git",
+      "status": "proposed-not-staged",
+      "fileCount": 10,
+      "bytes": 55893,
+      "reason": "Bounded project-authored code, README, and provenance metadata; no runtime or creative promotion."
+    },
+    {
+      "id": "postbaseline-v3-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "status": "excluded-until-preserved",
+      "fileCount": 10,
+      "bytes": 267598893,
+      "reason": "Rejected/research-only editable sources, third-party donor binaries, and derivatives; no recoverable backup has been verified."
+    },
+    {
+      "id": "postbaseline-audio-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "status": "excluded-until-preserved",
+      "fileCount": 2,
+      "bytes": 2304156,
+      "reason": "Raw paid-plan source candidate; rights are documented but mastering, selection, and recoverable backup remain incomplete."
+    },
+    {
+      "id": "postbaseline-v3-evidence-preservation-pending",
+      "tier": "cold-archive-pending",
+      "status": "excluded-until-preserved",
+      "fileCount": 17,
+      "bytes": 10030939,
+      "reason": "Bulk and rejected research evidence; no representative set or recoverable backup has been approved and verified."
+    },
+    {
+      "id": "postbaseline-v4-reproducibility-normal-git",
+      "tier": "normal-git",
+      "status": "proposed-not-staged",
+      "fileCount": 7,
+      "bytes": 38091,
+      "reason": "Bounded project-authored exploratory documentation, likeness specification, provenance ledger, and reproducibility scripts; no runtime or creative promotion."
+    },
+    {
+      "id": "postbaseline-v4-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "status": "excluded-until-preserved",
+      "fileCount": 7,
+      "bytes": 116717183,
+      "reason": "Unapproved/rejected exploratory editable sources and redundant Blender checkpoints; none has a verified recoverable backup or runtime status."
+    },
+    {
+      "id": "postbaseline-v4-review-evidence-normal-git",
+      "tier": "normal-git",
+      "status": "proposed-not-staged",
+      "fileCount": 2,
+      "bytes": 2206289,
+      "reason": "Bounded phone review board and objective Candidate D report for Mark's cheapest likeness gate; this does not imply acceptance."
+    },
+    {
+      "id": "postbaseline-v4-evidence-preservation-pending",
+      "tier": "cold-archive-pending",
+      "status": "excluded-until-preserved",
+      "fileCount": 20,
+      "bytes": 19908666,
+      "reason": "Rejected iterations, redundant single views, diagnostics, and bulk V4 evidence; no recoverable backup has been approved and verified."
+    }
+  ],
+  "files": [
+    {
+      "path": "assets/3d/jack/v3/README.md",
+      "bytes": 1554,
+      "sha256": "99334c2fda634e3d615c142d5949b51643436f44dbf10a78e918f1405abe7eef",
+      "lastWriteTimeUtc": "2026-08-16T16:20:14.0523280Z",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v3/SOURCE_LEDGER_V3.md",
+      "bytes": 1546,
+      "sha256": "cb5d9cd447f6b2349870539e4275f2a0d1ed1a14021367f025bcba90adca5432",
+      "lastWriteTimeUtc": "2026-08-16T16:20:16.0160719Z",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v3/source/jack-baby-meshy-native-rig-v3-prototype-a.blend",
+      "bytes": 29504937,
+      "sha256": "ac742607ca86ee3644fa8c7351bcb3c121ac019a5fee4c5d255df2945807236a",
+      "lastWriteTimeUtc": "2026-08-16T16:18:26.4162128Z",
+      "classificationRuleId": "postbaseline-v3-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v3/source/jack-baby-meshy-native-rig-v3-prototype-b.blend",
+      "bytes": 29352649,
+      "sha256": "e3cb3475badad0271d2afdbe1a5840e44604d747d5fcbaa67318d960eb467c4e",
+      "lastWriteTimeUtc": "2026-08-16T16:18:56.4406241Z",
+      "classificationRuleId": "postbaseline-v3-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v3/source/jack-baby-shepherd-v3-actions-a.blend",
+      "bytes": 22698159,
+      "sha256": "004844767e13e75a1753f2becbb999f58f6e429f782eb89547e672d25043aef9",
+      "lastWriteTimeUtc": "2026-08-16T16:14:15.2629399Z",
+      "classificationRuleId": "postbaseline-v3-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v3/source/jack-baby-shepherd-v3-actions-b.blend",
+      "bytes": 87579589,
+      "sha256": "5336440aa685557f3c1b9bc34ce4a67b3b6c92a39c5ad7c22de8ce595b1ff8e6",
+      "lastWriteTimeUtc": "2026-08-16T16:15:59.8507373Z",
+      "classificationRuleId": "postbaseline-v3-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v3/source/jack-baby-shepherd-v3-prototype-a.blend",
+      "bytes": 22659784,
+      "sha256": "8cd7fb2783e2810a5f6ed97d20b04a11efcc50440bea6b7a6a0fd42cd3daebe4",
+      "lastWriteTimeUtc": "2026-08-16T16:07:19.7148248Z",
+      "classificationRuleId": "postbaseline-v3-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v3/source/jack-baby-shepherd-v3-prototype-b.blend",
+      "bytes": 22671040,
+      "sha256": "202fc88428e6b4847d6a54f57aa7c5b49336a081f07eab40313e9c60c29bb552",
+      "lastWriteTimeUtc": "2026-08-16T16:09:13.8180251Z",
+      "classificationRuleId": "postbaseline-v3-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v3/source/jack-baby-shepherd-v3-prototype-c.blend",
+      "bytes": 22707359,
+      "sha256": "fbeb215b22dc8a2770551988836fc3b8b6f7a88553e7fe43de4e5ef9fe400c0f",
+      "lastWriteTimeUtc": "2026-08-16T16:11:20.2091364Z",
+      "classificationRuleId": "postbaseline-v3-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v3/source/third-party/quaternius-german-shepherd-cc-by-3.0/fbx/Characters_GermanShepherd.fbx",
+      "bytes": 6262556,
+      "sha256": "6d4c9194552703ad6ab00a6196bdadd603baf462a5f3b8e2386a8bdae892c8e5",
+      "lastWriteTimeUtc": "2024-03-17T13:26:06.0000000Z",
+      "classificationRuleId": "postbaseline-v3-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v3/source/third-party/quaternius-german-shepherd-cc-by-3.0/quaternius-german-shepherd-import.blend",
+      "bytes": 22685775,
+      "sha256": "7d910ca3138d8d13bb49b1dbe8e0a01d5574e7e7ac8b31858c27d25684e7fe6e",
+      "lastWriteTimeUtc": "2026-08-16T16:01:19.8527759Z",
+      "classificationRuleId": "postbaseline-v3-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v3/source/third-party/quaternius-german-shepherd-cc-by-3.0/quaternius-german-shepherd-poly-pizza-Hssa6NPc6W.zip",
+      "bytes": 1477045,
+      "sha256": "034a05c1dea4d4d33cf480fd110e77c47af5e773e40adfc94dc08ee6bd027320",
+      "lastWriteTimeUtc": "2026-08-16T15:58:23.2912541Z",
+      "classificationRuleId": "postbaseline-v3-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v3/tools/analyze_shepherd_components.py",
+      "bytes": 3501,
+      "sha256": "9a1160ac615cd5b37caa41c214ebb75043c7c5d4ca8d19c3b1234404e8887c01",
+      "lastWriteTimeUtc": "2026-08-16T16:04:14.3468469Z",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v3/tools/build_jack_shepherd_prototype.py",
+      "bytes": 8717,
+      "sha256": "7f453565316f07c168b85397aa035314486dba1e0d7ee522cec7c525a1117476",
+      "lastWriteTimeUtc": "2026-08-16T16:11:07.9688699Z",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v3/tools/build_meshy_native_rig_prototype.py",
+      "bytes": 7095,
+      "sha256": "fb4abae0a1876082bc1d39d1ec5a46fdb30446d83a437048ad1044b9cd38ccc4",
+      "lastWriteTimeUtc": "2026-08-16T16:18:40.8834246Z",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v3/tools/build_v3_action_library.py",
+      "bytes": 12137,
+      "sha256": "f8150b02bf001ded15b5c77569e732d55ced0fd6032579402fd3e5a8fa6dfe48",
+      "lastWriteTimeUtc": "2026-08-16T16:15:22.1622804Z",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v3/tools/inspect_shepherd_source.py",
+      "bytes": 4607,
+      "sha256": "e12d7dd88ca70224a4dda44075246c5876c50e89de70f6324ec3a7b3e82cd1ba",
+      "lastWriteTimeUtc": "2026-08-16T16:00:51.2188613Z",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v3/tools/render_jack_shepherd_prototype_board.py",
+      "bytes": 5676,
+      "sha256": "c8133a2154a8ff25b81dc19f43efd52f0fbfa6ec574d795913131b6e41f5e4a9",
+      "lastWriteTimeUtc": "2026-08-16T16:08:02.7019270Z",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v3/tools/render_shepherd_compatibility_board.py",
+      "bytes": 5652,
+      "sha256": "da7509ec6ca6640ca27e74e46d1b5eb6c7c3a000570766e41b80ddb760d8e854",
+      "lastWriteTimeUtc": "2026-08-16T16:05:08.5179799Z",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v3/tools/render_v3_contract_board.py",
+      "bytes": 5408,
+      "sha256": "544f2a8cdcc0a80242628d57bc15cfbccfa26060cde1de27ebf8d565fa3e1218",
+      "lastWriteTimeUtc": "2026-08-16T16:15:01.9018989Z",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v4/ADULT_LIKENESS_SPEC_V4.md",
+      "bytes": 3253,
+      "sha256": "c7362259708497838cfe9213744f041c2360a40ce70da6aca4b3fcc573e4640e",
+      "lastWriteTimeUtc": "2026-08-16T16:34:40.5181628Z",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v4/README.md",
+      "bytes": 2630,
+      "sha256": "99a1395336aad71c32470a6400bf85df804789c601264144b14ec2ebea909f08",
+      "lastWriteTimeUtc": "2026-08-16T16:55:28.9172423Z",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v4/SOURCE_LEDGER_V4.md",
+      "bytes": 1583,
+      "sha256": "117aa74fc4cff0aff0bf47d9dca0e9b159c73e41861b280a240ba2af53b01a7f",
+      "lastWriteTimeUtc": "2026-08-16T16:55:30.3105151Z",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v4/source/jack-adult-v4-candidate-a.blend",
+      "bytes": 16672604,
+      "sha256": "169c3efaf4c672bb1acbf89d67f232c2c3aa7e9173836264c786e354a9ddb1a3",
+      "lastWriteTimeUtc": "2026-08-16T16:43:09.1985346Z",
+      "classificationRuleId": "postbaseline-v4-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v4/source/jack-adult-v4-candidate-a.blend1",
+      "bytes": 16672632,
+      "sha256": "5fbfb0c486212ce365177fdac81298862b646e88fcca73328e439570a2287cfe",
+      "lastWriteTimeUtc": "2026-08-16T16:41:41.0368693Z",
+      "classificationRuleId": "postbaseline-v4-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v4/source/jack-adult-v4-candidate-b.blend",
+      "bytes": 16678060,
+      "sha256": "86deb303e04b08a4e894da212a70560644a914863d7881f101a6ebb115c9583e",
+      "lastWriteTimeUtc": "2026-08-16T16:47:58.9506336Z",
+      "classificationRuleId": "postbaseline-v4-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v4/source/jack-adult-v4-candidate-c.blend",
+      "bytes": 16675117,
+      "sha256": "d4f885a2eb8f9428b048b51e50aadf1e2efa4d78ca8645beab6ebe03c11af709",
+      "lastWriteTimeUtc": "2026-08-16T16:50:44.6831425Z",
+      "classificationRuleId": "postbaseline-v4-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v4/source/jack-adult-v4-candidate-d.blend",
+      "bytes": 16672734,
+      "sha256": "2af5d2cacfc50cf94ec28653775321ce179879bb94ed905e8db57abd1c5ec69f",
+      "lastWriteTimeUtc": "2026-08-16T16:52:27.0334202Z",
+      "classificationRuleId": "postbaseline-v4-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v4/source/jack-adult-v4-reference-a.blend",
+      "bytes": 16673040,
+      "sha256": "6d2b463ff263cc7101669eed54b09193640e02d901aa87de15c0deb06a9815df",
+      "lastWriteTimeUtc": "2026-08-16T16:37:09.6733037Z",
+      "classificationRuleId": "postbaseline-v4-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v4/source/jack-adult-v4-reference-a.blend1",
+      "bytes": 16672996,
+      "sha256": "e52794c4a6bd5145ad1bec01e7a4de01f9eed3134d8bbec9f2578a9e891c4eb3",
+      "lastWriteTimeUtc": "2026-08-16T16:35:46.7829197Z",
+      "classificationRuleId": "postbaseline-v4-source-preservation-pending"
+    },
+    {
+      "path": "assets/3d/jack/v4/tools/analyze_adult_components.py",
+      "bytes": 2920,
+      "sha256": "debea0b00f5c76d768c35e71d33322080388f91e4545cf610c4b56d5e2b6612b",
+      "lastWriteTimeUtc": "2026-08-16T16:38:50.7333320Z",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v4/tools/build_adult_likeness_candidate.py",
+      "bytes": 16099,
+      "sha256": "9b06d6ed972f0fde3935e2ba5562d4bad392664e971c0cfbb4c96c7a97a7d92e",
+      "lastWriteTimeUtc": "2026-08-16T16:52:13.6322967Z",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v4/tools/inspect_render_adult_source.py",
+      "bytes": 7392,
+      "sha256": "ecbeb8407717be966a21d326524ee17214b995d6f2ff99a416dce61315fe46e7",
+      "lastWriteTimeUtc": "2026-08-16T16:42:52.5684464Z",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/3d/jack/v4/tools/render_adult_single_views.py",
+      "bytes": 4214,
+      "sha256": "a62379701ee00280f2984c0e38713615b3ec5dea539048afc0c199970a3244cc",
+      "lastWriteTimeUtc": "2026-08-16T16:44:44.8327101Z",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git"
+    },
+    {
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-happy-bark-9c3G8W7UW5Vu60s3bTz2-c1.wav",
+      "bytes": 384078,
+      "sha256": "a504810cae473c3f514e3bf6ab52ef791d40b9fd4524e169eaddb9dc72f38ff7",
+      "lastWriteTimeUtc": "2026-08-16T16:03:45.9420784Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-sleep-breathing-89NIyvOHRLR6rcsEgBQl-c1.wav",
+      "bytes": 1920078,
+      "sha256": "5c99102d59d1c3be56c1a38367522684257d7c9dc750035547e15325a901a461",
+      "lastWriteTimeUtc": "2026-08-16T16:28:11.5782542Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-meshy-native-rig-v3-prototype-a-build.json",
+      "bytes": 1592,
+      "sha256": "25784db9a8750a61dc0b8091d8ff741c20c94b7a9a25b95710ba06291eabd356",
+      "lastWriteTimeUtc": "2026-08-16T16:18:26.4221735Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-meshy-native-rig-v3-prototype-b-board.png",
+      "bytes": 1157860,
+      "sha256": "e4204d15b272ba6f3edf3c516cf18dd2cbcfeead49c71c516838300fbe5cfc70",
+      "lastWriteTimeUtc": "2026-08-16T16:19:11.6274926Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-meshy-native-rig-v3-prototype-b-build.json",
+      "bytes": 1139,
+      "sha256": "d86e36b426ee71226753c129abf478ec69f95b97671280da5f4c3160e1f1e38b",
+      "lastWriteTimeUtc": "2026-08-16T16:18:56.4456119Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-actions-a-build.json",
+      "bytes": 3849,
+      "sha256": "ccaae2cd2e8f14a4a57ffa9655945c22410edf2332425fe0966b5af60ac6c49e",
+      "lastWriteTimeUtc": "2026-08-16T16:14:15.2669253Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-actions-b-build.json",
+      "bytes": 3849,
+      "sha256": "0931429513d5ce5f7149b3cfa3433adb846d1e73d984f651377d0ed6c55dd737",
+      "lastWriteTimeUtc": "2026-08-16T16:15:59.8547248Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-actions-b-contract-board.png",
+      "bytes": 1320110,
+      "sha256": "96482679aa9f1c31e08333caa3f8de0baebc6f7235ce0167a5b4bb8afa4dc294",
+      "lastWriteTimeUtc": "2026-08-16T16:16:14.1301589Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-a-board.png",
+      "bytes": 1141551,
+      "sha256": "db7bdfd0bb1c0e3e1413ade07117f7dcd00ed0ec5db3eb0731af48107313e1c8",
+      "lastWriteTimeUtc": "2026-08-16T16:08:15.8280618Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-a-build.json",
+      "bytes": 661,
+      "sha256": "20a354bff8bbe1ad075beb23548cc5bf59193b5e2c40c5998d89ad451c4820f8",
+      "lastWriteTimeUtc": "2026-08-16T16:07:19.7188138Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-b-board.png",
+      "bytes": 1270136,
+      "sha256": "4a735f0e572c6823bd54c48189eed3e7421315977126d52a7eb25ff8a791204d",
+      "lastWriteTimeUtc": "2026-08-16T16:09:27.4734100Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-b-build.json",
+      "bytes": 661,
+      "sha256": "2ff5262e15865e2d4a287666fb869d97526bd65c36c968f11fff828d7f542169",
+      "lastWriteTimeUtc": "2026-08-16T16:09:13.8230119Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-c-board.png",
+      "bytes": 1274175,
+      "sha256": "4cac4b617c979d8a0fc227e19882f209697a90ce7e8cade8bd0f1ad6e05c33a2",
+      "lastWriteTimeUtc": "2026-08-16T16:11:33.4307388Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-baby-shepherd-v3-prototype-c-build.json",
+      "bytes": 683,
+      "sha256": "682dddb1abbd0b2474ef85c8f7fa74647183e566fe0f21ebdf7e852b87d811fb",
+      "lastWriteTimeUtc": "2026-08-16T16:11:20.2141232Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-v3-meshy-transfer-failure.png",
+      "bytes": 1157860,
+      "sha256": "e4204d15b272ba6f3edf3c516cf18dd2cbcfeead49c71c516838300fbe5cfc70",
+      "lastWriteTimeUtc": "2026-08-16T16:19:11.6274926Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/jack-v3-native-shepherd-motion-check.png",
+      "bytes": 1320110,
+      "sha256": "96482679aa9f1c31e08333caa3f8de0baebc6f7235ce0167a5b4bb8afa4dc294",
+      "lastWriteTimeUtc": "2026-08-16T16:16:14.1301589Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/quaternius-german-shepherd-compatibility-board.png",
+      "bytes": 1312866,
+      "sha256": "42c1637816060eccd1f6457a597bb7592a65835b354aa49555f73b5941cb2385",
+      "lastWriteTimeUtc": "2026-08-16T16:05:24.1023405Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/quaternius-german-shepherd-components.json",
+      "bytes": 57446,
+      "sha256": "723444f8ba2d2badfdc1134b92713ae6737a55de90bd21916128cef8f034c230",
+      "lastWriteTimeUtc": "2026-08-16T16:04:23.3859775Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v3/quaternius-german-shepherd-inspection.json",
+      "bytes": 6391,
+      "sha256": "2bf18ebfa711a8ecdd1993bd0f9153b1a0f56f4e040098640af1b5f170fa8c68",
+      "lastWriteTimeUtc": "2026-08-16T16:01:19.8587575Z",
+      "classificationRuleId": "postbaseline-v3-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-a-board.png",
+      "bytes": 2156135,
+      "sha256": "724d883abb4b71304f230ddc57bf4130756be2130fcef1e9dd2793e249e2e574",
+      "lastWriteTimeUtc": "2026-08-16T16:43:45.4226582Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-a-front.png",
+      "bytes": 1077427,
+      "sha256": "38ab01d6bb35cb2fbf57aea31780dda5a551bbdfc7ecd1b0355537de59ceb251",
+      "lastWriteTimeUtc": "2026-08-16T16:45:06.6998325Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-a-report.json",
+      "bytes": 1647,
+      "sha256": "0c0ab4202fe0e786162053494a038b28feabe7904c5bd135f1362a81feb30171",
+      "lastWriteTimeUtc": "2026-08-16T16:43:45.4316353Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-a-side.png",
+      "bytes": 1077402,
+      "sha256": "60e2370219ef123dfda95c30b9acfe47109421c68b7a340098fafaeb184d7de1",
+      "lastWriteTimeUtc": "2026-08-16T16:45:20.7831661Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-a-three-quarter.png",
+      "bytes": 1129779,
+      "sha256": "5291bd4c91d209351e167ad6517c052a3f3a1f630b81538ab1884ca01d30d015",
+      "lastWriteTimeUtc": "2026-08-16T16:45:38.3711310Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-b-board.png",
+      "bytes": 2164351,
+      "sha256": "88318846a4734f1d036ecfe62d59f289add2278ed322fd8a6cd9075075f7d9cd",
+      "lastWriteTimeUtc": "2026-08-16T16:48:34.1943812Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-b-front.png",
+      "bytes": 1081957,
+      "sha256": "1fc206614dc20b359046afb535a3ad9703dec16635691a6c54c904a1c265f874",
+      "lastWriteTimeUtc": "2026-08-16T16:48:59.7295402Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-b-report.json",
+      "bytes": 1944,
+      "sha256": "09d26ab7660298aa6bd5d1b5d7e7a38d7869f8695c814cc5b33cab3567e67325",
+      "lastWriteTimeUtc": "2026-08-16T16:48:34.2033566Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-b-side.png",
+      "bytes": 1084659,
+      "sha256": "fda75ec51566dca59db80cc7e838eddb8f1deb6f0ad60cc0c262679c6bede48e",
+      "lastWriteTimeUtc": "2026-08-16T16:49:16.2962463Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-b-three-quarter.png",
+      "bytes": 1136747,
+      "sha256": "845ecdeebe9d391e02d2b592581a8d45d57a7da9eff4e11b967b1540bcf2311a",
+      "lastWriteTimeUtc": "2026-08-16T16:49:34.7468923Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-c-front.png",
+      "bytes": 1078368,
+      "sha256": "e75aa6b32a64ce36ed34967300473a37b2450a80c83a8997b535e521e9791dba",
+      "lastWriteTimeUtc": "2026-08-16T16:51:10.7480305Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-c-report.json",
+      "bytes": 1877,
+      "sha256": "919d79f726c34dc88dfd0380ace19243b71aa03ba11f118afd3a57750283d716",
+      "lastWriteTimeUtc": "2026-08-16T16:50:44.6871317Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-c-side.png",
+      "bytes": 1078718,
+      "sha256": "9abb05cb9b237906a8d921cff60e60e2274d15f0aa8108aa40910da372c5713c",
+      "lastWriteTimeUtc": "2026-08-16T16:51:24.2828343Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-c-three-quarter.png",
+      "bytes": 1131631,
+      "sha256": "1cdc71d06ceb4b4962e966191f7c4353ee418adc383e25abb0995dbf540f3c49",
+      "lastWriteTimeUtc": "2026-08-16T16:51:41.1886632Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-d-front.png",
+      "bytes": 1079738,
+      "sha256": "2bcc66366fbfb529cfae3a788f820998a5bcc20ce85d110da253461d4660f3e0",
+      "lastWriteTimeUtc": "2026-08-16T16:52:50.3641237Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-d-phone-board.png",
+      "bytes": 2204449,
+      "sha256": "9092e81681916e212d5ffbc700c42da5ee82730caf5e1abf3b581a4565d5603b",
+      "lastWriteTimeUtc": "2026-08-16T16:54:01.9459291Z",
+      "classificationRuleId": "postbaseline-v4-review-evidence-normal-git"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-d-report.json",
+      "bytes": 1840,
+      "sha256": "6ffb9d834a04e65588eed1411d158e3e9241e377c77a146f7ca63142801121f6",
+      "lastWriteTimeUtc": "2026-08-16T16:52:27.0373790Z",
+      "classificationRuleId": "postbaseline-v4-review-evidence-normal-git"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-d-side.png",
+      "bytes": 1078734,
+      "sha256": "3eef15966df5611c8f3152f49428c8f8cb5723e862d843fc11debfd931c65f10",
+      "lastWriteTimeUtc": "2026-08-16T16:53:04.5491400Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-candidate-d-three-quarter.png",
+      "bytes": 1132816,
+      "sha256": "12eb1679a260e2c01881255cef96110b600daeccf3697280e525b61d280461a6",
+      "lastWriteTimeUtc": "2026-08-16T16:53:21.3492127Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-reference-a-board.png",
+      "bytes": 2171820,
+      "sha256": "1d199ded7ea383a80bc30ebd763ad26a9ef963f5e5988cc0079d7936697e2bd5",
+      "lastWriteTimeUtc": "2026-08-16T16:37:53.0333437Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-reference-a-components.json",
+      "bytes": 242202,
+      "sha256": "908f694211d82b098385ac868548e637307758499738020ecec79b94c459ad20",
+      "lastWriteTimeUtc": "2026-08-16T16:39:06.8342737Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    },
+    {
+      "path": "evidence/3d-jack/v4/jack-adult-v4-reference-a-report.json",
+      "bytes": 714,
+      "sha256": "c8cd43b1f39112abe58ee90123c3292b4aef91e62620666965ea734eb7fbf7d0",
+      "lastWriteTimeUtc": "2026-08-16T16:37:53.0433165Z",
+      "classificationRuleId": "postbaseline-v4-evidence-preservation-pending"
+    }
+  ],
+  "unresolvedDecisions": [
+    {
+      "id": "postbaseline-preservation-destination",
+      "scope": "56 raw/source/bulk files, 416559837 bytes",
+      "decisionNeeded": "Approve a recoverable cold-archive destination plus upload and authenticated-download checksum verification."
+    },
+    {
+      "id": "v3-cc-by-distribution-package",
+      "scope": "Quaternius donor and project derivatives",
+      "decisionNeeded": "Before any distribution or promotion, retain a local license/attribution record and confirm the exact CC BY 3.0 notice placement."
+    },
+    {
+      "id": "v3-research-retention",
+      "scope": "Rejected Jack V3 compatibility spike",
+      "decisionNeeded": "Decide whether the rejected editable sources and bulk evidence should be cold-archived or intentionally retained local-only after preservation."
+    },
+    {
+      "id": "v4-candidate-d-creative-gate",
+      "scope": "Unapproved, unrigged Candidate D static likeness checkpoint and its two-file representative review set",
+      "decisionNeeded": "Only Mark may accept or reject the likeness direction. Do not begin rigging, detailed texture correction, runtime export, or integration before that decision."
+    },
+    {
+      "id": "v4-source-and-bulk-retention",
+      "scope": "Seven V4 Blender sources and 20 redundant/rejected/diagnostic evidence files",
+      "decisionNeeded": "Approve a recoverable preservation destination before any archive, cleanup, relocation, or deletion decision."
+    },
+    {
+      "id": "v4-private-reference-protection",
+      "scope": "Ten adult-Jack photographs used locally for likeness comparison",
+      "decisionNeeded": "Keep the photos outside the repository and review mirror; any future backup or sharing requires separate private-preservation approval."
+    },
+    {
+      "id": "elevenlabs-candidate-selection",
+      "scope": "Happy-bark candidate 1 and sleep-breathing candidate 1; 90 additional generated candidates remain undownloaded",
+      "decisionNeeded": "Complete the remaining raw downloads, audible selection, mastering, runtime QA, and preservation before any runtime promotion."
+    }
+  ],
+  "limitations": [
+    "This record proves file identity, size, provenance references, and proposed policy routing; it is not a backup.",
+    "No file in this intake is staged, committed, uploaded, moved, deleted, ignored, converted to LFS, or declared runtime-ready by this record.",
+    "No subjective visual or audio acceptance is inferred from technical evidence or file presence.",
+    "The repository remains the development source of truth; no external mirror was changed."
+  ]
+}

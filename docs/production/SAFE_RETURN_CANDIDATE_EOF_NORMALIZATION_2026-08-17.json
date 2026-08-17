@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 1,
+  "kind": "checksum-bound-candidate-eof-normalization",
+  "normalizationId": "2026-08-17-safe-return-candidate-eof-normalization",
+  "status": "authorized-exact-transition-recorded-local-verification-required",
+  "observedAtUtc": "2026-08-17T16:19:09.4435749Z",
+  "hashAlgorithm": "sha256",
+  "gitBlobIdentityCommand": "git hash-object --path=<path> <path>",
+  "transitionAggregateFormat": "ordinal-case-sensitive path<TAB>oldBytes<TAB>oldSha256<TAB>newBytes<TAB>newSha256<LF>, hashed as UTF-8",
+  "transitionAggregateBytes": 1068,
+  "transitionAggregateSha256": "a6134cc01fa9d8a3c768f78c515d384cc62bb648dfedbdf28290c883ccf15a51",
+  "authorization": {
+    "milestone": "Build — Safe Return Candidate EOF Normalization",
+    "scope": "Remove exactly one terminal LF from each of six named post-baseline V3/V4 reproducibility files so the staged Git diff check can pass; record an exact reversible predecessor-to-successor mapping.",
+    "generalMutableContextException": false,
+    "runtimeBehaviorChangeAuthorized": false,
+    "creativeStatusChangeAuthorized": false,
+    "assetTierOrDispositionChangeAuthorized": false
+  },
+  "repositoryState": {
+    "head": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+    "branch": "codex/jack-v05",
+    "stagedPathCountAfterAuthorizedUnstage": 0,
+    "workingByteDriftDuringUnstage": 0,
+    "externalActionPerformed": false
+  },
+  "immutableIdentitySource": {
+    "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+    "recordSha256": "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6",
+    "immutable": true,
+    "role": "The original 75-file intake remains the immutable source of the six prior raw identities and mtimes. This record is their only authorized successor."
+  },
+  "appendOnlyHistory": [
+    {
+      "record": "docs/production/V0.6-V0.8_TEXT_NORMALIZATION.json",
+      "recordBytes": 11168,
+      "recordSha256": "284966ba2bdd29709245200cebdcd3098476a7a051d5017c812ea2f66c6d1dc2",
+      "immutable": true,
+      "kind": "baseline-text-raw-to-normalized-mapping"
+    },
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+      "recordBytes": 38412,
+      "recordSha256": "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6",
+      "immutable": true,
+      "fileCount": 75,
+      "bytes": 418860110,
+      "aggregateSha256": "b0e16debbb690987ad84c168a3b84f8986f98263d44b4ff6c1502e872e9152a4"
+    },
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_75_TO_95_DELTA_2026-08-16.json",
+      "recordBytes": 14229,
+      "recordSha256": "32dada5d7a6a3c075ed29939ca4bab0b8e1db87d773a1265429c2463311c1a23",
+      "immutable": true,
+      "fileCount": 20,
+      "bytes": 7681560,
+      "aggregateSha256": "0691600367d637c1da18aee7bdcd17f4ebf79ce10b5a15674cf3d1af14a1180b"
+    },
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json",
+      "recordBytes": 22053,
+      "recordSha256": "aa45bff433980f26600fe7627a49ad831e1d325556d8abf4f6095b873fc54f67",
+      "immutable": true,
+      "fileCount": 30,
+      "bytes": 22135008,
+      "aggregateSha256": "de71338c2fb05e78a16eb0c7adb727c00f48756a06ba77201f3031215f9ca49f"
+    },
+    {
+      "record": "docs/production/V4_MANAGED_CONTEXT_REFRESH_2026-08-17.json",
+      "recordBytes": 6217,
+      "recordSha256": "03f8dd11fd8f0860bc3a84a3b2d70f7c806b49bf6cbcf1daf11e4c030763f17a",
+      "immutable": true,
+      "transitionCount": 3
+    },
+    {
+      "record": "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json",
+      "recordBytes": 7885,
+      "recordSha256": "99717544e31e46774e88b56f9afd018fd734863066aeb79454d36954ab37e409",
+      "immutable": true,
+      "transitionCount": 3,
+      "supportingTransitionCount": 2
+    }
+  ],
+  "priorCandidateContext": {
+    "record": "docs/production/SAFE_RETURN_CHECKPOINT_CANDIDATE.json",
+    "fileCount": 85,
+    "bytes": 22822480,
+    "recordBytes": 233328,
+    "recordSha256": "8937c70b63b38ee515314b31a952688c9608247ec9e9bbbe5058addad86c348e",
+    "authorizationStatus": "void-after-approved-eof-normalization",
+    "reason": "The six exact target identities and the append-only record change the candidate identity; a new exact authorization is required."
+  },
+  "transitionSummary": {
+    "fileCount": 6,
+    "priorBytes": 13486,
+    "currentBytes": 13480,
+    "netBytes": -6,
+    "removedBytesPerFile": 1,
+    "removedByteHex": "0a",
+    "transformation": "blank-line-at-eof-removed",
+    "otherByteChanges": 0
+  },
+  "governedSuccessorSets": {
+    "original75Current": {
+      "fileCount": 75,
+      "bytes": 418860104,
+      "aggregateSha256": "1520051aaf04994ebfadb24022cdcb550a362a2fac7127f9c6e35bf1381d54fb"
+    },
+    "source95Current": {
+      "fileCount": 95,
+      "bytes": 426541664,
+      "aggregateSha256": "b1eefc1819b746995e951e651b4629972eb9c34123b8d914006a298b825ffc31"
+    },
+    "combined125Current": {
+      "fileCount": 125,
+      "bytes": 448676672,
+      "aggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f"
+    }
+  },
+  "transitions": [
+    {
+      "path": "assets/3d/jack/v3/README.md",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git",
+      "prior": {
+        "bytes": 1554,
+        "sha256": "99334c2fda634e3d615c142d5949b51643436f44dbf10a78e918f1405abe7eef",
+        "pathAttributedGitBlobOid": "e011df9e9d0c8b2d29f88af55d1488fe5f41e171",
+        "lastWriteTimeUtc": "2026-08-16T16:20:14.0523280Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 30,
+        "terminalLfCount": 2
+      },
+      "current": {
+        "bytes": 1553,
+        "sha256": "deb50c2968e148413b50251b461cd728f15a74d07687032d557ca1e8082298c3",
+        "pathAttributedGitBlobOid": "8eea00ae9318036543d9c9b741caa7ca4005a9b0",
+        "lastWriteTimeUtc": "2026-08-17T16:18:31.0126296Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 29,
+        "terminalLfCount": 1,
+        "gitState": "untracked"
+      },
+      "reversibleTransformation": {
+        "type": "blank-line-at-eof-removed",
+        "removedBytes": 1,
+        "removedByteHex": "0a",
+        "priorReconstruction": "current raw bytes concatenated with one 0a byte",
+        "otherByteChanges": 0
+      }
+    },
+    {
+      "path": "assets/3d/jack/v3/SOURCE_LEDGER_V3.md",
+      "classificationRuleId": "postbaseline-v3-reproducibility-normal-git",
+      "prior": {
+        "bytes": 1546,
+        "sha256": "cb5d9cd447f6b2349870539e4275f2a0d1ed1a14021367f025bcba90adca5432",
+        "pathAttributedGitBlobOid": "46c057ec566a3c1e0fbbee1b741ac5a0cae4b890",
+        "lastWriteTimeUtc": "2026-08-16T16:20:16.0160719Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 13,
+        "terminalLfCount": 2
+      },
+      "current": {
+        "bytes": 1545,
+        "sha256": "c655601ef3dd32a81a4e9b30ce03d87d9091dca195a687d13f2705eea5ded7e0",
+        "pathAttributedGitBlobOid": "135168c8a08ce29ea26d7c32a50cc3712abcf130",
+        "lastWriteTimeUtc": "2026-08-17T16:18:32.5634844Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 12,
+        "terminalLfCount": 1,
+        "gitState": "untracked"
+      },
+      "reversibleTransformation": {
+        "type": "blank-line-at-eof-removed",
+        "removedBytes": 1,
+        "removedByteHex": "0a",
+        "priorReconstruction": "current raw bytes concatenated with one 0a byte",
+        "otherByteChanges": 0
+      }
+    },
+    {
+      "path": "assets/3d/jack/v4/ADULT_LIKENESS_SPEC_V4.md",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git",
+      "prior": {
+        "bytes": 3253,
+        "sha256": "c7362259708497838cfe9213744f041c2360a40ce70da6aca4b3fcc573e4640e",
+        "pathAttributedGitBlobOid": "646a959876de83d32dd1d5b477da55772a1d1b77",
+        "lastWriteTimeUtc": "2026-08-16T16:34:40.5181628Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 68,
+        "terminalLfCount": 2
+      },
+      "current": {
+        "bytes": 3252,
+        "sha256": "555bb30734df9a642b0b574ffc11e2656b7bebb0966d4cf6221a14355165b071",
+        "pathAttributedGitBlobOid": "947c0a454feba15de4453f9efce36b794736ee1f",
+        "lastWriteTimeUtc": "2026-08-17T16:18:34.0834199Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 67,
+        "terminalLfCount": 1,
+        "gitState": "untracked"
+      },
+      "reversibleTransformation": {
+        "type": "blank-line-at-eof-removed",
+        "removedBytes": 1,
+        "removedByteHex": "0a",
+        "priorReconstruction": "current raw bytes concatenated with one 0a byte",
+        "otherByteChanges": 0
+      }
+    },
+    {
+      "path": "assets/3d/jack/v4/README.md",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git",
+      "prior": {
+        "bytes": 2630,
+        "sha256": "99a1395336aad71c32470a6400bf85df804789c601264144b14ec2ebea909f08",
+        "pathAttributedGitBlobOid": "058af9ced4420632f6db638a71c272427f8498fd",
+        "lastWriteTimeUtc": "2026-08-16T16:55:28.9172423Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 53,
+        "terminalLfCount": 2
+      },
+      "current": {
+        "bytes": 2629,
+        "sha256": "801563a3bb518e5fc1cb7c88d99a53dcb740a224ca55ac3d8faa1afaea6703dc",
+        "pathAttributedGitBlobOid": "edb5f3ce0bea18334da2f4b9f19552ecdc550b22",
+        "lastWriteTimeUtc": "2026-08-17T16:18:35.6841431Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 52,
+        "terminalLfCount": 1,
+        "gitState": "untracked"
+      },
+      "reversibleTransformation": {
+        "type": "blank-line-at-eof-removed",
+        "removedBytes": 1,
+        "removedByteHex": "0a",
+        "priorReconstruction": "current raw bytes concatenated with one 0a byte",
+        "otherByteChanges": 0
+      }
+    },
+    {
+      "path": "assets/3d/jack/v4/SOURCE_LEDGER_V4.md",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git",
+      "prior": {
+        "bytes": 1583,
+        "sha256": "117aa74fc4cff0aff0bf47d9dca0e9b159c73e41861b280a240ba2af53b01a7f",
+        "pathAttributedGitBlobOid": "94e451a497a4fa2aa6e9f6d20af7af58744de73b",
+        "lastWriteTimeUtc": "2026-08-16T16:55:30.3105151Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 18,
+        "terminalLfCount": 2
+      },
+      "current": {
+        "bytes": 1582,
+        "sha256": "c743ccb0bc2c0422177bef82740f94c6c6aa61c85c96f68b34811a0220aa8a6a",
+        "pathAttributedGitBlobOid": "e98d528ee61b5ed916fd857f9ca8e599045b045c",
+        "lastWriteTimeUtc": "2026-08-17T16:18:37.2439775Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 17,
+        "terminalLfCount": 1,
+        "gitState": "untracked"
+      },
+      "reversibleTransformation": {
+        "type": "blank-line-at-eof-removed",
+        "removedBytes": 1,
+        "removedByteHex": "0a",
+        "priorReconstruction": "current raw bytes concatenated with one 0a byte",
+        "otherByteChanges": 0
+      }
+    },
+    {
+      "path": "assets/3d/jack/v4/tools/analyze_adult_components.py",
+      "classificationRuleId": "postbaseline-v4-reproducibility-normal-git",
+      "prior": {
+        "bytes": 2920,
+        "sha256": "debea0b00f5c76d768c35e71d33322080388f91e4545cf610c4b56d5e2b6612b",
+        "pathAttributedGitBlobOid": "786a7f94beab4388a1fadf53339a0a4e6672ec0d",
+        "lastWriteTimeUtc": "2026-08-16T16:38:50.7333320Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 77,
+        "terminalLfCount": 2
+      },
+      "current": {
+        "bytes": 2919,
+        "sha256": "ba41ea722a0dcbc0f8867c1c700874951e5e78422eb1f61c9ba051066d4ce2ff",
+        "pathAttributedGitBlobOid": "5ef376cea143122e8d8d67b4d5dc54c5df3cb3a9",
+        "lastWriteTimeUtc": "2026-08-17T16:18:38.7539378Z",
+        "encoding": "UTF-8 without BOM",
+        "lineEndings": "LF-only",
+        "crByteCount": 0,
+        "lfByteCount": 76,
+        "terminalLfCount": 1,
+        "gitState": "untracked"
+      },
+      "reversibleTransformation": {
+        "type": "blank-line-at-eof-removed",
+        "removedBytes": 1,
+        "removedByteHex": "0a",
+        "priorReconstruction": "current raw bytes concatenated with one 0a byte",
+        "otherByteChanges": 0
+      }
+    }
+  ],
+  "classificationEffect": {
+    "record": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+    "priorRecordSha256": "d1f1a637c1c438626bffb25911bdbcf50c754fc4581659f6cd507cb2a088f906",
+    "currentRecordBytes": 138055,
+    "currentRecordSha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb",
+    "changedPaths": 6,
+    "pathChanges": 0,
+    "fileCountChanges": 0,
+    "tierChanges": 0,
+    "dispositionChanges": 0,
+    "runtimeImportChanges": 0,
+    "expectedV3GroupByteDelta": -2,
+    "expectedV4GroupByteDelta": -4,
+    "allowedCurrentChanges": "Only the six entry sizes/SHA-256 values and their two group byte totals may change; generatedAt and all other fields must remain unchanged."
+  },
+  "excludedSceneInvariant": {
+    "path": "src/pet-room-scene.web.tsx",
+    "bytes": 12121,
+    "sha256": "8d26ac3d5d65dc0c4ed943ed1d55435350b9d56e5bacbb6df7de6465fe8dd7df",
+    "pathAttributedGitBlobOid": "9b59e2cda25df99a34362fea7f45744ffe160f09",
+    "excluded": true,
+    "staged": false,
+    "editedByThisMilestone": false
+  },
+  "limitations": [
+    "This record authorizes exactly six named one-byte EOF transitions and is not a wildcard or general mutable-context exception.",
+    "The immutable 75, 75-to-95, 95-to-125, baseline text-normalization, and managed-context records retain their original observations and are not rewritten.",
+    "The prior raw bytes are exactly reconstructable as current raw bytes plus one terminal 0a byte; old and new raw SHA-256 values and path-attributed Git blob OIDs prove both identities.",
+    "Checksums are identity evidence, not a backup.",
+    "No asset tier, disposition, runtime import, creative status, runtime behavior, dependency, external system, commit, push, upload, deployment, publication, deletion, relocation, or cleanup is authorized by this record."
+  ]
+}

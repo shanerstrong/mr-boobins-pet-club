@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "kind": "managed-context-refresh",
+  "refreshId": "2026-08-17-explicit-reset-fix-round-1",
+  "status": "authorized-transition-recorded-local-verification-required",
+  "observedAtUtc": "2026-08-17T02:16:51.5505459Z",
+  "hashAlgorithm": "sha256",
+  "authorization": {
+    "milestone": "Build — V4 Managed-Context Hash Reconciliation",
+    "sourceMilestone": "Build — Explicit Reset Persistence Closure",
+    "sourceFixRound": 1,
+    "scope": "Record only the exact authorized V4 App and persistence old-to-new identities after the explicit-reset implementation; no asset or classification change is authorized.",
+    "generalMutableContextException": false
+  },
+  "repositoryState": {
+    "head": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+    "stagedPathCount": 0,
+    "stagedPaths": [],
+    "externalOrGitActionPerformed": false
+  },
+  "immutablePredecessor": {
+    "record": "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json",
+    "recordSha256": "aa45bff433980f26600fe7627a49ad831e1d325556d8abf4f6095b873fc54f67",
+    "immutable": true,
+    "frozenContextRole": "The predecessor remains the immutable historical identity source. This refresh appends one exact authorized transition and does not rewrite that history."
+  },
+  "appendOnlyHistory": [
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+      "recordSha256": "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6",
+      "immutable": true,
+      "fileCount": 75,
+      "bytes": 418860110,
+      "aggregateSha256": "b0e16debbb690987ad84c168a3b84f8986f98263d44b4ff6c1502e872e9152a4"
+    },
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_75_TO_95_DELTA_2026-08-16.json",
+      "recordSha256": "32dada5d7a6a3c075ed29939ca4bab0b8e1db87d773a1265429c2463311c1a23",
+      "immutable": true,
+      "fileCount": 20,
+      "bytes": 7681560,
+      "aggregateSha256": "0691600367d637c1da18aee7bdcd17f4ebf79ce10b5a15674cf3d1af14a1180b"
+    },
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json",
+      "recordSha256": "aa45bff433980f26600fe7627a49ad831e1d325556d8abf4f6095b873fc54f67",
+      "immutable": true,
+      "fileCount": 30,
+      "bytes": 22135008,
+      "aggregateSha256": "de71338c2fb05e78a16eb0c7adb727c00f48756a06ba77201f3031215f9ca49f"
+    }
+  ],
+  "governedAssetSet": {
+    "fileCount": 125,
+    "bytes": 448676678,
+    "aggregateSha256": "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b",
+    "missingFilesAtRecordCreation": 0,
+    "driftedFilesAtRecordCreation": 0,
+    "recordCreationRehashPasses": 1,
+    "requiredFinalVerifierPasses": 2
+  },
+  "transitions": [
+    {
+      "path": "App.tsx",
+      "role": "explicit-reset-publication-and-runtime-import-authority",
+      "prior": {
+        "bytes": 107337,
+        "sha256": "8db9fb4de855a4bf632df0c599a4075badcd9ab480ac1831815821a39a49994f",
+        "lastWriteTimeUtc": "2026-08-16T19:46:22.3869550Z",
+        "identitySource": "immutable-95-to-125-managedContext-and-frozenV4"
+      },
+      "current": {
+        "bytes": 112038,
+        "sha256": "0f9893b566288adaec6a1000b4e05c4c5103a0d37692430de08aabe09423e5c2",
+        "lastWriteTimeUtc": "2026-08-17T00:07:49.8424495Z",
+        "gitState": "tracked-modified"
+      },
+      "reason": "Authorized Explicit Reset Persistence Closure fix round 1; no asset routing or creative status change."
+    },
+    {
+      "path": "src/persistence.ts",
+      "role": "strict-recoverable-v4-explicit-reset-transaction",
+      "prior": {
+        "bytes": 28174,
+        "sha256": "5d448dad68e5fecda993bff898df6af03bcee05e246d3ff8b067648de8aee8d2",
+        "lastWriteTimeUtc": null,
+        "mtimeEvidence": "not-recorded-in-immutable-frozenV4-entry",
+        "identitySource": "immutable-95-to-125-frozenV4"
+      },
+      "current": {
+        "bytes": 36091,
+        "sha256": "15f6d5e3ba55d134e61a68738416ca4bb6cbfbe12fb474982d4d53aeb07b51ce",
+        "lastWriteTimeUtc": "2026-08-17T00:09:59.2553069Z",
+        "gitState": "tracked-modified"
+      },
+      "reason": "Authorized Explicit Reset Persistence Closure fix round 1; no asset routing or creative status change."
+    },
+    {
+      "path": "src/persistence.test.ts",
+      "role": "deterministic-v4-explicit-reset-coverage",
+      "prior": {
+        "bytes": 55113,
+        "sha256": "fe62003127c9173a6224fb178f11da56cdde3cd46c62b7343e75ce51cc4e2e86",
+        "lastWriteTimeUtc": null,
+        "mtimeEvidence": "not-recorded-in-immutable-frozenV4-entry",
+        "identitySource": "immutable-95-to-125-frozenV4"
+      },
+      "current": {
+        "bytes": 64557,
+        "sha256": "59dba686857a8476c4d20420876db227865579e3d749511b11133471eead9d9a",
+        "lastWriteTimeUtc": "2026-08-17T00:10:28.8515728Z",
+        "gitState": "tracked-modified"
+      },
+      "reason": "Authorized Explicit Reset Persistence Closure fix round 1; no asset routing or creative status change."
+    }
+  ],
+  "unchangedInvariants": {
+    "assetPathChanges": 0,
+    "assetByteChanges": 0,
+    "assetTierChanges": 0,
+    "runtimeImportChanges": 0,
+    "assetDispositionChanges": 0,
+    "classificationChanges": 0,
+    "classificationRecord": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+    "classificationRecordSha256": "d1f1a637c1c438626bffb25911bdbcf50c754fc4581659f6cd507cb2a088f906",
+    "packageJsonSha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa",
+    "packageLockJsonSha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38"
+  },
+  "limitations": [
+    "This checksum-bound refresh authorizes only the three listed old-to-new transitions; it is not a wildcard or a general mutable-context exception.",
+    "The immutable intake records retain their original observations and are not rewritten by this refresh.",
+    "Where a prior mtime was not captured in the immutable predecessor, this record leaves it null instead of inventing evidence.",
+    "Checksums prove current identity and stability; they are not a backup.",
+    "No asset, classification, runtime import, tier, disposition, dependency, Git state, or external system is changed by this record."
+  ]
+}

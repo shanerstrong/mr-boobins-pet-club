@@ -4,6 +4,12 @@
   "status": "preservation-verified-checkpoint-candidate",
   "repositorySourceOfTruth": true,
   "runtimeLfsPolicy": "Runtime assets consumed by GitHub Pages remain normal Git unless the deployment workflow explicitly fetches and verifies LFS objects.",
+  "baselineTextNormalization": {
+    "record": "docs/production/V0.6-V0.8_TEXT_NORMALIZATION.json",
+    "baselineCommit": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+    "memberCount": 21,
+    "currentWorkingTreePolicy": "The immutable mapping proves the preserved raw-to-normalized baseline at the committed checkpoint. Exact mapped paths must remain tracked, present, and LF-only, but their managed working-tree content may evolve under ordinary current policy checks."
+  },
   "budgets": {
     "ordinaryGitMaxBytes": 10485760,
     "runtimeGlbMaxBytes": 4194304,
@@ -14,6 +20,13 @@
     "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
     "docs/production/V0.6-V0.8_PRESERVATION_MANIFEST.json",
     "docs/production/V0.6-V0.8_TEXT_NORMALIZATION.json",
+    "docs/production/V0.6-V0.8_EVIDENCE_REFRESH.json",
+    "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+    "docs/production/POST_BASELINE_ASSET_INTAKE_75_TO_95_DELTA_2026-08-16.json",
+    "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json",
+    "docs/production/V4_MANAGED_CONTEXT_REFRESH_2026-08-17.json",
+    "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json",
+    "docs/production/SAFE_RETURN_CANDIDATE_EOF_NORMALIZATION_2026-08-17.json",
     "assets/3d/jack/asset-manifest.json",
     "assets/3d/jack/SOURCE_LEDGER.md",
     "assets/3d/jack/v2/asset-manifest-v2.json",
@@ -29,6 +42,13 @@
     "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
     "docs/production/V0.6-V0.8_PRESERVATION_MANIFEST.json",
     "docs/production/V0.6-V0.8_TEXT_NORMALIZATION.json",
+    "docs/production/V0.6-V0.8_EVIDENCE_REFRESH.json",
+    "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+    "docs/production/POST_BASELINE_ASSET_INTAKE_75_TO_95_DELTA_2026-08-16.json",
+    "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json",
+    "docs/production/V4_MANAGED_CONTEXT_REFRESH_2026-08-17.json",
+    "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json",
+    "docs/production/SAFE_RETURN_CANDIDATE_EOF_NORMALIZATION_2026-08-17.json",
     "assets/3d/jack/asset-manifest.json",
     "assets/3d/jack/v2/asset-manifest-v2.json",
     "assets/3d/jack/animations/clip-manifest.json",
@@ -59,6 +79,16 @@
       "status": "in production; release rights and mastering remain incomplete"
     },
     {
+      "scope": "Post-baseline Jack V3/V4 research and ElevenLabs source candidates",
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+      "status": "hash-inventoried; V3 CC BY 3.0 attribution documented; V4 remains unapproved/static; distribution and preservation decisions remain pending"
+    },
+    {
+      "scope": "Post-baseline Audio V1 mastered/runtime reconciliation",
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json",
+      "status": "21 current App imports routed technically to normal Git; nine unwired candidates remain unapproved and preservation-pending; all 30 await Mark audible review"
+    },
+    {
       "scope": "Unversioned project-authored runtime WAV files",
       "record": "scripts/generate-audio.mjs",
       "status": "project-generated provisional runtime assets"
@@ -75,6 +105,27 @@
     { "path": "assets/audio/shower.wav", "maxBytes": 524288 },
     { "path": "assets/audio/sleepy.wav", "maxBytes": 524288 },
     { "path": "assets/audio/sneeze.wav", "maxBytes": 524288 },
+    { "path": "assets/audio/v1/jack/jack-alert-bark.v1.wav", "maxBytes": 192044, "sha256": "95161b96c3337f34bf2a85afa36e16a9108d347da226a675b5e78e07b8830bfb", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/jack/jack-happy-bark.v1.wav", "maxBytes": 192044, "sha256": "ece9d64e0fed4d49100ca1949cbc1bc2bc7b2b6b949370db7d30de916c48c9ce", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/jack/jack-huff.v1.wav", "maxBytes": 96044, "sha256": "d81c435b027dee0671ffae60f74d7eddd125cc41a1bd7082ef4aef7357655691", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/jack/jack-sleepy-grumble.v1.wav", "maxBytes": 96044, "sha256": "a8e8f659b56839b5ddad19099c76291d4ad19045cd09c7d7d41645877c88c9f8", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/jack/jack-sneeze.v1.wav", "maxBytes": 96044, "sha256": "88c878e11c2e7a83f0b5c9f7aaa06eff8ff98aafc511e6cbf58cca9aaf3a5198", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/jack/jack-toy-squeak.v1.wav", "maxBytes": 192044, "sha256": "36856ac5d494f2d6c808c0305c0742e6e3d50930f40cb6e8772b263389323e35", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/jack/jack-treat-crunch.v1.wav", "maxBytes": 192044, "sha256": "12f3fe397b41027dde4ab8f510b24036c61209d33608f8623770388adaa36101", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/jack/jack-wet-shake.v1.wav", "maxBytes": 96044, "sha256": "25f1a1d72d38acf1a22198d2295a7af3299cbe6c24d606b4d8dea76e3f0f8073", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/jack/jack-yawn.v1.wav", "maxBytes": 96044, "sha256": "d7c704730ce0294b420d62f8471b3c92125c6dc8192363dad9ea307335f837b6", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/music/pet-room-cozy.v1.wav", "maxBytes": 4447686, "sha256": "085960620c263f35b9b12909aa973448705bbdf3fe907e292a4e2d79b44641de", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/music/pet-room-play.v1.wav", "maxBytes": 6307942, "sha256": "1950fb713f796a7eb9e2cb8ec1a98357039d61b8359f905a068e3285da3c0fa0", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/music/pet-room-sleep.v1.wav", "maxBytes": 6307942, "sha256": "9bc2917bb4f82aa1a0489c3e9ba1cc07ce7f29d8c4fdfa83d50e1c27efaf3208", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/training/training-celebration-accent.v1.wav", "maxBytes": 192044, "sha256": "a091c5194de5a4a124dcd6675a04be3236ff8a7bc57af83c00667148c9ec2e71", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/training/training-success-chime.v1.wav", "maxBytes": 192044, "sha256": "f697c077a5344686b23ae51be900599c6a5bb96ee554eb1fa01aa76f4135cddf", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/training/training-treat-catch.v1.wav", "maxBytes": 96044, "sha256": "b9a9d35519084444b710f7c569edbe31c3259208639e6a6c5d82bf8010cd6832", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/training/training-treat-toss.v1.wav", "maxBytes": 192044, "sha256": "8ba75cf5e226e3ce94b909abc83ceb7b11a30887453ad9de2bae4d65d44c69e4", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/ui/ui-close.master.v1.wav", "maxBytes": 20592, "sha256": "b190ee79880c3a9e5c24ace580c68a105d447fabcdaf8ec9e4dc9875e9149acd", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/ui/ui-command-selected.master.v1.wav", "maxBytes": 15212, "sha256": "a829692ac6a4b251b4c92ca845c9ca42fe81f38623706fa59e300f51f41c7d53", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/ui/ui-confirm.master.v1.wav", "maxBytes": 27790, "sha256": "0a87f45bccb7605483436203e8bafb13c9b1fdbcd7f81eb2984e2712c7b56b56", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/ui/ui-open.master.v1.wav", "maxBytes": 22030, "sha256": "8d8b1d6d8fdb5da858f9f9b519c5f76235d81cbe2ac9b486ae4ebb80b40fbe5f", "reviewStatus": "awaiting-Mark-audible-review" },
+    { "path": "assets/audio/v1/ui/ui-tap.master.v1.wav", "maxBytes": 7246, "sha256": "c477cdf761ac3389e57fef1e053fda50526516dcbc67279884f99856bb13be6e", "reviewStatus": "awaiting-Mark-audible-review" },
     { "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb", "maxBytes": 4194304 }
   ],
   "forbiddenRuntimePathFragments": [
@@ -91,6 +142,220 @@
     "assets/3d/jack/v2/source/",
     "../evidence/",
     "drive.google.com/drive/folders/1Y_StiGFl17ATHM-nmiicHmHckcbujcpZ"
+  ],
+  "evidenceRefresh": {
+    "record": "docs/production/V0.6-V0.8_EVIDENCE_REFRESH.json",
+    "allowedPaths": [
+      "evidence/baby-day1/adoption-hub-390x844.jpg",
+      "evidence/baby-day1/guided-care-room-390x844.jpg",
+      "evidence/baby-day1/returning-hub-390x844.jpg",
+      "evidence/baby-day1/room-desktop-1440x900.jpg",
+      "evidence/baby-day1/sleep-dialog-keyboard-390x844.jpg"
+    ]
+  },
+  "managedContextRefreshes": [
+    {
+      "record": "docs/production/V4_MANAGED_CONTEXT_REFRESH_2026-08-17.json",
+      "kind": "checksum-bound-managed-context-refresh",
+      "predecessor": "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json",
+      "predecessorRecordSha256": "aa45bff433980f26600fe7627a49ad831e1d325556d8abf4f6095b873fc54f67",
+      "sourceMilestone": "Build — Explicit Reset Persistence Closure",
+      "sourceFixRound": 1,
+      "generalMutableContextException": false,
+      "governedAssetFileCount": 125,
+      "governedAssetBytes": 448676678,
+      "governedAssetAggregateSha256": "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b",
+      "authorizedTransitions": [
+        {
+          "path": "App.tsx",
+          "priorSha256": "8db9fb4de855a4bf632df0c599a4075badcd9ab480ac1831815821a39a49994f",
+          "currentSha256": "0f9893b566288adaec6a1000b4e05c4c5103a0d37692430de08aabe09423e5c2"
+        },
+        {
+          "path": "src/persistence.ts",
+          "priorSha256": "5d448dad68e5fecda993bff898df6af03bcee05e246d3ff8b067648de8aee8d2",
+          "currentSha256": "15f6d5e3ba55d134e61a68738416ca4bb6cbfbe12fb474982d4d53aeb07b51ce"
+        },
+        {
+          "path": "src/persistence.test.ts",
+          "priorSha256": "fe62003127c9173a6224fb178f11da56cdde3cd46c62b7343e75ce51cc4e2e86",
+          "currentSha256": "59dba686857a8476c4d20420876db227865579e3d749511b11133471eead9d9a"
+        }
+      ]
+    },
+    {
+      "record": "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json",
+      "kind": "checksum-bound-managed-context-refresh",
+      "predecessor": "docs/production/V4_MANAGED_CONTEXT_REFRESH_2026-08-17.json",
+      "predecessorRecordSha256": "03f8dd11fd8f0860bc3a84a3b2d70f7c806b49bf6cbcf1daf11e4c030763f17a",
+      "sourceMilestone": "Build — Explicit Reset Persistence Closure",
+      "sourceFixRound": 2,
+      "correctionMilestone": "Build — Initial Journal Ambiguity Closure",
+      "generalMutableContextException": false,
+      "governedAssetFileCount": 125,
+      "governedAssetBytes": 448676678,
+      "governedAssetAggregateSha256": "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b",
+      "authorizedTransitions": [
+        {
+          "path": "App.tsx",
+          "priorSha256": "0f9893b566288adaec6a1000b4e05c4c5103a0d37692430de08aabe09423e5c2",
+          "currentSha256": "8262c0892427dd1929e1d5c5724c50c655fd1b28ca8f59c6411b0d735a7cdf2a"
+        },
+        {
+          "path": "src/persistence.ts",
+          "priorSha256": "15f6d5e3ba55d134e61a68738416ca4bb6cbfbe12fb474982d4d53aeb07b51ce",
+          "currentSha256": "c409b047a6bcaf956cc85fa02fa654279d1b307d90080325c10514b9cffa1996"
+        },
+        {
+          "path": "src/persistence.test.ts",
+          "priorSha256": "59dba686857a8476c4d20420876db227865579e3d749511b11133471eead9d9a",
+          "currentSha256": "f46584fe22378e5d93bb860cadeb5ecfb8e2d39344b96d030f8403d35677c8ca"
+        }
+      ],
+      "supportingTransitions": [
+        {
+          "path": "src/day-one-ui.ts",
+          "priorSha256": "f824e895f7d13fa9fea57cedcf0b493fe8c254f69383a383be205d860a055a73",
+          "currentSha256": "bcd70a9dabc53ce5ba9d0793da328f5d26d3e1ce80481c5bc029bbebcd32481a"
+        },
+        {
+          "path": "src/day-one-ui.test.ts",
+          "priorSha256": "da507dc5513b44c3d904f70cd86daa79b7b514c822545cca32c7fb9e0ffc6fc5",
+          "currentSha256": "76788e0491dcd6735aed4e03499ca5a169a2cc28d5052444c55f9575e3e67466"
+        }
+      ]
+    }
+  ],
+  "candidateEofNormalizations": [
+    {
+      "record": "docs/production/SAFE_RETURN_CANDIDATE_EOF_NORMALIZATION_2026-08-17.json",
+      "kind": "checksum-bound-candidate-eof-normalization",
+      "identitySource": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+      "identitySourceRecordSha256": "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6",
+      "milestone": "Build — Safe Return Candidate EOF Normalization",
+      "generalMutableContextException": false,
+      "fileCount": 6,
+      "priorBytes": 13486,
+      "currentBytes": 13480,
+      "netBytes": -6,
+      "transitionAggregateSha256": "a6134cc01fa9d8a3c768f78c515d384cc62bb648dfedbdf28290c883ccf15a51",
+      "currentGovernedSets": {
+        "original75": {
+          "fileCount": 75,
+          "bytes": 418860104,
+          "aggregateSha256": "1520051aaf04994ebfadb24022cdcb550a362a2fac7127f9c6e35bf1381d54fb"
+        },
+        "source95": {
+          "fileCount": 95,
+          "bytes": 426541664,
+          "aggregateSha256": "b1eefc1819b746995e951e651b4629972eb9c34123b8d914006a298b825ffc31"
+        },
+        "combined125": {
+          "fileCount": 125,
+          "bytes": 448676672,
+          "aggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f"
+        }
+      },
+      "authorizedTransitions": [
+        {
+          "path": "assets/3d/jack/v3/README.md",
+          "priorBytes": 1554,
+          "priorSha256": "99334c2fda634e3d615c142d5949b51643436f44dbf10a78e918f1405abe7eef",
+          "priorGitBlobOid": "e011df9e9d0c8b2d29f88af55d1488fe5f41e171",
+          "currentBytes": 1553,
+          "currentSha256": "deb50c2968e148413b50251b461cd728f15a74d07687032d557ca1e8082298c3",
+          "currentGitBlobOid": "8eea00ae9318036543d9c9b741caa7ca4005a9b0"
+        },
+        {
+          "path": "assets/3d/jack/v3/SOURCE_LEDGER_V3.md",
+          "priorBytes": 1546,
+          "priorSha256": "cb5d9cd447f6b2349870539e4275f2a0d1ed1a14021367f025bcba90adca5432",
+          "priorGitBlobOid": "46c057ec566a3c1e0fbbee1b741ac5a0cae4b890",
+          "currentBytes": 1545,
+          "currentSha256": "c655601ef3dd32a81a4e9b30ce03d87d9091dca195a687d13f2705eea5ded7e0",
+          "currentGitBlobOid": "135168c8a08ce29ea26d7c32a50cc3712abcf130"
+        },
+        {
+          "path": "assets/3d/jack/v4/ADULT_LIKENESS_SPEC_V4.md",
+          "priorBytes": 3253,
+          "priorSha256": "c7362259708497838cfe9213744f041c2360a40ce70da6aca4b3fcc573e4640e",
+          "priorGitBlobOid": "646a959876de83d32dd1d5b477da55772a1d1b77",
+          "currentBytes": 3252,
+          "currentSha256": "555bb30734df9a642b0b574ffc11e2656b7bebb0966d4cf6221a14355165b071",
+          "currentGitBlobOid": "947c0a454feba15de4453f9efce36b794736ee1f"
+        },
+        {
+          "path": "assets/3d/jack/v4/README.md",
+          "priorBytes": 2630,
+          "priorSha256": "99a1395336aad71c32470a6400bf85df804789c601264144b14ec2ebea909f08",
+          "priorGitBlobOid": "058af9ced4420632f6db638a71c272427f8498fd",
+          "currentBytes": 2629,
+          "currentSha256": "801563a3bb518e5fc1cb7c88d99a53dcb740a224ca55ac3d8faa1afaea6703dc",
+          "currentGitBlobOid": "edb5f3ce0bea18334da2f4b9f19552ecdc550b22"
+        },
+        {
+          "path": "assets/3d/jack/v4/SOURCE_LEDGER_V4.md",
+          "priorBytes": 1583,
+          "priorSha256": "117aa74fc4cff0aff0bf47d9dca0e9b159c73e41861b280a240ba2af53b01a7f",
+          "priorGitBlobOid": "94e451a497a4fa2aa6e9f6d20af7af58744de73b",
+          "currentBytes": 1582,
+          "currentSha256": "c743ccb0bc2c0422177bef82740f94c6c6aa61c85c96f68b34811a0220aa8a6a",
+          "currentGitBlobOid": "e98d528ee61b5ed916fd857f9ca8e599045b045c"
+        },
+        {
+          "path": "assets/3d/jack/v4/tools/analyze_adult_components.py",
+          "priorBytes": 2920,
+          "priorSha256": "debea0b00f5c76d768c35e71d33322080388f91e4545cf610c4b56d5e2b6612b",
+          "priorGitBlobOid": "786a7f94beab4388a1fadf53339a0a4e6672ec0d",
+          "currentBytes": 2919,
+          "currentSha256": "ba41ea722a0dcbc0f8867c1c700874951e5e78422eb1f61c9ba051066d4ce2ff",
+          "currentGitBlobOid": "5ef376cea143122e8d8d67b4d5dc54c5df3cb3a9"
+        }
+      ]
+    }
+  ],
+  "postBaselineIntakes": [
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+      "fileCount": 75,
+      "bytes": 418860110,
+      "aggregateSha256": "b0e16debbb690987ad84c168a3b84f8986f98263d44b4ff6c1502e872e9152a4",
+      "roots": [
+        "assets/3d/jack/v3",
+        "assets/3d/jack/v4",
+        "assets/audio/v1/source/elevenlabs/2026-08-16",
+        "evidence/3d-jack/v3",
+        "evidence/3d-jack/v4"
+      ]
+    },
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_75_TO_95_DELTA_2026-08-16.json",
+      "kind": "checksum-bound-addition",
+      "predecessor": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+      "fileCount": 20,
+      "bytes": 7681560,
+      "aggregateSha256": "0691600367d637c1da18aee7bdcd17f4ebf79ce10b5a15674cf3d1af14a1180b",
+      "resultingFileCount": 95,
+      "resultingBytes": 426541670,
+      "resultingAggregateSha256": "89c8e9aac0fe19981737ce37645257f916abf44dfe2443e16ca3d87f22823d24",
+      "roots": [
+        "assets/audio/v1/source/elevenlabs/2026-08-16"
+      ]
+    },
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json",
+      "kind": "checksum-bound-addition",
+      "predecessor": "docs/production/POST_BASELINE_ASSET_INTAKE_75_TO_95_DELTA_2026-08-16.json",
+      "fileCount": 30,
+      "bytes": 22135008,
+      "aggregateSha256": "de71338c2fb05e78a16eb0c7adb727c00f48756a06ba77201f3031215f9ca49f",
+      "resultingFileCount": 125,
+      "resultingBytes": 448676678,
+      "resultingAggregateSha256": "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b",
+      "selection": "exact-current-audio-manifest-masterCandidate-files",
+      "runtimeImportedFileCount": 21,
+      "unwiredCandidateFileCount": 9
+    }
   ],
   "expectedLfsPointerGlobs": [
     "assets/source/**/*.blend",
@@ -156,6 +421,120 @@
         "assets/source/jack-v2/jack-baby-v2.2-quaternius-canonical.blend",
         "assets/source/jack-v2/jack-teen-v2.2-quaternius-canonical.blend",
         "assets/source/jack-v2/jack-adult-v2.2-quaternius-canonical.blend"
+      ]
+    },
+    {
+      "id": "postbaseline-v3-reproducibility-normal-git",
+      "tier": "normal-git",
+      "disposition": "Propose the bounded Jack V3 research README, provenance ledger, and project-authored reproducibility scripts for ordinary Git. This is not staging, preservation, runtime promotion, or subjective visual acceptance.",
+      "pathGlobs": [
+        "assets/3d/jack/v3/README.md",
+        "assets/3d/jack/v3/SOURCE_LEDGER_V3.md",
+        "assets/3d/jack/v3/tools/*.py"
+      ]
+    },
+    {
+      "id": "postbaseline-v3-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Rejected/research-only editable sources, donor binaries, and derivatives are hash-inventoried but not backed up. Keep originals untouched and exclude them until a preservation destination is separately approved and verified; CC BY 3.0 attribution remains required for any distribution.",
+      "pathGlobs": [
+        "assets/3d/jack/v3/source/**"
+      ]
+    },
+    {
+      "id": "postbaseline-audio-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Raw ElevenLabs paid-plan source candidates with documented commercial-use status, hashes, and generation IDs. Keep untouched and excluded until preservation is separately approved and verified; they are not mastered runtime assets.",
+      "pathGlobs": [
+        "assets/audio/v1/source/elevenlabs/2026-08-16/**"
+      ]
+    },
+    {
+      "id": "postbaseline-v3-evidence-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Bulk/rejected Jack V3 research evidence is hash-inventoried but not backed up or selected as representative evidence. Keep originals untouched and exclude them pending a separately approved and verified preservation decision.",
+      "pathGlobs": [
+        "evidence/3d-jack/v3/**"
+      ]
+    },
+    {
+      "id": "postbaseline-v4-reproducibility-normal-git",
+      "tier": "normal-git",
+      "disposition": "Propose the bounded Jack V4 exploratory README, likeness specification, source ledger, and project-authored reproducibility scripts for ordinary Git. Candidate D remains unapproved, unrigged, and non-runtime.",
+      "pathGlobs": [
+        "assets/3d/jack/v4/README.md",
+        "assets/3d/jack/v4/SOURCE_LEDGER_V4.md",
+        "assets/3d/jack/v4/ADULT_LIKENESS_SPEC_V4.md",
+        "assets/3d/jack/v4/tools/*.py"
+      ]
+    },
+    {
+      "id": "postbaseline-v4-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Unapproved/rejected exploratory editable sources and redundant Blender checkpoints are hash-inventoried but not backed up. Keep originals untouched and exclude them until preservation is separately approved and verified; no source is a runtime candidate.",
+      "pathGlobs": [
+        "assets/3d/jack/v4/source/**"
+      ]
+    },
+    {
+      "id": "postbaseline-v4-review-evidence-normal-git",
+      "tier": "normal-git",
+      "disposition": "Bounded phone-viewable Candidate D review board plus its objective build report. Retention supports Mark's cheapest useful likeness gate and does not imply visual acceptance, rig approval, or runtime promotion.",
+      "pathGlobs": [
+        "evidence/3d-jack/v4/jack-adult-v4-candidate-d-phone-board.png",
+        "evidence/3d-jack/v4/jack-adult-v4-candidate-d-report.json"
+      ]
+    },
+    {
+      "id": "postbaseline-v4-evidence-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Rejected iterations, redundant single views, source diagnostics, and bulk Jack V4 evidence are hash-inventoried but not backed up. Keep originals untouched and exclude them pending separately approved and verified preservation.",
+      "pathGlobs": [
+        "evidence/3d-jack/v4/**"
+      ]
+    },
+    {
+      "id": "postbaseline-audio-runtime-normal-git",
+      "tier": "normal-git",
+      "disposition": "Exact existing WAV bytes already imported by the frozen App and required by the current GitHub Pages export. This technical normal-Git routing grants no subjective acceptance, lock, selection, mastering approval, release readiness, or new promotion; every file remains awaiting Mark audible review.",
+      "pathGlobs": [
+        "assets/audio/v1/jack/jack-alert-bark.v1.wav",
+        "assets/audio/v1/jack/jack-happy-bark.v1.wav",
+        "assets/audio/v1/jack/jack-huff.v1.wav",
+        "assets/audio/v1/jack/jack-sleepy-grumble.v1.wav",
+        "assets/audio/v1/jack/jack-sneeze.v1.wav",
+        "assets/audio/v1/jack/jack-toy-squeak.v1.wav",
+        "assets/audio/v1/jack/jack-treat-crunch.v1.wav",
+        "assets/audio/v1/jack/jack-wet-shake.v1.wav",
+        "assets/audio/v1/jack/jack-yawn.v1.wav",
+        "assets/audio/v1/music/pet-room-cozy.v1.wav",
+        "assets/audio/v1/music/pet-room-play.v1.wav",
+        "assets/audio/v1/music/pet-room-sleep.v1.wav",
+        "assets/audio/v1/training/training-celebration-accent.v1.wav",
+        "assets/audio/v1/training/training-success-chime.v1.wav",
+        "assets/audio/v1/training/training-treat-catch.v1.wav",
+        "assets/audio/v1/training/training-treat-toss.v1.wav",
+        "assets/audio/v1/ui/ui-close.master.v1.wav",
+        "assets/audio/v1/ui/ui-command-selected.master.v1.wav",
+        "assets/audio/v1/ui/ui-confirm.master.v1.wav",
+        "assets/audio/v1/ui/ui-open.master.v1.wav",
+        "assets/audio/v1/ui/ui-tap.master.v1.wav"
+      ]
+    },
+    {
+      "id": "postbaseline-audio-master-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Exact mastered but unwired audio candidates that remain unapproved and checksum-indexed only. Keep them untouched and excluded pending separately approved recoverable preservation; they are not cold-archive-verified, normal-Git runtime, accepted, locked, selected, or release-ready.",
+      "pathGlobs": [
+        "assets/audio/v1/jack/jack-calm-pant.v1.wav",
+        "assets/audio/v1/jack/jack-collar-jingle.v1.wav",
+        "assets/audio/v1/jack/jack-drinking.v1.wav",
+        "assets/audio/v1/jack/jack-eating.v1.wav",
+        "assets/audio/v1/jack/jack-excited-pant.v1.wav",
+        "assets/audio/v1/jack/jack-gentle-whine.v1.wav",
+        "assets/audio/v1/jack/jack-paw-steps.v1.wav",
+        "assets/audio/v1/jack/jack-sleep-breathing.v1.wav",
+        "assets/audio/v1/jack/jack-sniff.v1.wav"
       ]
     },
     {
@@ -340,6 +719,14 @@
         "evidence/3d-jack/v2/full-frame-deformation-validation.json",
         "evidence/3d-jack/v2/runtime-playback-validation.json",
         "evidence/3d-jack/v2/v2-package-validation.json"
+      ]
+    },
+    {
+      "id": "v4-static-review",
+      "maxFiles": 2,
+      "paths": [
+        "evidence/3d-jack/v4/jack-adult-v4-candidate-d-phone-board.png",
+        "evidence/3d-jack/v4/jack-adult-v4-candidate-d-report.json"
       ]
     }
   ]

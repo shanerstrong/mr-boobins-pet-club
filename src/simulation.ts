@@ -1,5 +1,6 @@
-export const DEFAULT_CLOCK_MULTIPLIER = 12;
+export const DEFAULT_CLOCK_MULTIPLIER = 1;
 export const MAX_ELAPSED_REAL_MS = 24 * 60 * 60 * 1000;
+export const MAX_OFFLINE_PET_MINUTES = 4 * 60;
 export const GROWTH_STEP_MINUTES = 5 * 60;
 export const MAX_GROWTH_MEALS = 4;
 export const GROWTH_MEAL_HUNGER_THRESHOLD = 90;
@@ -245,7 +246,8 @@ function applyPhase(
   const timeBeforeZero =
     needs.hunger <= 0 ? 0 : Math.min(minutes, needs.hunger / hungerRate);
   const zeroMinutes = Math.max(0, minutes - timeBeforeZero);
-  const dies = starvation + zeroMinutes >= STARVATION_DEATH_MINUTES;
+  const dies =
+    starvation + zeroMinutes >= STARVATION_DEATH_MINUTES - 1e-9;
   const consumed = dies
     ? timeBeforeZero + (STARVATION_DEATH_MINUTES - starvation)
     : minutes;
@@ -269,6 +271,18 @@ function applyPhase(
   };
 }
 
+function applyDecayOnly(needs: Needs, minutes: number, sleeping: boolean): Needs {
+  const next = { ...needs };
+  for (const key of needKeys) {
+    const change =
+      sleeping && key === "energy"
+        ? -0.72
+        : decay[key] * (sleeping ? 0.42 : 1);
+    next[key] = clamp(next[key] - change * minutes);
+  }
+  return next;
+}
+
 function growthMealReadyAfterTime(pet: PetState, needs: Needs) {
   return (
     pet.growthMealReady || needs.hunger <= GROWTH_MEAL_HUNGER_THRESHOLD
@@ -288,6 +302,10 @@ export function advancePet(
     now <= pet.lastUpdatedAt
   ) {
     return pet;
+  }
+
+  if (!pet.adoptionCompleted) {
+    return stampPetTimestamp(pet, now);
   }
 
   const virtualMinutes =
@@ -339,6 +357,69 @@ export function advancePet(
         ? null
         : target,
   };
+}
+
+/**
+ * Moves a live adopted pet through a single fixed-rate absence. Offline time is
+ * intentionally different from active care-room time: it is capped, stamps the
+ * full observed clock, preserves starvation progress exactly, and cannot kill.
+ */
+export function advancePetOffline(pet: PetState, now: number): PetState {
+  if (
+    pet.isDead ||
+    !Number.isFinite(now) ||
+    now <= pet.lastUpdatedAt
+  ) {
+    return pet;
+  }
+
+  if (!pet.adoptionCompleted) {
+    return stampPetTimestamp(pet, now);
+  }
+
+  const elapsedRealMs = now - pet.lastUpdatedAt;
+  const virtualMinutes = Math.min(
+    Number.isFinite(elapsedRealMs)
+      ? elapsedRealMs / 60_000
+      : MAX_OFFLINE_PET_MINUTES,
+    MAX_OFFLINE_PET_MINUTES,
+  );
+  const target = pet.sleepUntilVirtualMinutes;
+  const sleepingMinutes =
+    target === null
+      ? 0
+      : Math.min(
+          virtualMinutes,
+          Math.max(0, target - pet.ageVirtualMinutes),
+        );
+  const awakeMinutes = virtualMinutes - sleepingMinutes;
+  const afterSleep = applyDecayOnly(pet.needs, sleepingMinutes, true);
+  const needs = applyDecayOnly(afterSleep, awakeMinutes, false);
+  const ageVirtualMinutes = pet.ageVirtualMinutes + virtualMinutes;
+
+  return {
+    ...pet,
+    lastUpdatedAt: now,
+    needs,
+    ageVirtualMinutes,
+    growthMealReady: growthMealReadyAfterTime(pet, needs),
+    sleepUntilVirtualMinutes:
+      target !== null && ageVirtualMinutes >= target ? null : target,
+    starvationVirtualMinutes: pet.starvationVirtualMinutes,
+    isDead: false,
+  };
+}
+
+/** Stamps a forward wall clock without replaying unreachable/pre-adoption time. */
+export function stampPetTimestamp(pet: PetState, now: number): PetState {
+  if (
+    pet.isDead ||
+    !Number.isFinite(now) ||
+    now <= pet.lastUpdatedAt
+  ) {
+    return pet;
+  }
+  return { ...pet, lastUpdatedAt: now };
 }
 
 export function startSleep(

@@ -12,6 +12,13 @@ const classificationPath = "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json"
 const checkpointPath = "docs/production/V0.6-V0.8_CHECKPOINT_CANDIDATE.json";
 const preservationPath = "docs/production/V0.6-V0.8_PRESERVATION_MANIFEST.json";
 const normalizationPath = "docs/production/V0.6-V0.8_TEXT_NORMALIZATION.json";
+const evidenceRefreshPath = "docs/production/V0.6-V0.8_EVIDENCE_REFRESH.json";
+const postBaselineIntakePath = "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json";
+const postBaselineDeltaPath = "docs/production/POST_BASELINE_ASSET_INTAKE_75_TO_95_DELTA_2026-08-16.json";
+const postBaselineMasteredDeltaPath = "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json";
+const v4ManagedContextRefreshPath = "docs/production/V4_MANAGED_CONTEXT_REFRESH_2026-08-17.json";
+const initialJournalAmbiguityRefreshPath = "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json";
+const candidateEofNormalizationPath = "docs/production/SAFE_RETURN_CANDIDATE_EOF_NORMALIZATION_2026-08-17.json";
 const selfPath = "scripts/verify-assets.mjs";
 
 const normalize = (value) => value.replaceAll("\\", "/").replace(/^\.\//, "");
@@ -72,6 +79,14 @@ function gitPaths(args) {
     .split("\0")
     .filter(Boolean)
     .map(normalize);
+}
+
+function pathAttributedGitBlobOid(file, buffer = readFileSync(absolute(file))) {
+  return execFileSync("git", ["hash-object", `--path=${file}`, "--stdin"], {
+    cwd: root,
+    input: buffer,
+    encoding: "utf8",
+  }).trim();
 }
 
 function capturePrepolicy() {
@@ -189,10 +204,24 @@ function verify() {
   let policy;
   let inventory;
   let normalization;
+  let evidenceRefresh;
+  let postBaselineIntake;
+  let postBaselineDelta;
+  let postBaselineMasteredDelta;
+  let v4ManagedContextRefresh;
+  let initialJournalAmbiguityRefresh;
+  let candidateEofNormalization;
   try {
     policy = JSON.parse(readFileSync(absolute(policyPath), "utf8"));
     inventory = JSON.parse(readFileSync(absolute(inventoryPath), "utf8"));
     normalization = existsSync(absolute(normalizationPath)) ? JSON.parse(readFileSync(absolute(normalizationPath), "utf8")) : null;
+    evidenceRefresh = existsSync(absolute(evidenceRefreshPath)) ? JSON.parse(readFileSync(absolute(evidenceRefreshPath), "utf8")) : null;
+    postBaselineIntake = existsSync(absolute(postBaselineIntakePath)) ? JSON.parse(readFileSync(absolute(postBaselineIntakePath), "utf8")) : null;
+    postBaselineDelta = existsSync(absolute(postBaselineDeltaPath)) ? JSON.parse(readFileSync(absolute(postBaselineDeltaPath), "utf8")) : null;
+    postBaselineMasteredDelta = existsSync(absolute(postBaselineMasteredDeltaPath)) ? JSON.parse(readFileSync(absolute(postBaselineMasteredDeltaPath), "utf8")) : null;
+    v4ManagedContextRefresh = existsSync(absolute(v4ManagedContextRefreshPath)) ? JSON.parse(readFileSync(absolute(v4ManagedContextRefreshPath), "utf8")) : null;
+    initialJournalAmbiguityRefresh = existsSync(absolute(initialJournalAmbiguityRefreshPath)) ? JSON.parse(readFileSync(absolute(initialJournalAmbiguityRefreshPath), "utf8")) : null;
+    candidateEofNormalization = existsSync(absolute(candidateEofNormalizationPath)) ? JSON.parse(readFileSync(absolute(candidateEofNormalizationPath), "utf8")) : null;
   } catch (error) {
     errors.push(`Policy/inventory JSON parse failure: ${error.message}`);
     return finish(errors, warnings);
@@ -202,6 +231,746 @@ function verify() {
   assert(inventory.schemaVersion === 1, `${inventoryPath} must use schemaVersion 1`);
   assert(inventory.hashAlgorithm === "sha256", `${inventoryPath} must use SHA-256`);
   const normalizationByPath = new Map((normalization?.entries ?? []).map((entry) => [normalize(entry.path), entry]));
+  const normalizationBaselineCommit = policy.baselineTextNormalization?.baselineCommit;
+  const evidenceRefreshByPath = new Map((evidenceRefresh?.entries ?? []).map((entry) => [normalize(entry.path), entry]));
+  const allowedEvidenceRefreshPaths = new Set((policy.evidenceRefresh?.allowedPaths ?? []).map(normalize));
+  assert(policy.evidenceRefresh?.record === evidenceRefreshPath, `Asset policy must point to ${evidenceRefreshPath}`);
+  assert(evidenceRefresh?.schemaVersion === 1, `${evidenceRefreshPath} must use schemaVersion 1`);
+  assert(evidenceRefresh?.hashAlgorithm === "sha256", `${evidenceRefreshPath} must use SHA-256`);
+  assert(evidenceRefresh?.sourceInventory === inventoryPath, `${evidenceRefreshPath} source inventory mismatch`);
+  assert(evidenceRefresh?.sourceInventoryEvidenceSha256 === inventory.scopes?.evidence?.aggregateSha256, `${evidenceRefreshPath} inventory evidence hash mismatch`);
+  assert(evidenceRefreshByPath.size === allowedEvidenceRefreshPaths.size, "Evidence refresh record/path count mismatch");
+  const representativeEvidencePaths = new Set((policy.representativeEvidenceSets ?? []).flatMap((set) => set.paths.map(normalize)));
+  const trackedEvidencePaths = new Set(gitPaths(["ls-files", "--cached", "-z", "--", "evidence"]));
+  for (const [path, entry] of evidenceRefreshByPath) {
+    assert(allowedEvidenceRefreshPaths.has(path), `Unapproved evidence refresh path: ${path}`);
+    assert(representativeEvidencePaths.has(path), `Evidence refresh is not in a representative set: ${path}`);
+    assert(trackedEvidencePaths.has(path), `Evidence refresh path is not tracked: ${path}`);
+    assert(classify(path, policy)?.tier === "normal-git", `Evidence refresh path is not normal Git: ${path}`);
+    try {
+      const prior = execFileSync("git", ["show", `${evidenceRefresh.priorGitCommit}:${path}`], { cwd: root });
+      assert(prior.length === entry.priorBytes && sha256(prior) === entry.priorSha256, `Evidence refresh baseline identity mismatch: ${path}`);
+    } catch (error) {
+      errors.push(`Evidence refresh baseline is not recoverable for ${path}: ${error.message}`);
+    }
+    assert(existsSync(absolute(path)), `Evidence refresh current file is missing: ${path}`);
+    if (existsSync(absolute(path))) {
+      assert(statSync(absolute(path)).size === entry.currentBytes && fileHash(path) === entry.currentSha256, `Evidence refresh current identity mismatch: ${path}`);
+    }
+  }
+  for (const path of allowedEvidenceRefreshPaths) {
+    assert(evidenceRefreshByPath.has(path), `Missing evidence refresh record: ${path}`);
+  }
+
+  const postBaselinePolicy = (policy.postBaselineIntakes ?? []).find((entry) => normalize(entry.record) === postBaselineIntakePath);
+  const postBaselineDeltaPolicy = (policy.postBaselineIntakes ?? []).find((entry) => normalize(entry.record) === postBaselineDeltaPath);
+  const postBaselineMasteredDeltaPolicy = (policy.postBaselineIntakes ?? []).find((entry) => normalize(entry.record) === postBaselineMasteredDeltaPath);
+  const v4ManagedContextRefreshPolicies = policy.managedContextRefreshes ?? [];
+  const v4ManagedContextRefreshPolicy = v4ManagedContextRefreshPolicies.find((entry) => normalize(entry.record) === v4ManagedContextRefreshPath);
+  const initialJournalAmbiguityRefreshPolicy = v4ManagedContextRefreshPolicies.find((entry) => normalize(entry.record) === initialJournalAmbiguityRefreshPath);
+  const v4ManagedContextTransitions = v4ManagedContextRefresh?.transitions ?? [];
+  const v4ManagedContextTransitionByPath = new Map(v4ManagedContextTransitions.map((entry) => [normalize(entry.path), entry]));
+  const initialJournalAmbiguityTransitions = initialJournalAmbiguityRefresh?.transitions ?? [];
+  const initialJournalAmbiguityTransitionByPath = new Map(initialJournalAmbiguityTransitions.map((entry) => [normalize(entry.path), entry]));
+  const initialJournalSupportingTransitions = initialJournalAmbiguityRefresh?.supportingTransitions ?? [];
+  const initialJournalSupportingTransitionByPath = new Map(initialJournalSupportingTransitions.map((entry) => [normalize(entry.path), entry]));
+  const candidateEofPolicies = policy.candidateEofNormalizations ?? [];
+  const candidateEofPolicy = candidateEofPolicies.find((entry) => normalize(entry.record) === candidateEofNormalizationPath);
+  const candidateEofTransitions = candidateEofNormalization?.transitions ?? [];
+  const candidateEofTransitionByPath = new Map(candidateEofTransitions.map((entry) => [normalize(entry.path), entry]));
+  const expectedV4ManagedContextTransitions = new Map([
+    ["App.tsx", {
+      prior: { bytes: 107337, sha256: "8db9fb4de855a4bf632df0c599a4075badcd9ab480ac1831815821a39a49994f", lastWriteTimeUtc: "2026-08-16T19:46:22.3869550Z" },
+      current: { bytes: 112038, sha256: "0f9893b566288adaec6a1000b4e05c4c5103a0d37692430de08aabe09423e5c2", lastWriteTimeUtc: "2026-08-17T00:07:49.8424495Z" },
+    }],
+    ["src/persistence.ts", {
+      prior: { bytes: 28174, sha256: "5d448dad68e5fecda993bff898df6af03bcee05e246d3ff8b067648de8aee8d2", lastWriteTimeUtc: null },
+      current: { bytes: 36091, sha256: "15f6d5e3ba55d134e61a68738416ca4bb6cbfbe12fb474982d4d53aeb07b51ce", lastWriteTimeUtc: "2026-08-17T00:09:59.2553069Z" },
+    }],
+    ["src/persistence.test.ts", {
+      prior: { bytes: 55113, sha256: "fe62003127c9173a6224fb178f11da56cdde3cd46c62b7343e75ce51cc4e2e86", lastWriteTimeUtc: null },
+      current: { bytes: 64557, sha256: "59dba686857a8476c4d20420876db227865579e3d749511b11133471eead9d9a", lastWriteTimeUtc: "2026-08-17T00:10:28.8515728Z" },
+    }],
+  ]);
+  const expectedInitialJournalAmbiguityTransitions = new Map([
+    ["App.tsx", {
+      prior: { bytes: 112038, sha256: "0f9893b566288adaec6a1000b4e05c4c5103a0d37692430de08aabe09423e5c2", lastWriteTimeUtc: "2026-08-17T00:07:49.8424495Z" },
+      current: { bytes: 117794, sha256: "8262c0892427dd1929e1d5c5724c50c655fd1b28ca8f59c6411b0d735a7cdf2a", lastWriteTimeUtc: "2026-08-17T04:08:14.0072771Z", gitState: "tracked-modified" },
+    }],
+    ["src/persistence.ts", {
+      prior: { bytes: 36091, sha256: "15f6d5e3ba55d134e61a68738416ca4bb6cbfbe12fb474982d4d53aeb07b51ce", lastWriteTimeUtc: "2026-08-17T00:09:59.2553069Z" },
+      current: { bytes: 50476, sha256: "c409b047a6bcaf956cc85fa02fa654279d1b307d90080325c10514b9cffa1996", lastWriteTimeUtc: "2026-08-17T04:09:11.8985253Z", gitState: "tracked-modified" },
+    }],
+    ["src/persistence.test.ts", {
+      prior: { bytes: 64557, sha256: "59dba686857a8476c4d20420876db227865579e3d749511b11133471eead9d9a", lastWriteTimeUtc: "2026-08-17T00:10:28.8515728Z" },
+      current: { bytes: 78712, sha256: "f46584fe22378e5d93bb860cadeb5ecfb8e2d39344b96d030f8403d35677c8ca", lastWriteTimeUtc: "2026-08-17T04:12:39.9460748Z", gitState: "tracked-modified" },
+    }],
+  ]);
+  const expectedInitialJournalSupportingTransitions = new Map([
+    ["src/day-one-ui.ts", {
+      prior: { bytes: 9252, sha256: "f824e895f7d13fa9fea57cedcf0b493fe8c254f69383a383be205d860a055a73", lastWriteTimeUtc: "2026-08-17T00:08:20.1041850Z" },
+      current: { bytes: 12245, sha256: "bcd70a9dabc53ce5ba9d0793da328f5d26d3e1ce80481c5bc029bbebcd32481a", lastWriteTimeUtc: "2026-08-17T04:15:32.3725533Z", gitState: "untracked" },
+    }],
+    ["src/day-one-ui.test.ts", {
+      prior: { bytes: 28643, sha256: "da507dc5513b44c3d904f70cd86daa79b7b514c822545cca32c7fb9e0ffc6fc5", lastWriteTimeUtc: "2026-08-17T00:12:00.2844630Z" },
+      current: { bytes: 34797, sha256: "76788e0491dcd6735aed4e03499ca5a169a2cc28d5052444c55f9575e3e67466", lastWriteTimeUtc: "2026-08-17T04:13:54.6610198Z", gitState: "untracked" },
+    }],
+  ]);
+  assert(v4ManagedContextRefreshPolicies.length === 2 && Boolean(v4ManagedContextRefreshPolicy) && Boolean(initialJournalAmbiguityRefreshPolicy), "Asset policy must declare exactly the two authorized managed-context refreshes");
+  assert(v4ManagedContextRefresh?.schemaVersion === 1 && v4ManagedContextRefresh?.kind === "managed-context-refresh", `${v4ManagedContextRefreshPath} schema/kind mismatch`);
+  assert(v4ManagedContextRefresh?.hashAlgorithm === "sha256", `${v4ManagedContextRefreshPath} must use SHA-256`);
+  assert(v4ManagedContextRefresh?.authorization?.milestone === "Build — V4 Managed-Context Hash Reconciliation" && v4ManagedContextRefresh?.authorization?.sourceMilestone === "Build — Explicit Reset Persistence Closure" && v4ManagedContextRefresh?.authorization?.sourceFixRound === 1, "V4 managed-context refresh authorization mismatch");
+  assert(v4ManagedContextRefresh?.authorization?.generalMutableContextException === false, "V4 managed-context refresh must not create a general mutable-context exception");
+  assert(v4ManagedContextRefresh?.repositoryState?.head === "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4" && v4ManagedContextRefresh?.repositoryState?.stagedPathCount === 0 && v4ManagedContextRefresh?.repositoryState?.stagedPaths?.length === 0 && v4ManagedContextRefresh?.repositoryState?.externalOrGitActionPerformed === false, "V4 managed-context refresh repository-state record mismatch");
+  assert(v4ManagedContextRefresh?.immutablePredecessor?.record === postBaselineMasteredDeltaPath && v4ManagedContextRefresh?.immutablePredecessor?.recordSha256 === "aa45bff433980f26600fe7627a49ad831e1d325556d8abf4f6095b873fc54f67" && v4ManagedContextRefresh?.immutablePredecessor?.immutable === true, "V4 managed-context immutable predecessor mismatch");
+  assert(fileHash(postBaselineMasteredDeltaPath) === "aa45bff433980f26600fe7627a49ad831e1d325556d8abf4f6095b873fc54f67", "Immutable 95-to-125 intake delta record drifted");
+
+  const expectedV4ManagedContextHistory = new Map([
+    [postBaselineIntakePath, { recordSha256: "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6", fileCount: 75, bytes: 418860110, aggregateSha256: "b0e16debbb690987ad84c168a3b84f8986f98263d44b4ff6c1502e872e9152a4" }],
+    [postBaselineDeltaPath, { recordSha256: "32dada5d7a6a3c075ed29939ca4bab0b8e1db87d773a1265429c2463311c1a23", fileCount: 20, bytes: 7681560, aggregateSha256: "0691600367d637c1da18aee7bdcd17f4ebf79ce10b5a15674cf3d1af14a1180b" }],
+    [postBaselineMasteredDeltaPath, { recordSha256: "aa45bff433980f26600fe7627a49ad831e1d325556d8abf4f6095b873fc54f67", fileCount: 30, bytes: 22135008, aggregateSha256: "de71338c2fb05e78a16eb0c7adb727c00f48756a06ba77201f3031215f9ca49f" }],
+  ]);
+  const v4ManagedContextHistory = v4ManagedContextRefresh?.appendOnlyHistory ?? [];
+  const v4ManagedContextHistoryByRecord = new Map(v4ManagedContextHistory.map((entry) => [normalize(entry.record), entry]));
+  assert(v4ManagedContextHistory.length === 3 && v4ManagedContextHistoryByRecord.size === expectedV4ManagedContextHistory.size, "V4 managed-context append-only history set mismatch");
+  for (const [record, expected] of expectedV4ManagedContextHistory) {
+    const entry = v4ManagedContextHistoryByRecord.get(record);
+    assert(Boolean(entry) && entry?.immutable === true, `V4 managed-context history is missing or mutable: ${record}`);
+    assert(entry?.recordSha256 === expected.recordSha256 && fileHash(record) === expected.recordSha256, `V4 managed-context history record identity drifted: ${record}`);
+    assert(entry?.fileCount === expected.fileCount && entry?.bytes === expected.bytes && entry?.aggregateSha256 === expected.aggregateSha256, `V4 managed-context history summary drifted: ${record}`);
+  }
+
+  assert(v4ManagedContextTransitions.length === 3 && v4ManagedContextTransitionByPath.size === expectedV4ManagedContextTransitions.size, "V4 managed-context refresh must bind exactly three transitions");
+  for (const [path, expected] of expectedV4ManagedContextTransitions) {
+    const transition = v4ManagedContextTransitionByPath.get(path);
+    assert(Boolean(transition), `V4 managed-context transition is missing: ${path}`);
+    assert(transition?.prior?.bytes === expected.prior.bytes && transition?.prior?.sha256 === expected.prior.sha256 && transition?.prior?.lastWriteTimeUtc === expected.prior.lastWriteTimeUtc, `V4 managed-context prior identity drifted: ${path}`);
+    assert(transition?.current?.bytes === expected.current.bytes && transition?.current?.sha256 === expected.current.sha256 && transition?.current?.lastWriteTimeUtc === expected.current.lastWriteTimeUtc && transition?.current?.gitState === "tracked-modified", `V4 managed-context current record drifted: ${path}`);
+    const successor = initialJournalAmbiguityTransitionByPath.get(path);
+    assert(successor?.prior?.bytes === expected.current.bytes && successor?.prior?.sha256 === expected.current.sha256 && successor?.prior?.lastWriteTimeUtc === expected.current.lastWriteTimeUtc, `V4 managed-context successor chain drifted: ${path}`);
+    assert(existsSync(absolute(path)), `V4 managed-context current file is missing: ${path}`);
+  }
+
+  const v4PolicyTransitions = v4ManagedContextRefreshPolicy?.authorizedTransitions ?? [];
+  const v4PolicyTransitionByPath = new Map(v4PolicyTransitions.map((entry) => [normalize(entry.path), entry]));
+  assert(v4ManagedContextRefreshPolicy?.kind === "checksum-bound-managed-context-refresh" && v4ManagedContextRefreshPolicy?.predecessor === postBaselineMasteredDeltaPath && v4ManagedContextRefreshPolicy?.predecessorRecordSha256 === "aa45bff433980f26600fe7627a49ad831e1d325556d8abf4f6095b873fc54f67", "V4 managed-context policy predecessor contract mismatch");
+  assert(v4ManagedContextRefreshPolicy?.sourceMilestone === "Build — Explicit Reset Persistence Closure" && v4ManagedContextRefreshPolicy?.sourceFixRound === 1 && v4ManagedContextRefreshPolicy?.generalMutableContextException === false, "V4 managed-context policy authorization mismatch");
+  assert(v4ManagedContextRefreshPolicy?.governedAssetFileCount === 125 && v4ManagedContextRefreshPolicy?.governedAssetBytes === 448676678 && v4ManagedContextRefreshPolicy?.governedAssetAggregateSha256 === "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b", "V4 managed-context policy asset-set invariant mismatch");
+  assert(v4PolicyTransitions.length === 3 && v4PolicyTransitionByPath.size === expectedV4ManagedContextTransitions.size, "V4 managed-context policy must contain exactly three authorized transitions");
+  for (const [path, expected] of expectedV4ManagedContextTransitions) {
+    const policyTransition = v4PolicyTransitionByPath.get(path);
+    assert(policyTransition?.priorSha256 === expected.prior.sha256 && policyTransition?.currentSha256 === expected.current.sha256, `V4 managed-context policy transition drifted: ${path}`);
+  }
+  const v4AssetSet = v4ManagedContextRefresh?.governedAssetSet;
+  assert(v4AssetSet?.fileCount === 125 && v4AssetSet?.bytes === 448676678 && v4AssetSet?.aggregateSha256 === "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b" && v4AssetSet?.missingFilesAtRecordCreation === 0 && v4AssetSet?.driftedFilesAtRecordCreation === 0 && v4AssetSet?.recordCreationRehashPasses === 1 && v4AssetSet?.requiredFinalVerifierPasses === 2, "V4 managed-context governed asset-set proof mismatch");
+  const v4Invariants = v4ManagedContextRefresh?.unchangedInvariants;
+  assert(v4Invariants?.assetPathChanges === 0 && v4Invariants?.assetByteChanges === 0 && v4Invariants?.assetTierChanges === 0 && v4Invariants?.runtimeImportChanges === 0 && v4Invariants?.assetDispositionChanges === 0 && v4Invariants?.classificationChanges === 0, "V4 managed-context refresh must record no asset or classification change");
+  assert(v4Invariants?.classificationRecord === classificationPath && v4Invariants?.classificationRecordSha256 === "d1f1a637c1c438626bffb25911bdbcf50c754fc4581659f6cd507cb2a088f906", "V4 managed-context historical classification invariant drifted");
+  assert(v4Invariants?.packageJsonSha256 === "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa" && fileHash("package.json") === v4Invariants.packageJsonSha256, "V4 managed-context package.json invariant drifted");
+  assert(v4Invariants?.packageLockJsonSha256 === "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38" && fileHash("package-lock.json") === v4Invariants.packageLockJsonSha256, "V4 managed-context package-lock.json invariant drifted");
+
+  assert(initialJournalAmbiguityRefresh?.schemaVersion === 1 && initialJournalAmbiguityRefresh?.kind === "managed-context-refresh", `${initialJournalAmbiguityRefreshPath} schema/kind mismatch`);
+  assert(initialJournalAmbiguityRefresh?.hashAlgorithm === "sha256", `${initialJournalAmbiguityRefreshPath} must use SHA-256`);
+  assert(initialJournalAmbiguityRefresh?.authorization?.milestone === "Build — Initial Journal Ambiguity Closure" && initialJournalAmbiguityRefresh?.authorization?.sourceMilestone === "Build — Explicit Reset Persistence Closure" && initialJournalAmbiguityRefresh?.authorization?.sourceFixRound === 2, "Initial-journal ambiguity refresh authorization mismatch");
+  assert(initialJournalAmbiguityRefresh?.authorization?.generalMutableContextException === false, "Initial-journal ambiguity refresh must not create a general mutable-context exception");
+  assert(initialJournalAmbiguityRefresh?.repositoryState?.head === "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4" && initialJournalAmbiguityRefresh?.repositoryState?.stagedPathCount === 0 && initialJournalAmbiguityRefresh?.repositoryState?.stagedPaths?.length === 0 && initialJournalAmbiguityRefresh?.repositoryState?.externalOrGitActionPerformed === false, "Initial-journal ambiguity repository-state record mismatch");
+  assert(initialJournalAmbiguityRefresh?.immutablePredecessor?.record === v4ManagedContextRefreshPath && initialJournalAmbiguityRefresh?.immutablePredecessor?.recordSha256 === "03f8dd11fd8f0860bc3a84a3b2d70f7c806b49bf6cbcf1daf11e4c030763f17a" && initialJournalAmbiguityRefresh?.immutablePredecessor?.immutable === true, "Initial-journal ambiguity predecessor mismatch");
+  assert(fileHash(v4ManagedContextRefreshPath) === "03f8dd11fd8f0860bc3a84a3b2d70f7c806b49bf6cbcf1daf11e4c030763f17a", "Immutable V4 managed-context refresh drifted");
+
+  const initialJournalHistory = initialJournalAmbiguityRefresh?.appendOnlyHistory ?? [];
+  const initialJournalHistoryByRecord = new Map(initialJournalHistory.map((entry) => [normalize(entry.record), entry]));
+  assert(initialJournalHistory.length === 4 && initialJournalHistoryByRecord.size === 4, "Initial-journal ambiguity append-only history set mismatch");
+  for (const [record, expected] of expectedV4ManagedContextHistory) {
+    const entry = initialJournalHistoryByRecord.get(record);
+    assert(Boolean(entry) && entry?.immutable === true, `Initial-journal ambiguity history is missing or mutable: ${record}`);
+    assert(entry?.recordSha256 === expected.recordSha256 && fileHash(record) === expected.recordSha256, `Initial-journal ambiguity history record identity drifted: ${record}`);
+    assert(entry?.fileCount === expected.fileCount && entry?.bytes === expected.bytes && entry?.aggregateSha256 === expected.aggregateSha256, `Initial-journal ambiguity history summary drifted: ${record}`);
+  }
+  const priorContextHistory = initialJournalHistoryByRecord.get(v4ManagedContextRefreshPath);
+  assert(priorContextHistory?.recordSha256 === "03f8dd11fd8f0860bc3a84a3b2d70f7c806b49bf6cbcf1daf11e4c030763f17a" && priorContextHistory?.immutable === true && priorContextHistory?.transitionCount === 3 && priorContextHistory?.sourceFixRound === 1, "Initial-journal ambiguity V4 history link drifted");
+
+  assert(initialJournalAmbiguityTransitions.length === 3 && initialJournalAmbiguityTransitionByPath.size === expectedInitialJournalAmbiguityTransitions.size, "Initial-journal ambiguity refresh must bind exactly three predecessor transitions");
+  const currentTrackedModified = new Set(gitPaths(["diff", "--name-only", "-z"]));
+  const currentUntracked = new Set(gitPaths(["ls-files", "--others", "--exclude-standard", "-z"]));
+  for (const [path, expected] of expectedInitialJournalAmbiguityTransitions) {
+    const transition = initialJournalAmbiguityTransitionByPath.get(path);
+    const predecessor = v4ManagedContextTransitionByPath.get(path);
+    assert(Boolean(transition) && Boolean(predecessor), `Initial-journal ambiguity transition chain is missing: ${path}`);
+    assert(transition?.prior?.bytes === expected.prior.bytes && transition?.prior?.sha256 === expected.prior.sha256 && transition?.prior?.lastWriteTimeUtc === expected.prior.lastWriteTimeUtc, `Initial-journal ambiguity prior identity drifted: ${path}`);
+    assert(predecessor?.current?.bytes === transition?.prior?.bytes && predecessor?.current?.sha256 === transition?.prior?.sha256 && predecessor?.current?.lastWriteTimeUtc === transition?.prior?.lastWriteTimeUtc, `Initial-journal ambiguity predecessor linkage drifted: ${path}`);
+    assert(transition?.current?.bytes === expected.current.bytes && transition?.current?.sha256 === expected.current.sha256 && transition?.current?.lastWriteTimeUtc === expected.current.lastWriteTimeUtc && transition?.current?.gitState === expected.current.gitState, `Initial-journal ambiguity current record drifted: ${path}`);
+    assert(existsSync(absolute(path)), `Initial-journal ambiguity current file is missing: ${path}`);
+    if (existsSync(absolute(path))) {
+      assert(statSync(absolute(path)).size === expected.current.bytes && fileHash(path) === expected.current.sha256, `Initial-journal ambiguity current identity drifted: ${path}`);
+      assert(Math.abs(statSync(absolute(path)).mtimeMs - new Date(expected.current.lastWriteTimeUtc).getTime()) < 1, `Initial-journal ambiguity current mtime drifted: ${path}`);
+    }
+    assert(currentTrackedModified.has(path), `Initial-journal ambiguity tracked-modified state drifted: ${path}`);
+  }
+
+  assert(initialJournalSupportingTransitions.length === 2 && initialJournalSupportingTransitionByPath.size === expectedInitialJournalSupportingTransitions.size, "Initial-journal ambiguity refresh must bind exactly two supporting transitions");
+  for (const [path, expected] of expectedInitialJournalSupportingTransitions) {
+    const transition = initialJournalSupportingTransitionByPath.get(path);
+    assert(Boolean(transition), `Initial-journal ambiguity supporting transition is missing: ${path}`);
+    assert(transition?.prior?.bytes === expected.prior.bytes && transition?.prior?.sha256 === expected.prior.sha256 && transition?.prior?.lastWriteTimeUtc === expected.prior.lastWriteTimeUtc && transition?.prior?.identitySource === "frozen-pass-2-handoff", `Initial-journal ambiguity supporting prior identity drifted: ${path}`);
+    assert(transition?.current?.bytes === expected.current.bytes && transition?.current?.sha256 === expected.current.sha256 && transition?.current?.lastWriteTimeUtc === expected.current.lastWriteTimeUtc && transition?.current?.gitState === expected.current.gitState, `Initial-journal ambiguity supporting current record drifted: ${path}`);
+    assert(existsSync(absolute(path)), `Initial-journal ambiguity supporting file is missing: ${path}`);
+    if (existsSync(absolute(path))) {
+      assert(statSync(absolute(path)).size === expected.current.bytes && fileHash(path) === expected.current.sha256, `Initial-journal ambiguity supporting identity drifted: ${path}`);
+      assert(Math.abs(statSync(absolute(path)).mtimeMs - new Date(expected.current.lastWriteTimeUtc).getTime()) < 1, `Initial-journal ambiguity supporting mtime drifted: ${path}`);
+    }
+    assert(currentUntracked.has(path), `Initial-journal ambiguity supporting untracked state drifted: ${path}`);
+  }
+
+  const initialJournalPolicyTransitions = initialJournalAmbiguityRefreshPolicy?.authorizedTransitions ?? [];
+  const initialJournalPolicyTransitionByPath = new Map(initialJournalPolicyTransitions.map((entry) => [normalize(entry.path), entry]));
+  const initialJournalPolicySupporting = initialJournalAmbiguityRefreshPolicy?.supportingTransitions ?? [];
+  const initialJournalPolicySupportingByPath = new Map(initialJournalPolicySupporting.map((entry) => [normalize(entry.path), entry]));
+  assert(initialJournalAmbiguityRefreshPolicy?.kind === "checksum-bound-managed-context-refresh" && initialJournalAmbiguityRefreshPolicy?.predecessor === v4ManagedContextRefreshPath && initialJournalAmbiguityRefreshPolicy?.predecessorRecordSha256 === "03f8dd11fd8f0860bc3a84a3b2d70f7c806b49bf6cbcf1daf11e4c030763f17a", "Initial-journal ambiguity policy predecessor contract mismatch");
+  assert(initialJournalAmbiguityRefreshPolicy?.sourceMilestone === "Build — Explicit Reset Persistence Closure" && initialJournalAmbiguityRefreshPolicy?.sourceFixRound === 2 && initialJournalAmbiguityRefreshPolicy?.correctionMilestone === "Build — Initial Journal Ambiguity Closure" && initialJournalAmbiguityRefreshPolicy?.generalMutableContextException === false, "Initial-journal ambiguity policy authorization mismatch");
+  assert(initialJournalAmbiguityRefreshPolicy?.governedAssetFileCount === 125 && initialJournalAmbiguityRefreshPolicy?.governedAssetBytes === 448676678 && initialJournalAmbiguityRefreshPolicy?.governedAssetAggregateSha256 === "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b", "Initial-journal ambiguity policy asset-set invariant mismatch");
+  assert(initialJournalPolicyTransitions.length === 3 && initialJournalPolicyTransitionByPath.size === expectedInitialJournalAmbiguityTransitions.size, "Initial-journal ambiguity policy transition set mismatch");
+  for (const [path, expected] of expectedInitialJournalAmbiguityTransitions) {
+    const transition = initialJournalPolicyTransitionByPath.get(path);
+    assert(transition?.priorSha256 === expected.prior.sha256 && transition?.currentSha256 === expected.current.sha256, `Initial-journal ambiguity policy transition drifted: ${path}`);
+  }
+  assert(initialJournalPolicySupporting.length === 2 && initialJournalPolicySupportingByPath.size === expectedInitialJournalSupportingTransitions.size, "Initial-journal ambiguity policy supporting transition set mismatch");
+  for (const [path, expected] of expectedInitialJournalSupportingTransitions) {
+    const transition = initialJournalPolicySupportingByPath.get(path);
+    assert(transition?.priorSha256 === expected.prior.sha256 && transition?.currentSha256 === expected.current.sha256, `Initial-journal ambiguity policy supporting transition drifted: ${path}`);
+  }
+  const initialJournalAssetSet = initialJournalAmbiguityRefresh?.governedAssetSet;
+  assert(initialJournalAssetSet?.fileCount === 125 && initialJournalAssetSet?.bytes === 448676678 && initialJournalAssetSet?.aggregateSha256 === "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b" && initialJournalAssetSet?.missingFilesAtRecordCreation === 0 && initialJournalAssetSet?.driftedFilesAtRecordCreation === 0 && initialJournalAssetSet?.recordCreationRehashPasses === 1 && initialJournalAssetSet?.requiredFinalVerifierPasses === 2, "Initial-journal ambiguity governed asset-set proof mismatch");
+  const initialJournalInvariants = initialJournalAmbiguityRefresh?.unchangedInvariants;
+  assert(initialJournalInvariants?.assetPathChanges === 0 && initialJournalInvariants?.assetByteChanges === 0 && initialJournalInvariants?.assetTierChanges === 0 && initialJournalInvariants?.runtimeImportChanges === 0 && initialJournalInvariants?.assetDispositionChanges === 0 && initialJournalInvariants?.classificationChanges === 0, "Initial-journal ambiguity refresh must record no asset or classification change");
+  assert(initialJournalInvariants?.classificationRecord === classificationPath && initialJournalInvariants?.classificationRecordSha256 === "d1f1a637c1c438626bffb25911bdbcf50c754fc4581659f6cd507cb2a088f906", "Initial-journal ambiguity historical classification invariant drifted");
+  assert(initialJournalInvariants?.packageJsonSha256 === "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa" && fileHash("package.json") === initialJournalInvariants.packageJsonSha256, "Initial-journal ambiguity package.json invariant drifted");
+  assert(initialJournalInvariants?.packageLockJsonSha256 === "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38" && fileHash("package-lock.json") === initialJournalInvariants.packageLockJsonSha256, "Initial-journal ambiguity package-lock.json invariant drifted");
+  const originalPostBaselineEntries = postBaselineIntake?.files ?? [];
+  const postBaselineDeltaEntries = postBaselineDelta?.files ?? [];
+  const postBaselineMasteredEntries = postBaselineMasteredDelta?.files ?? [];
+  const postBaselineSourceEntries = [...originalPostBaselineEntries, ...postBaselineDeltaEntries]
+    .sort((a, b) => (normalize(a.path) < normalize(b.path) ? -1 : normalize(a.path) > normalize(b.path) ? 1 : 0));
+  const postBaselineEntries = [...postBaselineSourceEntries, ...postBaselineMasteredEntries]
+    .sort((a, b) => (normalize(a.path) < normalize(b.path) ? -1 : normalize(a.path) > normalize(b.path) ? 1 : 0));
+  const originalPostBaselineByPath = new Map(originalPostBaselineEntries.map((entry) => [normalize(entry.path), entry]));
+  const postBaselineDeltaByPath = new Map(postBaselineDeltaEntries.map((entry) => [normalize(entry.path), entry]));
+  const postBaselineMasteredByPath = new Map(postBaselineMasteredEntries.map((entry) => [normalize(entry.path), entry]));
+  const postBaselineSourceByPath = new Map(postBaselineSourceEntries.map((entry) => [normalize(entry.path), entry]));
+  const postBaselineByPath = new Map(postBaselineEntries.map((entry) => [normalize(entry.path), entry]));
+  const postBaselineRoots = (postBaselineIntake?.scope?.roots ?? []).map(normalize);
+  const postBaselineSourcePaths = new Set(postBaselineSourceByPath.keys());
+  const postBaselinePaths = new Set(postBaselineByPath.keys());
+  const postBaselineAssetPaths = new Set([...postBaselinePaths].filter((path) => path.startsWith("assets/")));
+  const postBaselineEvidencePaths = new Set([...postBaselinePaths].filter((path) => path.startsWith("evidence/")));
+  const expectedCandidateEofTransitions = new Map([
+    ["assets/3d/jack/v3/README.md", {
+      currentBytes: 1553,
+      currentSha256: "deb50c2968e148413b50251b461cd728f15a74d07687032d557ca1e8082298c3",
+      currentGitBlobOid: "8eea00ae9318036543d9c9b741caa7ca4005a9b0",
+      currentLastWriteTimeUtc: "2026-08-17T16:18:31.0126296Z",
+    }],
+    ["assets/3d/jack/v3/SOURCE_LEDGER_V3.md", {
+      currentBytes: 1545,
+      currentSha256: "c655601ef3dd32a81a4e9b30ce03d87d9091dca195a687d13f2705eea5ded7e0",
+      currentGitBlobOid: "135168c8a08ce29ea26d7c32a50cc3712abcf130",
+      currentLastWriteTimeUtc: "2026-08-17T16:18:32.5634844Z",
+    }],
+    ["assets/3d/jack/v4/ADULT_LIKENESS_SPEC_V4.md", {
+      currentBytes: 3252,
+      currentSha256: "555bb30734df9a642b0b574ffc11e2656b7bebb0966d4cf6221a14355165b071",
+      currentGitBlobOid: "947c0a454feba15de4453f9efce36b794736ee1f",
+      currentLastWriteTimeUtc: "2026-08-17T16:18:34.0834199Z",
+    }],
+    ["assets/3d/jack/v4/README.md", {
+      currentBytes: 2629,
+      currentSha256: "801563a3bb518e5fc1cb7c88d99a53dcb740a224ca55ac3d8faa1afaea6703dc",
+      currentGitBlobOid: "edb5f3ce0bea18334da2f4b9f19552ecdc550b22",
+      currentLastWriteTimeUtc: "2026-08-17T16:18:35.6841431Z",
+    }],
+    ["assets/3d/jack/v4/SOURCE_LEDGER_V4.md", {
+      currentBytes: 1582,
+      currentSha256: "c743ccb0bc2c0422177bef82740f94c6c6aa61c85c96f68b34811a0220aa8a6a",
+      currentGitBlobOid: "e98d528ee61b5ed916fd857f9ca8e599045b045c",
+      currentLastWriteTimeUtc: "2026-08-17T16:18:37.2439775Z",
+    }],
+    ["assets/3d/jack/v4/tools/analyze_adult_components.py", {
+      currentBytes: 2919,
+      currentSha256: "ba41ea722a0dcbc0f8867c1c700874951e5e78422eb1f61c9ba051066d4ce2ff",
+      currentGitBlobOid: "5ef376cea143122e8d8d67b4d5dc54c5df3cb3a9",
+      currentLastWriteTimeUtc: "2026-08-17T16:18:38.7539378Z",
+    }],
+  ]);
+  const candidateEofPolicyTransitions = candidateEofPolicy?.authorizedTransitions ?? [];
+  const candidateEofPolicyTransitionByPath = new Map(candidateEofPolicyTransitions.map((entry) => [normalize(entry.path), entry]));
+  assert(candidateEofPolicies.length === 1 && Boolean(candidateEofPolicy), "Asset policy must declare exactly one bounded Safe Return candidate EOF normalization");
+  assert(candidateEofNormalization?.schemaVersion === 1 && candidateEofNormalization?.kind === "checksum-bound-candidate-eof-normalization", `${candidateEofNormalizationPath} schema/kind mismatch`);
+  assert(candidateEofNormalization?.hashAlgorithm === "sha256", `${candidateEofNormalizationPath} must use SHA-256`);
+  assert(candidateEofNormalization?.authorization?.milestone === "Build — Safe Return Candidate EOF Normalization" && candidateEofNormalization?.authorization?.generalMutableContextException === false, "Candidate EOF normalization authorization mismatch");
+  assert(candidateEofNormalization?.authorization?.runtimeBehaviorChangeAuthorized === false && candidateEofNormalization?.authorization?.creativeStatusChangeAuthorized === false && candidateEofNormalization?.authorization?.assetTierOrDispositionChangeAuthorized === false, "Candidate EOF normalization authority widened");
+  assert(candidateEofNormalization?.repositoryState?.head === "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4" && candidateEofNormalization?.repositoryState?.branch === "codex/jack-v05" && candidateEofNormalization?.repositoryState?.stagedPathCountAfterAuthorizedUnstage === 0 && candidateEofNormalization?.repositoryState?.workingByteDriftDuringUnstage === 0 && candidateEofNormalization?.repositoryState?.externalActionPerformed === false, "Candidate EOF normalization repository-state record mismatch");
+  assert(candidateEofNormalization?.immutableIdentitySource?.record === postBaselineIntakePath && candidateEofNormalization?.immutableIdentitySource?.recordSha256 === "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6" && candidateEofNormalization?.immutableIdentitySource?.immutable === true, "Candidate EOF normalization immutable identity source mismatch");
+  assert(candidateEofPolicy?.kind === "checksum-bound-candidate-eof-normalization" && candidateEofPolicy?.identitySource === postBaselineIntakePath && candidateEofPolicy?.identitySourceRecordSha256 === "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6", "Candidate EOF normalization policy identity source mismatch");
+  assert(candidateEofPolicy?.milestone === "Build — Safe Return Candidate EOF Normalization" && candidateEofPolicy?.generalMutableContextException === false, "Candidate EOF normalization policy authorization mismatch");
+  assert(candidateEofTransitions.length === 6 && candidateEofTransitionByPath.size === expectedCandidateEofTransitions.size, "Candidate EOF normalization must bind exactly six unique transitions");
+  assert(candidateEofPolicyTransitions.length === 6 && candidateEofPolicyTransitionByPath.size === expectedCandidateEofTransitions.size, "Candidate EOF policy must bind exactly six unique transitions");
+
+  const expectedCandidateEofHistory = new Map([
+    [normalizationPath, { bytes: 11168, sha256: "284966ba2bdd29709245200cebdcd3098476a7a051d5017c812ea2f66c6d1dc2" }],
+    [postBaselineIntakePath, { bytes: 38412, sha256: "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6" }],
+    [postBaselineDeltaPath, { bytes: 14229, sha256: "32dada5d7a6a3c075ed29939ca4bab0b8e1db87d773a1265429c2463311c1a23" }],
+    [postBaselineMasteredDeltaPath, { bytes: 22053, sha256: "aa45bff433980f26600fe7627a49ad831e1d325556d8abf4f6095b873fc54f67" }],
+    [v4ManagedContextRefreshPath, { bytes: 6217, sha256: "03f8dd11fd8f0860bc3a84a3b2d70f7c806b49bf6cbcf1daf11e4c030763f17a" }],
+    [initialJournalAmbiguityRefreshPath, { bytes: 7885, sha256: "99717544e31e46774e88b56f9afd018fd734863066aeb79454d36954ab37e409" }],
+  ]);
+  const candidateEofHistory = candidateEofNormalization?.appendOnlyHistory ?? [];
+  const candidateEofHistoryByRecord = new Map(candidateEofHistory.map((entry) => [normalize(entry.record), entry]));
+  assert(candidateEofHistory.length === expectedCandidateEofHistory.size && candidateEofHistoryByRecord.size === expectedCandidateEofHistory.size, "Candidate EOF append-only history set mismatch");
+  for (const [record, expected] of expectedCandidateEofHistory) {
+    const entry = candidateEofHistoryByRecord.get(record);
+    assert(entry?.immutable === true && entry?.recordBytes === expected.bytes && entry?.recordSha256 === expected.sha256, `Candidate EOF immutable history entry drifted: ${record}`);
+    assert(existsSync(absolute(record)) && statSync(absolute(record)).size === expected.bytes && fileHash(record) === expected.sha256, `Candidate EOF immutable history file drifted: ${record}`);
+  }
+
+  const candidateEofUntracked = new Set(gitPaths(["ls-files", "--others", "--exclude-standard", "-z", "--", ...expectedCandidateEofTransitions.keys()]));
+  for (const [path, expectedCurrent] of expectedCandidateEofTransitions) {
+    const transition = candidateEofTransitionByPath.get(path);
+    const policyTransition = candidateEofPolicyTransitionByPath.get(path);
+    const original = originalPostBaselineByPath.get(path);
+    assert(Boolean(transition && policyTransition && original), `Candidate EOF transition chain is incomplete: ${path}`);
+    if (!transition || !policyTransition || !original) continue;
+    assert(transition.classificationRuleId === original.classificationRuleId, `Candidate EOF classification rule drifted: ${path}`);
+    assert(transition.prior?.bytes === original.bytes && transition.prior?.sha256 === original.sha256, `Candidate EOF prior raw identity drifted: ${path}`);
+    assert(Math.abs(new Date(transition.prior?.lastWriteTimeUtc).getTime() - new Date(original.lastWriteTimeUtc).getTime()) < 1, `Candidate EOF prior mtime drifted: ${path}`);
+    assert(transition.current?.bytes === expectedCurrent.currentBytes && transition.current?.sha256 === expectedCurrent.currentSha256 && transition.current?.pathAttributedGitBlobOid === expectedCurrent.currentGitBlobOid, `Candidate EOF current recorded identity drifted: ${path}`);
+    assert(Math.abs(new Date(transition.current?.lastWriteTimeUtc).getTime() - new Date(expectedCurrent.currentLastWriteTimeUtc).getTime()) < 1 && transition.current?.gitState === "untracked", `Candidate EOF current mtime/state drifted: ${path}`);
+    assert(policyTransition.priorBytes === original.bytes && policyTransition.priorSha256 === original.sha256 && policyTransition.priorGitBlobOid === transition.prior?.pathAttributedGitBlobOid, `Candidate EOF policy prior identity drifted: ${path}`);
+    assert(policyTransition.currentBytes === expectedCurrent.currentBytes && policyTransition.currentSha256 === expectedCurrent.currentSha256 && policyTransition.currentGitBlobOid === expectedCurrent.currentGitBlobOid, `Candidate EOF policy current identity drifted: ${path}`);
+    assert(existsSync(absolute(path)), `Candidate EOF current file is missing: ${path}`);
+    if (!existsSync(absolute(path))) continue;
+    const currentBuffer = readFileSync(absolute(path));
+    const reconstructedPrior = Buffer.concat([currentBuffer, Buffer.from([0x0a])]);
+    const crCount = [...currentBuffer].filter((byte) => byte === 0x0d).length;
+    const lfCount = [...currentBuffer].filter((byte) => byte === 0x0a).length;
+    let trailingLfCount = 0;
+    for (let index = currentBuffer.length - 1; index >= 0 && currentBuffer[index] === 0x0a; index -= 1) trailingLfCount += 1;
+    assert(currentBuffer.length === expectedCurrent.currentBytes && sha256(currentBuffer) === expectedCurrent.currentSha256, `Candidate EOF current raw file drifted: ${path}`);
+    assert(pathAttributedGitBlobOid(path, currentBuffer) === expectedCurrent.currentGitBlobOid, `Candidate EOF current path-attributed Git blob drifted: ${path}`);
+    assert(reconstructedPrior.length === transition.prior.bytes && sha256(reconstructedPrior) === transition.prior.sha256, `Candidate EOF exact one-byte prior reconstruction failed: ${path}`);
+    assert(pathAttributedGitBlobOid(path, reconstructedPrior) === transition.prior.pathAttributedGitBlobOid, `Candidate EOF prior path-attributed Git blob reconstruction failed: ${path}`);
+    assert(currentBuffer.equals(Buffer.from(currentBuffer.toString("utf8"), "utf8")) && !(currentBuffer[0] === 0xef && currentBuffer[1] === 0xbb && currentBuffer[2] === 0xbf), `Candidate EOF UTF-8/no-BOM invariant failed: ${path}`);
+    assert(crCount === 0 && transition.current?.crByteCount === 0 && transition.current?.lineEndings === "LF-only", `Candidate EOF LF-only invariant failed: ${path}`);
+    assert(lfCount === transition.current?.lfByteCount && transition.prior?.lfByteCount === lfCount + 1 && trailingLfCount === 1 && transition.prior?.terminalLfCount === 2 && transition.current?.terminalLfCount === 1, `Candidate EOF newline-count invariant failed: ${path}`);
+    assert(transition.reversibleTransformation?.type === "blank-line-at-eof-removed" && transition.reversibleTransformation?.removedBytes === 1 && transition.reversibleTransformation?.removedByteHex === "0a" && transition.reversibleTransformation?.otherByteChanges === 0, `Candidate EOF reversible transformation contract drifted: ${path}`);
+    assert(Math.abs(statSync(absolute(path)).mtimeMs - new Date(expectedCurrent.currentLastWriteTimeUtc).getTime()) < 1, `Candidate EOF current filesystem mtime drifted: ${path}`);
+    assert(candidateEofUntracked.has(path), `Candidate EOF target is no longer untracked after the authorized unstage: ${path}`);
+  }
+
+  const transitionAggregateBody = [...candidateEofTransitionByPath.values()]
+    .sort((a, b) => (normalize(a.path) < normalize(b.path) ? -1 : normalize(a.path) > normalize(b.path) ? 1 : 0))
+    .map((entry) => `${normalize(entry.path)}\t${entry.prior.bytes}\t${entry.prior.sha256}\t${entry.current.bytes}\t${entry.current.sha256}\n`)
+    .join("");
+  assert(Buffer.byteLength(transitionAggregateBody, "utf8") === 1068 && candidateEofNormalization?.transitionAggregateBytes === 1068, "Candidate EOF transition aggregate byte count drifted");
+  assert(sha256(Buffer.from(transitionAggregateBody, "utf8")) === "a6134cc01fa9d8a3c768f78c515d384cc62bb648dfedbdf28290c883ccf15a51" && candidateEofNormalization?.transitionAggregateSha256 === "a6134cc01fa9d8a3c768f78c515d384cc62bb648dfedbdf28290c883ccf15a51", "Candidate EOF transition aggregate hash drifted");
+  assert(candidateEofNormalization?.transitionSummary?.fileCount === 6 && candidateEofNormalization?.transitionSummary?.priorBytes === 13486 && candidateEofNormalization?.transitionSummary?.currentBytes === 13480 && candidateEofNormalization?.transitionSummary?.netBytes === -6 && candidateEofNormalization?.transitionSummary?.removedBytesPerFile === 1 && candidateEofNormalization?.transitionSummary?.otherByteChanges === 0, "Candidate EOF transition summary drifted");
+  assert(candidateEofPolicy?.fileCount === 6 && candidateEofPolicy?.priorBytes === 13486 && candidateEofPolicy?.currentBytes === 13480 && candidateEofPolicy?.netBytes === -6 && candidateEofPolicy?.transitionAggregateSha256 === "a6134cc01fa9d8a3c768f78c515d384cc62bb648dfedbdf28290c883ccf15a51", "Candidate EOF policy summary drifted");
+
+  const withCandidateEofSuccessors = (entries) => entries.map((entry) => {
+    const successor = candidateEofTransitionByPath.get(normalize(entry.path));
+    return successor ? { path: normalize(entry.path), bytes: successor.current.bytes, sha256: successor.current.sha256 } : { path: normalize(entry.path), bytes: entry.bytes, sha256: entry.sha256 };
+  });
+  const currentOriginalPostBaselineEntries = withCandidateEofSuccessors(originalPostBaselineEntries);
+  const currentPostBaselineSourceEntries = withCandidateEofSuccessors(postBaselineSourceEntries);
+  const currentPostBaselineEntries = withCandidateEofSuccessors(postBaselineEntries);
+  const expectedCurrentGovernedSets = [
+    ["original75Current", "original75", currentOriginalPostBaselineEntries, 75, 418860104, "1520051aaf04994ebfadb24022cdcb550a362a2fac7127f9c6e35bf1381d54fb"],
+    ["source95Current", "source95", currentPostBaselineSourceEntries, 95, 426541664, "b1eefc1819b746995e951e651b4629972eb9c34123b8d914006a298b825ffc31"],
+    ["combined125Current", "combined125", currentPostBaselineEntries, 125, 448676672, "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f"],
+  ];
+  for (const [recordKey, policyKey, entries, fileCount, bytes, aggregateSha256] of expectedCurrentGovernedSets) {
+    const recorded = candidateEofNormalization?.governedSuccessorSets?.[recordKey];
+    const declared = candidateEofPolicy?.currentGovernedSets?.[policyKey];
+    const actualBytes = entries.reduce((sum, entry) => sum + entry.bytes, 0);
+    const actualAggregate = aggregate(entries);
+    assert(entries.length === fileCount && actualBytes === bytes && actualAggregate === aggregateSha256, `Candidate EOF current governed set drifted: ${policyKey}`);
+    assert(recorded?.fileCount === fileCount && recorded?.bytes === bytes && recorded?.aggregateSha256 === aggregateSha256, `Candidate EOF record governed set drifted: ${recordKey}`);
+    assert(declared?.fileCount === fileCount && declared?.bytes === bytes && declared?.aggregateSha256 === aggregateSha256, `Candidate EOF policy governed set drifted: ${policyKey}`);
+  }
+  const candidateEofClassificationEffect = candidateEofNormalization?.classificationEffect;
+  assert(candidateEofClassificationEffect?.record === classificationPath && candidateEofClassificationEffect?.priorRecordSha256 === "d1f1a637c1c438626bffb25911bdbcf50c754fc4581659f6cd507cb2a088f906", "Candidate EOF classification predecessor drifted");
+  assert(candidateEofClassificationEffect?.currentRecordBytes === 138055 && candidateEofClassificationEffect?.currentRecordSha256 === "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb" && statSync(absolute(classificationPath)).size === 138055 && fileHash(classificationPath) === "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb", "Candidate EOF current classification identity drifted");
+  assert(candidateEofClassificationEffect?.changedPaths === 6 && candidateEofClassificationEffect?.pathChanges === 0 && candidateEofClassificationEffect?.fileCountChanges === 0 && candidateEofClassificationEffect?.tierChanges === 0 && candidateEofClassificationEffect?.dispositionChanges === 0 && candidateEofClassificationEffect?.runtimeImportChanges === 0 && candidateEofClassificationEffect?.expectedV3GroupByteDelta === -2 && candidateEofClassificationEffect?.expectedV4GroupByteDelta === -4, "Candidate EOF classification scope widened");
+  const candidateEofScene = candidateEofNormalization?.excludedSceneInvariant;
+  assert(candidateEofScene?.path === "src/pet-room-scene.web.tsx" && candidateEofScene?.bytes === 12121 && candidateEofScene?.sha256 === "8d26ac3d5d65dc0c4ed943ed1d55435350b9d56e5bacbb6df7de6465fe8dd7df" && candidateEofScene?.pathAttributedGitBlobOid === "9b59e2cda25df99a34362fea7f45744ffe160f09" && candidateEofScene?.excluded === true && candidateEofScene?.staged === false && candidateEofScene?.editedByThisMilestone === false, "Candidate EOF excluded scene record drifted");
+  assert(existsSync(absolute(candidateEofScene?.path ?? "")) && statSync(absolute(candidateEofScene.path)).size === candidateEofScene.bytes && fileHash(candidateEofScene.path) === candidateEofScene.sha256 && pathAttributedGitBlobOid(candidateEofScene.path) === candidateEofScene.pathAttributedGitBlobOid, "Candidate EOF excluded scene identity drifted");
+  assert(postBaselineIntake?.schemaVersion === 1, `${postBaselineIntakePath} must use schemaVersion 1`);
+  assert(postBaselineIntake?.kind === "post-baseline-asset-intake", `${postBaselineIntakePath} kind mismatch`);
+  assert(postBaselineIntake?.hashAlgorithm === "sha256", `${postBaselineIntakePath} must use SHA-256`);
+  assert(postBaselineIntake?.baselineCommit === "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4", `${postBaselineIntakePath} baseline commit mismatch`);
+  assert(Boolean(postBaselinePolicy), `Asset policy must declare ${postBaselineIntakePath}`);
+  assert(originalPostBaselineEntries.length === originalPostBaselineByPath.size, `${postBaselineIntakePath} contains duplicate paths`);
+  assert(postBaselineIntake?.scope?.fileCount === originalPostBaselineEntries.length, `${postBaselineIntakePath} file count mismatch`);
+  assert(postBaselineIntake?.scope?.bytes === originalPostBaselineEntries.reduce((sum, entry) => sum + entry.bytes, 0), `${postBaselineIntakePath} byte total mismatch`);
+  assert(postBaselineIntake?.scope?.aggregateSha256 === aggregate(originalPostBaselineEntries), `${postBaselineIntakePath} aggregate hash mismatch`);
+  assert(postBaselinePolicy?.fileCount === postBaselineIntake?.scope?.fileCount, "Post-baseline policy/intake file count mismatch");
+  assert(postBaselinePolicy?.bytes === postBaselineIntake?.scope?.bytes, "Post-baseline policy/intake byte total mismatch");
+  assert(postBaselinePolicy?.aggregateSha256 === postBaselineIntake?.scope?.aggregateSha256, "Post-baseline policy/intake aggregate hash mismatch");
+  assert(JSON.stringify(postBaselinePolicy?.roots ?? []) === JSON.stringify(postBaselineRoots), "Post-baseline policy/intake root mismatch");
+  for (const entry of originalPostBaselineEntries) {
+    const path = normalize(entry.path);
+    const eofSuccessor = candidateEofTransitionByPath.get(path);
+    assert(postBaselineRoots.some((rootPath) => path.startsWith(`${rootPath}/`)), `Post-baseline path is outside approved roots: ${path}`);
+    assert(existsSync(absolute(path)), `Post-baseline file is missing: ${path}`);
+    if (existsSync(absolute(path))) {
+      const expectedBytes = eofSuccessor?.current?.bytes ?? entry.bytes;
+      const expectedSha256 = eofSuccessor?.current?.sha256 ?? entry.sha256;
+      assert(statSync(absolute(path)).size === expectedBytes && fileHash(path) === expectedSha256, `Post-baseline current file identity drifted: ${path}`);
+    }
+    const rule = classify(path, policy);
+    assert(rule?.id === entry.classificationRuleId, `Post-baseline classification drifted: ${path}`);
+  }
+
+  assert(postBaselineDelta?.schemaVersion === 1, `${postBaselineDeltaPath} must use schemaVersion 1`);
+  assert(postBaselineDelta?.kind === "post-baseline-asset-intake-delta", `${postBaselineDeltaPath} kind mismatch`);
+  assert(postBaselineDelta?.hashAlgorithm === "sha256", `${postBaselineDeltaPath} must use SHA-256`);
+  assert(postBaselineDelta?.baselineCommit === postBaselineIntake?.baselineCommit, `${postBaselineDeltaPath} baseline commit mismatch`);
+  assert(Boolean(postBaselineDeltaPolicy), `Asset policy must declare ${postBaselineDeltaPath}`);
+  assert(postBaselineDelta?.predecessor?.record === postBaselineIntakePath && postBaselineDelta?.predecessor?.immutable === true, "Post-baseline delta must preserve the immutable 75-file predecessor");
+  assert(postBaselineDelta?.predecessor?.recordSha256 === fileHash(postBaselineIntakePath), "Post-baseline predecessor record identity drifted");
+  assert(postBaselineDelta?.predecessor?.fileCount === postBaselineIntake?.scope?.fileCount && postBaselineDelta?.predecessor?.bytes === postBaselineIntake?.scope?.bytes && postBaselineDelta?.predecessor?.aggregateSha256 === postBaselineIntake?.scope?.aggregateSha256, "Post-baseline predecessor scope mismatch");
+  assert(postBaselineDelta?.predecessor?.rehashPasses === 2 && postBaselineDelta?.predecessor?.missingFiles === 0 && postBaselineDelta?.predecessor?.driftedFiles === 0, "Post-baseline predecessor rehash proof is incomplete");
+  assert(postBaselineDeltaEntries.length === postBaselineDeltaByPath.size && postBaselineSourceByPath.size === postBaselineSourceEntries.length, `${postBaselineDeltaPath} contains duplicate or predecessor-overlapping paths`);
+  assert(postBaselineDelta?.scope?.additionFileCount === postBaselineDeltaEntries.length, `${postBaselineDeltaPath} file count mismatch`);
+  assert(postBaselineDelta?.scope?.additionBytes === postBaselineDeltaEntries.reduce((sum, entry) => sum + entry.bytes, 0), `${postBaselineDeltaPath} byte total mismatch`);
+  assert(postBaselineDelta?.scope?.additionAggregateSha256 === aggregate(postBaselineDeltaEntries), `${postBaselineDeltaPath} aggregate hash mismatch`);
+  assert(postBaselineDelta?.scope?.rehashPasses === 2 && postBaselineDelta?.scope?.manifestIdentityMismatches === 0, "Post-baseline delta stability/manifest proof is incomplete");
+  assert(postBaselineDeltaPolicy?.kind === "checksum-bound-addition" && postBaselineDeltaPolicy?.predecessor === postBaselineIntakePath, "Post-baseline delta policy contract mismatch");
+  assert(postBaselineDeltaPolicy?.fileCount === postBaselineDelta?.scope?.additionFileCount && postBaselineDeltaPolicy?.bytes === postBaselineDelta?.scope?.additionBytes && postBaselineDeltaPolicy?.aggregateSha256 === postBaselineDelta?.scope?.additionAggregateSha256, "Post-baseline delta policy identity mismatch");
+  assert(JSON.stringify(postBaselineDeltaPolicy?.roots ?? []) === JSON.stringify([normalize(postBaselineDelta?.scope?.root ?? "")]), "Post-baseline delta policy root mismatch");
+  assert(postBaselineDeltaPolicy?.resultingFileCount === postBaselineDelta?.resultingGovernedRoots?.fileCount && postBaselineDeltaPolicy?.resultingBytes === postBaselineDelta?.resultingGovernedRoots?.bytes && postBaselineDeltaPolicy?.resultingAggregateSha256 === postBaselineDelta?.resultingGovernedRoots?.aggregateSha256, "Post-baseline delta resulting-scope policy mismatch");
+  assert(JSON.stringify((postBaselineDelta?.resultingGovernedRoots?.roots ?? []).map(normalize)) === JSON.stringify(postBaselineRoots), "Post-baseline delta resulting roots mismatch");
+  assert(postBaselineDelta?.resultingGovernedRoots?.unexpectedFiles === 0 && postBaselineDelta?.resultingGovernedRoots?.missingFiles === 0, "Post-baseline delta root-set proof is incomplete");
+  assert(postBaselineDelta?.classification?.id === "postbaseline-audio-source-preservation-pending" && postBaselineDelta?.classification?.tier === "cold-archive-pending" && postBaselineDelta?.classification?.status === "excluded-until-preserved", "Post-baseline delta classification must remain preservation-pending");
+  assert(postBaselineDelta?.classification?.fileCount === postBaselineDeltaEntries.length && postBaselineDelta?.classification?.bytes === postBaselineDeltaEntries.reduce((sum, entry) => sum + entry.bytes, 0), "Post-baseline delta classification summary mismatch");
+  assert(postBaselineDelta?.preservation?.checksumIsBackup === false && postBaselineDelta?.preservation?.backupVerified === false && postBaselineDelta?.preservation?.archiveUploaded === false && postBaselineDelta?.preservation?.lfsConfiguredOrUploaded === false, "Post-baseline delta must not claim external preservation");
+  assert(postBaselineDelta?.preservation?.originalsDeleted === false && postBaselineDelta?.preservation?.originalsMoved === false && postBaselineDelta?.preservation?.originalsRenamed === false && postBaselineDelta?.preservation?.originalsRewritten === false, "Post-baseline delta originals must remain untouched");
+  for (const entry of postBaselineDeltaEntries) {
+    const path = normalize(entry.path);
+    assert(path.startsWith(`${normalize(postBaselineDelta.scope.root)}/`), `Post-baseline delta path is outside its exact root: ${path}`);
+    assert(!originalPostBaselineByPath.has(path), `Post-baseline delta path already exists in the immutable predecessor: ${path}`);
+    assert(existsSync(absolute(path)), `Post-baseline delta file is missing: ${path}`);
+    if (existsSync(absolute(path))) assert(statSync(absolute(path)).size === entry.bytes && fileHash(path) === entry.sha256, `Post-baseline delta file identity drifted: ${path}`);
+    assert(classify(path, policy)?.id === entry.classificationRuleId && entry.classificationRuleId === postBaselineDelta.classification.id, `Post-baseline delta classification drifted: ${path}`);
+  }
+
+  assert(postBaselineMasteredDelta?.schemaVersion === 1, `${postBaselineMasteredDeltaPath} must use schemaVersion 1`);
+  assert(postBaselineMasteredDelta?.kind === "post-baseline-asset-intake-delta", `${postBaselineMasteredDeltaPath} kind mismatch`);
+  assert(postBaselineMasteredDelta?.hashAlgorithm === "sha256", `${postBaselineMasteredDeltaPath} must use SHA-256`);
+  assert(postBaselineMasteredDelta?.baselineCommit === postBaselineIntake?.baselineCommit, `${postBaselineMasteredDeltaPath} baseline commit mismatch`);
+  assert(Boolean(postBaselineMasteredDeltaPolicy), `Asset policy must declare ${postBaselineMasteredDeltaPath}`);
+  assert(postBaselineMasteredDelta?.predecessor?.record === postBaselineDeltaPath && postBaselineMasteredDelta?.predecessor?.immutable === true, "Mastered/runtime delta must preserve the immutable 95-file predecessor");
+  assert(fileHash(postBaselineIntakePath) === "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6", "Immutable original 75-file intake record drifted");
+  assert(fileHash(postBaselineDeltaPath) === "32dada5d7a6a3c075ed29939ca4bab0b8e1db87d773a1265429c2463311c1a23", "Immutable 75-to-95 intake delta record drifted");
+  assert(postBaselineMasteredDelta?.predecessor?.recordSha256 === fileHash(postBaselineDeltaPath), "Mastered/runtime predecessor record identity drifted");
+  assert(postBaselineMasteredDelta?.predecessor?.fileCount === postBaselineDelta?.resultingGovernedRoots?.fileCount && postBaselineMasteredDelta?.predecessor?.bytes === postBaselineDelta?.resultingGovernedRoots?.bytes && postBaselineMasteredDelta?.predecessor?.aggregateSha256 === postBaselineDelta?.resultingGovernedRoots?.aggregateSha256, "Mastered/runtime predecessor scope mismatch");
+  assert(postBaselineMasteredDelta?.predecessor?.rehashPasses === 2 && postBaselineMasteredDelta?.predecessor?.missingFiles === 0 && postBaselineMasteredDelta?.predecessor?.driftedFiles === 0, "Mastered/runtime predecessor rehash proof is incomplete");
+  assert(postBaselineMasteredDelta?.appendOnlyHistory?.original75?.record === postBaselineIntakePath && postBaselineMasteredDelta?.appendOnlyHistory?.original75?.recordSha256 === fileHash(postBaselineIntakePath) && postBaselineMasteredDelta?.appendOnlyHistory?.original75?.immutable === true, "Mastered/runtime delta original-75 history chain drifted");
+  assert(postBaselineMasteredDelta?.appendOnlyHistory?.sourceAddition20?.record === postBaselineDeltaPath && postBaselineMasteredDelta?.appendOnlyHistory?.sourceAddition20?.recordSha256 === fileHash(postBaselineDeltaPath) && postBaselineMasteredDelta?.appendOnlyHistory?.sourceAddition20?.immutable === true, "Mastered/runtime delta source-20 history chain drifted");
+  assert(postBaselineMasteredDelta?.appendOnlyHistory?.original75?.fileCount === 75 && postBaselineMasteredDelta?.appendOnlyHistory?.original75?.bytes === 418860110 && postBaselineMasteredDelta?.appendOnlyHistory?.original75?.aggregateSha256 === "b0e16debbb690987ad84c168a3b84f8986f98263d44b4ff6c1502e872e9152a4", "Mastered/runtime delta original-75 summary drifted");
+  assert(postBaselineMasteredDelta?.appendOnlyHistory?.sourceAddition20?.fileCount === 20 && postBaselineMasteredDelta?.appendOnlyHistory?.sourceAddition20?.bytes === 7681560 && postBaselineMasteredDelta?.appendOnlyHistory?.sourceAddition20?.aggregateSha256 === "0691600367d637c1da18aee7bdcd17f4ebf79ce10b5a15674cf3d1af14a1180b", "Mastered/runtime delta source-20 summary drifted");
+  assert(postBaselineMasteredEntries.length === postBaselineMasteredByPath.size && postBaselineByPath.size === postBaselineEntries.length, `${postBaselineMasteredDeltaPath} contains duplicate or predecessor-overlapping paths`);
+  assert(postBaselineMasteredDelta?.scope?.additionFileCount === postBaselineMasteredEntries.length && postBaselineMasteredEntries.length === 30, `${postBaselineMasteredDeltaPath} file count mismatch`);
+  assert(postBaselineMasteredDelta?.scope?.additionBytes === postBaselineMasteredEntries.reduce((sum, entry) => sum + entry.bytes, 0) && postBaselineMasteredDelta?.scope?.additionBytes === 22135008, `${postBaselineMasteredDeltaPath} byte total mismatch`);
+  assert(postBaselineMasteredDelta?.scope?.additionAggregateSha256 === aggregate(postBaselineMasteredEntries) && postBaselineMasteredDelta?.scope?.additionAggregateSha256 === "de71338c2fb05e78a16eb0c7adb727c00f48756a06ba77201f3031215f9ca49f", `${postBaselineMasteredDeltaPath} aggregate hash mismatch`);
+  assert(postBaselineMasteredDelta?.scope?.rehashPasses === 2 && postBaselineMasteredDelta?.scope?.manifestMasterCount === 30 && postBaselineMasteredDelta?.scope?.manifestIdentityMismatches === 0 && postBaselineMasteredDelta?.scope?.unexpectedNewAudioFiles === 0 && postBaselineMasteredDelta?.scope?.missingMasterFiles === 0, "Mastered/runtime delta stability and exact-set proof is incomplete");
+  assert(postBaselineMasteredDelta?.resultingGovernedSet?.fileCount === postBaselineEntries.length && postBaselineEntries.length === 125, "Mastered/runtime resulting file count mismatch");
+  assert(postBaselineMasteredDelta?.resultingGovernedSet?.bytes === postBaselineEntries.reduce((sum, entry) => sum + entry.bytes, 0) && postBaselineMasteredDelta?.resultingGovernedSet?.bytes === 448676678, "Mastered/runtime resulting byte total mismatch");
+  assert(postBaselineMasteredDelta?.resultingGovernedSet?.aggregateSha256 === aggregate(postBaselineEntries) && postBaselineMasteredDelta?.resultingGovernedSet?.aggregateSha256 === "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b", "Mastered/runtime resulting aggregate mismatch");
+  assert(postBaselineMasteredDelta?.resultingGovernedSet?.unexpectedFiles === 0 && postBaselineMasteredDelta?.resultingGovernedSet?.missingFiles === 0, "Mastered/runtime resulting exact-set proof is incomplete");
+  assert(postBaselineMasteredDeltaPolicy?.kind === "checksum-bound-addition" && postBaselineMasteredDeltaPolicy?.predecessor === postBaselineDeltaPath && postBaselineMasteredDeltaPolicy?.selection === "exact-current-audio-manifest-masterCandidate-files", "Mastered/runtime delta policy contract mismatch");
+  assert(postBaselineMasteredDeltaPolicy?.fileCount === 30 && postBaselineMasteredDeltaPolicy?.bytes === 22135008 && postBaselineMasteredDeltaPolicy?.aggregateSha256 === "de71338c2fb05e78a16eb0c7adb727c00f48756a06ba77201f3031215f9ca49f", "Mastered/runtime delta policy identity mismatch");
+  assert(postBaselineMasteredDeltaPolicy?.resultingFileCount === 125 && postBaselineMasteredDeltaPolicy?.resultingBytes === 448676678 && postBaselineMasteredDeltaPolicy?.resultingAggregateSha256 === "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b", "Mastered/runtime delta policy resulting-set mismatch");
+  assert(postBaselineMasteredDeltaPolicy?.runtimeImportedFileCount === 21 && postBaselineMasteredDeltaPolicy?.unwiredCandidateFileCount === 9, "Mastered/runtime delta policy split mismatch");
+
+  const masteredClassifications = new Map((postBaselineMasteredDelta?.classifications ?? []).map((entry) => [entry.id, entry]));
+  const runtimeMasteredEntries = postBaselineMasteredEntries.filter((entry) => entry.classificationRuleId === "postbaseline-audio-runtime-normal-git");
+  const unwiredMasteredEntries = postBaselineMasteredEntries.filter((entry) => entry.classificationRuleId === "postbaseline-audio-master-preservation-pending");
+  const runtimeMasteredSummary = masteredClassifications.get("postbaseline-audio-runtime-normal-git");
+  const unwiredMasteredSummary = masteredClassifications.get("postbaseline-audio-master-preservation-pending");
+  assert(masteredClassifications.size === 2, "Mastered/runtime delta must contain exactly two classification summaries");
+  assert(runtimeMasteredEntries.length === 21 && runtimeMasteredSummary?.tier === "normal-git" && runtimeMasteredSummary?.status === "existing-runtime-routing-only-awaiting-Mark-audible-review", "Mastered/runtime normal-Git split mismatch");
+  assert(runtimeMasteredSummary?.fileCount === 21 && runtimeMasteredSummary?.bytes === 19077012 && runtimeMasteredSummary?.aggregateSha256 === aggregate(runtimeMasteredEntries) && runtimeMasteredSummary?.aggregateSha256 === "f9c24038361d8efa9841dc5017f8b694e4e6a20c7c01224b596b499240fa63c1", "Mastered/runtime normal-Git identity mismatch");
+  assert(unwiredMasteredEntries.length === 9 && unwiredMasteredSummary?.tier === "cold-archive-pending" && unwiredMasteredSummary?.status === "unapproved-preservation-pending", "Mastered/unwired candidate split mismatch");
+  assert(unwiredMasteredSummary?.fileCount === 9 && unwiredMasteredSummary?.bytes === 3057996 && unwiredMasteredSummary?.aggregateSha256 === aggregate(unwiredMasteredEntries) && unwiredMasteredSummary?.aggregateSha256 === "ad3e5d2ab87f0c66f018ed51e6b4f8cfe64bb3353ae41849a1e31e255c48185c", "Mastered/unwired candidate identity mismatch");
+  assert(postBaselineMasteredDelta?.preservation?.checksumIsBackup === false && postBaselineMasteredDelta?.preservation?.backupVerified === false && postBaselineMasteredDelta?.preservation?.archiveUploaded === false && postBaselineMasteredDelta?.preservation?.lfsConfiguredOrUploaded === false, "Mastered/runtime delta must not claim external preservation");
+  assert(postBaselineMasteredDelta?.preservation?.originalsDeleted === false && postBaselineMasteredDelta?.preservation?.originalsMoved === false && postBaselineMasteredDelta?.preservation?.originalsRenamed === false && postBaselineMasteredDelta?.preservation?.originalsRewritten === false, "Mastered/runtime originals must remain untouched");
+
+  const audioManifestPath = "assets/audio/v1/audio-manifest.v1.json";
+  const audioManifestForMasteredDelta = JSON.parse(readFileSync(absolute(audioManifestPath), "utf8"));
+  const manifestMasterByPath = new Map((audioManifestForMasteredDelta.assets ?? []).map((asset) => [normalize(posix.join("assets/audio/v1", asset.masterCandidate?.file ?? "")), asset]));
+  assert(audioManifestForMasteredDelta.releaseStatus === "planned", "Audio manifest release status must remain planned");
+  assert(manifestMasterByPath.size === 30, "Audio manifest must contain exactly 30 unique master candidates");
+  const appMasteredReferences = runtimeAssetReferences().filter((reference) => reference.source === "App.tsx" && postBaselineMasteredByPath.has(reference.resolved));
+  const appMasteredPaths = new Set(appMasteredReferences.map((reference) => reference.resolved));
+  assert(appMasteredReferences.length === 21 && appMasteredPaths.size === 21, "Frozen App must import exactly 21 unique mastered/runtime WAVs");
+  const capturedAssetPaths = new Set((inventory.scopes?.assets?.files ?? []).map((entry) => normalize(entry.path)));
+  const currentNewAudioWavs = walk("assets/audio/v1").filter((path) => path.endsWith(".wav") && !capturedAssetPaths.has(path) && !postBaselineSourceByPath.has(path));
+  assert(currentNewAudioWavs.length === 30 && currentNewAudioWavs.every((path) => postBaselineMasteredByPath.has(path)), "Unexpected post-inventory Audio V1 WAV addition outside the exact mastered/runtime delta");
+  for (const path of postBaselineMasteredByPath.keys()) assert(currentNewAudioWavs.includes(path), `Missing mastered/runtime WAV from current exact set: ${path}`);
+  for (const entry of postBaselineMasteredEntries) {
+    const path = normalize(entry.path);
+    assert(!postBaselineSourceByPath.has(path), `Mastered/runtime delta path overlaps the immutable 95-file predecessor: ${path}`);
+    assert(existsSync(absolute(path)), `Mastered/runtime delta file is missing: ${path}`);
+    if (existsSync(absolute(path))) {
+      assert(statSync(absolute(path)).size === entry.bytes && fileHash(path) === entry.sha256, `Mastered/runtime delta file identity drifted: ${path}`);
+      assert(Math.abs(statSync(absolute(path)).mtimeMs - new Date(entry.lastWriteTimeUtc).getTime()) < 1, `Mastered/runtime delta file mtime drifted: ${path}`);
+    }
+    const manifestAsset = manifestMasterByPath.get(path);
+    assert(Boolean(manifestAsset) && manifestAsset?.id === entry.assetId, `Audio manifest master mapping mismatch: ${path}`);
+    assert(manifestAsset?.masterCandidate?.reviewStatus === "awaiting-Mark-audible-review" && entry.manifestReviewStatus === "awaiting-Mark-audible-review", `Audio master review status drifted: ${path}`);
+    const masteredRule = classify(path, policy);
+    assert(masteredRule?.id === entry.classificationRuleId, `Mastered/runtime classification drifted: ${path}`);
+    assert(entry.appImported === appMasteredPaths.has(path), `Mastered/runtime App-import flag drifted: ${path}`);
+    if (entry.appImported) assert(entry.classificationRuleId === "postbaseline-audio-runtime-normal-git" && masteredRule?.tier === "normal-git", `App-imported master is not routed to normal Git: ${path}`);
+    else assert(entry.classificationRuleId === "postbaseline-audio-master-preservation-pending" && masteredRule?.tier === "cold-archive-pending", `Unwired master is not preservation-pending: ${path}`);
+  }
+
+  const deltaRuntimePolicyEntries = (policy.runtimeImports ?? []).filter((entry) => postBaselineMasteredByPath.has(normalize(entry.path)));
+  const deltaRuntimePolicyByPath = new Map(deltaRuntimePolicyEntries.map((entry) => [normalize(entry.path), entry]));
+  assert(deltaRuntimePolicyEntries.length === 21 && deltaRuntimePolicyByPath.size === 21, "Asset policy must declare exactly the 21 existing mastered/runtime App imports");
+  for (const entry of runtimeMasteredEntries) {
+    const declared = deltaRuntimePolicyByPath.get(normalize(entry.path));
+    assert(Boolean(declared), `Missing mastered/runtime policy declaration: ${entry.path}`);
+    assert(declared?.maxBytes === entry.bytes && declared?.sha256 === entry.sha256 && declared?.reviewStatus === "awaiting-Mark-audible-review", `Mastered/runtime policy identity or review status drifted: ${entry.path}`);
+  }
+  for (const entry of unwiredMasteredEntries) assert(!deltaRuntimePolicyByPath.has(normalize(entry.path)), `Unwired candidate must not be declared as a runtime import: ${entry.path}`);
+
+  const expectedMasteredContextStates = new Map([
+    ["App.tsx", "tracked-modified"],
+    ["assets/audio/v1/audio-manifest.v1.json", "tracked-modified"],
+    ["docs/audio/AUDIO_LICENSE_LEDGER.v1.md", "tracked-modified"],
+    ["src/audio-cue-policy.test.ts", "tracked-modified"],
+    ["scripts/verify-audio-v1.mjs", "untracked"],
+    ["scripts/verify-export.mjs", "tracked-modified"],
+    ["scripts/master-audio-v1.mjs", "untracked"],
+    ["scripts/master-audio-music-v1.mjs", "untracked"],
+    ["scripts/record-audio-source-evidence-v1.mjs", "untracked"],
+  ]);
+  const masteredContext = postBaselineMasteredDelta?.managedContext ?? [];
+  const masteredContextByPath = new Map(masteredContext.map((entry) => [normalize(entry.path), entry]));
+  const masteredTrackedModified = new Set(gitPaths(["ls-files", "--modified", "-z", "--", ...expectedMasteredContextStates.keys()]));
+  const masteredUntracked = new Set(gitPaths(["ls-files", "--others", "--exclude-standard", "-z", "--", ...expectedMasteredContextStates.keys()]));
+  assert(masteredContext.length === 9 && masteredContextByPath.size === expectedMasteredContextStates.size, "Mastered/runtime delta must bind exactly nine managed-context files");
+  for (const [path, expectedState] of expectedMasteredContextStates) {
+    const entry = masteredContextByPath.get(path);
+    assert(Boolean(entry), `Mastered/runtime managed context is missing: ${path}`);
+    assert(entry?.gitState === expectedState && entry?.editedByThisMilestone === false, `Mastered/runtime managed context state mismatch: ${path}`);
+    if (expectedState === "tracked-modified") assert(masteredTrackedModified.has(path), `Mastered/runtime context is no longer tracked-modified: ${path}`);
+    else assert(masteredUntracked.has(path), `Mastered/runtime context is no longer untracked: ${path}`);
+    assert(existsSync(absolute(path)), `Mastered/runtime managed context file is missing: ${path}`);
+    const authorizedTransition = v4ManagedContextTransitionByPath.get(path);
+    if (authorizedTransition) {
+      assert(path === "App.tsx", `Unexpected V4 transition inside mastered/runtime managed context: ${path}`);
+      assert(entry?.bytes === authorizedTransition.prior.bytes && entry?.sha256 === authorizedTransition.prior.sha256 && entry?.lastWriteTimeUtc === authorizedTransition.prior.lastWriteTimeUtc, `Mastered/runtime immutable prior context drifted: ${path}`);
+      const successor = initialJournalAmbiguityTransitionByPath.get(path);
+      assert(Boolean(successor) && successor?.prior?.bytes === authorizedTransition.current.bytes && successor?.prior?.sha256 === authorizedTransition.current.sha256 && successor?.prior?.lastWriteTimeUtc === authorizedTransition.current.lastWriteTimeUtc, `Mastered/runtime authorized successor chain drifted: ${path}`);
+      if (existsSync(absolute(path))) {
+        assert(statSync(absolute(path)).size === successor?.current?.bytes && fileHash(path) === successor?.current?.sha256, `Mastered/runtime authorized current identity drifted: ${path}`);
+        assert(Math.abs(statSync(absolute(path)).mtimeMs - new Date(successor?.current?.lastWriteTimeUtc).getTime()) < 1, `Mastered/runtime authorized current mtime drifted: ${path}`);
+      }
+    } else if (existsSync(absolute(path))) {
+      assert(statSync(absolute(path)).size === entry?.bytes && fileHash(path) === entry?.sha256, `Mastered/runtime managed context identity drifted: ${path}`);
+      assert(Math.abs(statSync(absolute(path)).mtimeMs - new Date(entry?.lastWriteTimeUtc).getTime()) < 1, `Mastered/runtime managed context mtime drifted: ${path}`);
+    }
+  }
+  const frozenV4Expected = new Map([
+    ["App.tsx", "8db9fb4de855a4bf632df0c599a4075badcd9ab480ac1831815821a39a49994f"],
+    ["src/persistence.ts", "5d448dad68e5fecda993bff898df6af03bcee05e246d3ff8b067648de8aee8d2"],
+    ["src/persistence.test.ts", "fe62003127c9173a6224fb178f11da56cdde3cd46c62b7343e75ce51cc4e2e86"],
+  ]);
+  const frozenV4 = postBaselineMasteredDelta?.frozenV4 ?? [];
+  const frozenV4ByPath = new Map(frozenV4.map((entry) => [normalize(entry.path), entry]));
+  assert(frozenV4.length === 3 && frozenV4ByPath.size === frozenV4Expected.size, "Mastered/runtime delta frozen V4 set mismatch");
+  for (const [path, expectedSha256] of frozenV4Expected) {
+    const entry = frozenV4ByPath.get(path);
+    assert(Boolean(entry) && entry?.sha256 === expectedSha256, `Frozen V4 record identity mismatch: ${path}`);
+    const authorizedTransition = v4ManagedContextTransitionByPath.get(path);
+    assert(Boolean(authorizedTransition) && authorizedTransition?.prior?.bytes === entry?.bytes && authorizedTransition?.prior?.sha256 === expectedSha256, `Frozen V4 authorized history chain drifted: ${path}`);
+    const successor = initialJournalAmbiguityTransitionByPath.get(path);
+    assert(Boolean(successor) && successor?.prior?.bytes === authorizedTransition?.current?.bytes && successor?.prior?.sha256 === authorizedTransition?.current?.sha256 && successor?.prior?.lastWriteTimeUtc === authorizedTransition?.current?.lastWriteTimeUtc, `Frozen V4 authorized successor chain drifted: ${path}`);
+    assert(existsSync(absolute(path)) && statSync(absolute(path)).size === successor?.current?.bytes && fileHash(path) === successor?.current?.sha256, `Frozen V4 authorized current identity drifted: ${path}`);
+  }
+
+  const currentPostBaseline = recordFiles(postBaselineRoots.flatMap((rootPath) => walk(rootPath)));
+  assert(currentPostBaseline.length === currentPostBaselineSourceEntries.length, `Unexpected post-baseline source/research file count: expected ${currentPostBaselineSourceEntries.length}, found ${currentPostBaseline.length}`);
+  assert(currentPostBaseline.reduce((sum, entry) => sum + entry.bytes, 0) === 426541664, "Post-baseline current byte total drifted after exact EOF normalization");
+  assert(aggregate(currentPostBaseline) === "b1eefc1819b746995e951e651b4629972eb9c34123b8d914006a298b825ffc31", "Post-baseline current aggregate hash drifted after exact EOF normalization");
+  for (const current of currentPostBaseline) assert(postBaselineSourcePaths.has(current.path), `Unexpected file inside post-baseline source/research roots: ${current.path}`);
+
+  const intakeGroupById = new Map((postBaselineIntake?.classificationGroups ?? []).map((group) => [group.id, group]));
+  for (const group of intakeGroupById.values()) {
+    const members = originalPostBaselineEntries.filter((entry) => entry.classificationRuleId === group.id);
+    assert(group.fileCount === members.length, `Post-baseline classification group count mismatch: ${group.id}`);
+    assert(group.bytes === members.reduce((sum, entry) => sum + entry.bytes, 0), `Post-baseline classification group byte mismatch: ${group.id}`);
+    const policyRule = policy.classificationRules.find((rule) => rule.id === group.id);
+    assert(policyRule?.tier === group.tier, `Post-baseline policy tier mismatch: ${group.id}`);
+  }
+  for (const entry of originalPostBaselineEntries) assert(intakeGroupById.has(entry.classificationRuleId), `Post-baseline file references a missing group: ${entry.path}`);
+  assert(postBaselineIntake?.preservation?.checksumIsBackup === false && postBaselineIntake?.preservation?.backupVerified === false, "Post-baseline checksum must not be represented as a backup");
+  assert(postBaselineIntake?.preservation?.archiveUploaded === false && postBaselineIntake?.preservation?.lfsConfiguredOrUploaded === false, "Post-baseline external preservation must remain pending");
+  assert(postBaselineIntake?.preservation?.originalsDeleted === false && postBaselineIntake?.preservation?.originalsMoved === false && postBaselineIntake?.preservation?.originalsRenamed === false && postBaselineIntake?.preservation?.originalsRewritten === false, "Post-baseline originals must remain untouched");
+  assert(postBaselineIntake?.creativeStatus?.acceptedOrLockedByMark === false, "Post-baseline intake must not claim subjective acceptance");
+  assert(postBaselineIntake?.creativeStatus?.v3Research === "rejected-as-beta-replacement", "Jack V3 must remain rejected as the beta/runtime replacement");
+  assert(postBaselineIntake?.creativeStatus?.v4CandidatesBAndC === "rejected", "Jack V4 Candidates B/C rejection status drifted");
+  assert(postBaselineIntake?.creativeStatus?.v4CandidateD === "exploratory-pending-mark-likeness-review", "Jack V4 Candidate D must remain exploratory and unapproved");
+  assert(postBaselineIntake?.creativeStatus?.v4CandidateDRigBound === false && postBaselineIntake?.creativeStatus?.v4CandidateDRuntimeCandidate === false, "Jack V4 Candidate D must remain unrigged and non-runtime");
+  assert(postBaselineIntake?.provenance?.v3Donor?.license === "CC-BY-3.0" && Boolean(postBaselineIntake?.provenance?.v3Donor?.requiredAttribution), "V3 donor CC BY 3.0 attribution record is incomplete");
+  assert(postBaselineIntake?.provenance?.v3Donor?.licenseTextPresentInIntakeRoots === false && postBaselineIntake?.provenance?.v3Donor?.distributionAllowedBeforeLicenseAndAttributionDecision === false, "V3 donor distribution must remain blocked pending license/attribution packaging");
+  const v4Provenance = postBaselineIntake?.provenance?.v4ProjectResearch;
+  assert(v4Provenance?.privateReferenceCount === 10 && v4Provenance?.privateReferencesCopiedEmbeddedOrUploaded === false, "V4 private-reference protection record is incomplete");
+  assert(v4Provenance?.newThirdPartyAssetUsed === false && v4Provenance?.candidateDStatus === "unapproved-unrigged-static-review-candidate", "V4 provenance/status record is incomplete");
+  const v4CandidateDReportPath = "evidence/3d-jack/v4/jack-adult-v4-candidate-d-report.json";
+  if (existsSync(absolute(v4CandidateDReportPath))) {
+    const candidateDReport = JSON.parse(readFileSync(absolute(v4CandidateDReportPath), "utf8"));
+    assert(candidateDReport.status === "exploratory-pending-mark-likeness-review", "V4 Candidate D report must remain exploratory and pending Mark review");
+    assert(candidateDReport.rigBound === false && candidateDReport.runtimeCandidate === false && candidateDReport.animationCount === 0, "V4 Candidate D report must remain unrigged, static, and non-runtime");
+    assert(candidateDReport.privateReferencesEmbedded === false, "V4 Candidate D must not embed private references");
+  }
+  const audioProvenance = postBaselineIntake?.provenance?.elevenLabsCandidates;
+  const expectedDeltaContextPaths = new Set([
+    "assets/audio/v1/audio-manifest.v1.json",
+    "docs/audio/AUDIO_LICENSE_LEDGER.v1.md",
+    "src/audio-cue-policy.test.ts",
+  ]);
+  const changedManagedContext = postBaselineDelta?.changedManagedContext ?? [];
+  const changedManagedContextByPath = new Map(changedManagedContext.map((entry) => [normalize(entry.path), entry]));
+  const originalCollisionContextByPath = new Map((postBaselineIntake?.managedCollisionContext ?? []).map((entry) => [normalize(entry.path), entry]));
+  assert(changedManagedContext.length === expectedDeltaContextPaths.size && changedManagedContextByPath.size === expectedDeltaContextPaths.size, "Post-baseline delta must bind exactly three changed managed context files");
+  for (const path of expectedDeltaContextPaths) {
+    const entry = changedManagedContextByPath.get(path);
+    const prior = originalCollisionContextByPath.get(path);
+    assert(Boolean(entry && prior), `Post-baseline delta managed context chain is incomplete: ${path}`);
+    assert(entry?.priorAcceptedBytes === prior?.bytes && entry?.priorAcceptedSha256 === prior?.sha256, `Post-baseline delta prior managed identity mismatch: ${path}`);
+    assert(entry?.kind === "historical-handoff-context" && entry?.gitState === "tracked-modified" && entry?.editedByThisMilestone === false, `Post-baseline delta managed handoff contract mismatch: ${path}`);
+    assert(existsSync(absolute(path)), `Post-baseline delta managed context is missing: ${path}`);
+    if (existsSync(absolute(path))) assert(statSync(absolute(path)).size === entry?.currentBytes && fileHash(path) === entry?.currentSha256, `Post-baseline delta managed context identity drifted: ${path}`);
+    if (path === "assets/audio/v1/audio-manifest.v1.json") assert(entry?.jsonValid === true && entry?.gatePromotion === "exact-second-refresh-mapping-only", "Audio manifest delta context must be exact, JSON-valid, and refresh-only");
+    else assert(entry?.gatePromotion === "none-context-only", `Managed delta context must not promote gate status: ${path}`);
+  }
+  for (const record of [postBaselineIntake?.creativeStatus?.authoritativeRecord, postBaselineIntake?.provenance?.v3Donor?.record, v4Provenance?.sourceLedger, v4Provenance?.likenessSpec, audioProvenance?.licenseRecord, audioProvenance?.manifest]) {
+    assert(Boolean(record && existsSync(absolute(record))), `Missing post-baseline provenance record: ${record ?? "undefined"}`);
+  }
+  if (existsSync(absolute(postBaselineIntake?.creativeStatus?.authoritativeRecord ?? ""))) assert(fileHash(postBaselineIntake.creativeStatus.authoritativeRecord) === postBaselineIntake.creativeStatus.authoritativeRecordSha256, "Post-baseline creative authority record drifted");
+  if (existsSync(absolute(postBaselineIntake?.provenance?.v3Donor?.record ?? ""))) {
+    const successor = candidateEofTransitionByPath.get(normalize(postBaselineIntake.provenance.v3Donor.record));
+    assert(successor?.prior?.sha256 === postBaselineIntake.provenance.v3Donor.recordSha256 && fileHash(postBaselineIntake.provenance.v3Donor.record) === successor?.current?.sha256, "Post-baseline V3 provenance successor chain drifted");
+  }
+  if (existsSync(absolute(v4Provenance?.sourceLedger ?? ""))) {
+    const successor = candidateEofTransitionByPath.get(normalize(v4Provenance.sourceLedger));
+    assert(successor?.prior?.sha256 === v4Provenance.sourceLedgerSha256 && fileHash(v4Provenance.sourceLedger) === successor?.current?.sha256, "Post-baseline V4 source-ledger successor chain drifted");
+  }
+  if (existsSync(absolute(v4Provenance?.likenessSpec ?? ""))) {
+    const successor = candidateEofTransitionByPath.get(normalize(v4Provenance.likenessSpec));
+    assert(successor?.prior?.sha256 === v4Provenance.likenessSpecSha256 && fileHash(v4Provenance.likenessSpec) === successor?.current?.sha256, "Post-baseline V4 likeness-specification successor chain drifted");
+  }
+  const audioLicenseDeltaContext = changedManagedContextByPath.get(normalize(audioProvenance?.licenseRecord ?? ""));
+  const audioManifestDeltaContext = changedManagedContextByPath.get(normalize(audioProvenance?.manifest ?? ""));
+  assert(audioLicenseDeltaContext?.priorAcceptedSha256 === audioProvenance?.licenseRecordSha256, "Post-baseline audio license history chain drifted");
+  assert(audioManifestDeltaContext?.priorAcceptedSha256 === audioProvenance?.manifestSha256, "Post-baseline audio manifest history chain drifted");
+  assert(audioProvenance?.generationBatchCount === 23 && audioProvenance?.generatedCandidateCount === 92, "Post-baseline ElevenLabs generation totals must remain 23 batches / 92 candidates");
+  assert(audioProvenance?.locallyDownloadedRawCount === 2 && audioProvenance?.downloaded?.length === 2 && audioProvenance?.remainingDownloadsPending === true, "Post-baseline ElevenLabs download status mismatch");
+  assert(audioProvenance?.runtimeOrMastered === false, "Raw ElevenLabs candidates must not be promoted to runtime/mastered status");
+  if (existsSync(absolute(audioProvenance?.manifest ?? ""))) {
+    const audioManifest = JSON.parse(readFileSync(absolute(audioProvenance.manifest), "utf8"));
+    assert(audioManifest.schemaVersion === 1, "Post-baseline audio manifest schema mismatch");
+    for (const candidate of audioProvenance.downloaded ?? []) {
+      const intakeEntry = postBaselineByPath.get(normalize(candidate.path));
+      assert(Boolean(intakeEntry), `Downloaded ElevenLabs candidate is absent from the intake: ${candidate.path}`);
+      if (intakeEntry) assert(intakeEntry.bytes === candidate.bytes && intakeEntry.sha256 === candidate.sha256, `Downloaded ElevenLabs intake identity mismatch: ${candidate.path}`);
+      assert(classify(normalize(candidate.path), policy)?.tier === "cold-archive-pending", `Downloaded ElevenLabs candidate must remain preservation-pending: ${candidate.path}`);
+      const asset = audioManifest.assets?.find((entry) => entry.id === candidate.assetId);
+      const relativeSource = normalize(candidate.path).replace(/^assets\/audio\/v1\//, "");
+      const sourceCandidate = asset?.sourceCandidates?.find((entry) => normalize(entry.sourceFile) === relativeSource && entry.candidate === candidate.candidate);
+      assert(asset?.generationId === candidate.generationId, `ElevenLabs generation ID mismatch: ${candidate.assetId}`);
+      assert(Boolean(sourceCandidate), `ElevenLabs manifest is missing downloaded candidate: ${candidate.assetId}`);
+      if (sourceCandidate) assert(sourceCandidate.bytes === candidate.bytes && sourceCandidate.sha256.toLowerCase() === candidate.sha256, `ElevenLabs manifest candidate identity mismatch: ${candidate.assetId}`);
+    }
+    for (const candidate of postBaselineDeltaEntries) {
+      const asset = audioManifest.assets?.find((entry) => entry.id === candidate.assetId);
+      const relativeSource = normalize(candidate.path).replace(/^assets\/audio\/v1\//, "");
+      const sourceCandidate = asset?.sourceCandidates?.find((entry) => normalize(entry.sourceFile) === relativeSource && entry.candidate === candidate.candidate);
+      assert(asset?.generationId === candidate.generationId, `Post-baseline delta generation ID mismatch: ${candidate.assetId}`);
+      assert(Boolean(sourceCandidate), `Audio manifest is missing post-baseline delta candidate: ${candidate.assetId}`);
+      if (sourceCandidate) assert(sourceCandidate.bytes === candidate.bytes && sourceCandidate.sha256.toLowerCase() === candidate.sha256, `Audio manifest post-baseline delta identity mismatch: ${candidate.assetId}`);
+    }
+    const localElevenLabsCandidates = audioManifest.assets?.flatMap((asset) => (asset.sourceCandidates ?? [])
+      .filter((entry) => normalize(entry.sourceFile).startsWith("source/elevenlabs/2026-08-16/"))
+      .map((entry) => ({ asset, entry }))) ?? [];
+    assert(localElevenLabsCandidates.length === postBaselineEntries.filter((entry) => normalize(entry.path).startsWith("assets/audio/v1/source/elevenlabs/2026-08-16/")).length, "Audio manifest/current ElevenLabs intake count mismatch");
+  }
+
+  const managedAssetRefreshes = postBaselineIntake?.managedAssetRefreshes ?? [];
+  const originalManagedAssetRefreshByPath = new Map(managedAssetRefreshes.map((entry) => [normalize(entry.path), entry]));
+  const audioManifestRefreshPath = "assets/audio/v1/audio-manifest.v1.json";
+  const audioManifestRefresh = originalManagedAssetRefreshByPath.get(audioManifestRefreshPath);
+  assert(managedAssetRefreshes.length === 1 && originalManagedAssetRefreshByPath.size === 1 && Boolean(audioManifestRefresh), "Post-baseline managed asset refresh must be limited to the audio manifest");
+  assert(audioManifestRefresh?.baselineCommit === "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4", "Audio manifest refresh baseline commit mismatch");
+  assert(audioManifestRefresh?.priorJsonValid === true && audioManifestRefresh?.currentJsonValid === true, "Audio manifest refresh JSON-validity evidence is incomplete");
+  assert(audioManifestRefresh?.tracked === true && audioManifestRefresh?.gitState === "tracked-modified", "Audio manifest refresh must record tracked-modified status");
+  try {
+    const baselineManifest = execFileSync("git", ["show", `${audioManifestRefresh.baselineCommit}:${audioManifestRefreshPath}`], { cwd: root });
+    assert(baselineManifest.length === audioManifestRefresh.priorBytes && sha256(baselineManifest) === audioManifestRefresh.priorSha256, "Audio manifest refresh baseline identity mismatch");
+    JSON.parse(baselineManifest.toString("utf8"));
+  } catch (error) {
+    errors.push(`Audio manifest refresh baseline is not recoverable JSON: ${error.message}`);
+  }
+  assert(audioManifestDeltaContext?.priorAcceptedBytes === audioManifestRefresh?.currentBytes && audioManifestDeltaContext?.priorAcceptedSha256 === audioManifestRefresh?.currentSha256, "Audio manifest second-refresh history chain mismatch");
+  assert(existsSync(absolute(audioManifestRefreshPath)), "Audio manifest refresh current file is missing");
+  if (existsSync(absolute(audioManifestRefreshPath))) {
+    assert(statSync(absolute(audioManifestRefreshPath)).size === audioManifestDeltaContext?.currentBytes && fileHash(audioManifestRefreshPath) === audioManifestDeltaContext?.currentSha256, "Audio manifest second-refresh current identity mismatch");
+    try {
+      JSON.parse(readFileSync(absolute(audioManifestRefreshPath), "utf8"));
+    } catch (error) {
+      errors.push(`Audio manifest refresh current JSON is invalid: ${error.message}`);
+    }
+  }
+  const managedAssetRefreshByPath = new Map([[audioManifestRefreshPath, {
+    priorBytes: audioManifestRefresh?.priorBytes,
+    priorSha256: audioManifestRefresh?.priorSha256,
+    currentBytes: audioManifestDeltaContext?.currentBytes,
+    currentSha256: audioManifestDeltaContext?.currentSha256,
+  }]]);
+
+  const expectedCollisionStates = new Map([
+    ["assets/audio/v1/audio-manifest.v1.json", "tracked-modified"],
+    ["docs/audio/AUDIO_LICENSE_LEDGER.v1.md", "tracked-modified"],
+    ["docs/design/3D_JACK_MODEL_HANDOFF.md", "tracked-modified"],
+    ["package.json", "tracked-modified"],
+    ["src/audio-cue-policy.ts", "tracked-modified"],
+    ["src/audio-cue-policy.test.ts", "tracked-modified"],
+    ["scripts/verify-audio-v1.mjs", "untracked"],
+  ]);
+  const expectedCollisionPaths = new Set(expectedCollisionStates.keys());
+  const managedCollisionContext = postBaselineIntake?.managedCollisionContext ?? [];
+  const collisionByPath = new Map(managedCollisionContext.map((entry) => [normalize(entry.path), entry]));
+  assert(collisionByPath.size === expectedCollisionPaths.size && managedCollisionContext.length === expectedCollisionPaths.size, "Managed collision context must contain exactly seven unique files");
+  const trackedModifiedCollisionPaths = new Set(gitPaths(["ls-files", "--modified", "-z", "--", ...expectedCollisionPaths]));
+  const untrackedCollisionPaths = new Set(gitPaths(["ls-files", "--others", "--exclude-standard", "-z", "--", ...expectedCollisionPaths]));
+  for (const path of expectedCollisionPaths) {
+    const entry = collisionByPath.get(path);
+    const expectedState = expectedCollisionStates.get(path);
+    assert(Boolean(entry), `Managed collision context is missing: ${path}`);
+    assert(entry?.gitState === expectedState, `Managed collision recorded state mismatch: ${path}`);
+    if (expectedState === "tracked-modified") assert(trackedModifiedCollisionPaths.has(path), `Managed collision path is not tracked-modified: ${path}`);
+    else assert(untrackedCollisionPaths.has(path), `Managed collision path is not untracked: ${path}`);
+    assert(existsSync(absolute(path)), `Managed collision path is missing: ${path}`);
+    const masteredLatestContext = masteredContextByPath.get(path);
+    const latestContext = masteredLatestContext ?? changedManagedContextByPath.get(path);
+    const expectedBytes = masteredLatestContext?.bytes ?? latestContext?.currentBytes ?? entry?.bytes;
+    const expectedSha256 = masteredLatestContext?.sha256 ?? latestContext?.currentSha256 ?? entry?.sha256;
+    if (existsSync(absolute(path))) assert(statSync(absolute(path)).size === expectedBytes && fileHash(path) === expectedSha256, `Managed collision identity drifted: ${path}`);
+    if (path === audioManifestRefreshPath) assert(entry?.gatePromotion === "exact-refresh-mapping-only", "Audio manifest collision context must be limited to the exact refresh mapping");
+    else assert(entry?.gatePromotion === "none-context-only", `Managed collision context must not promote gate status: ${path}`);
+  }
 
   for (const [name, captured] of Object.entries(inventory.scopes ?? {})) {
     assert(Array.isArray(captured.files), `Inventory scope ${name} must contain files[]`);
@@ -223,22 +992,32 @@ function verify() {
       if (!found) continue;
       if (found.bytes !== original.bytes || found.sha256 !== original.sha256) {
         const mapped = normalizationByPath.get(original.path);
-        assert(Boolean(mapped), `Captured ${scopeName} file drifted without an approved normalization mapping: ${original.path}`);
+        const refreshed = scopeName === "evidence" ? evidenceRefreshByPath.get(original.path) : null;
+        const managedAssetRefresh = scopeName === "assets" ? managedAssetRefreshByPath.get(original.path) : null;
+        assert(Boolean(mapped || refreshed || managedAssetRefresh), `Captured ${scopeName} file drifted without an approved normalization/refresh mapping: ${original.path}`);
         if (mapped) {
           assert(mapped.rawBytes === original.bytes && mapped.rawSha256 === original.sha256, `Normalization raw identity mismatch: ${original.path}`);
           assert(mapped.normalizedBytes === found.bytes && mapped.normalizedSha256 === found.sha256, `Normalization current identity mismatch: ${original.path}`);
+        } else if (refreshed) {
+          assert(refreshed.priorBytes === original.bytes && refreshed.priorSha256 === original.sha256, `Evidence refresh prior identity mismatch: ${original.path}`);
+          assert(refreshed.currentBytes === found.bytes && refreshed.currentSha256 === found.sha256, `Evidence refresh current identity mismatch: ${original.path}`);
+        } else if (managedAssetRefresh) {
+          assert(managedAssetRefresh.priorBytes === original.bytes && managedAssetRefresh.priorSha256 === original.sha256, `Managed asset refresh prior identity mismatch: ${original.path}`);
+          assert(managedAssetRefresh.currentBytes === found.bytes && managedAssetRefresh.currentSha256 === found.sha256, `Managed asset refresh current identity mismatch: ${original.path}`);
         }
       }
     }
     const capturedPaths = new Set(captured.files.map((file) => file.path));
     const extras = current.files.filter((file) => !capturedPaths.has(file.path));
     if (scopeName === "assets") {
-      const allowedCopies = new Set((policy.canonicalCopies ?? []).map((mapping) => normalize(mapping.copy)));
-      assert(extras.length === allowedCopies.size, `Unexpected post-inventory asset count: expected ${allowedCopies.size}, found ${extras.length}`);
-      for (const extra of extras) assert(allowedCopies.has(extra.path), `Unexpected post-inventory asset: ${extra.path}`);
-      for (const allowed of allowedCopies) assert(extras.some((extra) => extra.path === allowed), `Missing approved canonical copy: ${allowed}`);
+      const allowedAssets = new Set([...(policy.canonicalCopies ?? []).map((mapping) => normalize(mapping.copy)), ...postBaselineAssetPaths]);
+      assert(extras.length === allowedAssets.size, `Unexpected post-inventory asset count: expected ${allowedAssets.size}, found ${extras.length}`);
+      for (const extra of extras) assert(allowedAssets.has(extra.path), `Unexpected post-inventory asset: ${extra.path}`);
+      for (const allowed of allowedAssets) assert(extras.some((extra) => extra.path === allowed), `Missing approved post-inventory asset: ${allowed}`);
     } else {
-      assert(extras.length === 0, `Unexpected post-inventory evidence files: ${extras.map((file) => file.path).join(", ")}`);
+      assert(extras.length === postBaselineEvidencePaths.size, `Unexpected post-inventory evidence count: expected ${postBaselineEvidencePaths.size}, found ${extras.length}`);
+      for (const extra of extras) assert(postBaselineEvidencePaths.has(extra.path), `Unexpected post-inventory evidence file: ${extra.path}`);
+      for (const allowed of postBaselineEvidencePaths) assert(extras.some((extra) => extra.path === allowed), `Missing approved post-inventory evidence: ${allowed}`);
     }
   }
 
@@ -341,19 +1120,30 @@ function verify() {
 
     assert(normalization?.schemaVersion === 1 && normalization?.kind === "baseline-text-raw-to-normalized-mapping", "Missing or invalid baseline text normalization mapping");
     assert(normalization?.memberCount === 21 && normalizationByPath.size === 21, "Baseline text normalization mapping must contain 21 unique entries");
+    assert(policy.baselineTextNormalization?.record === normalizationPath, `Asset policy must point to ${normalizationPath}`);
+    assert(policy.baselineTextNormalization?.memberCount === 21, "Asset policy baseline-text member count must remain 21");
+    assert(normalizationBaselineCommit === "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4", "Asset policy baseline-text commit must remain the recoverable V0.6–V0.8 checkpoint");
     const rawManifestPath = normalize(posix.join(baselineText.stagingRoot, baselineText.manifest.name));
     const rawManifest = JSON.parse(readFileSync(absolute(rawManifestPath), "utf8"));
     const rawByPath = new Map((rawManifest.members ?? []).map((entry) => [normalize(entry.path), entry]));
+    const trackedNormalizationPaths = new Set(gitPaths(["ls-files", "--cached", "-z", "--", ...normalizationByPath.keys()]));
     assert(rawManifest.memberCount === 21 && rawByPath.size === 21, "Baseline text private manifest must contain 21 unique members");
     for (const [path, entry] of normalizationByPath) {
       const raw = rawByPath.get(path);
       assert(Boolean(raw), `Normalization path missing from raw preservation manifest: ${path}`);
       if (raw) assert(raw.bytes === entry.rawBytes && raw.sha256 === entry.rawSha256, `Normalization raw preservation mismatch: ${path}`);
-      assert(existsSync(absolute(path)), `Normalized path is missing: ${path}`);
+      assert(trackedNormalizationPaths.has(path), `Normalized path is no longer tracked: ${path}`);
+      try {
+        const baseline = execFileSync("git", ["show", `${normalizationBaselineCommit}:${path}`], { cwd: root });
+        assert(baseline.length === entry.normalizedBytes && sha256(baseline) === entry.normalizedSha256, `Committed normalized baseline identity mismatch: ${path}`);
+        assert(!baseline.toString("utf8").includes("\r"), `Committed normalized baseline must use LF only: ${path}`);
+      } catch (error) {
+        errors.push(`Committed normalized baseline is not recoverable for ${path}: ${error.message}`);
+      }
+      assert(existsSync(absolute(path)), `Current mapped text path is missing: ${path}`);
       if (existsSync(absolute(path))) {
-        assert(statSync(absolute(path)).size === entry.normalizedBytes && fileHash(path) === entry.normalizedSha256, `Normalized path drifted: ${path}`);
         const text = readFileSync(absolute(path), "utf8");
-        assert(!text.includes("\r"), `Normalized text must use LF only: ${path}`);
+        assert(!text.includes("\r"), `Current mapped text must use LF only: ${path}`);
       }
       assert(Array.isArray(entry.transformations) && entry.transformations.length > 0, `Normalization entry lacks bounded transformations: ${path}`);
     }
@@ -379,6 +1169,7 @@ function verify() {
     if (!existsSync(absolute(runtime.path))) continue;
     const bytes = statSync(absolute(runtime.path)).size;
     assert(bytes <= runtime.maxBytes, `Runtime asset exceeds budget (${bytes} > ${runtime.maxBytes}): ${runtime.path}`);
+    if (runtime.sha256) assert(bytes === runtime.maxBytes && fileHash(runtime.path) === runtime.sha256, `Checksum-bound runtime asset identity drifted: ${runtime.path}`);
     assert(!isLfsPointer(runtime.path), `Runtime asset is an unexpected LFS pointer: ${runtime.path}`);
     const rule = classify(runtime.path, policy);
     assert(rule?.tier === "normal-git", `Runtime asset must remain normal Git: ${runtime.path}`);
@@ -417,6 +1208,10 @@ function verify() {
     const rule = classify(file, policy);
     assert(rule?.tier === "normal-git" || isLfsPointer(file), `Tracked asset/evidence file conflicts with its non-Git disposition (${rule?.tier ?? "unclassified"}): ${file}`);
   }
+  for (const entry of postBaselineEntries) {
+    const tier = classify(normalize(entry.path), policy)?.tier;
+    if (tier === "cold-archive-pending") assert(!trackedAssetPaths.has(normalize(entry.path)), `Preservation-pending post-baseline file must remain untracked: ${entry.path}`);
+  }
 
   for (const set of policy.representativeEvidenceSets ?? []) {
     assert(set.paths.length <= set.maxFiles, `Evidence-retention limit exceeded for ${set.id}: ${set.paths.length} > ${set.maxFiles}`);
@@ -444,6 +1239,17 @@ function verify() {
     sourceInventoryEvidenceSha256: inventory.scopes.evidence.aggregateSha256,
     groups: [...groups.values()],
   };
+  if (!process.argv.includes("--write-classification") && existsSync(absolute(classificationPath))) {
+    try {
+      const recorded = JSON.parse(readFileSync(absolute(classificationPath), "utf8"));
+      assert(recorded.sourceInventory === classification.sourceInventory, `${classificationPath} source inventory mismatch`);
+      assert(recorded.sourceInventoryAssetsSha256 === classification.sourceInventoryAssetsSha256, `${classificationPath} asset anchor mismatch`);
+      assert(recorded.sourceInventoryEvidenceSha256 === classification.sourceInventoryEvidenceSha256, `${classificationPath} evidence anchor mismatch`);
+      assert(JSON.stringify(recorded.groups) === JSON.stringify(classification.groups), `${classificationPath} does not match the deterministic current classification`);
+    } catch (error) {
+      errors.push(`Invalid current classification ${classificationPath}: ${error.message}`);
+    }
+  }
   if (process.argv.includes("--write-classification")) {
     writeFileSync(absolute(classificationPath), `${JSON.stringify(classification, null, 2)}\n`, "utf8");
     console.log(`Wrote ${classificationPath}`);

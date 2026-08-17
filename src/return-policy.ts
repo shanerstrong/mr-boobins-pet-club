@@ -38,9 +38,7 @@ export function getReturnSummary({
     return null;
   }
 
-  if (after.isDead) {
-    return before.isDead ? null : "While you were away, Jack’s story ended.";
-  }
+  if (after.isDead) return null;
 
   if (after.sleepUntilVirtualMinutes !== null) {
     return "Welcome back! Jack is still resting. You can let him sleep or wake him gently.";

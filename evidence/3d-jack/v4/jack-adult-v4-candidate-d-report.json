@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "status": "exploratory-pending-mark-likeness-review",
+  "blenderVersion": "4.5.12 LTS",
+  "input": "jack-adult-v4-reference-a.blend",
+  "output": "jack-adult-v4-candidate-d.blend",
+  "board": null,
+  "before": {
+    "vertices": 7892,
+    "triangles": 10286,
+    "materials": 1,
+    "materialNames": [
+      "Material_0.001"
+    ],
+    "boundsMin": [
+      -0.315309,
+      -0.91059,
+      0.0
+    ],
+    "boundsMax": [
+      0.263261,
+      0.915598,
+      1.900256
+    ]
+  },
+  "after": {
+    "vertices": 7892,
+    "triangles": 10286,
+    "materials": 1,
+    "materialNames": [
+      "Material_0.001"
+    ],
+    "boundsMin": [
+      -0.315309,
+      -0.91059,
+      0.0
+    ],
+    "boundsMax": [
+      0.263261,
+      0.915598,
+      1.900256
+    ]
+  },
+  "correction": {
+    "affectedVertices": 7114,
+    "maximumVertexDeltaMeters": 0.1073016,
+    "regionVertexCounts": {
+      "head_width": 3968,
+      "muzzle": 2404,
+      "nose": 293,
+      "ears": 2111,
+      "torso": 1811,
+      "tuck": 261,
+      "hindquarters": 667,
+      "paws": 758,
+      "tail": 520
+    },
+    "parameters": {
+      "headWidthMaximum": 1.09,
+      "muzzleLengthMaximum": 1.105,
+      "noseWidthMaximum": 1.24,
+      "earHeightMinimum": 0.91,
+      "torsoLengthMaximum": 1.045,
+      "tuckLiftMaximumMeters": 0.05,
+      "hindquarterWidthMaximum": 1.075,
+      "pawPlanarScaleMinimum": [
+        0.78,
+        0.82
+      ],
+      "tailLengthMaximum": 1.19,
+      "tailWidthMaximum": 1.22
+    }
+  },
+  "identityMaterials": {
+    "nosePolygons": 0,
+    "eyePolygons": 0
+  },
+  "topologyPreserved": true,
+  "sourceMaterialsRetained": true,
+  "privateReferencesEmbedded": false,
+  "rigBound": false,
+  "animationCount": 0,
+  "runtimeCandidate": false
+}

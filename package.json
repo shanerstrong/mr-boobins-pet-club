@@ -34,6 +34,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "check:assets": "node scripts/verify-assets.mjs",
+    "check:audio": "node scripts/verify-audio-v1.mjs",
     "smoke": "node scripts/verify-export.mjs",
     "export:web": "expo export --platform web",
     "check:deps": "npm audit --omit=dev --audit-level=critical"

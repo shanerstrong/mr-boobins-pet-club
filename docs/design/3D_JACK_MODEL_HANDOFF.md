@@ -2,6 +2,62 @@
 
 Status: **V2.2 is the promoted mobile animation package. Baby, Teen, and Adult share one validated 27-bone quadruped skeleton and hybrid 28-clip library. Genuine Quaternius CC0 canine motion replaces the rejected procedural idle, walk, run, play/jump, wash/dirty reactions, and happy hop; Jack's clearer original dog-specific feed, sleep/rest, Boop, and Sit/Paw/Up actions remain in place. All three versioned V2.2 skin GLBs pass budget, contract, full-frame deformation, and runtime-playback checks. V1, V2.1, rejected retarget checkpoints, and high-resolution art sources remain preserved.** This additive record does not replace `docs/V0.5_FIGMA_HANDOFF.md` or `docs/design/3D_PET_ROOM_DIRECTION.md`.
 
+## V4 current-photo adult likeness checkpoint — 2026-08-16
+
+Mark supplied ten current adult-Jack photographs covering standing body,
+front/side face, back, pelvis, and relaxed tail views and authorized proceeding
+with them. They were used locally only and were not copied into the repository,
+embedded in Blender sources, or uploaded to Drive.
+
+The existing Adult V2.2 runtime skin remains a technically validated stretched
+Baby topology and does not match the newly documented adult silhouette closely
+enough: it reads too puppy-like through the torso, paws, and tail. The preserved
+independent Meshy adult source is the stronger static likeness base, so V4
+corrects that mesh before attempting another bind.
+
+`jack-adult-v4-candidate-d.blend` is the current exploratory static checkpoint:
+7,892 vertices, 10,286 triangles, one retained material, no rig, and no
+animations. Bounded coordinate-region edits broaden and extend the muzzle,
+reduce ear height while widening the bases, lengthen the trunk, lift the
+abdominal tuck, add hindquarter mass, reduce the paw footprint, and lengthen
+and widen the relaxed tail. Maximum recorded vertex displacement is 0.1073016
+meters in the source's pre-runtime scale. Topology and the original source
+material remain intact.
+
+Candidates B and C are preserved rejected checkpoints. Candidate B's automatic
+dark-eye selection painted incorrect star-shaped patches around the ear bases;
+Candidate C removed that error but left a jagged procedural nose-mask edge.
+Candidate D restores the coherent original face material instead of hiding
+those failures.
+
+Candidate D is **not approved, not rigged, not exported as GLB, and not a
+runtime replacement**. Visible known work remains: darker almond-eye texture,
+an organic mauve-charcoal nose treatment, less blocky lower legs/paws, fuller
+tail coat volume, and a manual bind/weight-paint pass if Mark approves the
+static direction. V2.2 therefore remains the beta runtime package.
+
+Review evidence: `evidence/3d-jack/v4/jack-adult-v4-candidate-d-phone-board.png`
+contains only neutral front, side, and three-quarter model renders and no
+reference photographs.
+
+## V3 native-shepherd compatibility result — 2026-08-16
+
+A no-cost compatibility spike tested Quaternius' free CC-BY 3.0 German
+Shepherd on its native 67-bone canine rig. The native walk, run, eating,
+jump/play, and side-lying death motion deforms cleanly. After removable gear
+was stripped, however, the donor's 2,892-triangle dog body and face remained
+too generic and visibly lower-detail than the approved Meshy Jack. An
+automatic transfer of the approved 9,738-triangle Meshy skin onto the native
+rig produced severe limb collapse because the rest joints and vertex-weight
+topology do not match.
+
+The spike is therefore **rejected as a beta replacement**. V2.2 remains the
+runtime integration package. The preserved V3 source is useful for a later
+manual Blender re-rig and weight-paint rebuild, but must not be integrated or
+presented as approved Jack without a fresh visual/deformation gate. No paid
+API, generation credit, private-reference upload, application change, or
+simulation change occurred.
+
 Date: 2026-08-15
 
 ## Objective and integration boundary

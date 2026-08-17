@@ -5,8 +5,10 @@ import {
   DEFAULT_CLOCK_MULTIPLIER,
   GROWTH_STEP_MINUTES,
   MAX_ELAPSED_REAL_MS,
+  MAX_OFFLINE_PET_MINUTES,
   STARVATION_DEATH_MINUTES,
   advancePet,
+  advancePetOffline,
   canBoop,
   canCareForPet,
   careForPet,
@@ -25,7 +27,16 @@ import {
   switchClockRate,
   wakePet,
   type Needs,
+  type PetState,
 } from "./simulation";
+
+function adoptedPet(now = 0, overrides: Partial<PetState> = {}): PetState {
+  return {
+    ...createNewPet(now),
+    adoptionCompleted: true,
+    ...overrides,
+  };
+}
 
 describe("V0.5 V6 simulation", () => {
   it("creates a strict reset-ready New Baby Jack at 8:00 AM", () => {
@@ -75,20 +86,20 @@ describe("V0.5 V6 simulation", () => {
 
   it("decays fractional one-second ticks at accelerated rates", () => {
     for (const rate of [1, 12, 60, 3600]) {
-      const pet = advancePet(createNewPet(0), 1000, rate);
+      const pet = advancePet(adoptedPet(0), 1000, rate);
       expect(pet.ageVirtualMinutes).toBeCloseTo(rate / 60, 8);
-      expect(pet.needs.hunger).toBeLessThan(createNewPet(0).needs.hunger);
+      expect(pet.needs.hunger).toBeLessThan(adoptedPet(0).needs.hunger);
     }
   });
 
   it("keeps old-rate continuity when switching clocks", () => {
-    const changed = switchClockRate(createNewPet(0), 1000, 12, 60);
+    const changed = switchClockRate(adoptedPet(0), 1000, 12, 60);
     expect(changed.pet.ageVirtualMinutes).toBeCloseTo(0.2, 8);
     expect(advancePet(changed.pet, 2000, changed.rate).ageVirtualMinutes).toBeCloseTo(1.2, 8);
   });
 
   it("handles rollback and large jumps safely", () => {
-    const pet = createNewPet(1000);
+    const pet = adoptedPet(1000);
     expect(advancePet(pet, 999, 3600)).toEqual(pet);
     expect(advancePet(pet, 1000 + MAX_ELAPSED_REAL_MS * 10, 12).needs).toEqual(
       advancePet(pet, 1000 + MAX_ELAPSED_REAL_MS, 12).needs,
@@ -151,7 +162,7 @@ describe("V0.5 V6 simulation", () => {
   });
 
   it("does not farm feeds and re-arms after a hunger cycle", () => {
-    const start = createNewPet(0);
+    const start = adoptedPet(0);
     const hungry = { ...start, needs: { ...start.needs, hunger: 90 } };
     const first = careForPet(hungry, "feed", 0, 3600);
     expect(careForPet(first, "feed", 0, 3600).growthMeals).toBe(1);
@@ -161,7 +172,7 @@ describe("V0.5 V6 simulation", () => {
   });
 
   it("never grows a no-feed pet and freezes on death", () => {
-    const start = createNewPet(0);
+    const start = adoptedPet(0);
     const hungry = { ...start, needs: { ...start.needs, hunger: 0 }, growthMeals: 0 };
     const dead = advancePet(hungry, 20 * 60 * 60 * 1000, 60);
     expect(dead.isDead).toBe(true);
@@ -170,7 +181,7 @@ describe("V0.5 V6 simulation", () => {
   });
 
   it("kills Jack exactly at 120 zero-hunger pet minutes", () => {
-    const start = createNewPet(0);
+    const start = adoptedPet(0);
     const pet = {
       ...start,
       needs: { ...start.needs, hunger: 0 },
@@ -183,7 +194,7 @@ describe("V0.5 V6 simulation", () => {
   });
 
   it("feeding before death clears starvation progress", () => {
-    const start = createNewPet(0);
+    const start = adoptedPet(0);
     const pet = {
       ...start,
       needs: { ...start.needs, hunger: 0 },
@@ -196,11 +207,11 @@ describe("V0.5 V6 simulation", () => {
 
   it("supports timed naps, automatic wake, and forced wake", () => {
     for (const hours of [1, 2, 4, 8]) {
-      const asleep = startSleep(createNewPet(0), hours, 0, 60);
+      const asleep = startSleep(adoptedPet(0), hours, 0, 60);
       expect(asleep.sleepUntilVirtualMinutes).toBe(hours * 60);
       expect(isSleeping(advancePet(asleep, hours * 60_000, 60))).toBe(false);
     }
-    const asleep = startSleep(createNewPet(0), 4, 0, 60);
+    const asleep = startSleep(adoptedPet(0), 4, 0, 60);
     expect(canCareForPet(asleep)).toBe(false);
     expect(isSleeping(wakePet(asleep, 0))).toBe(false);
   });
@@ -294,6 +305,66 @@ describe("V0.5 V6 simulation", () => {
   });
 
   it("retains the explicit default rate", () => {
-    expect(DEFAULT_CLOCK_MULTIPLIER).toBe(12);
+    expect(DEFAULT_CLOCK_MULTIPLIER).toBe(1);
+  });
+
+  it("stamps pre-adoption time without replaying need decay or age", () => {
+    const pet = createNewPet(1_000);
+    const stamped = advancePet(pet, 24 * 60 * 60_000, 3_600);
+    expect(stamped).toEqual({ ...pet, lastUpdatedAt: 24 * 60 * 60_000 });
+  });
+
+  it.each([
+    [4 * 60 * 60_000 - 1, MAX_OFFLINE_PET_MINUTES - 1 / 60_000],
+    [4 * 60 * 60_000, MAX_OFFLINE_PET_MINUTES],
+    [40 * 60 * 60_000, MAX_OFFLINE_PET_MINUTES],
+  ])("caps fixed-rate offline time for %i ms at %f pet minutes", (now, expected) => {
+    const next = advancePetOffline(adoptedPet(), now);
+    expect(next.ageVirtualMinutes).toBeCloseTo(expected, 8);
+    expect(next.lastUpdatedAt).toBe(now);
+  });
+
+  it("stamps full now so one absence cannot be consumed repeatedly", () => {
+    const now = 40 * 60 * 60_000;
+    const first = advancePetOffline(adoptedPet(), now);
+    expect(first.ageVirtualMinutes).toBe(MAX_OFFLINE_PET_MINUTES);
+    expect(advancePetOffline(first, now)).toEqual(first);
+    expect(advancePetOffline(first, now + 60_000).ageVirtualMinutes).toBe(
+      MAX_OFFLINE_PET_MINUTES + 1,
+    );
+  });
+
+  it.each([0, 0.5, 119])(
+    "preserves %s starvation minutes and prevents death while offline",
+    (starvationVirtualMinutes) => {
+      const pet = adoptedPet(0, {
+        needs: { hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
+        starvationVirtualMinutes,
+      });
+      const next = advancePetOffline(pet, 4 * 60 * 60_000);
+      expect(next.needs.hunger).toBe(0);
+      expect(next.starvationVirtualMinutes).toBe(starvationVirtualMinutes);
+      expect(next.isDead).toBe(false);
+    },
+  );
+
+  it("lets hunger cross zero offline without starting starvation", () => {
+    const pet = adoptedPet(0, {
+      needs: { hunger: 0.01, happiness: 80, energy: 76, hygiene: 88 },
+      starvationVirtualMinutes: 0.5,
+    });
+    const next = advancePetOffline(pet, 60_000);
+    expect(next.needs.hunger).toBe(0);
+    expect(next.starvationVirtualMinutes).toBe(0.5);
+    expect(next.isDead).toBe(false);
+  });
+
+  it("leaves already-dead saves frozen offline", () => {
+    const dead = adoptedPet(0, {
+      isDead: true,
+      starvationVirtualMinutes: STARVATION_DEATH_MINUTES,
+      sleepUntilVirtualMinutes: null,
+    });
+    expect(advancePetOffline(dead, Number.MAX_VALUE)).toEqual(dead);
   });
 });

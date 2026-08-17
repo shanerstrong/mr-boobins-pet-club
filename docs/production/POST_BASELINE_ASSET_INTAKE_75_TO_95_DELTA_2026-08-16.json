@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "kind": "post-baseline-asset-intake-delta",
+  "intakeId": "2026-08-16-elevenlabs-75-to-95-reconciliation",
+  "status": "inventory-complete-preservation-pending",
+  "observedAtUtc": "2026-08-16T22:48:34.879Z",
+  "baselineCommit": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+  "hashAlgorithm": "sha256",
+  "aggregateFormat": "ordinal-case-sensitive path<TAB>bytes<TAB>lowercase-sha256<LF>, hashed as UTF-8",
+  "predecessor": {
+    "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+    "recordSha256": "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6",
+    "immutable": true,
+    "fileCount": 75,
+    "bytes": 418860110,
+    "aggregateSha256": "b0e16debbb690987ad84c168a3b84f8986f98263d44b4ff6c1502e872e9152a4",
+    "rehashPasses": 2,
+    "missingFiles": 0,
+    "driftedFiles": 0
+  },
+  "scope": {
+    "root": "assets/audio/v1/source/elevenlabs/2026-08-16",
+    "additionFileCount": 20,
+    "additionBytes": 7681560,
+    "additionAggregateSha256": "0691600367d637c1da18aee7bdcd17f4ebf79ce10b5a15674cf3d1af14a1180b",
+    "rehashPasses": 2,
+    "manifestIdentityMismatches": 0
+  },
+  "resultingGovernedRoots": {
+    "roots": [
+      "assets/3d/jack/v3",
+      "assets/3d/jack/v4",
+      "assets/audio/v1/source/elevenlabs/2026-08-16",
+      "evidence/3d-jack/v3",
+      "evidence/3d-jack/v4"
+    ],
+    "fileCount": 95,
+    "bytes": 426541670,
+    "aggregateSha256": "89c8e9aac0fe19981737ce37645257f916abf44dfe2443e16ca3d87f22823d24",
+    "unexpectedFiles": 0,
+    "missingFiles": 0
+  },
+  "classification": {
+    "id": "postbaseline-audio-source-preservation-pending",
+    "tier": "cold-archive-pending",
+    "status": "excluded-until-preserved",
+    "fileCount": 20,
+    "bytes": 7681560,
+    "reason": "Existing raw, unmastered ElevenLabs paid-plan candidate-1 sources. Keep every byte untouched and excluded pending separately approved recoverable preservation; no selection, subjective acceptance, mastering, runtime promotion, normal-Git promotion, upload, relocation, deletion, or LFS conversion is implied."
+  },
+  "preservation": {
+    "checksumIsBackup": false,
+    "backupVerified": false,
+    "archiveUploaded": false,
+    "lfsConfiguredOrUploaded": false,
+    "originalsDeleted": false,
+    "originalsMoved": false,
+    "originalsRenamed": false,
+    "originalsRewritten": false,
+    "decision": "The 20 raw source candidates remain in place, excluded, and preservation-pending. This intake records identity only."
+  },
+  "changedManagedContext": [
+    {
+      "path": "assets/audio/v1/audio-manifest.v1.json",
+      "kind": "historical-handoff-context",
+      "priorAcceptedBytes": 24679,
+      "priorAcceptedSha256": "386c1de41ddc2da7a4c4b3ad90f9ce3f95ff31c6a1f4ba66e8afc0a12ce7b2c9",
+      "currentBytes": 53333,
+      "currentSha256": "55faccd935f28c20dde4bc814377a944406221f01150d1f2ab8c8977f088b3c1",
+      "currentLastWriteTimeUtc": "2026-08-16T19:40:30.4760654Z",
+      "gitState": "tracked-modified",
+      "jsonValid": true,
+      "gatePromotion": "exact-second-refresh-mapping-only",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "docs/audio/AUDIO_LICENSE_LEDGER.v1.md",
+      "kind": "historical-handoff-context",
+      "priorAcceptedBytes": 10921,
+      "priorAcceptedSha256": "edaa9c9688569a2c176ecd27ed5af29b209bb59f61880d03522dc05fd2c7d961",
+      "currentBytes": 13374,
+      "currentSha256": "72e628e971ed7d6d46a5dc02127160a604911948e6be1a2a4bc68bb90175dd7c",
+      "currentLastWriteTimeUtc": "2026-08-16T19:46:52.0488780Z",
+      "gitState": "tracked-modified",
+      "gatePromotion": "none-context-only",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "src/audio-cue-policy.test.ts",
+      "kind": "historical-handoff-context",
+      "priorAcceptedBytes": 8207,
+      "priorAcceptedSha256": "9c682d5f65a0d6303fd6d0857ed3bd3de5ed2b49266386d14a24678baba82fdf",
+      "currentBytes": 9709,
+      "currentSha256": "5f3a529c727d38fe97ac307b485b12056d234eadf49a2e2ee7520eb19b875ce5",
+      "currentLastWriteTimeUtc": "2026-08-16T19:40:50.0325823Z",
+      "gitState": "tracked-modified",
+      "gatePromotion": "none-context-only",
+      "editedByThisMilestone": false
+    }
+  ],
+  "files": [
+    {
+      "assetId": "jack.alert-bark",
+      "generationId": "IqOz1ZnOkF1hVM3plUoA",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-alert-bark-IqOz1ZnOkF1hVM3plUoA-c1.wav",
+      "bytes": 384078,
+      "sha256": "7f3c2ea86ef2ae9ddd7faa28f19b7181baee0416651adf11a3f7a34f475efe7c",
+      "lastWriteTimeUtc": "2026-08-16T19:20:20.1148475Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.calm-pant",
+      "generationId": "AQNUgqzxYvEErVaR8CMR",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-calm-pant-AQNUgqzxYvEErVaR8CMR-c1.wav",
+      "bytes": 1344078,
+      "sha256": "d05d23ca3529a185b5a7e8e2e8f75cb2c574f8833bf028e97114037538dce88e",
+      "lastWriteTimeUtc": "2026-08-16T19:22:32.7496968Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.collar-jingle",
+      "generationId": "ScG14PJsJZNEU1nXKtpn",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-collar-jingle-ScG14PJsJZNEU1nXKtpn-c1.wav",
+      "bytes": 192078,
+      "sha256": "2ea4d329fbdf2046255c4cd04768b3e32df72b58f195903cb6dfb465af991bcc",
+      "lastWriteTimeUtc": "2026-08-16T19:24:18.6028470Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.drinking",
+      "generationId": "0j1IE6wXTl8TdAVh99RI",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-drinking-0j1IE6wXTl8TdAVh99RI-c1.wav",
+      "bytes": 192078,
+      "sha256": "54327b5b4efdd944c60890cfe8a38cf75870b7dc82ef84d618bf47278ab3f1e7",
+      "lastWriteTimeUtc": "2026-08-16T19:23:37.6546272Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.eating",
+      "generationId": "aZur6ellw5MYMqn6loxR",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-eating-aZur6ellw5MYMqn6loxR-c1.wav",
+      "bytes": 384078,
+      "sha256": "5e9a710d36ccd462e3b3d1a1c18d4713a29136a7c0ebb056b72f6174bdda3759",
+      "lastWriteTimeUtc": "2026-08-16T19:23:30.6203567Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.excited-pant",
+      "generationId": "IrArENQjy2bdHEWUyjtQ",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-excited-pant-IrArENQjy2bdHEWUyjtQ-c1.wav",
+      "bytes": 960078,
+      "sha256": "bba2d29e3fb6cb640118fd0c3c87f24b13a929653df4000317f350d988c6b6bf",
+      "lastWriteTimeUtc": "2026-08-16T19:18:55.5605729Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.gentle-whine",
+      "generationId": "HdjNJzofJy1ufcsTniz9",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-gentle-whine-HdjNJzofJy1ufcsTniz9-c1.wav",
+      "bytes": 384078,
+      "sha256": "f26cf901d4f327c8c0b32d6c1897278e5a733f420a5e67810f8ec647f9228c9c",
+      "lastWriteTimeUtc": "2026-08-16T19:21:49.6024680Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.huff",
+      "generationId": "6jT5aOIlMaupszkYBjEE",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-huff-6jT5aOIlMaupszkYBjEE-c1.wav",
+      "bytes": 192078,
+      "sha256": "ad1fc039175f7455bada0ba5c6bb4f3def3b9de747bbe909c61cad4e680b14d3",
+      "lastWriteTimeUtc": "2026-08-16T19:24:53.0331331Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.paw-steps",
+      "generationId": "8zXYJxveRDsKPALWMhjA",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-paw-steps-8zXYJxveRDsKPALWMhjA-c1.wav",
+      "bytes": 384078,
+      "sha256": "15fbd379e8e6cb7735a330f01cb9d067806124efd9a996642a567aa29740b92e",
+      "lastWriteTimeUtc": "2026-08-16T19:23:56.3458634Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.sleepy-grumble",
+      "generationId": "7xquqejnKWlY0iQ4o9HJ",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-sleepy-grumble-7xquqejnKWlY0iQ4o9HJ-c1.wav",
+      "bytes": 192078,
+      "sha256": "42da832e22847af8ab93a2b429063d97c53cc4a98e2279e3fee9ce0d67af9b8a",
+      "lastWriteTimeUtc": "2026-08-16T19:25:18.3184726Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.sneeze",
+      "generationId": "CE6efjWCS5y6WCjnVu25",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-sneeze-CE6efjWCS5y6WCjnVu25-c1.wav",
+      "bytes": 192078,
+      "sha256": "bc973a6d08c11900d49c8a811fb4212ccf7a80706d42b7ff1e49b2074e98f4d3",
+      "lastWriteTimeUtc": "2026-08-16T19:22:55.3802494Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.sniff",
+      "generationId": "3UkQOti6fyhMGqS46GpP",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-sniff-3UkQOti6fyhMGqS46GpP-c1.wav",
+      "bytes": 384078,
+      "sha256": "ebb18283d70aa0f5f63000cff720420658530b71596a902cb6b23f8edb38665b",
+      "lastWriteTimeUtc": "2026-08-16T19:22:42.7439376Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.toy-squeak",
+      "generationId": "HIjSVesu07UZCnWHQGgn",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-toy-squeak-HIjSVesu07UZCnWHQGgn-c1.wav",
+      "bytes": 384078,
+      "sha256": "06fa64f398df9f69c7fe6d461cda85de37b0b8f2b584104ea1c32fbb4248d715",
+      "lastWriteTimeUtc": "2026-08-16T19:24:46.0216895Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.treat-crunch",
+      "generationId": "QZSXVH8eVqQ2nF47dowd",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-treat-crunch-QZSXVH8eVqQ2nF47dowd-c1.wav",
+      "bytes": 384078,
+      "sha256": "aebfe1cabc57824c4339c3264df525a0024d333c652c8522578a2157a373d0aa",
+      "lastWriteTimeUtc": "2026-08-16T19:23:49.2936389Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.wet-shake",
+      "generationId": "aNRLtMrr2uXYihbhnHcu",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-wet-shake-aNRLtMrr2uXYihbhnHcu-c1.wav",
+      "bytes": 192078,
+      "sha256": "422865b9933fb51c4607b6f16a2b676f44beb4abf06dce8549ca69264146138c",
+      "lastWriteTimeUtc": "2026-08-16T19:24:30.8047018Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "jack.yawn",
+      "generationId": "LlZNp482epMUT7Nr1s0C",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/jack-yawn-LlZNp482epMUT7Nr1s0C-c1.wav",
+      "bytes": 192078,
+      "sha256": "f4052dcbffa1bcc3611a7e0a216ef123bf70b912ba762383b293a67a67c94de7",
+      "lastWriteTimeUtc": "2026-08-16T19:23:08.4634602Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "training.celebration-accent",
+      "generationId": "POO70EOC52nkYnCVbSh7",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/training-celebration-accent-POO70EOC52nkYnCVbSh7-c1.wav",
+      "bytes": 384078,
+      "sha256": "c033dc2dd8805f9ffda8db58643d4366eb04fa65de2974927eeefc7e30bf779e",
+      "lastWriteTimeUtc": "2026-08-16T19:26:02.4740121Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "training.success-chime",
+      "generationId": "KC33MVO6E0iGATBmj5ZO",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/training-success-chime-KC33MVO6E0iGATBmj5ZO-c1.wav",
+      "bytes": 384078,
+      "sha256": "b97a6d3c66ae3637dad094434ca698c75033ee4d45ff7b6d7ee99272e5ca9930",
+      "lastWriteTimeUtc": "2026-08-16T19:25:25.4244012Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "training.treat-catch",
+      "generationId": "ahdLRdTwDE4IKSvFxYM2",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/training-treat-catch-ahdLRdTwDE4IKSvFxYM2-c1.wav",
+      "bytes": 192078,
+      "sha256": "3b4257876d1405469eb0df3c6d210697dcd29687947e4de95f78ce3dc75e79fe",
+      "lastWriteTimeUtc": "2026-08-16T19:25:40.6775850Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    },
+    {
+      "assetId": "training.treat-toss",
+      "generationId": "fTzEuwGcfE7MdOLTQfAG",
+      "candidate": 1,
+      "path": "assets/audio/v1/source/elevenlabs/2026-08-16/training-treat-toss-fTzEuwGcfE7MdOLTQfAG-c1.wav",
+      "bytes": 384078,
+      "sha256": "257e2292c2ffd9571075752606bdd49750657fd5fdd103ae85cfd1f4f7c7138d",
+      "lastWriteTimeUtc": "2026-08-16T19:25:33.1047633Z",
+      "classificationRuleId": "postbaseline-audio-source-preservation-pending"
+    }
+  ],
+  "limitations": [
+    "This append-only delta preserves the accepted 75-file intake as immutable history and records only the exact 20-path addition plus three changed managed handoff identities.",
+    "Checksums prove identity and stability; they are not a backup.",
+    "No audio was generated, modified, selected, mastered, promoted, moved, deleted, uploaded, published, converted to LFS, or accepted subjectively by this reconciliation.",
+    "The three managed context files were changed before this bounded milestone and were not edited by it.",
+    "The repository remains the development source of truth; no external state changed."
+  ]
+}
