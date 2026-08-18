@@ -1,24 +1,27 @@
 /* eslint-disable react/no-unknown-property -- React Three Fiber elements intentionally use Three.js JSX props. */
 import { Canvas, useThree } from "@react-three/fiber";
-import { Center, useAnimations, useGLTF } from "@react-three/drei";
+import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
 import { Asset } from "expo-asset";
 import {
   Component,
   Suspense,
+  useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
   type ErrorInfo,
   type ReactNode,
 } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import {
   Group,
   LoopOnce,
   LoopRepeat,
   Mesh,
   MeshStandardMaterial,
+  TOUCH,
   type Object3D,
 } from "three";
 import { clone as cloneSkeleton } from "three/examples/jsm/utils/SkeletonUtils.js";
@@ -29,10 +32,21 @@ import {
   type Jack3DClipName,
 } from "./jack-3d-policy";
 import {
+  ALPHA_INSPECT_CAMERA,
+  AUTHORED_CAMERA_VIEW,
+  ROOM_FLOOR_PLANE_Y,
+  ROOM_WALKABLE_SURFACE_Y,
+  resolveJackRoomTransform,
+} from "./pet-room-3d-policy";
+import {
   PetRoomSceneShell,
   type PetRoomSceneProps,
 } from "./pet-room-scene-shell";
 import type { Daypart, RoomTheme } from "./simulation";
+import {
+  UP_CONTACT_SHADOW_STYLE,
+  resolveSettledUpContactShadows,
+} from "./up-contact-shadow-policy";
 import jackModelModule from "../assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb";
 
 const JACK_MODEL_URL = Asset.fromModule(jackModelModule).uri;
@@ -49,7 +63,7 @@ const themePalette: Record<RoomTheme, {
     wall: "#f1d6b8",
     sideWall: "#e8c69f",
     floor: "#bb8159",
-    rug: "#efd09b",
+    rug: "#ca945f",
     bed: "#c76559",
     curtain: "#d76c5c",
   },
@@ -65,7 +79,7 @@ const themePalette: Record<RoomTheme, {
     wall: "#dce7c7",
     sideWall: "#cadbb1",
     floor: "#9eb173",
-    rug: "#e5c48d",
+    rug: "#c79a62",
     bed: "#62865a",
     curtain: "#6f9b64",
   },
@@ -78,16 +92,18 @@ const daypartPalette: Record<Daypart, {
   keyIntensity: number;
   sky: string;
 }> = {
-  morning: { background: "#f8deb8", ambient: 1.8, key: "#ffd18e", keyIntensity: 3.2, sky: "#ffd594" },
-  day: { background: "#d8ebee", ambient: 2.1, key: "#fff4d7", keyIntensity: 3.5, sky: "#87d8ee" },
-  dusk: { background: "#7b718b", ambient: 1.3, key: "#f0a66b", keyIntensity: 3.1, sky: "#b879a6" },
-  night: { background: "#263550", ambient: 0.75, key: "#f0bd72", keyIntensity: 2.6, sky: "#253962" },
+  morning: { background: "#f8deb8", ambient: 1.2, key: "#ffd18e", keyIntensity: 2.65, sky: "#ffd594" },
+  day: { background: "#d8ebee", ambient: 1.35, key: "#fff4d7", keyIntensity: 2.8, sky: "#87d8ee" },
+  dusk: { background: "#7b718b", ambient: 0.9, key: "#f0a66b", keyIntensity: 2.55, sky: "#b879a6" },
+  night: { background: "#263550", ambient: 0.55, key: "#f0bd72", keyIntensity: 2.15, sky: "#253962" },
 };
 
 export type { PetRoomSceneProps } from "./pet-room-scene-shell";
 
 export function PetRoomScene(props: PetRoomSceneProps) {
   const [failed, setFailed] = useState(false);
+  const [inspectEnabled, setInspectEnabled] = useState(false);
+  const [inspectResetRevision, setInspectResetRevision] = useState(0);
   const [ready, setReady] = useState(false);
   const supported = isJack3DStageSupported(props.stage) && !props.reduced && Boolean(JACK_MODEL_URL);
 
@@ -96,11 +112,21 @@ export function PetRoomScene(props: PetRoomSceneProps) {
   }
 
   return (
-    <PetRoomSceneShell {...props} hideDog={ready} objectVisuals={!ready}>
+    <PetRoomSceneShell
+      {...props}
+      hideDog={ready}
+      objectTargetsEnabled={!inspectEnabled}
+      objectVisuals={!ready}
+    >
       <View pointerEvents="box-none" style={StyleSheet.absoluteFill}>
         <SceneErrorBoundary onError={() => setFailed(true)}>
           <Canvas
-            camera={{ fov: 30, near: 0.1, far: 100, position: [8.2, 6.1, 10.4] }}
+            camera={{
+              far: 100,
+              fov: AUTHORED_CAMERA_VIEW.fov,
+              near: 0.1,
+              position: [...AUTHORED_CAMERA_VIEW.position],
+            }}
             dpr={[1, 1.5]}
             gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
             onCreated={({ gl }) => {
@@ -111,6 +137,8 @@ export function PetRoomScene(props: PetRoomSceneProps) {
             <Suspense fallback={null}>
               <DollhouseRoom
                 {...props}
+                inspectEnabled={inspectEnabled}
+                inspectResetRevision={inspectResetRevision}
                 onReady={() => setReady(true)}
               />
             </Suspense>
@@ -121,48 +149,161 @@ export function PetRoomScene(props: PetRoomSceneProps) {
             <Text style={styles.clockText}>{props.clockLabel}</Text>
           </View>
         )}
+        {ready && (
+          <View
+            pointerEvents="box-none"
+            style={[styles.inspectControls, !props.large && styles.inspectControlsCompact]}
+          >
+            <Pressable
+              accessibilityLabel={`Alpha Inspect View ${inspectEnabled ? "on" : "off"}. ${
+                inspectEnabled
+                  ? "Drag to orbit and use the wheel or pinch to zoom."
+                  : "Uses the authored fixed camera."
+              }`}
+              accessibilityRole="button"
+              accessibilityState={{ selected: inspectEnabled }}
+              onPress={() => setInspectEnabled((current) => !current)}
+              style={({ pressed }) => [
+                styles.inspectButton,
+                !props.large && styles.inspectButtonCompact,
+                pressed && styles.inspectButtonPressed,
+              ]}
+            >
+              <Text style={[styles.inspectButtonText, !props.large && styles.inspectButtonTextCompact]}>
+                {props.large
+                  ? `ALPHA • INSPECT ${inspectEnabled ? "ON" : "OFF"}`
+                  : `ALPHA\nINSPECT ${inspectEnabled ? "ON" : "OFF"}`}
+              </Text>
+            </Pressable>
+            {inspectEnabled && (
+              <Pressable
+                accessibilityLabel="Reset Alpha Inspect View to the authored camera"
+                accessibilityRole="button"
+                onPress={() => setInspectResetRevision((current) => current + 1)}
+                style={({ pressed }) => [
+                  styles.inspectButton,
+                  !props.large && styles.inspectButtonCompact,
+                  pressed && styles.inspectButtonPressed,
+                ]}
+              >
+                <Text style={[styles.inspectButtonText, !props.large && styles.inspectButtonTextCompact]}>
+                  RESET VIEW
+                </Text>
+              </Pressable>
+            )}
+          </View>
+        )}
       </View>
     </PetRoomSceneShell>
   );
 }
 
-function DollhouseRoom(props: PetRoomSceneProps & { onReady: () => void }) {
+function DollhouseRoom(
+  props: PetRoomSceneProps & {
+    inspectEnabled: boolean;
+    inspectResetRevision: number;
+    onReady: () => void;
+  },
+) {
   const palette = themePalette[props.roomTheme];
   const light = daypartPalette[props.daypart];
   const clip = resolveJack3DClip(props);
+  const upContactShadows = resolveSettledUpContactShadows({
+    clip,
+    large: Boolean(props.large),
+    poseHeld: props.trainingPoseHeld,
+    stage: props.stage,
+  });
 
   return (
     <>
       <color attach="background" args={[light.background]} />
       <ambientLight intensity={light.ambient} color="#f7f2e5" />
-      <directionalLight position={[2.5, 7, 5]} intensity={light.keyIntensity} color={light.key} />
+      <directionalLight position={[-2.8, 6.5, 4.5]} intensity={light.keyIntensity} color={light.key} />
       <pointLight position={[-3.6, 3.1, -1.8]} intensity={props.daypart === "night" ? 12 : 4} distance={7} color="#ffd07f" />
-      <FixedCamera />
+      <CameraRig
+        inspectEnabled={props.inspectEnabled}
+        resetRevision={props.inspectResetRevision}
+      />
       <RoomGeometry palette={palette} sky={light.sky} />
-      <mesh position={[0.15, 0.015, 0.35]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[0.95, 28]} />
-        <meshBasicMaterial color="#3b3029" transparent opacity={0.16} depthWrite={false} />
+      <mesh position={[0.15, 0.012, 0.15]} rotation={[-Math.PI / 2, 0, 0]} scale={[1.25, 0.72, 1]}>
+        <circleGeometry args={[0.82, 28]} />
+        <meshBasicMaterial
+          color="#40342d"
+          depthWrite={false}
+          opacity={upContactShadows.length > 0 ? 0.16 : 0.24}
+          transparent
+        />
       </mesh>
+      {upContactShadows.map((position, index) => (
+        <mesh
+          key={`up-contact-${index}`}
+          position={[...position]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={[...UP_CONTACT_SHADOW_STYLE.scale]}
+        >
+          <circleGeometry args={[UP_CONTACT_SHADOW_STYLE.radius, 20]} />
+          <meshBasicMaterial
+            color={UP_CONTACT_SHADOW_STYLE.color}
+            depthWrite={false}
+            opacity={UP_CONTACT_SHADOW_STYLE.opacity}
+            transparent
+          />
+        </mesh>
+      ))}
       <JackModel
         clip={clip}
         animationRevision={props.trainingAnimationRevision}
         poseHeld={props.trainingPoseHeld}
         large={Boolean(props.large)}
         onReady={props.onReady}
+        stage={props.stage}
       />
     </>
   );
 }
 
-function FixedCamera() {
+function CameraRig({
+  inspectEnabled,
+  resetRevision,
+}: {
+  inspectEnabled: boolean;
+  resetRevision: number;
+}) {
   const camera = useThree((state) => state.camera);
-
-  useEffect(() => {
-    camera.lookAt(0, 0.7, -0.15);
+  const [mountedResetRevision, setMountedResetRevision] = useState(resetRevision);
+  const restoreAuthoredView = useCallback(() => {
+    camera.position.set(...AUTHORED_CAMERA_VIEW.position);
+    camera.lookAt(...AUTHORED_CAMERA_VIEW.target);
     camera.updateProjectionMatrix();
   }, [camera]);
 
-  return null;
+  useLayoutEffect(() => {
+    restoreAuthoredView();
+    if (mountedResetRevision === resetRevision) return;
+    const frame = requestAnimationFrame(() => setMountedResetRevision(resetRevision));
+    return () => cancelAnimationFrame(frame);
+  }, [inspectEnabled, mountedResetRevision, resetRevision, restoreAuthoredView]);
+
+  if (!inspectEnabled || mountedResetRevision !== resetRevision) return null;
+
+  return (
+    <OrbitControls
+      key={`alpha-inspect-${mountedResetRevision}`}
+      enablePan={ALPHA_INSPECT_CAMERA.enablePan}
+      enableRotate
+      enableZoom
+      makeDefault
+      maxAzimuthAngle={ALPHA_INSPECT_CAMERA.maxAzimuthAngle}
+      maxDistance={ALPHA_INSPECT_CAMERA.maxDistance}
+      maxPolarAngle={ALPHA_INSPECT_CAMERA.maxPolarAngle}
+      minAzimuthAngle={ALPHA_INSPECT_CAMERA.minAzimuthAngle}
+      minDistance={ALPHA_INSPECT_CAMERA.minDistance}
+      minPolarAngle={ALPHA_INSPECT_CAMERA.minPolarAngle}
+      target={[...AUTHORED_CAMERA_VIEW.target]}
+      touches={{ ONE: TOUCH.ROTATE, TWO: TOUCH.DOLLY_PAN }}
+    />
+  );
 }
 
 function JackModel({
@@ -171,17 +312,20 @@ function JackModel({
   large,
   onReady,
   poseHeld,
+  stage,
 }: {
   animationRevision: number;
   clip: Jack3DClipName;
   large: boolean;
   onReady: () => void;
   poseHeld: boolean;
+  stage: PetRoomSceneProps["stage"];
 }) {
   const root = useRef<Group>(null);
   const gltf = useGLTF(JACK_MODEL_URL);
   const scene = useMemo(() => cloneSkeleton(gltf.scene), [gltf.scene]);
   const { actions } = useAnimations(gltf.animations, root);
+  const transform = resolveJackRoomTransform({ clip, large, poseHeld, stage });
 
   useEffect(() => {
     scene.traverse((node: Object3D) => {
@@ -232,13 +376,11 @@ function JackModel({
   return (
     <group
       ref={root}
-      position={[0.15, 0.02, 0.15]}
-      rotation={[0, -0.28, 0]}
-      scale={large ? 3.05 : 3.2}
+      position={[...transform.position]}
+      rotation={[...transform.rotation]}
+      scale={transform.scale}
     >
-      <Center bottom>
-        <primitive object={scene} />
-      </Center>
+      <primitive object={scene} />
     </group>
   );
 }
@@ -252,7 +394,7 @@ function RoomGeometry({
 }) {
   return (
     <group>
-      <mesh position={[0, -0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+      <mesh position={[0, ROOM_FLOOR_PLANE_Y, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[10, 6.5]} />
         <meshStandardMaterial color={palette.floor} roughness={0.92} />
       </mesh>
@@ -264,7 +406,7 @@ function RoomGeometry({
         <boxGeometry args={[0.16, 4.4, 6.5]} />
         <meshStandardMaterial color={palette.sideWall} roughness={0.95} />
       </mesh>
-      <mesh position={[0, 0, 0.4]} rotation={[-Math.PI / 2, 0, 0]}>
+      <mesh position={[0, ROOM_WALKABLE_SURFACE_Y, 0.4]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[2.65, 32]} />
         <meshStandardMaterial color={palette.rug} roughness={1} />
       </mesh>
@@ -371,6 +513,30 @@ class SceneErrorBoundary extends Component<{
 
 const styles = StyleSheet.create({
   canvas: { position: "absolute", inset: 0 },
+  inspectControls: {
+    position: "absolute",
+    left: 10,
+    top: 10,
+    flexDirection: "row",
+    gap: 6,
+    zIndex: 30,
+  },
+  inspectControlsCompact: { top: 72, flexDirection: "column" },
+  inspectButton: {
+    minHeight: 44,
+    minWidth: 128,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: "#314455",
+    backgroundColor: "rgba(247, 240, 219, 0.94)",
+  },
+  inspectButtonPressed: { transform: [{ scale: 0.97 }], backgroundColor: "#ffe1a2" },
+  inspectButtonCompact: { width: 96, minWidth: 96, paddingHorizontal: 4 },
+  inspectButtonText: { color: "#23313c", fontSize: 11, lineHeight: 14, fontWeight: "900", letterSpacing: 0.5 },
+  inspectButtonTextCompact: { fontSize: 10, lineHeight: 11, textAlign: "center" },
   clockChip: {
     position: "absolute",
     right: 12,

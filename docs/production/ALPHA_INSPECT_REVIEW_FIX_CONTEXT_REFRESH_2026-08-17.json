@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "kind": "managed-context-review-fix-refresh",
+  "refreshId": "2026-08-17-alpha-inspect-review-pass-1-fix-round-1",
+  "createdOn": "2026-08-17",
+  "hashAlgorithm": "sha256",
+  "authorization": {
+    "milestone": "Build — Alpha Inspect Camera & Jack Grounding",
+    "reviewPass": 1,
+    "fixRound": 1,
+    "scope": "Close exactly the two independent-review findings: remove seven obsolete unused verifier declarations without removing assertions, and relabel the new grounding contract from V2.2 to the exact imported Baby V2 runtime asset.",
+    "generalMutableContextException": false,
+    "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+    "dependencyChangeAuthorized": false,
+    "externalOrGitActionAuthorized": false,
+    "subjectiveAcceptanceOrLockAuthorized": false
+  },
+  "repositoryState": {
+    "head": "372b82d6853259a2580e554ed2d869f65f1f5c87",
+    "branch": "codex/jack-v05",
+    "stagedPathCount": 0,
+    "stagedPaths": [],
+    "externalOrGitActionPerformed": false
+  },
+  "immutablePredecessor": {
+    "record": "docs/production/ALPHA_INSPECT_SAFE_RETURN_STATUS_REFRESH_2026-08-17.json",
+    "recordBytes": 18829,
+    "recordSha256": "e2849dbd7c9c0ad1214c286628dcedc73567beb86b39fb99223cffaae99f0839",
+    "immutable": true,
+    "transitivelyPreservesAllEarlierIntakeContextAndNormalizationRecords": true
+  },
+  "reviewFindings": [
+    {
+      "id": "review-pass-1-verifier-unused-declarations",
+      "severity": "medium",
+      "status": "corrected",
+      "fact": "Seven Git-status sets became obsolete after the exact committed-successor assertions were introduced and caused npm run lint to fail with no-unused-vars warnings.",
+      "correction": "Remove only the seven unused declarations. Preserve every committed-successor assertion and add exact review-fix successor validation."
+    },
+    {
+      "id": "review-pass-1-grounding-runtime-label",
+      "severity": "medium",
+      "status": "corrected",
+      "fact": "The grounding math was calibrated to assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb, while the new policy and decision text incorrectly called that runtime asset V2.2.",
+      "correction": "Relabel only the new grounding contract as Baby V2; do not change the imported GLB, offsets, camera behavior, model bytes, visuals, or product balance."
+    }
+  ],
+  "runtimeAssetBinding": {
+    "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb",
+    "bytes": 2630728,
+    "sha256": "e097d15872b9a08f94604fda649a260c4ab23b57989c95f6d4b9944e778821b1",
+    "gitNormalizedBlobOid": "c9fd46ad53e40382d5cf62dc10676a458b26a478",
+    "changedByThisFixRound": false
+  },
+  "transitions": [
+    {
+      "path": "docs/DECISIONS.md",
+      "change": "grounding-runtime-version-label-only",
+      "exactReplacements": [
+        {
+          "prior": "Ground the Baby V2.2 runtime model",
+          "current": "Ground the Baby V2 runtime model",
+          "count": 1
+        }
+      ],
+      "otherChanges": 0,
+      "prior": {
+        "bytes": 27761,
+        "sha256": "84024a13f82c5264eaeba2d3a85623d429dc06c1a8080f11ca8b8c9a5a624e06",
+        "gitNormalizedBlobOid": "458e7602fc5cfe76a333ff25e36dbced6f29612d",
+        "lastWriteTimeUtc": "2026-08-17T18:18:06.6079233Z",
+        "gitState": "tracked-modified"
+      },
+      "current": {
+        "bytes": 27759,
+        "sha256": "c65e88042284aa7c858fe168980d05e953545778408b9d4dfa907fc91b1aa09a",
+        "gitNormalizedBlobOid": "fd697d6e6da3fb99f5714a02b1d26b80839a22f3",
+        "lastWriteTimeUtc": "2026-08-17T19:05:45.6242060Z",
+        "gitState": "tracked-modified"
+      }
+    },
+    {
+      "path": "src/pet-room-3d-policy.ts",
+      "change": "grounding-runtime-version-label-only",
+      "exactReplacements": [
+        {
+          "prior": "The validated Baby V2.2 GLB",
+          "current": "The validated Baby V2 runtime GLB",
+          "count": 1
+        },
+        {
+          "prior": "The V2.2 Jack",
+          "current": "The V2 Jack",
+          "count": 2
+        }
+      ],
+      "otherChanges": 0,
+      "prior": {
+        "bytes": 2802,
+        "sha256": "231f7ff126c0473a71422e5a418bfd2cfc1f3491bb310ac0259453f7b6832c9c",
+        "gitNormalizedBlobOid": "3723f9166948786847d35295909e3bbde8882143",
+        "lastWriteTimeUtc": "2026-08-17T18:18:03.2875519Z",
+        "gitState": "untracked"
+      },
+      "current": {
+        "bytes": 2804,
+        "sha256": "394bcad2239ca0d8af8dd9daa1ff2cba57f9451377a475752312f72e1983dd5b",
+        "gitNormalizedBlobOid": "57e652ca1f105948f0386266c98108805eee2449",
+        "lastWriteTimeUtc": "2026-08-17T19:05:43.9097908Z",
+        "gitState": "untracked"
+      }
+    },
+    {
+      "path": "scripts/verify-assets.mjs",
+      "change": "remove-seven-obsolete-unused-declarations-and-validate-exact-successor",
+      "removedDeclarations": [
+        "currentTrackedModified",
+        "currentUntracked",
+        "candidateEofUntracked",
+        "masteredTrackedModified",
+        "masteredUntracked",
+        "trackedModifiedCollisionPaths",
+        "untrackedCollisionPaths"
+      ],
+      "removedDeclarationCount": 7,
+      "assertionsRemoved": 0,
+      "otherChanges": 0,
+      "prior": {
+        "bytes": 164833,
+        "sha256": "92ae88a7ce35e447e2c4a12c1cdd1758fae5b1d60795de3a677a87ada8b816eb",
+        "gitNormalizedBlobOid": "1eb85ab44d4f6d65e9868bad2fa53a3f86f209c5",
+        "lastWriteTimeUtc": null,
+        "gitState": "tracked-modified"
+      },
+      "current": {
+        "bytes": 176106,
+        "sha256": "adcd1309ac36d63cba93f02304c3f67161011edcbf03ec9f38c453659e94705d",
+        "gitNormalizedBlobOid": "cff9c70530f7cc8f17a789a8d192db1ffd4ba70d",
+        "lastWriteTimeUtc": "2026-08-17T19:14:26.6378699Z",
+        "gitState": "tracked-modified"
+      }
+    }
+  ],
+  "controlPlanePredecessors": {
+    "assetPolicy": {
+      "path": "docs/production/asset-policy.v1.json",
+      "bytes": 39843,
+      "sha256": "19e656e02f1ebe953285b3e269bee22d927cacf8aea6e57b3c5fb38faf2146a0",
+      "successorPurpose": "Register this checksum-bound append-only record and its exact transitions; no asset rule, tier, import, byte, or disposition changes."
+    }
+  },
+  "unchangedInvariants": {
+    "sceneSha256": "ea74d4243ad80cf3d7e92001cd7b0bfebd869276ffb9c091c767cde09560ac14",
+    "sceneShellSha256": "83f584e3144eff26b62de9e5c9bafa9a4d6b54fcd451c2989aa6cf792df9e6d7",
+    "policyTestSha256": "a6d6fb93f08faee1c41c2526abe1206af3c3160f1664ac78627a3c87ee5acc19",
+    "qualityGatesSha256": "b171ba588a25215c00b968a501bcede46fea6a9e1b6fe011543fbbf258aca632",
+    "petRoomDirectionSha256": "edb0c5ac510b48b9b3ad7a0e6edb9a2b53a5a46b775623027e3048902dd35460",
+    "creativeDirectionSha256": "e1c3222dcab31c53c4b920944c276aa8e7cf4a33896efcf87701cf8dc61db7ef",
+    "productionDashboardSha256": "2b1f9f1aa17f7acdd1e6ce3ae6b4955f087d154ab41113cf14314f007778c873",
+    "classificationSha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb",
+    "packageJsonSha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa",
+    "packageLockJsonSha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38",
+    "governedAssetFileCount": 125,
+    "governedAssetBytes": 448676672,
+    "governedAssetAggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f",
+    "assetPathChanges": 0,
+    "assetByteChanges": 0,
+    "assetTierChanges": 0,
+    "runtimeImportChanges": 0,
+    "assetDispositionChanges": 0,
+    "classificationChanges": 0
+  }
+}

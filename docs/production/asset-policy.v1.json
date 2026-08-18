@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "policyId": "mr-boobins-asset-control-v1",
-  "status": "preservation-verified-checkpoint-candidate",
+  "status": "preservation-verified-safe-return-local-commit-with-authorized-up-contact-shadow-successor",
   "repositorySourceOfTruth": true,
   "runtimeLfsPolicy": "Runtime assets consumed by GitHub Pages remain normal Git unless the deployment workflow explicitly fetches and verifies LFS objects.",
   "baselineTextNormalization": {
@@ -27,6 +27,9 @@
     "docs/production/V4_MANAGED_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/SAFE_RETURN_CANDIDATE_EOF_NORMALIZATION_2026-08-17.json",
+    "docs/production/ALPHA_INSPECT_SAFE_RETURN_STATUS_REFRESH_2026-08-17.json",
+    "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json",
+    "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
     "assets/3d/jack/asset-manifest.json",
     "assets/3d/jack/SOURCE_LEDGER.md",
     "assets/3d/jack/v2/asset-manifest-v2.json",
@@ -49,6 +52,9 @@
     "docs/production/V4_MANAGED_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/SAFE_RETURN_CANDIDATE_EOF_NORMALIZATION_2026-08-17.json",
+    "docs/production/ALPHA_INSPECT_SAFE_RETURN_STATUS_REFRESH_2026-08-17.json",
+    "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json",
+    "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
     "assets/3d/jack/asset-manifest.json",
     "assets/3d/jack/v2/asset-manifest-v2.json",
     "assets/3d/jack/animations/clip-manifest.json",
@@ -312,6 +318,152 @@
           "currentGitBlobOid": "5ef376cea143122e8d8d67b4d5dc54c5df3cb3a9"
         }
       ]
+    }
+  ],
+  "postCommitContextRefreshes": [
+    {
+      "record": "docs/production/ALPHA_INSPECT_SAFE_RETURN_STATUS_REFRESH_2026-08-17.json",
+      "recordBytes": 18829,
+      "recordSha256": "e2849dbd7c9c0ad1214c286628dcedc73567beb86b39fb99223cffaae99f0839",
+      "kind": "checksum-bound-managed-context-status-refresh",
+      "milestone": "Build — Alpha Inspect Managed-Context Reconciliation",
+      "safeReturnCommit": "372b82d6853259a2580e554ed2d869f65f1f5c87",
+      "safeReturnParent": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+      "safeReturnCandidate": "docs/production/SAFE_RETURN_CHECKPOINT_CANDIDATE.json",
+      "safeReturnCandidateBytes": 238966,
+      "safeReturnCandidateSha256": "3593f4ce5d26242472c379fe84ed2b186ed0080a4702b7b50ee9e0c8b71348e4",
+      "safeReturnCandidateFileCount": 86,
+      "safeReturnCandidateTotalBytes": 22866380,
+      "historicalStatusExpectationCount": 27,
+      "uniqueStatusSuccessorPathCount": 22,
+      "generalMutableContextException": false,
+      "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+      "subjectiveAcceptanceOrLockAuthorized": false,
+      "authorizedTransitions": [
+        {
+          "path": "src/pet-room-scene.web.tsx",
+          "priorBytes": 12121,
+          "priorSha256": "8d26ac3d5d65dc0c4ed943ed1d55435350b9d56e5bacbb6df7de6465fe8dd7df",
+          "priorGitBlobOid": "9b59e2cda25df99a34362fea7f45744ffe160f09",
+          "currentBytes": 16712,
+          "currentSha256": "ea74d4243ad80cf3d7e92001cd7b0bfebd869276ffb9c091c767cde09560ac14",
+          "currentGitBlobOid": "13d80295067773fe9dc39fa1f00825013a7bf5a5"
+        },
+        {
+          "path": "docs/production/CREATIVE_DIRECTION.md",
+          "priorBytes": 4429,
+          "priorSha256": "f7d6a352d1713aaa17b3a240da1f32b670b6e8f88020107d5202a7c10efdc18a",
+          "priorGitBlobOid": "afab7d73b877df7e0f2e1a75db30d82841b99cb4",
+          "currentBytes": 5030,
+          "currentSha256": "e1c3222dcab31c53c4b920944c276aa8e7cf4a33896efcf87701cf8dc61db7ef",
+          "currentGitBlobOid": "8c443f800256e91861ba8ea66c4f89d10bd9779e"
+        }
+      ],
+      "frozenAlphaInspectWorkingSet": {
+        "fileCount": 9,
+        "bytes": 119205,
+        "aggregateSha256": "75ba006ab3ac58531b738917ff8fa923aec0ad9e64c7c8c01b1cb4cf0081dbcd"
+      },
+      "unchangedClassificationSha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb"
+    }
+  ],
+  "reviewFixContextRefreshes": [
+    {
+      "record": "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json",
+      "recordBytes": 7518,
+      "recordSha256": "db398e0d5772e1e0ab76fb5f3ad9580cf4eac21a82bf1d8a6b5ff5ec2e71655c",
+      "kind": "checksum-bound-managed-context-review-fix-refresh",
+      "milestone": "Build — Alpha Inspect Camera & Jack Grounding",
+      "reviewPass": 1,
+      "fixRound": 1,
+      "predecessor": "docs/production/ALPHA_INSPECT_SAFE_RETURN_STATUS_REFRESH_2026-08-17.json",
+      "predecessorRecordSha256": "e2849dbd7c9c0ad1214c286628dcedc73567beb86b39fb99223cffaae99f0839",
+      "generalMutableContextException": false,
+      "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+      "dependencyChangeAuthorized": false,
+      "externalOrGitActionAuthorized": false,
+      "subjectiveAcceptanceOrLockAuthorized": false,
+      "authorizedTransitions": [
+        {
+          "path": "docs/DECISIONS.md",
+          "priorBytes": 27761,
+          "priorSha256": "84024a13f82c5264eaeba2d3a85623d429dc06c1a8080f11ca8b8c9a5a624e06",
+          "priorGitBlobOid": "458e7602fc5cfe76a333ff25e36dbced6f29612d",
+          "currentBytes": 27759,
+          "currentSha256": "c65e88042284aa7c858fe168980d05e953545778408b9d4dfa907fc91b1aa09a",
+          "currentGitBlobOid": "fd697d6e6da3fb99f5714a02b1d26b80839a22f3"
+        },
+        {
+          "path": "src/pet-room-3d-policy.ts",
+          "priorBytes": 2802,
+          "priorSha256": "231f7ff126c0473a71422e5a418bfd2cfc1f3491bb310ac0259453f7b6832c9c",
+          "priorGitBlobOid": "3723f9166948786847d35295909e3bbde8882143",
+          "currentBytes": 2804,
+          "currentSha256": "394bcad2239ca0d8af8dd9daa1ff2cba57f9451377a475752312f72e1983dd5b",
+          "currentGitBlobOid": "57e652ca1f105948f0386266c98108805eee2449"
+        },
+        {
+          "path": "scripts/verify-assets.mjs",
+          "priorBytes": 164833,
+          "priorSha256": "92ae88a7ce35e447e2c4a12c1cdd1758fae5b1d60795de3a677a87ada8b816eb",
+          "priorGitBlobOid": "1eb85ab44d4f6d65e9868bad2fa53a3f86f209c5",
+          "currentBytes": 176106,
+          "currentSha256": "adcd1309ac36d63cba93f02304c3f67161011edcbf03ec9f38c453659e94705d",
+          "currentGitBlobOid": "cff9c70530f7cc8f17a789a8d192db1ffd4ba70d"
+        }
+      ],
+      "unchangedClassificationSha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb"
+    }
+  ],
+  "upContactShadowContextRefreshes": [
+    {
+      "record": "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
+      "recordBytes": 7020,
+      "recordSha256": "550ee99936cd52003b24e5e098cab2139d7fb6f4510aed36308f89dc6c88b70e",
+      "kind": "checksum-bound-managed-context-up-contact-shadow-refresh",
+      "milestone": "Build — Up Contact-Shadow Correction",
+      "predecessor": "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json",
+      "predecessorRecordSha256": "db398e0d5772e1e0ab76fb5f3ad9580cf4eac21a82bf1d8a6b5ff5ec2e71655c",
+      "generalMutableContextException": false,
+      "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+      "dependencyChangeAuthorized": false,
+      "externalOrGitActionAuthorized": false,
+      "subjectiveAcceptanceOrLockAuthorized": false,
+      "sceneIdentityChain": [
+        {
+          "role": "review-fix-verified-predecessor",
+          "bytes": 16712,
+          "sha256": "ea74d4243ad80cf3d7e92001cd7b0bfebd869276ffb9c091c767cde09560ac14",
+          "gitBlobOid": "13d80295067773fe9dc39fa1f00825013a7bf5a5"
+        },
+        {
+          "role": "authorized-hard-reset-intermediate",
+          "bytes": 17125,
+          "sha256": "a79fbd66ee09ae45dd2da7c2485e4d4dc4b04914a80280b1f017d833ccce2357",
+          "gitBlobOid": "cf917727d9b63e4ff1c2d3fe4c2ee9c82e0b7f74"
+        },
+        {
+          "role": "authorized-up-contact-shadow-successor",
+          "bytes": 18031,
+          "sha256": "dcc5f779dfa7425b70795544f78a23d0351aafea681c8e06711c88cb6a23a644",
+          "gitBlobOid": "62e285f0bf708c46c0ef74d00f4e5ec53f4463d3"
+        }
+      ],
+      "currentManagedFiles": [
+        {
+          "path": "src/up-contact-shadow-policy.ts",
+          "bytes": 1244,
+          "sha256": "92d7eb0ba294d928b7a630324397f431970bcb8cef19d0bb5cfd6b62d85700e7",
+          "gitBlobOid": "98f1a2efb9faebe483184da4ead0edd98f3d10d4"
+        },
+        {
+          "path": "src/up-contact-shadow-policy.test.ts",
+          "bytes": 1764,
+          "sha256": "751e78825ec419dd537412b41db61cd434ecb7f4bb9b0aa6009ef9d993954735",
+          "gitBlobOid": "da67d3d0d28afc28c4a4a045dfbbad8b4bf9027f"
+        }
+      ],
+      "unchangedClassificationSha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb"
     }
   ],
   "postBaselineIntakes": [

@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 1,
+  "kind": "alpha-inspect-checkpoint-candidate-index",
+  "generatedAt": "2026-08-18T14:27:41.2140482Z",
+  "parentHead": "372b82d6853259a2580e554ed2d869f65f1f5c87",
+  "branch": "codex/jack-v05",
+  "hashAlgorithm": "sha256",
+  "gitBlobIdentityCommand": "git hash-object --path=<path> <path>",
+  "aggregateFormat": "ordinal-case-sensitive path<TAB>bytes<TAB>lowercase-sha256<TAB>path-attributed-git-blob-oid<LF>, hashed as UTF-8",
+  "status": "verified-local-commit-candidate-separate-approval-required",
+  "sourceOfTruth": "repository working tree over the exact parent HEAD",
+  "scope": {
+    "objective": "Checkpoint only the final independently reviewed Alpha Inspect, camera hard-reset, Baby V2 grounding, and settled-Up contact-shadow work plus the minimum exact successor policy, verifier, and append-only context records.",
+    "runtimeCreativeStatus": "Technically verified and still subjectively provisional; no model, room, intro, camera presentation, or contact-shadow treatment is accepted or locked by this checkpoint.",
+    "implementationChangedByCheckpointTask": false,
+    "assetBytesChangedByCheckpointTask": false,
+    "existingFilesChangedByCheckpointTask": false,
+    "gitOrExternalActionPerformedByCheckpointTask": false
+  },
+  "receivedWorktreeBeforeThisTask": {
+    "visibleStatusPathCount": 551,
+    "trackedModifiedPathCount": 9,
+    "untrackedPathCount": 542,
+    "visibleBytes": 2609100206,
+    "includedExistingPathCount": 16,
+    "includedExistingBytes": 393959,
+    "excludedExistingPathCount": 535,
+    "excludedExistingBytes": 2608706247,
+    "unresolvedPathCount": 0,
+    "allVisiblePathsAccountedFor": true,
+    "stagedPathCount": 0
+  },
+  "candidate": {
+    "fileCount": 17,
+    "nonSelfFileCount": 16,
+    "nonSelfBytes": 393959,
+    "nonSelfAggregateBodyBytes": 2396,
+    "nonSelfAggregateSha256": "4dee22b8d49dda179958e42c9850915b9302d0044ba9eb3e7a00c1c6f59b88ba",
+    "totalBytes": null,
+    "totalBytesReportedInCompanionReport": true,
+    "files": [
+      {
+        "path": "docs/DECISIONS.md",
+        "statusRelativeToParent": "modified",
+        "bytes": 27759,
+        "sha256": "c65e88042284aa7c858fe168980d05e953545778408b9d4dfa907fc91b1aa09a",
+        "gitNormalizedBlobOid": "fd697d6e6da3fb99f5714a02b1d26b80839a22f3"
+      },
+      {
+        "path": "docs/QUALITY_GATES.md",
+        "statusRelativeToParent": "modified",
+        "bytes": 11745,
+        "sha256": "b171ba588a25215c00b968a501bcede46fea6a9e1b6fe011543fbbf258aca632",
+        "gitNormalizedBlobOid": "eb48455a5b527fa1bd3161805fae9b9d6a6a9aae"
+      },
+      {
+        "path": "docs/design/3D_PET_ROOM_DIRECTION.md",
+        "statusRelativeToParent": "modified",
+        "bytes": 32898,
+        "sha256": "edb0c5ac510b48b9b3ad7a0e6edb9a2b53a5a46b775623027e3048902dd35460",
+        "gitNormalizedBlobOid": "92fd23ffdd088e283479908ea9f1f13c3d49f6ac"
+      },
+      {
+        "path": "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json",
+        "statusRelativeToParent": "untracked",
+        "bytes": 7518,
+        "sha256": "db398e0d5772e1e0ab76fb5f3ad9580cf4eac21a82bf1d8a6b5ff5ec2e71655c",
+        "gitNormalizedBlobOid": "5433bf2e54eec212d980384a0fd6c6d50aa77564"
+      },
+      {
+        "path": "docs/production/ALPHA_INSPECT_SAFE_RETURN_STATUS_REFRESH_2026-08-17.json",
+        "statusRelativeToParent": "untracked",
+        "bytes": 18829,
+        "sha256": "e2849dbd7c9c0ad1214c286628dcedc73567beb86b39fb99223cffaae99f0839",
+        "gitNormalizedBlobOid": "7b84c5542faed1ccbc289da5d244a9897f973557"
+      },
+      {
+        "path": "docs/production/CREATIVE_DIRECTION.md",
+        "statusRelativeToParent": "modified",
+        "bytes": 5030,
+        "sha256": "e1c3222dcab31c53c4b920944c276aa8e7cf4a33896efcf87701cf8dc61db7ef",
+        "gitNormalizedBlobOid": "8c443f800256e91861ba8ea66c4f89d10bd9779e"
+      },
+      {
+        "path": "docs/production/PRODUCTION_DASHBOARD.md",
+        "statusRelativeToParent": "modified",
+        "bytes": 9599,
+        "sha256": "2b1f9f1aa17f7acdd1e6ce3ae6b4955f087d154ab41113cf14314f007778c873",
+        "gitNormalizedBlobOid": "e98e4740af85e08c621da26df91f1510272ded77"
+      },
+      {
+        "path": "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
+        "statusRelativeToParent": "untracked",
+        "bytes": 7020,
+        "sha256": "550ee99936cd52003b24e5e098cab2139d7fb6f4510aed36308f89dc6c88b70e",
+        "gitNormalizedBlobOid": "a3ad3586f5af98e03e408ee783fea00469558411"
+      },
+      {
+        "path": "docs/production/asset-policy.v1.json",
+        "statusRelativeToParent": "modified",
+        "bytes": 44909,
+        "sha256": "bd1c17bc78417099be00b881b1912d2c7f7754c5cc9883d8201a4a88cc8e3f1b",
+        "gitNormalizedBlobOid": "df1d604de506d21d03bd74f42a6f416c3acdfa13"
+      },
+      {
+        "path": "scripts/verify-assets.mjs",
+        "statusRelativeToParent": "modified",
+        "bytes": 192151,
+        "sha256": "f921394c5f68def9f5c59739c77520367947c6b434f2445ec66a81ae6eda033e",
+        "gitNormalizedBlobOid": "8a4ccdf0c805093a43acea77cdbb7f73f022a35b"
+      },
+      {
+        "path": "src/pet-room-3d-policy.test.ts",
+        "statusRelativeToParent": "untracked",
+        "bytes": 3844,
+        "sha256": "a6d6fb93f08faee1c41c2526abe1206af3c3160f1664ac78627a3c87ee5acc19",
+        "gitNormalizedBlobOid": "59a28efc8923c052e79774dbfa84bd9c12c54a01"
+      },
+      {
+        "path": "src/pet-room-3d-policy.ts",
+        "statusRelativeToParent": "untracked",
+        "bytes": 2804,
+        "sha256": "394bcad2239ca0d8af8dd9daa1ff2cba57f9451377a475752312f72e1983dd5b",
+        "gitNormalizedBlobOid": "57e652ca1f105948f0386266c98108805eee2449"
+      },
+      {
+        "path": "src/pet-room-scene-shell.tsx",
+        "statusRelativeToParent": "modified",
+        "bytes": 8814,
+        "sha256": "83f584e3144eff26b62de9e5c9bafa9a4d6b54fcd451c2989aa6cf792df9e6d7",
+        "gitNormalizedBlobOid": "710e0cc6a95cb5fbf84f761f01cb577b8d76bbc7"
+      },
+      {
+        "path": "src/pet-room-scene.web.tsx",
+        "statusRelativeToParent": "modified",
+        "bytes": 18031,
+        "sha256": "dcc5f779dfa7425b70795544f78a23d0351aafea681c8e06711c88cb6a23a644",
+        "gitNormalizedBlobOid": "62e285f0bf708c46c0ef74d00f4e5ec53f4463d3"
+      },
+      {
+        "path": "src/up-contact-shadow-policy.test.ts",
+        "statusRelativeToParent": "untracked",
+        "bytes": 1764,
+        "sha256": "751e78825ec419dd537412b41db61cd434ecb7f4bb9b0aa6009ef9d993954735",
+        "gitNormalizedBlobOid": "da67d3d0d28afc28c4a4a045dfbbad8b4bf9027f"
+      },
+      {
+        "path": "src/up-contact-shadow-policy.ts",
+        "statusRelativeToParent": "untracked",
+        "bytes": 1244,
+        "sha256": "92d7eb0ba294d928b7a630324397f431970bcb8cef19d0bb5cfd6b62d85700e7",
+        "gitNormalizedBlobOid": "98f1a2efb9faebe483184da4ead0edd98f3d10d4"
+      },
+      {
+        "path": "docs/production/ALPHA_INSPECT_CHECKPOINT_CANDIDATE.json",
+        "statusRelativeToParent": "untracked",
+        "bytes": null,
+        "sha256": null,
+        "gitNormalizedBlobOid": null,
+        "identityReportedInCompanionReport": true
+      }
+    ]
+  },
+  "selfIndexSemantics": {
+    "path": "docs/production/ALPHA_INSPECT_CHECKPOINT_CANDIDATE.json",
+    "countedAsCandidate": true,
+    "recursiveDigestStoredInsideSelf": false,
+    "reason": "A file cannot contain its own final byte size, SHA-256, or Git blob OID without changing those identities. The final candidate identity and exact candidate total bytes are therefore reported in the companion report after this JSON is final."
+  },
+  "excluded": {
+    "existingFileCount": 535,
+    "existingBytes": 2608706247,
+    "finalFileCountIncludingCompanionReport": 536,
+    "finalBytesIncludingCompanionReport": null,
+    "unresolved": [],
+    "groups": [
+      {
+        "id": "immutable-safe-return-exclusions-except-authorized-scene-successor",
+        "pathSetSource": "docs/production/SAFE_RETURN_CHECKPOINT_CANDIDATE.json excluded.groups",
+        "pathSetSourceBytes": 238966,
+        "pathSetSourceSha256": "3593f4ce5d26242472c379fe84ed2b186ed0080a4702b7b50ee9e0c8b71348e4",
+        "excludedSourceEntry": "src/pet-room-scene.web.tsx",
+        "fileCount": 482,
+        "bytes": 2603594246,
+        "aggregateWithoutSceneFormat": "ordinal-case-sensitive path<TAB>bytes<TAB>lowercase-sha256<LF>, hashed as UTF-8",
+        "aggregateWithoutSceneBodyBytes": 65444,
+        "aggregateWithoutSceneSha256": "b23c6f05cf7300895be352f24454bddc108ec9c426f96d20c50557822e95780a",
+        "verification": "All 482 source-ledger paths remained present, visible in status, and at their recorded byte sizes. The current verifier revalidated governed contents twice; multi-gigabyte preservation bundles were not redundantly re-read by this checkpoint task.",
+        "dispositionBreakdown": [
+          { "id": "canonical-editable-lfs-local-copy", "fileCount": 5, "bytes": 24926986, "aggregateSha256": "f8f3b059f03dffc0fee6bef48fb7af72199724737754ffcdaf88a97f23e76dd3" },
+          { "id": "canonical-editable-lfs-pending", "fileCount": 5, "bytes": 24926986, "aggregateSha256": "1e8268d6b85a3a19ea02d2ca5657054cd934b1af57d01ddc85ee4caf41030a40" },
+          { "id": "local-only-private", "fileCount": 59, "bytes": 22677256, "aggregateSha256": "8c27d0ec449418a7c75a055a05fc93e381ec2c67f75737cf7d0fc300b7751228" },
+          { "id": "postbaseline-audio-master-preservation-pending", "fileCount": 9, "bytes": 3057996, "aggregateSha256": "ad3e5d2ab87f0c66f018ed51e6b4f8cfe64bb3353ae41849a1e31e255c48185c" },
+          { "id": "postbaseline-audio-source-preservation-pending", "fileCount": 22, "bytes": 9985716, "aggregateSha256": "1e51386a324a09e3814bada227f8fde403a8a7dd7027bc661a1584963a06f86b" },
+          { "id": "postbaseline-v3-evidence-preservation-pending", "fileCount": 17, "bytes": 10030939, "aggregateSha256": "f5408106e172d5764827c6ce2cc61f93ece08ae450ce3ce03f2889eec1c3512c" },
+          { "id": "postbaseline-v3-source-preservation-pending", "fileCount": 10, "bytes": 267598893, "aggregateSha256": "55cbabc9d415d673472763d60467b7fd65b459588f04bd23b734e44b588e4b87" },
+          { "id": "postbaseline-v4-evidence-preservation-pending", "fileCount": 20, "bytes": 19908666, "aggregateSha256": "363a9f2ec0260b8881109d7d51a948255e7a61d214d2d564f071e764d8d46728" },
+          { "id": "postbaseline-v4-source-preservation-pending", "fileCount": 7, "bytes": 116717183, "aggregateSha256": "fbbb9ab31a9fe21105cea4a1b3e885694f29d82d1e524c87a005406788951378" },
+          { "id": "preservation-staging", "fileCount": 37, "bytes": 1567551385, "aggregateSha256": "2f82d441247af378a3e023777e795ddb298a5e914660c07067de47307001dc89" },
+          { "id": "proposed-cold-archive", "fileCount": 291, "bytes": 536212240, "aggregateSha256": "dfd1be0ccd825b6cb283927403ce0234f046409d24ca29440a5815bfac914a9c" }
+        ]
+      },
+      {
+        "id": "safe-return-companion-report",
+        "path": "docs/production/SAFE_RETURN_CHECKPOINT_REPORT.md",
+        "fileCount": 1,
+        "bytes": 12114,
+        "sha256": "9c9dbc2430a9275e28b4b102b6d98615875b30fc798d5c0d442d63b1797f1e1a",
+        "gitNormalizedBlobOid": "5be8b2584d17f51a5ab8ee04218c3c158083ebe4",
+        "disposition": "preserve untracked and exclude from this candidate"
+      },
+      {
+        "id": "paused-50.1-intro-cinematic-artifacts",
+        "fileCount": 52,
+        "bytes": 5099887,
+        "aggregateBodyBytes": 9223,
+        "aggregateSha256": "bb81773fb7e732d8c4560473f58ede511d5ab97f1d4917fa45d4a6defb67b043",
+        "liveHashedPathByPath": true,
+        "membersDefinedByExactVisiblePathsUnder": [
+          "output/intro-cinematic-concepts/",
+          "output/pdf/mr-boobins-intro-cinematic-concepts-exploratory.pdf",
+          "tmp/pdfs/intro-cinematic-concepts-render/"
+        ],
+        "subgroups": [
+          { "path": "output/intro-cinematic-concepts/", "fileCount": 31, "bytes": 1725877, "aggregateSha256": "0d1b32a3b3101f2c761e01532ba026b89b69acaf13da77ae74946b1febeb9dd3" },
+          { "path": "output/pdf/mr-boobins-intro-cinematic-concepts-exploratory.pdf", "fileCount": 1, "bytes": 683903, "aggregateSha256": "c6f9c2fbb75685583e7d18cd2cb80d4ec16edcc52d400b96380c2c6bc7678c7f" },
+          { "path": "tmp/pdfs/intro-cinematic-concepts-render/", "fileCount": 20, "bytes": 2690107, "aggregateSha256": "645f1303db6727ad1d066ee572d48a213d7700e3dc0831434114319cdd5c24d9" }
+        ],
+        "disposition": "paused concurrent 50.1 cinematic work; preserve unchanged and exclude"
+      },
+      {
+        "id": "alpha-inspect-checkpoint-companion-report",
+        "path": "docs/production/ALPHA_INSPECT_CHECKPOINT_REPORT.md",
+        "fileCount": 1,
+        "bytes": null,
+        "sha256": null,
+        "gitNormalizedBlobOid": null,
+        "identityReportedAfterFinalization": true,
+        "disposition": "companion decision report outside the exact candidate to avoid circular candidate/report digest dependency"
+      }
+    ]
+  },
+  "statusAccountingAfterThisTask": {
+    "visiblePathCount": 553,
+    "candidatePathCount": 17,
+    "excludedPathCount": 536,
+    "unresolvedPathCount": 0,
+    "allVisiblePathsAccountedFor": true,
+    "onlyNewPathsFromThisTask": [
+      "docs/production/ALPHA_INSPECT_CHECKPOINT_CANDIDATE.json",
+      "docs/production/ALPHA_INSPECT_CHECKPOINT_REPORT.md"
+    ]
+  },
+  "runtimeAndImportCoverage": {
+    "appRuntimeCodeAtParentHeadUnchangedByThisCandidateExceptSceneAdapterFiles": true,
+    "candidateLocalRuntimeDependencies": [
+      "src/pet-room-scene-shell.tsx",
+      "src/pet-room-scene.web.tsx",
+      "src/pet-room-3d-policy.ts",
+      "src/up-contact-shadow-policy.ts"
+    ],
+    "allStaticAndLocalImportsSatisfiedByParentOrCandidate": true,
+    "productionExportRouteCount": 3,
+    "smokeReferencedRuntimeAssetCount": 22,
+    "unexpectedLfsPointerCount": 0,
+    "credentialLikeFindingCount": 0
+  },
+  "integrity": {
+    "classification": {
+      "path": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+      "bytes": 138055,
+      "sha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb"
+    },
+    "governedPostBaselineAssetSet": {
+      "fileCount": 125,
+      "bytes": 448676672,
+      "aggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f",
+      "verifiedByAssetVerifierPassCount": 2
+    },
+    "packages": {
+      "packageJson": { "bytes": 1277, "sha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa" },
+      "packageLockJson": { "bytes": 483873, "sha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38" },
+      "changedByCandidate": false
+    },
+    "appendOnlyContextChain": [
+      { "path": "docs/production/ALPHA_INSPECT_SAFE_RETURN_STATUS_REFRESH_2026-08-17.json", "bytes": 18829, "sha256": "e2849dbd7c9c0ad1214c286628dcedc73567beb86b39fb99223cffaae99f0839" },
+      { "path": "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json", "bytes": 7518, "sha256": "db398e0d5772e1e0ab76fb5f3ad9580cf4eac21a82bf1d8a6b5ff5ec2e71655c" },
+      { "path": "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json", "bytes": 7020, "sha256": "550ee99936cd52003b24e5e098cab2139d7fb6f4510aed36308f89dc6c88b70e" }
+    ],
+    "assetPathByteTierImportDispositionOrClassificationChange": false,
+    "headUnchanged": true,
+    "stagedPathCount": 0
+  },
+  "verification": {
+    "commands": [
+      { "command": "git diff --check", "result": "pass" },
+      { "command": "powershell.exe -NoProfile -Command \"Get-Content -Raw '.codex-kit/model-routing.json' | ConvertFrom-Json | Out-Null; Get-Content -Raw '.codex-kit/manifest.json' | ConvertFrom-Json | Out-Null\"", "result": "pass" },
+      { "command": "npm run check:assets", "result": "pass", "freshPassCount": 2 },
+      { "command": "npm run lint", "result": "pass" },
+      { "command": "npm run typecheck", "result": "pass" },
+      { "command": "npm test", "result": "pass", "testFileCount": 12, "testCount": 222 },
+      { "command": "npm run export:web", "result": "pass", "routeCount": 3 },
+      { "command": "npm run smoke", "result": "pass", "runtimeAssetCount": 22 },
+      { "command": "npm run check:deps", "result": "pass-at-critical-threshold", "critical": 0, "high": 16, "moderate": 7 }
+    ],
+    "additionalChecks": [
+      { "check": "node --check scripts/verify-assets.mjs", "result": "pass" },
+      { "check": "candidate/config/context JSON parsing", "result": "pass" },
+      { "check": "candidate text EOF and trailing-whitespace scan", "result": "pass", "checkedPathCount": 16 },
+      { "check": "candidate LFS pointer scan", "result": "pass", "findingCount": 0 },
+      { "check": "candidate credential-like content scan", "result": "pass", "findingCount": 0 },
+      { "check": "status path union against immutable Safe Return exclusions, candidate, paused cinematic paths, and companion report", "result": "pass", "unresolvedPathCount": 0 }
+    ],
+    "visualAndIndependentReviewEvidence": {
+      "source": "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
+      "phoneViewport": [390, 844],
+      "desktopViewport": [1440, 900],
+      "horizontalOverflow": false,
+      "settledUpHindPawsReadAsGrounded": true,
+      "inspectTargetIsolationVerified": true,
+      "cameraHardResetPredecessorPreserved": true,
+      "reviewFixSource": "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json",
+      "reviewFixFindingCount": 2,
+      "reviewFixesChecksumBound": true,
+      "checkpointTaskReranBrowserQA": false
+    }
+  },
+  "knownRisksAndNonApprovals": [
+    "The current Alpha Inspect, room, Baby V2, grounding, and contact-shadow presentation remains provisional; Mark has not accepted or locked the subjective result.",
+    "The current pre-alpha intro/title direction remains explicitly rejected as final, and all paused 50.1 cinematic concept artifacts are excluded unchanged.",
+    "npm audit reported 16 high and 7 moderate production-tree findings but zero critical findings; available force fixes are breaking dependency changes and were not authorized or applied.",
+    "Checksums prove current identity and stability; they are not backups.",
+    "The candidate JSON is self-indexed by path/count only and cannot recursively contain its own final digest, byte size, or blob OID.",
+    "The companion report is outside the exact candidate and must remain untracked unless a later separate candidate explicitly includes it.",
+    "No commit, push, Git LFS action/configuration, upload, Drive change, deletion, cleanup, deployment, publication, dependency change, runtime change beyond these already-reviewed candidate bytes, or global Project Kit installation is approved by this record."
+  ],
+  "approval": {
+    "commitApproved": false,
+    "pushApproved": false,
+    "lfsActionApproved": false,
+    "uploadApproved": false,
+    "cleanupApproved": false,
+    "deployOrPublishApproved": false,
+    "dependencyChangeApproved": false,
+    "globalProjectKitInstallApproved": false,
+    "exactPasteReadyAuthorizationInCompanionReport": true
+  }
+}

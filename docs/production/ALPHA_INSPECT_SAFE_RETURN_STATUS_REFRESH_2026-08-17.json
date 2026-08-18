@@ -1,0 +1,313 @@
+{
+  "schemaVersion": 1,
+  "kind": "managed-context-status-refresh",
+  "refreshId": "2026-08-17-safe-return-commit-alpha-inspect-grounding",
+  "status": "authorized-successors-recorded-local-verification-required",
+  "observedAtUtc": "2026-08-17T18:34:17.4503548Z",
+  "hashAlgorithm": "sha256",
+  "gitBlobIdentityCommand": "git hash-object --path=<path> <path>",
+  "authorization": {
+    "milestone": "Build — Alpha Inspect Managed-Context Reconciliation",
+    "sourceMilestones": [
+      "Safe Return checkpoint local commit",
+      "Build — Alpha Inspect View & Grounding"
+    ],
+    "scope": "Record only the exact Safe Return historical-status-to-local-commit succession plus the user-authorized Alpha Inspect/grounding scene and Creative Direction transitions. No asset classification change is authorized.",
+    "generalMutableContextException": false,
+    "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+    "dependencyChangeAuthorized": false,
+    "externalOrGitActionAuthorized": false,
+    "subjectiveAcceptanceOrLockAuthorized": false
+  },
+  "repositoryState": {
+    "head": "372b82d6853259a2580e554ed2d869f65f1f5c87",
+    "parent": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+    "tree": "9093b7e66df70941e5a58da588c314523e6dfd58",
+    "branch": "codex/jack-v05",
+    "commitSubject": "feat: secure safe return checkpoint",
+    "commitTime": "2026-08-17T12:51:56-04:00",
+    "stagedPathCount": 0,
+    "stagedPaths": [],
+    "externalOrGitActionPerformedByThisMilestone": false
+  },
+  "appendOnlyHistory": [
+    {
+      "record": "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
+      "recordBytes": 209351,
+      "recordSha256": "d332853029ea2f46a3f28370b20e107d717e0fe32c65b642deee17fe5e53765f",
+      "immutable": true,
+      "kind": "pre-policy-worktree-inventory"
+    },
+    {
+      "record": "docs/production/V0.6-V0.8_PRESERVATION_MANIFEST.json",
+      "recordBytes": 13321,
+      "recordSha256": "e52cb511d4595ba7e4853e21fc3c74cec2c6f5f760ad60c6c4efee8bc2cc4f4d",
+      "immutable": true,
+      "kind": "preservation-summary"
+    },
+    {
+      "record": "docs/production/V0.6-V0.8_TEXT_NORMALIZATION.json",
+      "recordBytes": 11168,
+      "recordSha256": "284966ba2bdd29709245200cebdcd3098476a7a051d5017c812ea2f66c6d1dc2",
+      "immutable": true,
+      "kind": "baseline-text-raw-to-normalized-mapping"
+    },
+    {
+      "record": "docs/production/V0.6-V0.8_EVIDENCE_REFRESH.json",
+      "recordBytes": 2257,
+      "recordSha256": "51ef99c420fe2e6eea5c3b19cfe0f5f7f2e86842bb9f3e57b16ce908a2192f33",
+      "immutable": true,
+      "kind": "evidence-refresh"
+    },
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+      "recordBytes": 38412,
+      "recordSha256": "f474bae293be22fa6ca8fd28011350106943dc2602067ad78ff85b976c06eeb6",
+      "immutable": true,
+      "fileCount": 75,
+      "bytes": 418860110,
+      "aggregateSha256": "b0e16debbb690987ad84c168a3b84f8986f98263d44b4ff6c1502e872e9152a4"
+    },
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_75_TO_95_DELTA_2026-08-16.json",
+      "recordBytes": 14229,
+      "recordSha256": "32dada5d7a6a3c075ed29939ca4bab0b8e1db87d773a1265429c2463311c1a23",
+      "immutable": true,
+      "fileCount": 20,
+      "bytes": 7681560,
+      "aggregateSha256": "0691600367d637c1da18aee7bdcd17f4ebf79ce10b5a15674cf3d1af14a1180b"
+    },
+    {
+      "record": "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json",
+      "recordBytes": 22053,
+      "recordSha256": "aa45bff433980f26600fe7627a49ad831e1d325556d8abf4f6095b873fc54f67",
+      "immutable": true,
+      "fileCount": 30,
+      "bytes": 22135008,
+      "aggregateSha256": "de71338c2fb05e78a16eb0c7adb727c00f48756a06ba77201f3031215f9ca49f"
+    },
+    {
+      "record": "docs/production/V4_MANAGED_CONTEXT_REFRESH_2026-08-17.json",
+      "recordBytes": 6217,
+      "recordSha256": "03f8dd11fd8f0860bc3a84a3b2d70f7c806b49bf6cbcf1daf11e4c030763f17a",
+      "immutable": true,
+      "transitionCount": 3
+    },
+    {
+      "record": "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json",
+      "recordBytes": 7885,
+      "recordSha256": "99717544e31e46774e88b56f9afd018fd734863066aeb79454d36954ab37e409",
+      "immutable": true,
+      "transitionCount": 3,
+      "supportingTransitionCount": 2
+    },
+    {
+      "record": "docs/production/SAFE_RETURN_CANDIDATE_EOF_NORMALIZATION_2026-08-17.json",
+      "recordBytes": 14789,
+      "recordSha256": "8863a6b7f1cddb04a751205ac4d3704c23fee2c242483764c6f81db86f0f96e0",
+      "immutable": true,
+      "transitionCount": 6
+    },
+    {
+      "record": "docs/production/V0.6-V0.8_CHECKPOINT_CANDIDATE.json",
+      "recordBytes": 159734,
+      "recordSha256": "045c0d74c7417649307aabadde2fcdc2327fbef19cd2ef02ed11eefc6cde4b21",
+      "immutable": true,
+      "fileCount": 169,
+      "role": "recoverable-baseline-candidate"
+    },
+    {
+      "record": "docs/production/SAFE_RETURN_CHECKPOINT_CANDIDATE.json",
+      "recordBytes": 238966,
+      "recordSha256": "3593f4ce5d26242472c379fe84ed2b186ed0080a4702b7b50ee9e0c8b71348e4",
+      "immutable": true,
+      "fileCount": 86,
+      "role": "committed-safe-return-candidate"
+    }
+  ],
+  "safeReturnCommit": {
+    "commit": "372b82d6853259a2580e554ed2d869f65f1f5c87",
+    "parent": "9c8a82140d6116b29b0fa7444d9ba64e73e2baf4",
+    "tree": "9093b7e66df70941e5a58da588c314523e6dfd58",
+    "subject": "feat: secure safe return checkpoint",
+    "candidate": {
+      "record": "docs/production/SAFE_RETURN_CHECKPOINT_CANDIDATE.json",
+      "recordBytes": 238966,
+      "recordSha256": "3593f4ce5d26242472c379fe84ed2b186ed0080a4702b7b50ee9e0c8b71348e4",
+      "commitBlobOid": "401cbad538f88e0015a0606f87a8a4e3bfcb39ac",
+      "fileCount": 86,
+      "bytes": 22866380,
+      "nonSelfFileCount": 85,
+      "nonSelfBytes": 22627414,
+      "nonSelfAggregateSha256": "d7c995b8a6a2b6dd5a2ae5b86807327f2bf42a2a8ccd6222f93b46e231aea441"
+    },
+    "commitChangedPathCount": 86,
+    "historicalStatusExpectationCount": 27,
+    "uniqueStatusSuccessorPathCount": 22,
+    "statusSuccessorIdentitySource": "The immutable candidate supplies every path's exact raw bytes, SHA-256, and path-attributed Git blob OID. The local commit tree must contain those exact blobs.",
+    "statusExpectationGroups": [
+      {
+        "id": "initial-journal-current",
+        "record": "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json",
+        "memberCount": 5,
+        "members": [
+          { "path": "App.tsx", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "src/persistence.ts", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "src/persistence.test.ts", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "src/day-one-ui.ts", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "src/day-one-ui.test.ts", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" }
+        ]
+      },
+      {
+        "id": "candidate-eof-current",
+        "record": "docs/production/SAFE_RETURN_CANDIDATE_EOF_NORMALIZATION_2026-08-17.json",
+        "memberCount": 6,
+        "members": [
+          { "path": "assets/3d/jack/v3/README.md", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "assets/3d/jack/v3/SOURCE_LEDGER_V3.md", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "assets/3d/jack/v4/ADULT_LIKENESS_SPEC_V4.md", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "assets/3d/jack/v4/README.md", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "assets/3d/jack/v4/SOURCE_LEDGER_V4.md", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "assets/3d/jack/v4/tools/analyze_adult_components.py", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" }
+        ]
+      },
+      {
+        "id": "mastered-runtime-context",
+        "record": "docs/production/POST_BASELINE_ASSET_INTAKE_95_TO_125_DELTA_2026-08-16.json",
+        "memberCount": 9,
+        "members": [
+          { "path": "App.tsx", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "assets/audio/v1/audio-manifest.v1.json", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "docs/audio/AUDIO_LICENSE_LEDGER.v1.md", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "src/audio-cue-policy.test.ts", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "scripts/verify-audio-v1.mjs", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "scripts/verify-export.mjs", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "scripts/master-audio-v1.mjs", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "scripts/master-audio-music-v1.mjs", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "scripts/record-audio-source-evidence-v1.mjs", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" }
+        ]
+      },
+      {
+        "id": "managed-collision-context",
+        "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
+        "memberCount": 7,
+        "members": [
+          { "path": "assets/audio/v1/audio-manifest.v1.json", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "docs/audio/AUDIO_LICENSE_LEDGER.v1.md", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "docs/design/3D_JACK_MODEL_HANDOFF.md", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "package.json", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "src/audio-cue-policy.ts", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "src/audio-cue-policy.test.ts", "historicalGitState": "tracked-modified", "currentState": "tracked-committed-at-safe-return" },
+          { "path": "scripts/verify-audio-v1.mjs", "historicalGitState": "untracked", "currentState": "tracked-committed-at-safe-return" }
+        ]
+      }
+    ]
+  },
+  "companionReport": {
+    "path": "docs/production/SAFE_RETURN_CHECKPOINT_REPORT.md",
+    "bytes": 12114,
+    "sha256": "9c9dbc2430a9275e28b4b102b6d98615875b30fc798d5c0d442d63b1797f1e1a",
+    "pathAttributedGitBlobOid": "5be8b2584d17f51a5ab8ee04218c3c158083ebe4",
+    "lastWriteTimeUtc": "2026-08-17T16:39:50.1985037Z",
+    "currentState": "untracked-companion-not-in-candidate-or-commit",
+    "circularDigestReasonPreserved": true
+  },
+  "candidateExclusions": {
+    "fileCount": 483,
+    "bytes": 2603606367,
+    "groupCount": 12,
+    "candidateIntersectionCount": 0,
+    "currentSceneIdentityIsAuthorizedSuccessor": true,
+    "sceneExclusionAtCandidate": {
+      "path": "src/pet-room-scene.web.tsx",
+      "bytes": 12121,
+      "sha256": "8d26ac3d5d65dc0c4ed943ed1d55435350b9d56e5bacbb6df7de6465fe8dd7df",
+      "gitNormalizedBlobOid": "9b59e2cda25df99a34362fea7f45744ffe160f09",
+      "candidateIntersection": false
+    }
+  },
+  "authorizedWorkingTreeTransitions": [
+    {
+      "path": "src/pet-room-scene.web.tsx",
+      "role": "alpha-inspect-camera-and-animation-aware-grounding",
+      "prior": {
+        "bytes": 12121,
+        "sha256": "8d26ac3d5d65dc0c4ed943ed1d55435350b9d56e5bacbb6df7de6465fe8dd7df",
+        "gitNormalizedBlobOid": "9b59e2cda25df99a34362fea7f45744ffe160f09",
+        "identitySource": "Safe Return candidate concurrent-user-work exclusion"
+      },
+      "current": {
+        "bytes": 16712,
+        "sha256": "ea74d4243ad80cf3d7e92001cd7b0bfebd869276ffb9c091c767cde09560ac14",
+        "gitNormalizedBlobOid": "13d80295067773fe9dc39fa1f00825013a7bf5a5",
+        "lastWriteTimeUtc": "2026-08-17T18:25:08.8064919Z",
+        "gitState": "tracked-modified"
+      },
+      "authorization": "Mark approved the recommended optional Alpha Inspect View and grounding correction after the Safe Return commit."
+    },
+    {
+      "path": "docs/production/CREATIVE_DIRECTION.md",
+      "role": "binding-pre-alpha-visual-rejection-record",
+      "prior": {
+        "bytes": 4429,
+        "sha256": "f7d6a352d1713aaa17b3a240da1f32b670b6e8f88020107d5202a7c10efdc18a",
+        "gitNormalizedBlobOid": "afab7d73b877df7e0f2e1a75db30d82841b99cb4",
+        "identitySource": "Safe Return HEAD and immutable post-baseline creative authority identity"
+      },
+      "current": {
+        "bytes": 5030,
+        "sha256": "e1c3222dcab31c53c4b920944c276aa8e7cf4a33896efcf87701cf8dc61db7ef",
+        "gitNormalizedBlobOid": "8c443f800256e91861ba8ea66c4f89d10bd9779e",
+        "lastWriteTimeUtc": "2026-08-17T18:03:04.1951906Z",
+        "gitState": "tracked-modified"
+      },
+      "authorization": "Mark explicitly rejected the current pre-alpha intro/title presentation and broken-looking placeholder elements as a final visual direction; no subjective acceptance or lock is inferred."
+    }
+  ],
+  "frozenAlphaInspectWorkingSet": {
+    "aggregateFormat": "ordinal-case-sensitive path<TAB>bytes<TAB>lowercase-sha256<TAB>gitNormalizedBlobOid<LF>, hashed as UTF-8",
+    "fileCount": 9,
+    "bytes": 119205,
+    "aggregateBodyBytes": 1271,
+    "aggregateSha256": "75ba006ab3ac58531b738917ff8fa923aec0ad9e64c7c8c01b1cb4cf0081dbcd",
+    "files": [
+      { "path": "docs/DECISIONS.md", "bytes": 27761, "sha256": "84024a13f82c5264eaeba2d3a85623d429dc06c1a8080f11ca8b8c9a5a624e06", "gitNormalizedBlobOid": "458e7602fc5cfe76a333ff25e36dbced6f29612d", "lastWriteTimeUtc": "2026-08-17T18:18:06.6079233Z", "gitState": "tracked-modified" },
+      { "path": "docs/QUALITY_GATES.md", "bytes": 11745, "sha256": "b171ba588a25215c00b968a501bcede46fea6a9e1b6fe011543fbbf258aca632", "gitNormalizedBlobOid": "eb48455a5b527fa1bd3161805fae9b9d6a6a9aae", "lastWriteTimeUtc": "2026-08-17T18:18:58.0544810Z", "gitState": "tracked-modified" },
+      { "path": "docs/design/3D_PET_ROOM_DIRECTION.md", "bytes": 32898, "sha256": "edb0c5ac510b48b9b3ad7a0e6edb9a2b53a5a46b775623027e3048902dd35460", "gitNormalizedBlobOid": "92fd23ffdd088e283479908ea9f1f13c3d49f6ac", "lastWriteTimeUtc": "2026-08-17T18:03:10.8167119Z", "gitState": "tracked-modified" },
+      { "path": "docs/production/CREATIVE_DIRECTION.md", "bytes": 5030, "sha256": "e1c3222dcab31c53c4b920944c276aa8e7cf4a33896efcf87701cf8dc61db7ef", "gitNormalizedBlobOid": "8c443f800256e91861ba8ea66c4f89d10bd9779e", "lastWriteTimeUtc": "2026-08-17T18:03:04.1951906Z", "gitState": "tracked-modified" },
+      { "path": "docs/production/PRODUCTION_DASHBOARD.md", "bytes": 9599, "sha256": "2b1f9f1aa17f7acdd1e6ce3ae6b4955f087d154ab41113cf14314f007778c873", "gitNormalizedBlobOid": "e98e4740af85e08c621da26df91f1510272ded77", "lastWriteTimeUtc": "2026-08-17T18:18:59.6422303Z", "gitState": "tracked-modified" },
+      { "path": "src/pet-room-scene-shell.tsx", "bytes": 8814, "sha256": "83f584e3144eff26b62de9e5c9bafa9a4d6b54fcd451c2989aa6cf792df9e6d7", "gitNormalizedBlobOid": "710e0cc6a95cb5fbf84f761f01cb577b8d76bbc7", "lastWriteTimeUtc": "2026-08-17T18:02:05.2538964Z", "gitState": "tracked-modified" },
+      { "path": "src/pet-room-scene.web.tsx", "bytes": 16712, "sha256": "ea74d4243ad80cf3d7e92001cd7b0bfebd869276ffb9c091c767cde09560ac14", "gitNormalizedBlobOid": "13d80295067773fe9dc39fa1f00825013a7bf5a5", "lastWriteTimeUtc": "2026-08-17T18:25:08.8064919Z", "gitState": "tracked-modified" },
+      { "path": "src/pet-room-3d-policy.ts", "bytes": 2802, "sha256": "231f7ff126c0473a71422e5a418bfd2cfc1f3491bb310ac0259453f7b6832c9c", "gitNormalizedBlobOid": "3723f9166948786847d35295909e3bbde8882143", "lastWriteTimeUtc": "2026-08-17T18:18:03.2875519Z", "gitState": "untracked" },
+      { "path": "src/pet-room-3d-policy.test.ts", "bytes": 3844, "sha256": "a6d6fb93f08faee1c41c2526abe1206af3c3160f1664ac78627a3c87ee5acc19", "gitNormalizedBlobOid": "59a28efc8923c052e79774dbfa84bd9c12c54a01", "lastWriteTimeUtc": "2026-08-17T18:18:04.9563362Z", "gitState": "untracked" }
+    ]
+  },
+  "unchangedInvariants": {
+    "classificationRecord": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+    "classificationRecordBytes": 138055,
+    "classificationRecordSha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb",
+    "governedAssetFileCount": 125,
+    "governedAssetBytes": 448676672,
+    "governedAssetAggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f",
+    "historicalGovernedAssetBytes": 448676678,
+    "historicalGovernedAssetAggregateSha256": "db504eb423e6e7eba9995421b708706062b554ed729762c9f75374901fb2f42b",
+    "packageJsonBytes": 1277,
+    "packageJsonSha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa",
+    "packageLockJsonBytes": 483873,
+    "packageLockJsonSha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38",
+    "assetPathChanges": 0,
+    "assetByteChanges": 0,
+    "assetTierChanges": 0,
+    "runtimeImportChanges": 0,
+    "assetDispositionChanges": 0,
+    "classificationChanges": 0
+  },
+  "limitations": [
+    "This record authorizes only the exact Safe Return commit-status succession and the two named working-tree transitions; it is not a wildcard or general mutable-context exception.",
+    "All prior intake, normalization, context, candidate, and preservation records remain immutable and byte-identical.",
+    "The current pre-alpha intro/title direction remains rejected as final; this record grants no subjective acceptance or lock to any visual, model, room, audio, or UI artifact.",
+    "The Safe Return companion report remains untracked and outside the exact committed candidate because including its digest would create the documented circular dependency.",
+    "Checksums prove identity and stability; they are not backups.",
+    "No asset, classification, dependency, Git stage, commit, push, upload, deployment, publication, cleanup, or external system is changed by this record."
+  ]
+}

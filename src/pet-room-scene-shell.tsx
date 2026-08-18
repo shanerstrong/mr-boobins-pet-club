@@ -53,6 +53,7 @@ export type PetRoomSceneProps = {
 type ShellProps = PetRoomSceneProps & {
   children?: ReactNode;
   hideDog?: boolean;
+  objectTargetsEnabled?: boolean;
   objectVisuals?: boolean;
 };
 
@@ -61,6 +62,7 @@ export function PetRoomSceneShell({
   careDisabled,
   children,
   hideDog = false,
+  objectTargetsEnabled = true,
   objectVisuals = true,
   onCare,
   onRest,
@@ -105,11 +107,15 @@ export function PetRoomSceneShell({
           <View style={styles.trainingTreatDot} />
         </Animated.View>
       )}
-      <View pointerEvents="box-none" style={StyleSheet.absoluteFill}>
+      <View
+        accessibilityElementsHidden={!objectTargetsEnabled}
+        pointerEvents={objectTargetsEnabled ? "box-none" : "none"}
+        style={StyleSheet.absoluteFill}
+      >
         {hideDog && (
           <RoomObjectButton
             accessibilityLabel={`Boop Jack's nose. ${dogProps.boopStatus}`}
-            disabled={dogProps.boopDisabled}
+            disabled={dogProps.boopDisabled || !objectTargetsEnabled}
             onPress={dogProps.onBoop}
             style={[styles.noseTarget, large && styles.noseTargetLarge]}
             transparent
@@ -117,7 +123,7 @@ export function PetRoomSceneShell({
         )}
         <RoomObjectButton
           accessibilityLabel="Food bowl. Feed Jack."
-          disabled={careDisabled}
+          disabled={careDisabled || !objectTargetsEnabled}
           onPress={() => onCare("feed")}
           style={styles.bowlTarget}
           transparent={!objectVisuals}
@@ -131,7 +137,7 @@ export function PetRoomSceneShell({
         </RoomObjectButton>
         <RoomObjectButton
           accessibilityLabel="Jack's toy. Play with Jack."
-          disabled={careDisabled}
+          disabled={careDisabled || !objectTargetsEnabled}
           onPress={() => onCare("play")}
           style={styles.toyTarget}
           transparent={!objectVisuals}
@@ -146,7 +152,7 @@ export function PetRoomSceneShell({
         </RoomObjectButton>
         <RoomObjectButton
           accessibilityLabel="Cleaning mat. Clean Jack."
-          disabled={careDisabled}
+          disabled={careDisabled || !objectTargetsEnabled}
           onPress={() => onCare("clean")}
           style={styles.cleanTarget}
           transparent={!objectVisuals}
@@ -159,7 +165,7 @@ export function PetRoomSceneShell({
         </RoomObjectButton>
         <RoomObjectButton
           accessibilityLabel={`${restLabel} Jack using the bed.`}
-          disabled={restDisabled}
+          disabled={restDisabled || !objectTargetsEnabled}
           onPress={onRest}
           style={styles.bedTarget}
           transparent

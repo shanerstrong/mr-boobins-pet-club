@@ -8,7 +8,7 @@ Date: 2026-08-14
 
 **A tiny room with a big relationship.** Mr. Boobins' Pet Club becomes a fixed-camera miniature living room held inside an original virtual-pet-inspired frame. Chunky low-poly forms, softly beveled edges, and sparingly pixelated painted textures make the room tactile and nostalgic without imitating another game's assets or composition. Jack—not the controls—is the visual anchor. Care is expressed through the room: tap the bowl to feed, the toy to play, the bed to rest, the cleaning mat to clean, and Jack's unmistakably oversized nose to Boop. A compact labeled action strip remains available as a forgiving, always-visible equivalent path.
 
-The device frame is a presentation metaphor, not a copy of a known shell. It never exposes camera, movement, or gamepad controls. The camera is fixed, slightly elevated, and perspective-limited so every meaningful object remains visible and Jack's face stays large enough to read.
+The device frame is a presentation metaphor, not a copy of a known shell. The normal player view never exposes camera, movement, or gamepad controls. The authored camera is fixed, slightly elevated, and perspective-limited so every meaningful object remains visible and Jack's face stays large enough to read. During pre-alpha evaluation only, Mark approved a clearly labeled, opt-in, session-only Alpha Inspect View with clamped orbit/zoom, no pan, and an exact authored-view reset; this inspection tool is not approval for permanent gameplay camera control.
 
 ### Design pillars
 
@@ -129,7 +129,7 @@ At intermediate widths, move the left panel above the room before shrinking the 
 ### Camera and stage specification
 
 - Logical room footprint: 10.0 × 6.5 units; back walls at north and east edges.
-- Camera: fixed perspective, approximately 32° downward pitch and 8° yaw; 28–32° field of view.
+- Camera: authored fixed perspective at position `(8.2, 5.15, 10.4)`, target `(0, 0.72, -0.15)`, and 30° field of view. Alpha Inspect may temporarily orbit/zoom inside its bounded evaluation range but cannot pan or persist its view.
 - Jack movement oval: centered at (5.1, 3.5), approximately 4.5 × 2.6 units.
 - Jack never travels behind furniture or into an object target. Runtime locomotion is bounded to authored waypoints inside the oval.
 - Camera, room, and interactive object transforms are invariant across themes and dayparts.
@@ -314,7 +314,7 @@ Prove that the existing local Jack simulation and care loop can be presented as 
 
 **Out**
 
-- Camera control, free roaming, player avatar, physics gameplay, multiple rooms, additional pets, growth-stage model production beyond Baby, new simulation rules, save migration, cloud/network features, publishing, deployment, or replacement of the V0.5 Figma record.
+- Permanent gameplay camera control, free roaming, player avatar, physics gameplay, multiple rooms, additional pets, growth-stage model production beyond Baby, new simulation rules, save migration, cloud/network features, publishing, deployment, or replacement of the V0.5 Figma record. The approved session-only Alpha Inspect evaluation tool is the sole temporary camera-control exception.
 - Production polish for every current state, store packaging, analytics, monetization, social features, or sourced third-party game art.
 
 ### Affected areas
@@ -330,7 +330,7 @@ Prove that the existing local Jack simulation and care loop can be presented as 
 
 ### Acceptance criteria
 
-1. At both 390×844 and 1440×900, the fixed camera shows Jack and all six required room objects without rotation, zoom, scrolling, or movement controls.
+1. At both 390×844 and 1440×900, the authored fixed camera is the default and shows Jack and all six required room objects without requiring rotation, zoom, scrolling, or movement controls. Alpha Inspect is optional, labeled as pre-alpha inspection, does not persist, and restores this exact view on Reset or toggle-off.
 2. Jack matches the approved likeness sheet: upright ears, long wedge muzzle, broad mauve-charcoal nose, dark almond eyes, short white coat, lean baby shepherd body, sturdy paws, blue collar/tag, smile/tongue.
 3. Bowl, toy, cleaning area, bed, and nose are direct-tappable with forgiving hit regions and call the same semantic actions as the labeled strip.
 4. Every direct target is keyboard reachable on web with visible focus; strip controls are at least 44×44 and use icon + text.
@@ -349,7 +349,7 @@ Prove that the existing local Jack simulation and care loop can be presented as 
 ### Constraints
 
 - Keep Expo, React Native, TypeScript, current V6 save schema, care effects, growth, persistence, clock/daypart boundaries, audio behavior, room theme values, Boop priority, PLAY timing, cleaning timing, and starvation/death behavior intact.
-- No camera controls, free roaming, physics-dependent care outcomes, autoplay audio, network requirement, photo upload, or child data collection.
+- No permanent gameplay camera controls, free roaming, physics-dependent care outcomes, autoplay audio, network requirement, photo upload, or child data collection. Alpha Inspect remains a session-only evaluation exception with no pan or state/save authority.
 - 3D code must be presentation-only and disposable behind an adapter; simulation remains pure and renderer-independent.
 - Touch targets remain readable and forgiving; interaction cannot depend on depth perception, color, motion, or audio alone.
 - Preserve unmanaged and locally modified files; implementation must start from a reconciled clean scope.

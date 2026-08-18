@@ -1,6 +1,6 @@
 # Creative direction and taste memory
 
-Updated: 2026-08-16
+Updated: 2026-08-17
 
 ## Purpose
 
@@ -39,6 +39,7 @@ Codex may say that an artifact **passes named objective checks** and may describ
 | Date | Artifact or method | Mark's feedback | Binding lesson | Next allowed approach |
 | --- | --- | --- | --- | --- |
 | 2026-08-16 | Repeated attempts to reconstruct Jack in Blender from a single image, accompanied by Codex claims that the results looked good. | The models looked bad, and Codex kept treating them as good until Mark objected. | Do not use crude single-image Blender reconstruction as an acceptable likeness method. Do not self-approve a render or defend continued polishing after rejection. | Start from better multi-view references or a materially different character-production method. Show a cheap silhouette/likeness comparison before detailed modeling. |
+| 2026-08-17 | Current pre-alpha intro/title presentation and visibly broken-looking placeholder elements. | The build looks "pretty alpha," some things look "busted ass," and the intro page looks "super elementary." | The current intro composition and finish are rejected as a final visual direction. Do not treat functional completion as visual approval or keep polishing the same elementary concept. | Keep it honestly labeled as provisional while functionality is built. Before redesign, present materially different reference-led, inexpensive intro concepts for Mark's comparison and approval. |
 
 ### Provisional, not approved taste
 
