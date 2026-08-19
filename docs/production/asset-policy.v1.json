@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "policyId": "mr-boobins-asset-control-v1",
-  "status": "preservation-verified-safe-return-local-commit-with-authorized-up-contact-shadow-successor",
+  "status": "preservation-verified-alpha-inspect-local-commit-with-authorized-v7-health-status-successor",
   "repositorySourceOfTruth": true,
   "runtimeLfsPolicy": "Runtime assets consumed by GitHub Pages remain normal Git unless the deployment workflow explicitly fetches and verifies LFS objects.",
   "baselineTextNormalization": {
@@ -30,6 +30,7 @@
     "docs/production/ALPHA_INSPECT_SAFE_RETURN_STATUS_REFRESH_2026-08-17.json",
     "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
+    "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
     "assets/3d/jack/asset-manifest.json",
     "assets/3d/jack/SOURCE_LEDGER.md",
     "assets/3d/jack/v2/asset-manifest-v2.json",
@@ -55,6 +56,7 @@
     "docs/production/ALPHA_INSPECT_SAFE_RETURN_STATUS_REFRESH_2026-08-17.json",
     "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
+    "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
     "assets/3d/jack/asset-manifest.json",
     "assets/3d/jack/v2/asset-manifest-v2.json",
     "assets/3d/jack/animations/clip-manifest.json",
@@ -466,6 +468,70 @@
       "unchangedClassificationSha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb"
     }
   ],
+  "healthStatusMedicineContextRefreshes": [
+    {
+      "record": "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
+      "recordBytes": 14873,
+      "recordSha256": "d68c8dde360cdd1cb303f8e8720978a259c97dfcb62008ce15b48a3ddc49ecd4",
+      "kind": "checksum-bound-managed-context-health-status-medicine-refresh",
+      "milestone": "Build — Health, Attention, Status & Medicine",
+      "identityPredecessor": "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json",
+      "identityPredecessorRecordSha256": "99717544e31e46774e88b56f9afd018fd734863066aeb79454d36954ab37e409",
+      "latestAppendOnlyPredecessor": "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
+      "latestAppendOnlyPredecessorRecordSha256": "550ee99936cd52003b24e5e098cab2139d7fb6f4510aed36308f89dc6c88b70e",
+      "generalMutableContextException": false,
+      "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+      "classificationChangeAuthorized": true,
+      "classificationChangeScope": "Exactly one two-file, 108367-byte normal-Git representative-evidence group plus generatedAt; every prior group and source-inventory anchor remains unchanged.",
+      "evidenceExtensionCorrectionAuthorized": true,
+      "dependencyChangeAuthorized": false,
+      "externalOrGitActionAuthorized": false,
+      "subjectiveAcceptanceOrLockAuthorized": false,
+      "authorizedTransitions": [
+        {
+          "path": "App.tsx",
+          "priorBytes": 117794,
+          "priorSha256": "8262c0892427dd1929e1d5c5724c50c655fd1b28ca8f59c6411b0d735a7cdf2a",
+          "priorGitBlobOid": "653263bb5ceb3ce429692886d0138e0d9834fe0d",
+          "currentBytes": 124143,
+          "currentSha256": "7606a0852ce92f5e14d429b63befa0961934e4f91d4efe6a95eafd04f36c9a1b",
+          "currentGitBlobOid": "aae7d69c2e3a50e8cf8622edd4b0d89aa241ec25"
+        },
+        {
+          "path": "src/persistence.ts",
+          "priorBytes": 50476,
+          "priorSha256": "c409b047a6bcaf956cc85fa02fa654279d1b307d90080325c10514b9cffa1996",
+          "priorGitBlobOid": "450e14bd6df68416ba79fc3dcfe33b5837c08b9f",
+          "currentBytes": 56676,
+          "currentSha256": "86cca46e758c7fc98282ab223d313594d27edbc28cb4911d7588b35a9c2b1338",
+          "currentGitBlobOid": "ee8fdf7578b8f10a3331c1eed344e3be9a3e3229"
+        },
+        {
+          "path": "src/persistence.test.ts",
+          "priorBytes": 78712,
+          "priorSha256": "f46584fe22378e5d93bb860cadeb5ecfb8e2d39344b96d030f8403d35677c8ca",
+          "priorGitBlobOid": "233351c4004f1f6d1fa9e69ba90a2e448d25323f",
+          "currentBytes": 87216,
+          "currentSha256": "798b9b143c0bfdddf7e74d0f9c6c95b2ceddf36c2161d2a3a27e6f11a0eee318",
+          "currentGitBlobOid": "b3624e32e80af85f00bf429afcc6c24a5c3cab0a"
+        }
+      ],
+      "supportingContentTransitionCount": 4,
+      "committedStateSuccessorCount": 8,
+      "representativeEvidence": {
+        "groupId": "normal-git-evidence-health-status-medicine",
+        "fileCount": 2,
+        "bytes": 108367,
+        "paths": [
+          "evidence/health-status-medicine/status-medicine-390x844.jpg",
+          "evidence/health-status-medicine/status-medicine-1440x900.jpg"
+        ]
+      },
+      "priorClassificationSha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb",
+      "currentClassificationBytes": 138776,
+      "currentClassificationSha256": "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a"
+    }
+  ],
   "postBaselineIntakes": [
     {
       "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
@@ -788,6 +854,15 @@
       ]
     },
     {
+      "id": "normal-git-evidence-health-status-medicine",
+      "tier": "normal-git",
+      "disposition": "Representative V7 health, attention, Status, and Medicine phone/desktop evidence retained in Git.",
+      "pathGlobs": [
+        "evidence/health-status-medicine/status-medicine-390x844.jpg",
+        "evidence/health-status-medicine/status-medicine-1440x900.jpg"
+      ]
+    },
+    {
       "id": "proposed-cold-archive",
       "tier": "cold-archive-verified",
       "disposition": "Rejected iteration, redundant checkpoint, raw candidate, unused derivative, or bulk evidence preserved in the restricted authenticated-download-verified Drive cold archive. Keep originals untouched and excluded pending separate cleanup approval.",
@@ -879,6 +954,14 @@
       "paths": [
         "evidence/3d-jack/v4/jack-adult-v4-candidate-d-phone-board.png",
         "evidence/3d-jack/v4/jack-adult-v4-candidate-d-report.json"
+      ]
+    },
+    {
+      "id": "health-status-medicine",
+      "maxFiles": 2,
+      "paths": [
+        "evidence/health-status-medicine/status-medicine-390x844.jpg",
+        "evidence/health-status-medicine/status-medicine-1440x900.jpg"
       ]
     }
   ]

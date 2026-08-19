@@ -3,6 +3,8 @@ import {
   BOOP_COOLDOWN_MS,
   CLEANING_DURATION_MS,
   DEFAULT_CLOCK_MULTIPLIER,
+  ATTENTION_DECAY_AWAKE_PER_MINUTE,
+  ATTENTION_DECAY_SLEEPING_PER_MINUTE,
   GROWTH_STEP_MINUTES,
   MAX_ELAPSED_REAL_MS,
   MAX_OFFLINE_PET_MINUTES,
@@ -18,6 +20,7 @@ import {
   getGrowthStage,
   getHygieneAppearance,
   getVirtualClock,
+  giveMedicine,
   isPetState,
   isSleeping,
   isValidNickname,
@@ -26,6 +29,7 @@ import {
   startSleep,
   switchClockRate,
   wakePet,
+  type LegacyNeeds,
   type Needs,
   type PetState,
 } from "./simulation";
@@ -38,11 +42,13 @@ function adoptedPet(now = 0, overrides: Partial<PetState> = {}): PetState {
   };
 }
 
-describe("V0.5 V6 simulation", () => {
+describe("V7 health, attention, and legacy simulation", () => {
   it("creates a strict reset-ready New Baby Jack at 8:00 AM", () => {
     const pet = createNewPet(123);
     expect(pet).toMatchObject({
-      version: 6,
+      version: 7,
+      wellbeingLastUpdatedAt: 123,
+      needs: expect.objectContaining({ health: 100, attention: 80 }),
       ageVirtualMinutes: 0,
       roomTheme: "cozy",
       starvationVirtualMinutes: 0,
@@ -129,7 +135,14 @@ describe("V0.5 V6 simulation", () => {
   });
 
   it("uses exact Boop priority without mutating needs", () => {
-    const base: Needs = { hunger: 100, energy: 100, hygiene: 100, happiness: 100 };
+    const base: Needs = {
+      hunger: 100,
+      energy: 100,
+      hygiene: 100,
+      happiness: 100,
+      health: 100,
+      attention: 100,
+    };
     const cases: [Needs, string][] = [
       [{ ...base, hunger: 20, energy: 0, hygiene: 0, happiness: 0 }, "whine"],
       [{ ...base, hunger: 21, energy: 25, hygiene: 0, happiness: 0 }, "grumble"],
@@ -229,32 +242,184 @@ describe("V0.5 V6 simulation", () => {
     expect(wakePet(dead, 1000)).toEqual(dead);
   });
 
-  it("migrates strict V1 through V4 into safe V6 state", () => {
+  it("decays attention at the exact awake and sleeping rates and restores 28 with Play", () => {
+    const awake = advancePet(adoptedPet(0), 60 * 60_000);
+    expect(ATTENTION_DECAY_AWAKE_PER_MINUTE).toBe(0.1);
+    expect(awake.needs.attention).toBeCloseTo(74, 8);
+
+    const sleeping = startSleep(adoptedPet(0), 2, 0);
+    const afterSleepHour = advancePet(sleeping, 60 * 60_000);
+    expect(ATTENTION_DECAY_SLEEPING_PER_MINUTE).toBe(0.04);
+    expect(afterSleepHour.needs.attention).toBeCloseTo(77.6, 8);
+
+    const lonely = adoptedPet(0, {
+      needs: { ...createNewPet(0).needs, attention: 30 },
+    });
+    expect(careForPet(lonely, "play", 0).needs.attention).toBe(58);
+    expect(careForPet(adoptedPet(0), "play", 0).needs.attention).toBe(100);
+  });
+
+  it("applies exact additive neglect health decay only for time below 20", () => {
+    const neglected = adoptedPet(0, {
+      needs: {
+        ...createNewPet(0).needs,
+        hunger: 19,
+        hygiene: 19,
+        attention: 19,
+        health: 100,
+      },
+    });
+    const afterTenMinutes = advancePet(neglected, 10 * 60_000);
+    expect(afterTenMinutes.needs.health).toBeCloseTo(99.1, 8);
+
+    const crossing = adoptedPet(0, {
+      needs: {
+        ...createNewPet(0).needs,
+        hunger: 20.32,
+        health: 90,
+      },
+    });
+    const afterTwoMinutes = advancePet(crossing, 2 * 60_000);
+    expect(afterTwoMinutes.needs.health).toBeCloseTo(89.96, 8);
+
+    const caredFor = advancePet(adoptedPet(0), 60 * 60_000);
+    expect(caredFor.needs.health).toBe(100);
+  });
+
+  it("uses bounded medicine without cost, resurrection, or a new death cause", () => {
+    const unwell = adoptedPet(0, {
+      needs: { ...createNewPet(0).needs, health: 49 },
+      starvationVirtualMinutes: 17,
+    });
+    const treated = giveMedicine(unwell, 0);
+    expect(treated.needs.health).toBe(74);
+    expect(treated.starvationVirtualMinutes).toBe(17);
+    expect(treated.ageVirtualMinutes).toBe(0);
+    expect(giveMedicine({ ...unwell, needs: { ...unwell.needs, health: 79 } }, 0).needs.health).toBe(100);
+    expect(giveMedicine({ ...unwell, needs: { ...unwell.needs, health: 80 } }, 0).needs.health).toBe(80);
+
+    const zeroHealth = advancePet(
+      { ...unwell, needs: { ...unwell.needs, health: 0 } },
+      60_000,
+    );
+    expect(zeroHealth.isDead).toBe(false);
+    const dead = {
+      ...unwell,
+      needs: { ...unwell.needs, health: 0 },
+      starvationVirtualMinutes: STARVATION_DEATH_MINUTES,
+      isDead: true,
+    };
+    expect(giveMedicine(dead, 60_000)).toEqual(dead);
+  });
+
+  it("caps offline attention and health change at four pet hours without offline death", () => {
+    const neglected = adoptedPet(0, {
+      needs: {
+        ...createNewPet(0).needs,
+        hunger: 0,
+        hygiene: 0,
+        attention: 0,
+        health: 60,
+      },
+      starvationVirtualMinutes: 119,
+    });
+    const atCap = advancePetOffline(neglected, 4 * 60 * 60_000);
+    const aboveCap = advancePetOffline(neglected, 40 * 60 * 60_000);
+    expect(aboveCap.needs).toEqual(atCap.needs);
+    expect(atCap.needs.health).toBeCloseTo(38.4, 8);
+    expect(atCap.needs.attention).toBe(0);
+    expect(atCap.starvationVirtualMinutes).toBe(119);
+    expect(atCap.isDead).toBe(false);
+  });
+
+  it("preserves all six needs across backward clocks and freezes them after starvation death", () => {
+    const pet = adoptedPet(10_000, {
+      needs: {
+        ...createNewPet(0).needs,
+        health: 37,
+        attention: 22,
+      },
+    });
+    expect(advancePet(pet, 9_999)).toEqual(pet);
+    const dead = advancePet(
+      {
+        ...pet,
+        lastUpdatedAt: 10_000,
+        wellbeingLastUpdatedAt: 10_000,
+        needs: { ...pet.needs, hunger: 0 },
+        starvationVirtualMinutes: 119,
+      },
+      70_000,
+    );
+    expect(dead.isDead).toBe(true);
+    expect(advancePet(dead, Number.MAX_SAFE_INTEGER)).toEqual(dead);
+  });
+
+  it("migrates strict V1 through V6 into safe V7 state without retroactive wellbeing decay", () => {
     const base = createNewPet(0);
+    const legacyNeeds: LegacyNeeds = {
+      hunger: base.needs.hunger,
+      happiness: base.needs.happiness,
+      energy: base.needs.energy,
+      hygiene: base.needs.hygiene,
+    };
     const common = {
       id: base.id,
       name: base.name,
       createdAt: 0,
       lastUpdatedAt: 0,
-      needs: base.needs,
+      needs: legacyNeeds,
     };
     const v1 = { version: 1 as const, ...common };
     const v2 = { version: 2 as const, ...common, ageVirtualMinutes: 50, isSleeping: false };
     const v3 = { version: 3 as const, ...common, ageVirtualMinutes: 900, introCompleted: true, sleepUntilVirtualMinutes: null };
     const v4 = { ...v3, version: 4 as const, growthMeals: 3, growthMealReady: false };
-    for (const old of [v1, v2, v3, v4]) {
-      const migrated = migratePetState(old);
-      expect(migrated?.version).toBe(6);
+    const v5 = {
+      ...v4,
+      version: 5 as const,
+      backgroundId: "sunny" as const,
+      starvationVirtualMinutes: 0,
+      isDead: false,
+    };
+    const { introCompleted, backgroundId, ...v5Rest } = v5;
+    const v6 = {
+      ...v5Rest,
+      version: 6 as const,
+      adoptionCompleted: introCompleted,
+      roomTheme: "cozy" as const,
+    };
+    const upgradeAt = 4 * 60 * 60_000;
+    for (const old of [v1, v2, v3, v4, v5, v6]) {
+      const migrated = migratePetState(old, upgradeAt);
+      expect(migrated?.version).toBe(7);
       expect(migrated?.roomTheme).toBe("cozy");
       expect(migrated?.isDead).toBe(false);
+      expect(migrated?.needs.health).toBe(100);
+      expect(migrated?.needs.attention).toBe(80);
+      expect(migrated?.wellbeingLastUpdatedAt).toBe(upgradeAt);
+      const caughtUp = advancePetOffline(migrated!, upgradeAt);
+      expect(caughtUp.needs.health).toBe(100);
+      expect(caughtUp.needs.attention).toBe(80);
+      expect(caughtUp.ageVirtualMinutes).toBeGreaterThanOrEqual(
+        migrated!.ageVirtualMinutes,
+      );
+      expect(caughtUp.lastUpdatedAt).toBe(upgradeAt);
     }
-    expect(migratePetState(v4)?.growthMeals).toBe(3);
-    expect(migratePetState(v3)?.adoptionCompleted).toBe(true);
+    expect(migratePetState(v4, 10_000)?.growthMeals).toBe(3);
+    expect(migratePetState(v3, 10_000)?.adoptionCompleted).toBe(true);
   });
 
-  it("migrates each strict V5 background and intro field to V6", () => {
+  it("migrates each strict V5 background and intro field to V7", () => {
     const base = createNewPet(0);
-    const { adoptionCompleted, roomTheme, version, ...rest } = base;
+    const {
+      adoptionCompleted,
+      roomTheme,
+      version,
+      wellbeingLastUpdatedAt: _wellbeingLastUpdatedAt,
+      needs,
+      ...rest
+    } = base;
+    const { health: _health, attention: _attention, ...legacyNeeds } = needs;
     const mapping = [
       ["sunny", "cozy"],
       ["night", "blue"],
@@ -263,22 +428,23 @@ describe("V0.5 V6 simulation", () => {
     for (const [backgroundId, expectedTheme] of mapping) {
       const v5 = {
         ...rest,
+        needs: legacyNeeds,
         version: 5,
         introCompleted: true,
         backgroundId,
       };
       expect(migratePetState(v5)).toMatchObject({
-        version: 6,
+        version: 7,
         adoptionCompleted: true,
         roomTheme: expectedTheme,
       });
     }
     expect(adoptionCompleted).toBe(false);
     expect(roomTheme).toBe("cozy");
-    expect(version).toBe(6);
+    expect(version).toBe(7);
   });
 
-  it("validates strict V6 schema and persisted themes", () => {
+  it("validates strict six-need V7 schema and persisted themes", () => {
     const pet = createNewPet(0);
     expect(isPetState({ ...pet, roomTheme: "garden" })).toBe(true);
     expect(isPetState({ ...pet, extra: true })).toBe(false);
@@ -286,14 +452,26 @@ describe("V0.5 V6 simulation", () => {
     expect(isPetState({ ...pet, name: "" })).toBe(false);
     expect(isPetState({ ...pet, isDead: true })).toBe(false);
     expect(isPetState({ ...pet, starvationVirtualMinutes: 120 })).toBe(false);
+    const { health: _health, ...fiveNeeds } = pet.needs;
+    expect(isPetState({ ...pet, needs: fiveNeeds })).toBe(false);
+    expect(isPetState({ ...pet, version: 6 })).toBe(false);
   });
 
   it("rejects parseable legacy data that is not strict", () => {
     const base = createNewPet(0);
-    const { adoptionCompleted, roomTheme, version, ...rest } = base;
+    const {
+      adoptionCompleted,
+      roomTheme,
+      version,
+      wellbeingLastUpdatedAt: _wellbeingLastUpdatedAt,
+      needs,
+      ...rest
+    } = base;
+    const { health: _health, attention: _attention, ...legacyNeeds } = needs;
     expect(
       migratePetState({
         ...rest,
+        needs: legacyNeeds,
         version: 5,
         introCompleted: adoptionCompleted,
         backgroundId: "sunny",
@@ -301,7 +479,7 @@ describe("V0.5 V6 simulation", () => {
       }),
     ).toBeNull();
     expect(roomTheme).toBe("cozy");
-    expect(version).toBe(6);
+    expect(version).toBe(7);
   });
 
   it("retains the explicit default rate", () => {
@@ -311,7 +489,11 @@ describe("V0.5 V6 simulation", () => {
   it("stamps pre-adoption time without replaying need decay or age", () => {
     const pet = createNewPet(1_000);
     const stamped = advancePet(pet, 24 * 60 * 60_000, 3_600);
-    expect(stamped).toEqual({ ...pet, lastUpdatedAt: 24 * 60 * 60_000 });
+    expect(stamped).toEqual({
+      ...pet,
+      lastUpdatedAt: 24 * 60 * 60_000,
+      wellbeingLastUpdatedAt: 24 * 60 * 60_000,
+    });
   });
 
   it.each([
@@ -338,7 +520,7 @@ describe("V0.5 V6 simulation", () => {
     "preserves %s starvation minutes and prevents death while offline",
     (starvationVirtualMinutes) => {
       const pet = adoptedPet(0, {
-        needs: { hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
+        needs: { ...createNewPet(0).needs, hunger: 0 },
         starvationVirtualMinutes,
       });
       const next = advancePetOffline(pet, 4 * 60 * 60_000);
@@ -350,7 +532,7 @@ describe("V0.5 V6 simulation", () => {
 
   it("lets hunger cross zero offline without starting starvation", () => {
     const pet = adoptedPet(0, {
-      needs: { hunger: 0.01, happiness: 80, energy: 76, hygiene: 88 },
+      needs: { ...createNewPet(0).needs, hunger: 0.01 },
       starvationVirtualMinutes: 0.5,
     });
     const next = advancePetOffline(pet, 60_000);

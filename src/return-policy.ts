@@ -7,9 +7,18 @@ const needCopy: Record<NeedKey, { label: string; action: string }> = {
   happiness: { label: "happiness", action: "A little play would help." },
   energy: { label: "energy", action: "Let Jack rest soon." },
   hygiene: { label: "hygiene", action: "A gentle clean would help." },
+  health: { label: "health", action: "Check Status and give medicine if needed." },
+  attention: { label: "attention", action: "Spend a little time playing together." },
 };
 
-const needPriority: NeedKey[] = ["hunger", "energy", "hygiene", "happiness"];
+const needPriority: NeedKey[] = [
+  "health",
+  "hunger",
+  "hygiene",
+  "attention",
+  "energy",
+  "happiness",
+];
 
 export function getLowestNeed(needs: PetState["needs"]): NeedKey {
   return needPriority.reduce((lowest, key) =>

@@ -17,7 +17,7 @@ function adoptedPet(overrides: Partial<PetState> = {}): PetState {
 describe("return policy", () => {
   it("uses a stable care priority when needs tie", () => {
     const pet = adoptedPet({
-      needs: { hunger: 30, happiness: 30, energy: 30, hygiene: 30 },
+      needs: { ...createNewPet(0).needs, hunger: 30, happiness: 30, energy: 30, hygiene: 30 },
     });
     expect(getLowestNeed(pet.needs)).toBe("hunger");
   });
@@ -45,7 +45,7 @@ describe("return policy", () => {
   it("turns the lowest need into one clear next action", () => {
     const before = adoptedPet();
     const after = adoptedPet({
-      needs: { hunger: 12, happiness: 70, energy: 68, hygiene: 72 },
+      needs: { ...createNewPet(0).needs, hunger: 12, happiness: 70, energy: 68, hygiene: 72 },
     });
     expect(
       getReturnSummary({
@@ -58,15 +58,15 @@ describe("return policy", () => {
 
   it.each([
     {
-      needs: { hunger: 70, happiness: 75, energy: 35, hygiene: 80 },
+      needs: { ...createNewPet(0).needs, hunger: 70, happiness: 75, energy: 35, hygiene: 80 },
       expected: "Welcome back! Jack could use some care: energy is 35%. Let Jack rest soon.",
     },
     {
-      needs: { hunger: 70, happiness: 75, energy: 80, hygiene: 34 },
+      needs: { ...createNewPet(0).needs, hunger: 70, happiness: 75, energy: 80, hygiene: 34 },
       expected: "Welcome back! Jack could use some care: hygiene is 34%. A gentle clean would help.",
     },
     {
-      needs: { hunger: 70, happiness: 33, energy: 80, hygiene: 75 },
+      needs: { ...createNewPet(0).needs, hunger: 70, happiness: 33, energy: 80, hygiene: 75 },
       expected: "Welcome back! Jack could use some care: happiness is 33%. A little play would help.",
     },
   ])("summarizes a $expected return", ({ needs, expected }) => {
@@ -84,7 +84,7 @@ describe("return policy", () => {
   it("reports a healthy return without manufacturing a reward", () => {
     const before = adoptedPet();
     const after = adoptedPet({
-      needs: { hunger: 71, happiness: 74, energy: 76, hygiene: 80 },
+      needs: { ...createNewPet(0).needs, hunger: 71, happiness: 74, energy: 76, hygiene: 80 },
     });
     expect(
       getReturnSummary({
@@ -95,6 +95,31 @@ describe("return policy", () => {
     ).toBe(
       "Welcome back! Jack is doing well. His lowest need is hunger at 71%.",
     );
+  });
+
+  it.each([
+    ["health", 19, "Jack’s health is very low"],
+    ["attention", 35, "attention is 35%"],
+  ] as const)("includes current %s in return guidance", (key, value, copy) => {
+    const before = adoptedPet();
+    const after = adoptedPet({
+      needs: {
+        ...createNewPet(0).needs,
+        hunger: 70,
+        happiness: 70,
+        energy: 70,
+        hygiene: 70,
+        health: key === "health" ? value : 70,
+        attention: key === "attention" ? value : 70,
+      },
+    });
+    expect(
+      getReturnSummary({
+        before,
+        after,
+        elapsedRealMs: RETURN_SUMMARY_MIN_REAL_MS,
+      }),
+    ).toContain(copy);
   });
 
   it("announces an in-progress nap and never creates an away-death message", () => {

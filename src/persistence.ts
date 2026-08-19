@@ -232,18 +232,6 @@ function isCareGuideProgress(value: unknown): value is CareGuideProgress {
   );
 }
 
-function isCleanCompletionSnapshot(
-  value: unknown,
-): value is CleanCompletionSnapshot {
-  if (!value || typeof value !== "object") return false;
-  const record = value as Record<string, unknown>;
-  return (
-    Object.keys(record).length === 2 &&
-    (record.pet === null || isPetState(record.pet)) &&
-    (record.progress === null || isCareGuideProgress(record.progress))
-  );
-}
-
 function isExplicitResetRawSnapshot(
   value: unknown,
 ): value is ExplicitResetTransaction["before"] {
@@ -260,11 +248,24 @@ function isExplicitResetTarget(
   pet: unknown,
   progress: unknown,
   generation: unknown,
+  allowMigratedWellbeing = false,
 ): pet is PetState {
+  const expected =
+    pet && typeof pet === "object" && "createdAt" in pet
+      ? createNewPet((pet as { createdAt: number }).createdAt)
+      : null;
+  const expectedWithMigration =
+    expected && allowMigratedWellbeing && "wellbeingLastUpdatedAt" in (pet as object)
+      ? {
+          ...expected,
+          wellbeingLastUpdatedAt: (pet as PetState).wellbeingLastUpdatedAt,
+        }
+      : expected;
   if (
     !isPetState(pet) ||
     !isCareGuideProgress(progress) ||
-    JSON.stringify(pet) !== JSON.stringify(createNewPet(pet.createdAt)) ||
+    !expectedWithMigration ||
+    !samePet(pet, expectedWithMigration) ||
     progress.firstCareCompleted ||
     !generation ||
     typeof generation !== "object"
@@ -279,10 +280,32 @@ function isExplicitResetTarget(
   );
 }
 
-function isStoredCleanCompletionTransaction(
+function normalizeCleanCompletionSnapshot(
   value: unknown,
-): value is StoredCleanCompletionTransaction {
-  if (!value || typeof value !== "object") return false;
+  migratedAt: number,
+): CleanCompletionSnapshot | null {
+  if (!value || typeof value !== "object") return null;
+  const record = value as Record<string, unknown>;
+  if (
+    Object.keys(record).length !== 2 ||
+    (record.progress !== null && !isCareGuideProgress(record.progress))
+  ) {
+    return null;
+  }
+  const pet =
+    record.pet === null ? null : migratePetState(record.pet, migratedAt);
+  if (record.pet !== null && !pet) return null;
+  return {
+    pet,
+    progress: record.progress as CareGuideProgress | null,
+  };
+}
+
+function normalizeStoredCleanCompletionTransaction(
+  value: unknown,
+  migratedAt: number,
+): StoredCleanCompletionTransaction | null {
+  if (!value || typeof value !== "object") return null;
   const record = value as Record<string, unknown>;
   const validStatus =
     record.status === "prepared" || record.status === "committed";
@@ -290,53 +313,77 @@ function isStoredCleanCompletionTransaction(
     Object.keys(record).length === 4 &&
     record.version === 1 &&
     validStatus &&
-    isPetState(record.pet) &&
     isCareGuideProgress(record.progress) &&
     record.progress.firstCareCompleted
   ) {
-    return true;
+    const pet = migratePetState(record.pet, migratedAt);
+    return pet
+      ? {
+          version: 1,
+          status: record.status as CleanCompletionTransactionStatus,
+          pet,
+          progress: record.progress,
+        }
+      : null;
   }
+  const before = normalizeCleanCompletionSnapshot(record.before, migratedAt);
   if (
     record.version === 2 &&
     Object.keys(record).length === 4 &&
     validStatus &&
-    isCleanCompletionSnapshot(record.before) &&
+    before &&
     record.after &&
     typeof record.after === "object"
   ) {
     const after = record.after as Record<string, unknown>;
+    const afterPet = migratePetState(after.pet, migratedAt);
     if (
       Object.keys(after).length === 2 &&
-      isPetState(after.pet) &&
+      afterPet &&
       isCareGuideProgress(after.progress) &&
       after.progress.firstCareCompleted
     ) {
-      const before = record.before as CleanCompletionSnapshot;
       return (
         before.pet === null ||
-        (before.pet.id === after.pet.id &&
-          before.pet.createdAt === after.pet.createdAt)
-      );
+        (before.pet.id === afterPet.id &&
+          before.pet.createdAt === afterPet.createdAt)
+      )
+        ? {
+            version: 2,
+            status: record.status as CleanCompletionTransactionStatus,
+            before,
+            after: { pet: afterPet, progress: after.progress },
+          }
+        : null;
     }
-    return false;
+    return null;
   }
   if (record.version === 3) {
     if (
       Object.keys(record).length !== 5 ||
       record.operation !== "supersede" ||
       !validStatus ||
-      !isCleanCompletionSnapshot(record.before) ||
+      !before ||
       !record.after ||
       typeof record.after !== "object"
     ) {
-      return false;
+      return null;
     }
     const after = record.after as Record<string, unknown>;
+    const afterPet = migratePetState(after.pet, migratedAt);
     return (
       Object.keys(after).length === 2 &&
-      isPetState(after.pet) &&
+      afterPet &&
       isCareGuideProgress(after.progress)
-    );
+    )
+      ? {
+          version: 3,
+          operation: "supersede",
+          status: record.status as CleanCompletionTransactionStatus,
+          before,
+          after: { pet: afterPet, progress: after.progress },
+        }
+      : null;
   }
   if (
     record.version !== 4 ||
@@ -347,17 +394,62 @@ function isStoredCleanCompletionTransaction(
     !record.after ||
     typeof record.after !== "object"
   ) {
-    return false;
+    return null;
   }
   const after = record.after as Record<string, unknown>;
-  return (
-    Object.keys(after).length === 2 &&
-    isExplicitResetTarget(after.pet, after.progress, record.targetGeneration)
-  );
+  if (Object.keys(after).length !== 2 || !isCareGuideProgress(after.progress)) {
+    return null;
+  }
+  const afterPet = migratePetState(after.pet, migratedAt);
+  if (!afterPet) return null;
+  const expectedReset = {
+    ...createNewPet(afterPet.createdAt),
+    wellbeingLastUpdatedAt: afterPet.wellbeingLastUpdatedAt,
+  };
+  if (
+    !samePet(afterPet, expectedReset) ||
+    !isExplicitResetTarget(
+      afterPet,
+      after.progress,
+      record.targetGeneration,
+      true,
+    )
+  ) {
+    return null;
+  }
+  return {
+    version: 4,
+    operation: "explicit-reset",
+    status: record.status as CleanCompletionTransactionStatus,
+    before: record.before as ExplicitResetTransaction["before"],
+    after: { pet: afterPet, progress: after.progress },
+    targetGeneration: record.targetGeneration as ExplicitResetTransaction["targetGeneration"],
+  };
 }
 
 function samePet(left: PetState, right: PetState) {
-  return JSON.stringify(left) === JSON.stringify(right);
+  return (
+    left.version === right.version &&
+    left.id === right.id &&
+    left.name === right.name &&
+    left.createdAt === right.createdAt &&
+    left.lastUpdatedAt === right.lastUpdatedAt &&
+    left.wellbeingLastUpdatedAt === right.wellbeingLastUpdatedAt &&
+    left.needs.hunger === right.needs.hunger &&
+    left.needs.happiness === right.needs.happiness &&
+    left.needs.energy === right.needs.energy &&
+    left.needs.hygiene === right.needs.hygiene &&
+    left.needs.health === right.needs.health &&
+    left.needs.attention === right.needs.attention &&
+    left.ageVirtualMinutes === right.ageVirtualMinutes &&
+    left.adoptionCompleted === right.adoptionCompleted &&
+    left.sleepUntilVirtualMinutes === right.sleepUntilVirtualMinutes &&
+    left.growthMeals === right.growthMeals &&
+    left.growthMealReady === right.growthMealReady &&
+    left.roomTheme === right.roomTheme &&
+    left.starvationVirtualMinutes === right.starvationVirtualMinutes &&
+    left.isDead === right.isDead
+  );
 }
 
 function sameProgress(left: CareGuideProgress, right: CareGuideProgress) {
@@ -437,11 +529,14 @@ function committedJournalRaw(preparedJournalRaw: string) {
   }
 }
 
-function petResultFromRead(read: StorageValueRead): LoadPetResult {
+function petResultFromRead(
+  read: StorageValueRead,
+  migratedAt = Date.now(),
+): LoadPetResult {
   if (read.kind === "unavailable") return { kind: "unavailable" };
   if (read.raw === null) return { kind: "missing" };
   try {
-    const pet = migratePetState(JSON.parse(read.raw) as unknown);
+    const pet = migratePetState(JSON.parse(read.raw) as unknown, migratedAt);
     return pet ? { kind: "loaded", pet } : { kind: "invalid" };
   } catch {
     return { kind: "invalid" };
@@ -463,14 +558,77 @@ function guideResultFromRead(
   }
 }
 
+function isLegacyV6PetRaw(raw: string | null) {
+  if (raw === null) return false;
+  try {
+    const value = JSON.parse(raw) as { version?: unknown };
+    return value?.version === 6;
+  } catch {
+    return false;
+  }
+}
+
+function stablePreparedJournalMigrationAnchor(
+  value: unknown,
+  petRead: StorageValueRead,
+  fallback: number,
+) {
+  if (
+    !value ||
+    typeof value !== "object" ||
+    (value as { status?: unknown }).status !== "prepared" ||
+    petRead.kind !== "available" ||
+    petRead.raw === null
+  ) {
+    return fallback;
+  }
+  let current: unknown;
+  try {
+    current = JSON.parse(petRead.raw) as unknown;
+  } catch {
+    return fallback;
+  }
+  if (!isPetState(current)) return fallback;
+
+  const record = value as Record<string, unknown>;
+  const candidates: unknown[] = [];
+  if (record.version === 2) {
+    const before = record.before as { pet?: unknown } | null;
+    const after = record.after as { pet?: unknown } | null;
+    candidates.push(before?.pet, after?.pet);
+  } else if (record.version === 4 && record.operation === "explicit-reset") {
+    const after = record.after as { pet?: unknown } | null;
+    candidates.push(after?.pet);
+  }
+
+  for (const candidate of candidates) {
+    if (
+      !candidate ||
+      typeof candidate !== "object" ||
+      (candidate as { version?: unknown }).version !== 6
+    ) {
+      continue;
+    }
+    const migrated = migratePetState(
+      candidate,
+      current.wellbeingLastUpdatedAt,
+    );
+    if (migrated && samePet(migrated, current)) {
+      return current.wellbeingLastUpdatedAt;
+    }
+  }
+  return fallback;
+}
+
 export async function loadPet(
   storage: StorageLike = AsyncStorage,
 ): Promise<LoadPetResult> {
+  const migratedAt = Date.now();
   try {
     const raw = await storage.getItem(PET_STORAGE_KEY);
     if (raw === null) return { kind: "missing" };
     try {
-      const pet = migratePetState(JSON.parse(raw) as unknown);
+      const pet = migratePetState(JSON.parse(raw) as unknown, migratedAt);
       return pet ? { kind: "loaded", pet } : { kind: "invalid" };
     } catch {
       return { kind: "invalid" };
@@ -486,12 +644,13 @@ export function savePet(pet: PetState, storage: StorageLike = AsyncStorage) {
 export async function loadPetAndCareGuide(
   storage: StorageLike = AsyncStorage,
 ): Promise<LoadPetAndCareGuideResult> {
+  const migratedAt = Date.now();
   const [petRead, careGuideRead, transactionRead] = await Promise.all([
     readStorageValue(storage, PET_STORAGE_KEY),
     readStorageValue(storage, CARE_GUIDE_PROGRESS_KEY),
     readStorageValue(storage, CLEAN_COMPLETION_TRANSACTION_KEY),
   ]);
-  const petResult = petResultFromRead(petRead);
+  const petResult = petResultFromRead(petRead, migratedAt);
   const careGuideResult = guideResultFromRead(careGuideRead);
 
   if (transactionRead.kind === "unavailable") {
@@ -512,14 +671,18 @@ export async function loadPetAndCareGuide(
   let transaction: StoredCleanCompletionTransaction;
   try {
     const parsed = JSON.parse(transactionRead.raw) as unknown;
-    if (!isStoredCleanCompletionTransaction(parsed)) {
+    const normalized = normalizeStoredCleanCompletionTransaction(
+      parsed,
+      stablePreparedJournalMigrationAnchor(parsed, petRead, migratedAt),
+    );
+    if (!normalized) {
       return {
         petResult,
         careGuideResult,
         cleanCompletionRecovery: "invalid",
       };
     }
-    transaction = parsed;
+    transaction = normalized;
   } catch {
     return {
       petResult,
@@ -550,7 +713,11 @@ export async function loadPetAndCareGuide(
     const afterPetRaw = JSON.stringify(transaction.after.pet);
     const afterProgressRaw = JSON.stringify(transaction.after.progress);
     const beforePet = petRead.raw === transaction.before.petRaw;
-    const afterPet = petRead.raw === afterPetRaw;
+    const afterPet =
+      petRead.raw === afterPetRaw ||
+      (isLegacyV6PetRaw(petRead.raw) &&
+        petResult.kind === "loaded" &&
+        samePet(petResult.pet, transaction.after.pet));
     const beforeGuide = careGuideRead.raw === transaction.before.progressRaw;
     const afterGuide = careGuideRead.raw === afterProgressRaw;
     const isLegalOrderedBoundary =
@@ -617,12 +784,13 @@ export async function loadPetAndCareGuide(
 export async function loadPetAndCareGuideDurably(
   storage: StorageLike = AsyncStorage,
 ): Promise<DurableLoadPetAndCareGuideResult> {
+  const migratedAt = Date.now();
   const [petRead, careGuideRead, transactionRead] = await Promise.all([
     readStorageValue(storage, PET_STORAGE_KEY),
     readStorageValue(storage, CARE_GUIDE_PROGRESS_KEY),
     readStorageValue(storage, CLEAN_COMPLETION_TRANSACTION_KEY),
   ]);
-  const petResult = petResultFromRead(petRead);
+  const petResult = petResultFromRead(petRead, migratedAt);
   const careGuideResult = guideResultFromRead(careGuideRead);
 
   if (transactionRead.kind === "unavailable") {
@@ -645,7 +813,11 @@ export async function loadPetAndCareGuideDurably(
   let transaction: StoredCleanCompletionTransaction;
   try {
     const parsed = JSON.parse(transactionRead.raw) as unknown;
-    if (!isStoredCleanCompletionTransaction(parsed)) {
+    const normalized = normalizeStoredCleanCompletionTransaction(
+      parsed,
+      stablePreparedJournalMigrationAnchor(parsed, petRead, migratedAt),
+    );
+    if (!normalized) {
       return {
         petResult,
         careGuideResult,
@@ -653,7 +825,7 @@ export async function loadPetAndCareGuideDurably(
         explicitResetRecovery: "invalid",
       };
     }
-    transaction = parsed;
+    transaction = normalized;
   } catch {
     return {
       petResult,
@@ -724,7 +896,7 @@ export async function loadPetAndCareGuideDurably(
         }
         if (
           !petMatchesSnapshot(
-            petResultFromRead(latestPet),
+            petResultFromRead(latestPet, migratedAt),
             transaction.before.pet,
           )
         ) {
@@ -790,7 +962,7 @@ export async function loadPetAndCareGuideDurably(
       }
       if (
         !petMatchesSnapshot(
-          petResultFromRead(finalPet),
+          petResultFromRead(finalPet, migratedAt),
           transaction.after.pet,
         ) ||
         !guideMatchesSnapshot(
@@ -861,7 +1033,12 @@ export async function loadPetAndCareGuideDurably(
   const afterPetRaw = JSON.stringify(transaction.after.pet);
   const afterProgressRaw = JSON.stringify(transaction.after.progress);
   const beforePet = petRead.raw === transaction.before.petRaw;
-  const afterPet = petRead.raw === afterPetRaw;
+  const afterPetExact = petRead.raw === afterPetRaw;
+  const afterPet =
+    afterPetExact ||
+    (isLegacyV6PetRaw(petRead.raw) &&
+      petResult.kind === "loaded" &&
+      samePet(petResult.pet, transaction.after.pet));
   const beforeGuide = careGuideRead.raw === transaction.before.progressRaw;
   const afterGuide = careGuideRead.raw === afterProgressRaw;
   const isLegalOrderedBoundary =
@@ -889,6 +1066,29 @@ export async function loadPetAndCareGuideDurably(
         };
       }
       if (latestPet.raw !== transaction.before.petRaw) {
+        return {
+          petResult,
+          careGuideResult,
+          cleanCompletionRecovery: "prepared",
+          explicitResetRecovery: "invalid",
+        };
+      }
+      await savePet(transaction.after.pet, storage);
+    } else if (afterPet && !afterPetExact) {
+      const latestPet = await readStorageValue(storage, PET_STORAGE_KEY);
+      if (latestPet.kind === "unavailable") {
+        return {
+          petResult,
+          careGuideResult,
+          cleanCompletionRecovery: "prepared",
+          explicitResetRecovery: "unavailable",
+        };
+      }
+      const latestPetResult = petResultFromRead(latestPet, migratedAt);
+      if (
+        latestPetResult.kind !== "loaded" ||
+        !samePet(latestPetResult.pet, transaction.after.pet)
+      ) {
         return {
           petResult,
           careGuideResult,

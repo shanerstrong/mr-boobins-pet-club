@@ -119,6 +119,8 @@ Track A — domain and care:
 - Add Status and Health/Medicine flows.
 - Preserve rollback, large-jump, interrupted-storage, invalid-save retention, and all previous migrations.
 
+Implementation checkpoint — 2026-08-18: Track A is implemented pending final evidence and gates. Strict V1–V6 records migrate to six-need V7 with health `100`, attention `80`, and a separate wellbeing timestamp that prevents retroactive pre-upgrade decay while legacy needs, age, and Safe Return catch-up remain exact. Attention decays at the approved awake/sleeping rates and PLAY restores `28`; health changes only through additive approved neglect decay or bounded Medicine. Health zero is nonfatal and active starvation remains the only death path. The App exposes read-only Status and a separate typed Medicine intent with deterministic health bands, recommendations, reachability, sleeping, dead, and healthy-state guards. Delayed-Clean journals normalize embedded V6 pets without weakening raw-before or malformed-save protections.
+
 Track B — control contract:
 
 - Extract typed player intents from `App.tsx`.

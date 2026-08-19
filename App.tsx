@@ -125,6 +125,13 @@ import {
   type DelayedCleanCommitAdapter,
   type ReturnContext,
 } from "./src/day-one-ui";
+import {
+  getHealthBand,
+  getMedicineAvailability,
+  getStatusRecommendation,
+  healthBandLabels,
+  resolveHealthPlayerIntent,
+} from "./src/pet-care-policy";
 
 type Mode = "loading" | "available" | "invalid" | "unavailable" | "session";
 type Screen = AppScreen;
@@ -170,6 +177,8 @@ const needLabels: Record<NeedKey, string> = {
   happiness: "HAPPINESS",
   energy: "ENERGY",
   hygiene: "HYGIENE",
+  health: "HEALTH",
+  attention: "ATTENTION",
 };
 const themeLabels: Record<RoomTheme, string> = {
   cozy: "COZY",
@@ -251,6 +260,7 @@ function PetClub() {
   const boopCooldownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [reduced, setReduced] = useState(false);
   const [sleepMenuOpen, setSleepMenuOpen] = useState(false);
+  const [statusOpen, setStatusOpen] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
   const [resetPending, setResetPending] = useState(false);
   const [resetError, setResetError] = useState("");
@@ -354,7 +364,7 @@ function PetClub() {
   const sleeping = pet ? isSleeping(pet) : false;
   const playing = emote === "toy";
   const trainingOpen = trainingState.phase !== "closed";
-  const modalOpen = trainingOpen || sleepMenuOpen || restartOpen;
+  const modalOpen = trainingOpen || sleepMenuOpen || statusOpen || restartOpen;
   const trainingAnimating =
     trainingOpen && trainingState.phase !== "choosing";
   const previousSleepingRef = useRef<boolean | null>(null);
@@ -385,6 +395,7 @@ function PetClub() {
     setMessage("");
     setEmote(null);
     setSleepMenuOpen(false);
+    setStatusOpen(false);
     setRestartOpen(false);
     setTrainingState((current) => {
       const next = transitionTraining(current, { type: "CLOSE" });
@@ -1589,6 +1600,50 @@ function PetClub() {
     playSound("yawn");
   };
 
+  const openStatus = () => {
+    const current = petRef.current ?? pet;
+    if (!current || careLocked || trainingOpen) return;
+    const resolution = resolveHealthPlayerIntent({
+      pet: current,
+      intent: "status",
+      now: interactionNow(),
+    });
+    if (!resolution.allowed) return;
+    setStatusOpen(true);
+    playSound("uiOpen");
+  };
+
+  const closeStatus = () => {
+    setStatusOpen(false);
+    playSound("uiClose");
+  };
+
+  const giveHealthMedicine = () => {
+    const now = interactionNow();
+    const current = applyTimeEvent({ type: "TICK", now }) ?? petRef.current;
+    if (!current) return;
+    const resolution = resolveHealthPlayerIntent({
+      pet: current,
+      intent: "medicine",
+      now,
+      careLocked,
+      careReachable:
+        foregroundRef.current && screenRef.current === "room" && !careLocked,
+      multiplier: DEFAULT_CLOCK_MULTIPLIER,
+    });
+    petRef.current = resolution.pet;
+    setPet(resolution.pet);
+    if (!resolution.allowed) return;
+    setReturnContext(null);
+    setTransientMessage(
+      `Medicine helped ${resolution.pet.name} feel better.`,
+      "happy",
+    );
+    playSound("uiConfirm");
+    playSound("happy");
+    animatePulse();
+  };
+
   const persistPreferences = (next: AudioPreferences) => {
     if (!currentAliveSnapshot()) return;
     playSound("uiTap");
@@ -1784,6 +1839,13 @@ function PetClub() {
     ),
   );
   const careAvailable = canCareForPet(pet) && !careLocked;
+  const medicineAvailability = getMedicineAvailability({
+    pet,
+    careLocked,
+    careReachable: screen === "room" && !careLocked,
+  });
+  const statusRecommendation = getStatusRecommendation(pet);
+  const healthBand = getHealthBand(pet.needs.health);
   const boopAvailability = getBoopAvailability(
     pet,
     interactionNow(),
@@ -1798,6 +1860,8 @@ function PetClub() {
         ? firstCareGuidance
         : returnSummary
           ? returnSummary
+          : pet.needs.health < 50
+            ? `${pet.name} feels unwell. Check Status for medicine.`
           : pet.needs.hunger <= 20
             ? `${pet.name} is very hungry and needs food.`
             : pet.needs.energy <= 25
@@ -1806,6 +1870,8 @@ function PetClub() {
                 ? `${pet.name} is muddy and needs a clean.`
                 : pet.needs.happiness <= 30
                   ? `${pet.name} wants to play.`
+                  : pet.needs.attention <= 35
+                    ? `${pet.name} needs your attention. Play together?`
                   : clock.daypart === "night"
                     ? "Nighttime makes Jack sleepy, but bedtime is your choice."
                     : `${pet.name} is ready to play.`;
@@ -1893,6 +1959,7 @@ function PetClub() {
             applyTimeEvent({ type: "NAVIGATE", now: interactionNow(), screen: "settings" });
           }
         }}
+        onStatus={openStatus}
         onSleep={sleeping ? wakeUp : openSleepMenu}
         onTrain={beginTraining}
         pet={pet}
@@ -1969,6 +2036,17 @@ function PetClub() {
         visible={sleepMenuOpen}
         onCancel={closeSleepMenu}
         onChoose={beginSleep}
+      />
+      <StatusDialog
+        bandLabel={healthBandLabels[healthBand]}
+        medicineAvailable={medicineAvailability.available}
+        medicineMessage={medicineAvailability.message}
+        onCancel={closeStatus}
+        onMedicine={giveHealthMedicine}
+        pet={pet}
+        recommendation={statusRecommendation.message}
+        reduced={reduced}
+        visible={statusOpen}
       />
       <TrainingDialog
         onCancel={closeTraining}
@@ -2187,6 +2265,7 @@ type RoomScreenProps = {
   onBoop: () => void;
   onCare: (action: CareAction) => void;
   onOpenSettings: () => void;
+  onStatus: () => void;
   onSleep: () => void;
   onTrain: () => void;
   pet: PetState;
@@ -2224,6 +2303,7 @@ function RoomScreen(props: RoomScreenProps) {
     onBoop,
     onCare,
     onOpenSettings,
+    onStatus,
     onSleep,
     onTrain,
     pet,
@@ -2262,7 +2342,10 @@ function RoomScreen(props: RoomScreenProps) {
             {pet.name.toUpperCase()} • DAY {clock.day}
           </Text>
         </View>
-        <UtilityButton label="⚙" accessibilityLabel="Open settings" disabled={pet.isDead || careLocked} onPress={onOpenSettings} />
+        <View style={s.utilityRow}>
+          <UtilityButton label="STATUS" accessibilityLabel="Open Jack's status" disabled={careLocked} onPress={onStatus} />
+          <UtilityButton label="⚙" accessibilityLabel="Open settings" disabled={pet.isDead || careLocked} onPress={onOpenSettings} />
+        </View>
       </View>
       <View style={[desktop && s.roomGrid]}>
         <View style={desktop && s.roomVisualColumn}>
@@ -2364,6 +2447,7 @@ function MobileRoomScreen({
   onBoop,
   onCare,
   onOpenSettings,
+  onStatus,
   onSleep,
   onTrain,
   pet,
@@ -2464,6 +2548,7 @@ function MobileRoomScreen({
         <DeviceActionButton icon="✦" label="Clean" tint="#91cadd" disabled={actionDisabled} onPress={() => onCare("clean")} />
         <DeviceActionButton icon="☾" label={sleeping ? "Wake" : "Rest"} tint="#b4a1d4" disabled={restDisabled} onPress={onSleep} />
         <DeviceActionButton icon="★" label="Train" tint="#efc553" disabled={trainingDisabled} onPress={onTrain} />
+        <DeviceActionButton icon="＋" label="Status" tint="#f0d7a6" disabled={careLocked} onPress={onStatus} />
       </View>
 
       <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={s.devicePawOrnament}>
@@ -2946,6 +3031,118 @@ function TrainingDialog({
   );
 }
 
+function StatusDialog({
+  bandLabel,
+  medicineAvailable,
+  medicineMessage,
+  onCancel,
+  onMedicine,
+  pet,
+  recommendation,
+  reduced,
+  visible,
+}: {
+  bandLabel: string;
+  medicineAvailable: boolean;
+  medicineMessage: string;
+  onCancel: () => void;
+  onMedicine: () => void;
+  pet: PetState;
+  recommendation: string;
+  reduced: boolean;
+  visible: boolean;
+}) {
+  const dialogRef = useRef<View>(null);
+  const cancelRef = useRef(onCancel);
+  useEffect(() => {
+    cancelRef.current = onCancel;
+  }, [onCancel]);
+  useEffect(() => {
+    if (!visible || Platform.OS !== "web") return;
+    const dialog = dialogRef.current as unknown as HTMLElement | null;
+    const focusableSelector =
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    return installDialogFocusBoundary(
+      {
+        getActiveElement: () =>
+          document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null,
+        getFocusableElements: () =>
+          dialog
+            ? Array.from(
+                dialog.querySelectorAll<HTMLElement>(focusableSelector),
+              )
+            : [],
+        contains: (element) =>
+          Boolean(
+            dialog &&
+              element &&
+              dialog.contains(element as unknown as Node),
+          ),
+        addKeydownListener: (listener) =>
+          document.addEventListener(
+            "keydown",
+            listener as unknown as (event: KeyboardEvent) => void,
+          ),
+        removeKeydownListener: (listener) =>
+          document.removeEventListener(
+            "keydown",
+            listener as unknown as (event: KeyboardEvent) => void,
+          ),
+        scheduleInitialFocus: (callback) => setTimeout(callback, 0),
+        cancelInitialFocus: (handle) =>
+          clearTimeout(handle as ReturnType<typeof setTimeout>),
+      },
+      () => cancelRef.current(),
+    );
+  }, [visible]);
+
+  return (
+    <Modal
+      transparent
+      animationType={reduced ? "none" : "fade"}
+      visible={visible}
+      onRequestClose={onCancel}
+    >
+      <View style={s.overlay}>
+        <View
+          ref={dialogRef}
+          role="dialog"
+          accessibilityViewIsModal
+          accessibilityLabel={`Jack's status. Health is ${bandLabel}.`}
+          style={[s.dialog, s.statusDialog]}
+        >
+          <Text style={s.flowLabel}>STATUS • READ ONLY</Text>
+          <Text style={s.pixelTitle}>{pet.name.toUpperCase()} • {bandLabel.toUpperCase()}</Text>
+          <Text accessibilityLiveRegion="polite" style={s.bodyText}>
+            {recommendation}
+          </Text>
+          <View accessibilityLabel="All six pet needs" style={s.statusNeedsGrid}>
+            {(Object.keys(needLabels) as NeedKey[]).map((key) => (
+              <NeedMeter
+                key={key}
+                label={needLabels[key]}
+                value={pet.needs[key]}
+              />
+            ))}
+          </View>
+          <Text style={s.note}>{medicineMessage}</Text>
+          <View style={s.statusActions}>
+            <ActionButton
+              label="GIVE MEDICINE"
+              disabled={!medicineAvailable}
+              onPress={onMedicine}
+              wide
+            />
+            <ActionButton label="CLOSE STATUS" onPress={onCancel} tone="sleep" wide />
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
 function SleepDialog({
   reduced,
   visible,
@@ -3220,6 +3417,7 @@ const s = StyleSheet.create({
   pawToeFour: { right: 0, top: 12, transform: [{ rotate: "24deg" }] },
   pawPad: { position: "absolute", width: 47, height: 34, left: 16, bottom: 0, borderRadius: 22, backgroundColor: "#5b99a4", borderWidth: 2, borderColor: "#3b6f78", transform: [{ rotate: "-2deg" }] },
   roomHeader: { minHeight: 48, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 10 },
+  utilityRow: { flexDirection: "row", alignItems: "center", gap: 8 },
   roomGrid: { flexDirection: "row", gap: 28, alignItems: "flex-start" },
   roomVisualColumn: { flex: 1.6 },
   roomControls: { gap: 6 },
@@ -3258,6 +3456,9 @@ const s = StyleSheet.create({
   textButton: { minWidth: 44, minHeight: 44, alignSelf: "center", alignItems: "center", justifyContent: "center", paddingHorizontal: 12 },
   textButtonLabel: { color: ink, fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 12, fontWeight: "900" },
   overlay: { flex: 1, alignItems: "center", justifyContent: "center", padding: 24, backgroundColor: "rgba(39,68,76,0.52)" },
+  statusDialog: { maxWidth: 560, maxHeight: "92%" },
+  statusNeedsGrid: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  statusActions: { gap: 8 },
   dialog: { width: "100%", maxWidth: 440, padding: 22, gap: 16, borderRadius: 26, borderWidth: 4, borderColor: outline, backgroundColor: surface },
   sleepOptions: { flexDirection: "row", flexWrap: "wrap", gap: 10, justifyContent: "center" },
   trainingOverlay: { flex: 1, justifyContent: "flex-end", paddingHorizontal: 12, paddingBottom: 16, backgroundColor: "rgba(39,68,76,0.18)" },

@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "kind": "v7-gameplay-checkpoint-candidate-index",
+  "generatedAt": "2026-08-18T20:30:43.5093895Z",
+  "parentHead": "8e01e9d36faaaa74d79ea6f51777fce6319875e5",
+  "branch": "codex/jack-v05",
+  "hashAlgorithm": "sha256",
+  "gitBlobIdentityCommand": "git hash-object --path=<path> <path>",
+  "aggregateFormat": "ordinal-case-sensitive path<TAB>bytes<TAB>lowercase-sha256<TAB>path-attributed-git-blob-oid<LF>, hashed as UTF-8",
+  "status": "verified-local-commit-candidate-separate-approval-required",
+  "sourceOfTruth": "repository working tree over the exact parent HEAD",
+  "scope": {
+    "objective": "Checkpoint only the completed and independently reviewed Health, Attention, Status & Medicine slice: strict V7 migration, App-used typed care policy, deterministic tests, factual documentation, two representative JPEGs, and the exact context, policy, verifier, and classification successors required by that slice.",
+    "creativeStatus": "The two representative screenshots are objective review evidence, not asset promotion or subjective acceptance. No visual, audio, model, room, intro, or cinematic direction is accepted or locked by this checkpoint.",
+    "implementationChangedByCheckpointTask": false,
+    "assetOrEvidenceBytesChangedByCheckpointTask": false,
+    "existingFilesChangedByCheckpointTask": false,
+    "gitOrExternalActionPerformedByCheckpointTask": false
+  },
+  "receivedWorktreeBeforeThisTask": {
+    "visibleStatusPathCount": 558,
+    "trackedModifiedPathCount": 17,
+    "untrackedPathCount": 541,
+    "visibleBytes": 2609725465,
+    "includedExistingPathCount": 22,
+    "includedExistingBytes": 1009850,
+    "excludedExistingPathCount": 536,
+    "excludedExistingBytes": 2608715615,
+    "unresolvedPathCount": 0,
+    "allVisiblePathsAccountedFor": true,
+    "stagedPathCount": 0
+  },
+  "candidate": {
+    "fileCount": 23,
+    "nonSelfFileCount": 22,
+    "nonSelfBytes": 1009850,
+    "nonSelfAggregateBodyBytes": 3137,
+    "nonSelfAggregateSha256": "00e26a190ff5455833c82c23ed475cb1eba3680453f121f3824fed5bd69a63b1",
+    "totalBytes": null,
+    "totalBytesReportedInCompanionReport": true,
+    "files": [
+      { "path": "App.tsx", "statusRelativeToParent": "modified", "bytes": 124143, "sha256": "7606a0852ce92f5e14d429b63befa0961934e4f91d4efe6a95eafd04f36c9a1b", "gitNormalizedBlobOid": "aae7d69c2e3a50e8cf8622edd4b0d89aa241ec25" },
+      { "path": "PLANS.md", "statusRelativeToParent": "modified", "bytes": 20772, "sha256": "8e98a4329be7a9e3a3ac58b9ed2c0d855345f38e60fe6bdfb590e756b2b21764", "gitNormalizedBlobOid": "726fe00b5f1244886327af5b5a103f68ca51fb17" },
+      { "path": "docs/DECISIONS.md", "statusRelativeToParent": "modified", "bytes": 28988, "sha256": "91b9a0a76e9e31bc7a2da4df1666bd699cc4055f3f42b852ddcdb32b17a2de3d", "gitNormalizedBlobOid": "bc4185e44ed6e56655f299a1ba5aa2bec41b62d1" },
+      { "path": "docs/GAME_PRODUCTION_PLAN.md", "statusRelativeToParent": "modified", "bytes": 23255, "sha256": "95ef191bbb896ab45e5ce24d6e8192b089c158c99f922e08493e3a66b6807528", "gitNormalizedBlobOid": "23b7d8955e8e3fbcf86422c00dd67c62fc800dd6" },
+      { "path": "docs/QUALITY_GATES.md", "statusRelativeToParent": "modified", "bytes": 12486, "sha256": "b158a6f590564754c86aa7ac5a2e26ca82c9579b59abfedda96380022d2b7fa4", "gitNormalizedBlobOid": "b25b264ddf9a45985403e3091ed3f239c7bfc49e" },
+      { "path": "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json", "statusRelativeToParent": "untracked", "bytes": 14873, "sha256": "d68c8dde360cdd1cb303f8e8720978a259c97dfcb62008ce15b48a3ddc49ecd4", "gitNormalizedBlobOid": "57085d300ea5a5b0f8b8c26801feddfdfee43313" },
+      { "path": "docs/production/PRODUCTION_DASHBOARD.md", "statusRelativeToParent": "modified", "bytes": 10273, "sha256": "0fa0a671ef67ae37a13464c32a7150860e8d61f0a40d47ff57232353a5c6fc0c", "gitNormalizedBlobOid": "31d8432bde6b4513758632cf4703922e483317d2" },
+      { "path": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json", "statusRelativeToParent": "modified", "bytes": 138776, "sha256": "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a", "gitNormalizedBlobOid": "955a0c100e2029452612d9209e45d7591348e98c" },
+      { "path": "docs/production/asset-policy.v1.json", "statusRelativeToParent": "modified", "bytes": 49221, "sha256": "7f8e92558224d2ee1ad128a9b8bfc9cd170ea0dd35199b472635ba4aaecf8b9e", "gitNormalizedBlobOid": "822714523c80360f125724cbb0f7aab408de83ff" },
+      { "path": "evidence/health-status-medicine/status-medicine-1440x900.jpg", "statusRelativeToParent": "untracked", "bytes": 67890, "sha256": "4396f872b40e6cc06f7804cbec51449e16f97b30dd5bb033f1d88d3ffe5f9b3d", "gitNormalizedBlobOid": "76c3a943b10f69202779cb3d3855976dd6779a1a" },
+      { "path": "evidence/health-status-medicine/status-medicine-390x844.jpg", "statusRelativeToParent": "untracked", "bytes": 40477, "sha256": "9a15da2ad4edbfa9939fe28bee5023e21d6767a8073d0cf7e216499e33b08fe3", "gitNormalizedBlobOid": "3acaa3fb6257d907a89355a0a890c692f0adb805" },
+      { "path": "scripts/verify-assets.mjs", "statusRelativeToParent": "modified", "bytes": 227502, "sha256": "fd0e8d801fb4b7e82b49173d81e1164a136b06afa8e0907939a76a3f0e374d01", "gitNormalizedBlobOid": "39d6e6a45af6026a9408b262e64673caaf630e00" },
+      { "path": "src/app-lifecycle.test.ts", "statusRelativeToParent": "modified", "bytes": 11241, "sha256": "799859515cc36acfcf867b1603f70aa606c873c6406e471a1070f9ee34f68008", "gitNormalizedBlobOid": "274aeec2340db8392f5e02294f8b5263f900bf5b" },
+      { "path": "src/day-one-ui.test.ts", "statusRelativeToParent": "modified", "bytes": 35071, "sha256": "b7cd34d38473ae9cb0a3a63b2ad3d65a46c8a1eca64e4dc107985938dab27918", "gitNormalizedBlobOid": "b80d50afb72f3852724c6826a3073a0a600827c2" },
+      { "path": "src/persistence.test.ts", "statusRelativeToParent": "modified", "bytes": 87216, "sha256": "798b9b143c0bfdddf7e74d0f9c6c95b2ceddf36c2161d2a3a27e6f11a0eee318", "gitNormalizedBlobOid": "b3624e32e80af85f00bf429afcc6c24a5c3cab0a" },
+      { "path": "src/persistence.ts", "statusRelativeToParent": "modified", "bytes": 56676, "sha256": "86cca46e758c7fc98282ab223d313594d27edbc28cb4911d7588b35a9c2b1338", "gitNormalizedBlobOid": "ee8fdf7578b8f10a3331c1eed344e3be9a3e3229" },
+      { "path": "src/pet-care-policy.test.ts", "statusRelativeToParent": "untracked", "bytes": 3501, "sha256": "4a4ce28df5660423e48183d3336bbc8616bffdd76e39e7a5363596063e0b7d30", "gitNormalizedBlobOid": "d35e21231cf5f001ab1398e870e86f1e9eae5978" },
+      { "path": "src/pet-care-policy.ts", "statusRelativeToParent": "untracked", "bytes": 3914, "sha256": "2d0ce4f3fc2d1264103ab6547c5b870b508f822ac2d3d39227388ce42d0d9cd6", "gitNormalizedBlobOid": "3000e6e16cbaead52183270213857b6f34fb5874" },
+      { "path": "src/return-policy.test.ts", "statusRelativeToParent": "modified", "bytes": 4473, "sha256": "2c4e25502139c02659dc4ed14d66eeb4c5988efd04df09172d22fb1b0f5f601f", "gitNormalizedBlobOid": "85db0dbfab7fb22e164045140683b5d7dcde0312" },
+      { "path": "src/return-policy.ts", "statusRelativeToParent": "modified", "bytes": 1987, "sha256": "ff1afbd73fc8f36139ef09b98326b3f1d52e2f88f28c0a95aa3a7d6cb084e330", "gitNormalizedBlobOid": "3187ab1a8d0dd14990d90e13b7e6ad4ce575b04c" },
+      { "path": "src/simulation.test.ts", "statusRelativeToParent": "modified", "bytes": 19913, "sha256": "428e0e6444bc4390e271ac3974172a6a79d1a6780521c1ad5b1d14e9a404c2ed", "gitNormalizedBlobOid": "1db07286c55a694b6a9608a352243f7b0d683819" },
+      { "path": "src/simulation.ts", "statusRelativeToParent": "modified", "bytes": 27202, "sha256": "9c9e053062eb2a383b07af5a86c3657cac624962b426b256ca1dcac4ab0e1dbd", "gitNormalizedBlobOid": "2fbae18d5c8504a4db62f6e7df8f4e1b70ca839a" },
+      { "path": "docs/production/V7_GAMEPLAY_CHECKPOINT_CANDIDATE.json", "statusRelativeToParent": "untracked", "bytes": null, "sha256": null, "gitNormalizedBlobOid": null, "identityReportedInCompanionReport": true }
+    ]
+  },
+  "selfIndexSemantics": {
+    "path": "docs/production/V7_GAMEPLAY_CHECKPOINT_CANDIDATE.json",
+    "countedAsCandidate": true,
+    "recursiveDigestStoredInsideSelf": false,
+    "reason": "A file cannot contain its own final byte size, SHA-256, or Git blob OID without changing those identities. The final candidate identity and candidate total bytes are reported in the companion report after this JSON is final."
+  },
+  "excluded": {
+    "existingFileCount": 536,
+    "existingBytes": 2608715615,
+    "finalFileCountIncludingCompanionReport": 537,
+    "finalBytesIncludingCompanionReport": null,
+    "unresolved": [],
+    "groups": [
+      {
+        "id": "immutable-safe-return-exclusions-except-committed-scene-successor",
+        "pathSetSource": "docs/production/SAFE_RETURN_CHECKPOINT_CANDIDATE.json excluded.groups",
+        "pathSetSourceBytes": 238966,
+        "pathSetSourceSha256": "3593f4ce5d26242472c379fe84ed2b186ed0080a4702b7b50ee9e0c8b71348e4",
+        "excludedSourceEntry": "src/pet-room-scene.web.tsx",
+        "fileCount": 482,
+        "bytes": 2603594246,
+        "aggregateWithoutSceneFormat": "ordinal-case-sensitive path<TAB>bytes<TAB>lowercase-sha256<LF>, hashed as UTF-8",
+        "aggregateWithoutSceneBodyBytes": 65444,
+        "aggregateWithoutSceneSha256": "b23c6f05cf7300895be352f24454bddc108ec9c426f96d20c50557822e95780a",
+        "verification": "All 482 immutable-ledger paths remained present and at their recorded byte sizes. Unchanged bulk preservation contents were validated through the immutable manifests and current verifier rather than needlessly rehashing multi-gigabyte archives."
+      },
+      {
+        "id": "prior-checkpoint-reports",
+        "fileCount": 2,
+        "bytes": 21482,
+        "files": [
+          { "path": "docs/production/SAFE_RETURN_CHECKPOINT_REPORT.md", "bytes": 12114, "sha256": "9c9dbc2430a9275e28b4b102b6d98615875b30fc798d5c0d442d63b1797f1e1a", "gitNormalizedBlobOid": "5be8b2584d17f51a5ab8ee04218c3c158083ebe4" },
+          { "path": "docs/production/ALPHA_INSPECT_CHECKPOINT_REPORT.md", "bytes": 9368, "sha256": "1071ce47d4edb3c27dec3409568d34e691285eaa0fb6e2c57559efcbe5c7a99c", "gitNormalizedBlobOid": "af9bbc3505873cdd0f8d7eefed10b5d673580a72" }
+        ],
+        "disposition": "preserve untracked and exclude from this candidate"
+      },
+      {
+        "id": "paused-50.1-intro-cinematic-artifacts",
+        "fileCount": 52,
+        "bytes": 5099887,
+        "aggregateBodyBytes": 9223,
+        "aggregateSha256": "bb81773fb7e732d8c4560473f58ede511d5ab97f1d4917fa45d4a6defb67b043",
+        "liveHashedPathByPath": true,
+        "membersDefinedByExactVisiblePathsUnder": [
+          "output/intro-cinematic-concepts/",
+          "output/pdf/mr-boobins-intro-cinematic-concepts-exploratory.pdf",
+          "tmp/pdfs/intro-cinematic-concepts-render/"
+        ],
+        "subgroups": [
+          { "path": "output/intro-cinematic-concepts/", "fileCount": 31, "bytes": 1725877, "aggregateSha256": "0d1b32a3b3101f2c761e01532ba026b89b69acaf13da77ae74946b1febeb9dd3" },
+          { "path": "output/pdf/mr-boobins-intro-cinematic-concepts-exploratory.pdf", "fileCount": 1, "bytes": 683903, "aggregateSha256": "c6f9c2fbb75685583e7d18cd2cb80d4ec16edcc52d400b96380c2c6bc7678c7f" },
+          { "path": "tmp/pdfs/intro-cinematic-concepts-render/", "fileCount": 20, "bytes": 2690107, "aggregateSha256": "645f1303db6727ad1d066ee572d48a213d7700e3dc0831434114319cdd5c24d9" }
+        ],
+        "disposition": "paused concurrent cinematic work; preserve unchanged and exclude"
+      },
+      {
+        "id": "v7-gameplay-checkpoint-companion-report",
+        "path": "docs/production/V7_GAMEPLAY_CHECKPOINT_REPORT.md",
+        "fileCount": 1,
+        "bytes": null,
+        "sha256": null,
+        "gitNormalizedBlobOid": null,
+        "identityReportedAfterFinalization": true,
+        "disposition": "companion decision report outside the exact candidate to avoid circular candidate/report digest dependency"
+      }
+    ]
+  },
+  "statusAccountingAfterThisTask": {
+    "visiblePathCount": 560,
+    "candidatePathCount": 23,
+    "excludedPathCount": 537,
+    "unresolvedPathCount": 0,
+    "allVisiblePathsAccountedFor": true,
+    "onlyNewPathsFromThisTask": [
+      "docs/production/V7_GAMEPLAY_CHECKPOINT_CANDIDATE.json",
+      "docs/production/V7_GAMEPLAY_CHECKPOINT_REPORT.md"
+    ]
+  },
+  "runtimeAndImportCoverage": {
+    "appUsedV7ModulesIncluded": [
+      "src/simulation.ts",
+      "src/persistence.ts",
+      "src/return-policy.ts",
+      "src/pet-care-policy.ts"
+    ],
+    "allStaticAndLocalImportsSatisfiedByParentOrCandidate": true,
+    "productionExportRouteCount": 3,
+    "smokeReferencedRuntimeAssetCount": 22,
+    "unexpectedLfsPointerCount": 0,
+    "privateOrProhibitedCandidatePathCount": 0,
+    "credentialLikeFindingCount": 0
+  },
+  "evidence": {
+    "groupId": "normal-git-evidence-health-status-medicine",
+    "technicalAdmissionOnly": true,
+    "subjectiveAcceptanceOrLock": false,
+    "fileCount": 2,
+    "bytes": 108367,
+    "files": [
+      { "path": "evidence/health-status-medicine/status-medicine-390x844.jpg", "bytes": 40477, "sha256": "9a15da2ad4edbfa9939fe28bee5023e21d6767a8073d0cf7e216499e33b08fe3", "dimensions": [390, 844], "signature": "jpeg-jfif" },
+      { "path": "evidence/health-status-medicine/status-medicine-1440x900.jpg", "bytes": 67890, "sha256": "4396f872b40e6cc06f7804cbec51449e16f97b30dd5bb033f1d88d3ffe5f9b3d", "dimensions": [1440, 900], "signature": "jpeg-jfif" }
+    ]
+  },
+  "integrity": {
+    "classification": {
+      "path": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+      "priorBytes": 138055,
+      "priorSha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb",
+      "currentBytes": 138776,
+      "currentSha256": "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a",
+      "change": "exactly one two-file, 108367-byte normal-Git representative-evidence group plus generatedAt; all prior groups and source anchors unchanged"
+    },
+    "governedPostBaselineAssetSet": {
+      "fileCount": 125,
+      "bytes": 448676672,
+      "aggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f",
+      "verifiedByAssetVerifierPassCount": 2
+    },
+    "packages": {
+      "packageJson": { "bytes": 1277, "sha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa" },
+      "packageLockJson": { "bytes": 483873, "sha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38" },
+      "changedByCandidate": false
+    },
+    "contextSuccessor": {
+      "path": "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
+      "bytes": 14873,
+      "sha256": "d68c8dde360cdd1cb303f8e8720978a259c97dfcb62008ce15b48a3ddc49ecd4",
+      "predecessor": "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
+      "predecessorSha256": "550ee99936cd52003b24e5e098cab2139d7fb6f4510aed36308f89dc6c88b70e"
+    },
+    "assetPolicy": { "bytes": 49221, "sha256": "7f8e92558224d2ee1ad128a9b8bfc9cd170ea0dd35199b472635ba4aaecf8b9e" },
+    "assetVerifier": { "bytes": 227502, "sha256": "fd0e8d801fb4b7e82b49173d81e1164a136b06afa8e0907939a76a3f0e374d01" },
+    "assetPathByteTierImportOrDispositionChange": false,
+    "headUnchanged": true,
+    "stagedPathCount": 0
+  },
+  "verification": {
+    "commands": [
+      { "command": "git diff --check", "result": "pass" },
+      { "command": "powershell.exe -NoProfile -Command \"Get-Content -Raw '.codex-kit/model-routing.json' | ConvertFrom-Json | Out-Null; Get-Content -Raw '.codex-kit/manifest.json' | ConvertFrom-Json | Out-Null\"", "result": "pass" },
+      { "command": "npm run check:assets", "result": "pass", "freshPassCount": 2 },
+      { "command": "npm run lint", "result": "pass" },
+      { "command": "npm run typecheck", "result": "pass" },
+      { "command": "npm test", "result": "pass", "testFileCount": 13, "testCount": 247 },
+      { "command": "npm run export:web", "result": "pass", "routeCount": 3 },
+      { "command": "npm run smoke", "result": "pass", "runtimeAssetCount": 22 },
+      { "command": "npm run check:deps", "result": "pass-at-critical-threshold", "critical": 0, "high": 16, "moderate": 7 }
+    ],
+    "additionalChecks": [
+      { "check": "node --check scripts/verify-assets.mjs", "result": "pass" },
+      { "check": "candidate/config/context/classification JSON parsing", "result": "pass" },
+      { "check": "candidate text EOF and trailing-whitespace scan", "result": "pass", "checkedPathCount": 20 },
+      { "check": "candidate LFS-pointer/private-path/credential-like scans", "result": "pass", "findingCount": 0 },
+      { "check": "representative JPEG signature and dimensions", "result": "pass", "fileCount": 2 },
+      { "check": "status path union against immutable exclusions, candidate, paused cinematic paths, and reports", "result": "pass", "unresolvedPathCount": 0 }
+    ],
+    "liveAndIndependentReviewEvidence": {
+      "source": "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
+      "phoneViewport": [390, 844],
+      "desktopViewport": [1440, 900],
+      "horizontalOverflow": false,
+      "statusShowsAllSixNeeds": true,
+      "modalFocusTrapEscapeAndTriggerRestorationVerified": true,
+      "medicineGuardCopyVerified": true,
+      "attentionPlayAndReloadPersistenceVerified": true,
+      "checkpointTaskReranBrowserQA": false
+    }
+  },
+  "knownRisksAndNonApprovals": [
+    "The Health, Attention, Status & Medicine slice is complete, but the full first-reviewable milestone remains incomplete until LCD presentation and classic-control parity are delivered.",
+    "The screenshots are representative technical evidence only; Mark has not accepted or locked any subjective visual direction through this checkpoint.",
+    "The current pre-alpha intro/title direction remains rejected as final, and all paused cinematic artifacts remain excluded unchanged.",
+    "npm audit reported 16 high and 7 moderate production-tree findings but zero critical findings; available force fixes are breaking dependency changes and were not authorized or applied.",
+    "Checksums prove current identity and stability; they are not backups.",
+    "The candidate JSON is self-indexed by path/count only and cannot recursively contain its own final digest, byte size, or blob OID.",
+    "All three checkpoint reports are outside the exact candidate and must remain untracked unless a later exact candidate explicitly includes them.",
+    "No commit, push, Git LFS action/configuration, upload, Drive change, deletion, cleanup, deployment, publication, dependency change, runtime change beyond these already-reviewed candidate bytes, or global Project Kit installation is approved by this record."
+  ],
+  "approval": {
+    "commitApproved": false,
+    "pushApproved": false,
+    "lfsActionApproved": false,
+    "uploadApproved": false,
+    "cleanupApproved": false,
+    "deployOrPublishApproved": false,
+    "dependencyChangeApproved": false,
+    "globalProjectKitInstallApproved": false,
+    "exactPasteReadyAuthorizationInCompanionReport": true
+  }
+}

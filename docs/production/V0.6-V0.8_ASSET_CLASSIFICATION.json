@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-16T23:33:15.217Z",
+  "generatedAt": "2026-08-18T19:18:48.862Z",
   "sourceInventory": "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
   "sourceInventoryAssetsSha256": "30d0685dfb16000426ccd7bfcfa74f074a7d4072175e2670e34355969b1c6292",
   "sourceInventoryEvidenceSha256": "40ee3701e1046461ccf3d0e465842a82e89207c04326826c5ae67d8d0005c600",
@@ -3149,6 +3149,25 @@
           "path": "evidence/baby-day1/sleep-dialog-keyboard-390x844.jpg",
           "bytes": 35346,
           "sha256": "39c78e1d7481240c45b17ce51edbb285ee9dd09d652e15edb52321452307a0da"
+        }
+      ]
+    },
+    {
+      "id": "normal-git-evidence-health-status-medicine",
+      "tier": "normal-git",
+      "disposition": "Representative V7 health, attention, Status, and Medicine phone/desktop evidence retained in Git.",
+      "fileCount": 2,
+      "bytes": 108367,
+      "files": [
+        {
+          "path": "evidence/health-status-medicine/status-medicine-1440x900.jpg",
+          "bytes": 67890,
+          "sha256": "4396f872b40e6cc06f7804cbec51449e16f97b30dd5bb033f1d88d3ffe5f9b3d"
+        },
+        {
+          "path": "evidence/health-status-medicine/status-medicine-390x844.jpg",
+          "bytes": 40477,
+          "sha256": "9a15da2ad4edbfa9939fe28bee5023e21d6767a8073d0cf7e216499e33b08fe3"
         }
       ]
     },

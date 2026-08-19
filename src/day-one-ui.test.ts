@@ -144,11 +144,11 @@ describe("Baby Day 1 App presentation contract", () => {
     const context = { before };
     const hungry = adoptedPet({
       lastUpdatedAt: 10 * 60_000,
-      needs: { hunger: 10, happiness: 80, energy: 76, hygiene: 88 },
+      needs: { ...createNewPet(0).needs, hunger: 10, happiness: 80, energy: 76, hygiene: 88 },
     });
     const cared = adoptedPet({
       lastUpdatedAt: 10 * 60_000,
-      needs: { hunger: 80, happiness: 80, energy: 76, hygiene: 88 },
+      needs: { ...createNewPet(0).needs, hunger: 80, happiness: 80, energy: 76, hygiene: 88 },
     });
     expect(getLiveReturnSummary(context, hungry)).toContain("hunger is very low");
     expect(getLiveReturnSummary(context, cared)).toContain("doing well");
@@ -173,7 +173,7 @@ describe("Baby Day 1 App presentation contract", () => {
       careReachable: true,
     });
     const originalPet = adoptedPet({
-      needs: { hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
+      needs: { ...createNewPet(0).needs, hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
     });
     coordinator.hydrateLoadedPet(originalPet, 0);
     coordinator.apply({
@@ -209,7 +209,7 @@ describe("Baby Day 1 App presentation contract", () => {
     vi.useFakeTimers();
     const storage = memory();
     const originalPet = adoptedPet({
-      needs: { hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
+      needs: { ...createNewPet(0).needs, hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
     });
     let currentPet = originalPet;
     let progress = DEFAULT_CARE_GUIDE_PROGRESS;
@@ -261,7 +261,7 @@ describe("Baby Day 1 App presentation contract", () => {
       },
     };
     const originalPet = adoptedPet({
-      needs: { hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
+      needs: { ...createNewPet(0).needs, hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
     });
     const authority = createPetGuidePersistenceAuthority(storage);
     let currentPet = originalPet;
@@ -341,7 +341,7 @@ describe("Baby Day 1 App presentation contract", () => {
 
   it("keeps ambiguous Clean truthful and blocked, then reload-recovers and publishes once", async () => {
     const originalPet = adoptedPet({
-      needs: { hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
+      needs: { ...createNewPet(0).needs, hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
     });
     const values = new Map<string, string>([
       [PET_STORAGE_KEY, JSON.stringify(originalPet)],
@@ -449,7 +449,7 @@ describe("Baby Day 1 App presentation contract", () => {
     const storage = deferredStorage(CLEAN_COMPLETION_TRANSACTION_KEY);
     const authority = createPetGuidePersistenceAuthority(storage);
     const originalPet = adoptedPet({
-      needs: { hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
+      needs: { ...createNewPet(0).needs, hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
     });
     let currentGeneration = true;
     const applyCommitted = vi.fn();
@@ -492,7 +492,7 @@ describe("Baby Day 1 App presentation contract", () => {
     const storage = memory();
     const authority = createPetGuidePersistenceAuthority(storage);
     const originalPet = adoptedPet({
-      needs: { hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
+      needs: { ...createNewPet(0).needs, hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
     });
     const applyCommitted = vi.fn();
     const restoreForRetry = vi.fn();
@@ -518,7 +518,7 @@ describe("Baby Day 1 App presentation contract", () => {
     const storage = deferredStorage(CLEAN_COMPLETION_TRANSACTION_KEY);
     const authority = createPetGuidePersistenceAuthority(storage);
     const originalPet = adoptedPet({
-      needs: { hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
+      needs: { ...createNewPet(0).needs, hunger: 84, happiness: 80, energy: 76, hygiene: 20 },
     });
     let currentGeneration = true;
     const applyCommitted = vi.fn();
@@ -938,6 +938,7 @@ describe("Baby Day 1 App presentation contract", () => {
       expect(coordinator.snapshot().pet).toEqual({
         ...resetPet,
         lastUpdatedAt: 14_100,
+        wellbeingLastUpdatedAt: 14_100,
       });
 
       const laterPet = { ...resetPet, name: "Bobby" };

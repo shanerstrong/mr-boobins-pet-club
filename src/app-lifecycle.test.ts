@@ -54,7 +54,11 @@ describe("App Safe Return lifecycle", () => {
       now: 2 * 60 * 60_000,
       testMultiplier: 3_600,
     });
-    expect(hub.pet).toEqual({ ...pet, lastUpdatedAt: 2 * 60 * 60_000 });
+    expect(hub.pet).toEqual({
+      ...pet,
+      lastUpdatedAt: 2 * 60 * 60_000,
+      wellbeingLastUpdatedAt: 2 * 60 * 60_000,
+    });
 
     const adopted = applyAppTimeEvent(hub, {
       type: "ADOPT_AND_ENTER_ROOM",
@@ -67,7 +71,7 @@ describe("App Safe Return lifecycle", () => {
 
   it("allows active starvation only in the foreground care room", () => {
     const hungry = adoptedPet(0, {
-      needs: { hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
+      needs: { ...createNewPet(0).needs, hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
       starvationVirtualMinutes: 119,
     });
     for (const screen of ["title", "hub", "settings"] as const) {
@@ -93,7 +97,7 @@ describe("App Safe Return lifecycle", () => {
     "pauses exact active-starvation time across the %s blocking boundary",
     () => {
       const hungry = adoptedPet(0, {
-        needs: { hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
+        needs: { ...createNewPet(0).needs, hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
         starvationVirtualMinutes: 119,
       });
       const blocked = applyAppTimeEvent(appState(hungry), {
@@ -138,7 +142,7 @@ describe("App Safe Return lifecycle", () => {
 
   it("settles the reachable side of an access boundary before pausing", () => {
     const hungry = adoptedPet(0, {
-      needs: { hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
+      needs: { ...createNewPet(0).needs, hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
       starvationVirtualMinutes: 119,
     });
     let reachable = appState(hungry);
@@ -203,12 +207,15 @@ describe("App Safe Return lifecycle", () => {
       foreground: true,
     });
     expect(resumed.pet.lastUpdatedAt).toBe(60 * 60_000);
+    expect(resumed.pet.wellbeingLastUpdatedAt).toBe(60 * 60_000);
+    expect(resumed.pet.needs.attention).toBeCloseTo(74, 8);
+    expect(resumed.pet.needs.health).toBe(100);
     expect(repeated).toEqual(resumed);
   });
 
   it("treats timer suspension and huge forward clock jumps as offline", () => {
     const hungry = adoptedPet(0, {
-      needs: { hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
+      needs: { ...createNewPet(0).needs, hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
       starvationVirtualMinutes: 119,
     });
     const suspended = applyAppTimeEvent(appState(hungry), {
@@ -277,7 +284,7 @@ describe("App Safe Return lifecycle", () => {
 
   it("preserves active-care death and feed-before-threshold behavior", () => {
     const hungry = adoptedPet(0, {
-      needs: { hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
+      needs: { ...createNewPet(0).needs, hunger: 0, happiness: 80, energy: 76, hygiene: 88 },
       starvationVirtualMinutes: 119,
     });
     let almost = appState(hungry);

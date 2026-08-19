@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "kind": "managed-context-health-status-medicine-refresh",
+  "refreshId": "2026-08-18-health-attention-status-medicine-v7",
+  "createdOn": "2026-08-18",
+  "hashAlgorithm": "sha256",
+  "gitBlobIdentityCommand": "git hash-object --path=<path> <path>",
+  "authorization": {
+    "milestone": "Build — Health, Attention, Status & Medicine",
+    "scope": "Record only the exact final App-used V7 health, attention, Status, Medicine, migration, delayed-Clean compatibility, factual documentation, committed-state rollover, and two-file representative-evidence identities after code and documentation freeze.",
+    "generalMutableContextException": false,
+    "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+    "classificationChangeAuthorized": true,
+    "classificationChangeScope": "Exactly one two-file, 108367-byte normal-Git representative-evidence group plus generatedAt; every prior group and source-inventory anchor remains unchanged.",
+    "evidenceExtensionCorrectionAuthorized": true,
+    "dependencyChangeAuthorized": false,
+    "externalOrGitActionAuthorized": false,
+    "subjectiveAcceptanceOrLockAuthorized": false
+  },
+  "repositoryState": {
+    "head": "8e01e9d36faaaa74d79ea6f51777fce6319875e5",
+    "branch": "codex/jack-v05",
+    "stagedPathCount": 0,
+    "stagedPaths": [],
+    "externalOrGitActionPerformed": false
+  },
+  "immutablePredecessors": [
+    {
+      "role": "authoritative-prior-identities",
+      "record": "docs/production/INITIAL_JOURNAL_AMBIGUITY_CONTEXT_REFRESH_2026-08-17.json",
+      "recordBytes": 7885,
+      "recordSha256": "99717544e31e46774e88b56f9afd018fd734863066aeb79454d36954ab37e409",
+      "immutable": true
+    },
+    {
+      "role": "safe-return-commit-status-witness",
+      "record": "docs/production/ALPHA_INSPECT_SAFE_RETURN_STATUS_REFRESH_2026-08-17.json",
+      "recordBytes": 18829,
+      "recordSha256": "e2849dbd7c9c0ad1214c286628dcedc73567beb86b39fb99223cffaae99f0839",
+      "immutable": true
+    },
+    {
+      "role": "latest-append-only-asset-control-record",
+      "record": "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
+      "recordBytes": 7020,
+      "recordSha256": "550ee99936cd52003b24e5e098cab2139d7fb6f4510aed36308f89dc6c88b70e",
+      "immutable": true
+    }
+  ],
+  "transitions": [
+    {
+      "path": "App.tsx",
+      "role": "app-used-v7-health-attention-status-and-medicine-integration",
+      "prior": {
+        "bytes": 117794,
+        "sha256": "8262c0892427dd1929e1d5c5724c50c655fd1b28ca8f59c6411b0d735a7cdf2a",
+        "gitNormalizedBlobOid": "653263bb5ceb3ce429692886d0138e0d9834fe0d",
+        "identitySource": "safe-return-committed-successor"
+      },
+      "current": {
+        "bytes": 124143,
+        "sha256": "7606a0852ce92f5e14d429b63befa0961934e4f91d4efe6a95eafd04f36c9a1b",
+        "gitNormalizedBlobOid": "aae7d69c2e3a50e8cf8622edd4b0d89aa241ec25",
+        "lastWriteTimeUtc": "2026-08-18T17:37:35.1810364Z",
+        "gitState": "tracked-modified"
+      }
+    },
+    {
+      "path": "src/persistence.ts",
+      "role": "strict-v7-loading-migration-and-embedded-v6-journal-compatibility",
+      "prior": {
+        "bytes": 50476,
+        "sha256": "c409b047a6bcaf956cc85fa02fa654279d1b307d90080325c10514b9cffa1996",
+        "gitNormalizedBlobOid": "450e14bd6df68416ba79fc3dcfe33b5837c08b9f",
+        "identitySource": "safe-return-committed-successor"
+      },
+      "current": {
+        "bytes": 56676,
+        "sha256": "86cca46e758c7fc98282ab223d313594d27edbc28cb4911d7588b35a9c2b1338",
+        "gitNormalizedBlobOid": "ee8fdf7578b8f10a3331c1eed344e3be9a3e3229",
+        "lastWriteTimeUtc": "2026-08-18T20:00:11.1195883Z",
+        "gitState": "tracked-modified"
+      }
+    },
+    {
+      "path": "src/persistence.test.ts",
+      "role": "deterministic-v1-v7-and-delayed-clean-journal-migration-coverage",
+      "prior": {
+        "bytes": 78712,
+        "sha256": "f46584fe22378e5d93bb860cadeb5ecfb8e2d39344b96d030f8403d35677c8ca",
+        "gitNormalizedBlobOid": "233351c4004f1f6d1fa9e69ba90a2e448d25323f",
+        "identitySource": "safe-return-committed-successor"
+      },
+      "current": {
+        "bytes": 87216,
+        "sha256": "798b9b143c0bfdddf7e74d0f9c6c95b2ceddf36c2161d2a3a27e6f11a0eee318",
+        "gitNormalizedBlobOid": "b3624e32e80af85f00bf429afcc6c24a5c3cab0a",
+        "lastWriteTimeUtc": "2026-08-18T19:57:20.7631617Z",
+        "gitState": "tracked-modified"
+      }
+    }
+  ],
+  "supportingContentTransitions": [
+    {
+      "path": "docs/DECISIONS.md",
+      "role": "durable-v7-health-status-product-policy",
+      "prior": {
+        "bytes": 27759,
+        "sha256": "c65e88042284aa7c858fe168980d05e953545778408b9d4dfa907fc91b1aa09a",
+        "gitNormalizedBlobOid": "fd697d6e6da3fb99f5714a02b1d26b80839a22f3",
+        "identitySource": "Alpha Inspect committed successor"
+      },
+      "current": {
+        "bytes": 28988,
+        "sha256": "91b9a0a76e9e31bc7a2da4df1666bd699cc4055f3f42b852ddcdb32b17a2de3d",
+        "gitNormalizedBlobOid": "bc4185e44ed6e56655f299a1ba5aa2bec41b62d1",
+        "lastWriteTimeUtc": "2026-08-18T17:44:04.2487759Z",
+        "gitState": "tracked-modified"
+      }
+    },
+    {
+      "path": "docs/QUALITY_GATES.md",
+      "role": "v7-deterministic-and-live-quality-gate-contract",
+      "prior": {
+        "bytes": 11745,
+        "sha256": "b171ba588a25215c00b968a501bcede46fea6a9e1b6fe011543fbbf258aca632",
+        "gitNormalizedBlobOid": "eb48455a5b527fa1bd3161805fae9b9d6a6a9aae",
+        "identitySource": "Alpha Inspect committed successor"
+      },
+      "current": {
+        "bytes": 12486,
+        "sha256": "b158a6f590564754c86aa7ac5a2e26ca82c9579b59abfedda96380022d2b7fa4",
+        "gitNormalizedBlobOid": "b25b264ddf9a45985403e3091ed3f239c7bfc49e",
+        "lastWriteTimeUtc": "2026-08-18T17:44:07.4262712Z",
+        "gitState": "tracked-modified"
+      }
+    },
+    {
+      "path": "docs/production/PRODUCTION_DASHBOARD.md",
+      "role": "current-v7-slice-production-status",
+      "prior": {
+        "bytes": 9599,
+        "sha256": "2b1f9f1aa17f7acdd1e6ce3ae6b4955f087d154ab41113cf14314f007778c873",
+        "gitNormalizedBlobOid": "e98e4740af85e08c621da26df91f1510272ded77",
+        "identitySource": "Alpha Inspect committed successor"
+      },
+      "current": {
+        "bytes": 10273,
+        "sha256": "0fa0a671ef67ae37a13464c32a7150860e8d61f0a40d47ff57232353a5c6fc0c",
+        "gitNormalizedBlobOid": "31d8432bde6b4513758632cf4703922e483317d2",
+        "lastWriteTimeUtc": "2026-08-18T17:44:05.6779514Z",
+        "gitState": "tracked-modified"
+      }
+    },
+    {
+      "path": "src/day-one-ui.test.ts",
+      "role": "app-used-v7-day-one-and-reset-regression-fixtures",
+      "prior": {
+        "bytes": 34797,
+        "sha256": "76788e0491dcd6735aed4e03499ca5a169a2cc28d5052444c55f9575e3e67466",
+        "gitNormalizedBlobOid": "12b751432b3efdb7b9375c77ca5f8fa488ed3342",
+        "identitySource": "Safe Return committed successor"
+      },
+      "current": {
+        "bytes": 35071,
+        "sha256": "b7cd34d38473ae9cb0a3a63b2ad3d65a46c8a1eca64e4dc107985938dab27918",
+        "gitNormalizedBlobOid": "b80d50afb72f3852724c6826a3073a0a600827c2",
+        "lastWriteTimeUtc": "2026-08-18T17:28:21.9297583Z",
+        "gitState": "tracked-modified"
+      }
+    }
+  ],
+  "committedStateSuccessors": [
+    {
+      "path": "docs/production/CREATIVE_DIRECTION.md",
+      "bytes": 5030,
+      "sha256": "e1c3222dcab31c53c4b920944c276aa8e7cf4a33896efcf87701cf8dc61db7ef",
+      "gitNormalizedBlobOid": "8c443f800256e91861ba8ea66c4f89d10bd9779e",
+      "priorState": "tracked-modified",
+      "currentState": "tracked-clean-at-alpha-inspect-head",
+      "bytesChanged": false
+    },
+    {
+      "path": "docs/design/3D_PET_ROOM_DIRECTION.md",
+      "bytes": 32898,
+      "sha256": "edb0c5ac510b48b9b3ad7a0e6edb9a2b53a5a46b775623027e3048902dd35460",
+      "gitNormalizedBlobOid": "92fd23ffdd088e283479908ea9f1f13c3d49f6ac",
+      "priorState": "tracked-modified",
+      "currentState": "tracked-clean-at-alpha-inspect-head",
+      "bytesChanged": false
+    },
+    {
+      "path": "src/pet-room-scene-shell.tsx",
+      "bytes": 8814,
+      "sha256": "83f584e3144eff26b62de9e5c9bafa9a4d6b54fcd451c2989aa6cf792df9e6d7",
+      "gitNormalizedBlobOid": "710e0cc6a95cb5fbf84f761f01cb577b8d76bbc7",
+      "priorState": "tracked-modified",
+      "currentState": "tracked-clean-at-alpha-inspect-head",
+      "bytesChanged": false
+    },
+    {
+      "path": "src/pet-room-scene.web.tsx",
+      "bytes": 18031,
+      "sha256": "dcc5f779dfa7425b70795544f78a23d0351aafea681c8e06711c88cb6a23a644",
+      "gitNormalizedBlobOid": "62e285f0bf708c46c0ef74d00f4e5ec53f4463d3",
+      "priorState": "tracked-modified",
+      "currentState": "tracked-clean-at-alpha-inspect-head",
+      "bytesChanged": false
+    },
+    {
+      "path": "src/pet-room-3d-policy.ts",
+      "bytes": 2804,
+      "sha256": "394bcad2239ca0d8af8dd9daa1ff2cba57f9451377a475752312f72e1983dd5b",
+      "gitNormalizedBlobOid": "57e652ca1f105948f0386266c98108805eee2449",
+      "priorState": "untracked",
+      "currentState": "tracked-clean-at-alpha-inspect-head",
+      "bytesChanged": false
+    },
+    {
+      "path": "src/pet-room-3d-policy.test.ts",
+      "bytes": 3844,
+      "sha256": "a6d6fb93f08faee1c41c2526abe1206af3c3160f1664ac78627a3c87ee5acc19",
+      "gitNormalizedBlobOid": "59a28efc8923c052e79774dbfa84bd9c12c54a01",
+      "priorState": "untracked",
+      "currentState": "tracked-clean-at-alpha-inspect-head",
+      "bytesChanged": false
+    },
+    {
+      "path": "src/up-contact-shadow-policy.ts",
+      "bytes": 1244,
+      "sha256": "92d7eb0ba294d928b7a630324397f431970bcb8cef19d0bb5cfd6b62d85700e7",
+      "gitNormalizedBlobOid": "98f1a2efb9faebe483184da4ead0edd98f3d10d4",
+      "priorState": "untracked",
+      "currentState": "tracked-clean-at-alpha-inspect-head",
+      "bytesChanged": false
+    },
+    {
+      "path": "src/up-contact-shadow-policy.test.ts",
+      "bytes": 1764,
+      "sha256": "751e78825ec419dd537412b41db61cd434ecb7f4bb9b0aa6009ef9d993954735",
+      "gitNormalizedBlobOid": "da67d3d0d28afc28c4a4a045dfbbad8b4bf9027f",
+      "priorState": "untracked",
+      "currentState": "tracked-clean-at-alpha-inspect-head",
+      "bytesChanged": false
+    }
+  ],
+  "representativeEvidence": {
+    "kind": "byte-identical-jpeg-extension-correction-and-normal-git-admission",
+    "fileCount": 2,
+    "bytes": 108367,
+    "files": [
+      {
+        "sourcePath": "evidence/health-status-medicine/status-medicine-390x844.png",
+        "currentPath": "evidence/health-status-medicine/status-medicine-390x844.jpg",
+        "bytes": 40477,
+        "sha256": "9a15da2ad4edbfa9939fe28bee5023e21d6767a8073d0cf7e216499e33b08fe3",
+        "gitNormalizedBlobOid": "3acaa3fb6257d907a89355a0a890c692f0adb805",
+        "dimensions": [390, 844],
+        "signature": "jpeg-jfif",
+        "bytesChangedByRename": false
+      },
+      {
+        "sourcePath": "evidence/health-status-medicine/status-medicine-1440x900.png",
+        "currentPath": "evidence/health-status-medicine/status-medicine-1440x900.jpg",
+        "bytes": 67890,
+        "sha256": "4396f872b40e6cc06f7804cbec51449e16f97b30dd5bb033f1d88d3ffe5f9b3d",
+        "gitNormalizedBlobOid": "76c3a943b10f69202779cb3d3855976dd6779a1a",
+        "dimensions": [1440, 900],
+        "signature": "jpeg-jfif",
+        "bytesChangedByRename": false
+      }
+    ],
+    "classification": {
+      "groupId": "normal-git-evidence-health-status-medicine",
+      "tier": "normal-git",
+      "priorGroupsChanged": 0,
+      "sourceInventoryAnchorsChanged": 0
+    }
+  },
+  "liveVerification": {
+    "preview": "http://127.0.0.1:8092/",
+    "phone": {
+      "viewport": [390, 844],
+      "documentScrollWidth": 390,
+      "horizontalOverflow": false,
+      "statusShowsAllSixNeeds": true,
+      "initialFocus": "CLOSE STATUS",
+      "tabTrap": true,
+      "escapeRestoresStatusTrigger": true
+    },
+    "desktop": {
+      "viewport": [1440, 900],
+      "documentScrollWidth": 1440,
+      "horizontalOverflow": false,
+      "statusShowsAllSixNeeds": true,
+      "initialFocus": "CLOSE STATUS",
+      "escapeRestoresStatusTrigger": true
+    },
+    "observedBehavior": [
+      "Healthy Medicine is disabled with truthful no-medicine-needed copy.",
+      "Sleeping Medicine is disabled with truthful wake-first copy.",
+      "PLAY increased attention from 80 to 100 within the approved cap.",
+      "Health and attention survived a full page reload through the title and pet hub."
+    ],
+    "evidencePaths": [
+      "evidence/health-status-medicine/status-medicine-390x844.jpg",
+      "evidence/health-status-medicine/status-medicine-1440x900.jpg"
+    ]
+  },
+  "controlPlanePredecessors": {
+    "assetPolicy": {
+      "path": "docs/production/asset-policy.v1.json",
+      "bytes": 47778,
+      "sha256": "5745e4e7dd54090a33ebf9bc220d15db3fd0b5126c170a3eb35a74bb8fb32e54"
+    },
+    "assetVerifier": {
+      "path": "scripts/verify-assets.mjs",
+      "bytes": 206218,
+      "sha256": "e6c84064c08c02cc5d5bce02e0cd3415d5d029e73a920b774a62524f33f24dc6"
+    }
+  },
+  "unchangedInvariants": {
+    "classificationPath": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+    "priorClassificationBytes": 138055,
+    "priorClassificationSha256": "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb",
+    "currentClassificationBytes": 138776,
+    "currentClassificationSha256": "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a",
+    "priorClassificationGroupCount": 22,
+    "currentClassificationGroupCount": 23,
+    "classificationChange": "one two-file, 108367-byte normal-Git representative-evidence group plus generatedAt only",
+    "packageJsonSha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa",
+    "packageLockJsonSha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38",
+    "governedAssetFileCount": 125,
+    "governedAssetBytes": 448676672,
+    "governedAssetAggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f",
+    "assetPathChanges": 0,
+    "assetByteChanges": 0,
+    "assetTierChanges": 0,
+    "runtimeImportChanges": 0,
+    "assetDispositionChanges": 0,
+    "classificationChanges": 1,
+    "evidencePathRenames": 2,
+    "evidenceByteChanges": 0
+  },
+  "limitations": [
+    "This record authorizes only the exact listed content, state, App/persistence, and evidence transitions and creates no general mutable-context exception.",
+    "The immutable intake, context, normalization, Alpha Inspect, and Up contact-shadow records remain unchanged.",
+    "Checksums prove identity and stability; they are not a backup.",
+    "No gameplay, simulation, persistence, App, interaction, test, documentation, audio, 3D, model, dependency, package, or lockfile bytes changed during the asset-control collision reconciliation."
+  ]
+}

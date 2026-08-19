@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   AUDIO_PREFERENCES_KEY,
   CARE_GUIDE_PROGRESS_KEY,
@@ -26,6 +26,7 @@ import { commitSuccessfulClean } from "./day-one-ui";
 import {
   careForPet,
   createNewPet,
+  migratePetState,
   startSleep,
   wakePet,
   type PetState,
@@ -49,6 +50,17 @@ const memory = (): StorageLike & {
     },
   };
 };
+
+function asStrictV6(pet: PetState) {
+  const {
+    version: _version,
+    wellbeingLastUpdatedAt: _wellbeingLastUpdatedAt,
+    needs,
+    ...rest
+  } = pet;
+  const { health: _health, attention: _attention, ...legacyNeeds } = needs;
+  return { version: 6 as const, ...rest, needs: legacyNeeds };
+}
 
 const faultingMemory = (
   failureKey: string,
@@ -204,15 +216,24 @@ function seedPreparedExplicitReset(
   );
 }
 
-describe("V6 pet persistence", () => {
-  it("migrates a strict V5 save and round-trips V6 theme and nickname", async () => {
+describe("V7 pet persistence", () => {
+  it("migrates a strict V5 save and round-trips V7 theme, wellbeing, and nickname", async () => {
     const store = memory();
     const current = createNewPet(2);
-    const { adoptionCompleted, roomTheme, version, ...rest } = current;
+    const {
+      adoptionCompleted,
+      roomTheme,
+      version,
+      wellbeingLastUpdatedAt: _wellbeingLastUpdatedAt,
+      needs,
+      ...rest
+    } = current;
+    const { health: _health, attention: _attention, ...legacyNeeds } = needs;
     await store.setItem(
       PET_STORAGE_KEY,
       JSON.stringify({
         ...rest,
+        needs: legacyNeeds,
         version: 5,
         introCompleted: true,
         backgroundId: "yard",
@@ -221,9 +242,10 @@ describe("V6 pet persistence", () => {
     await expect(loadPet(store)).resolves.toMatchObject({
       kind: "loaded",
       pet: {
-        version: 6,
+        version: 7,
         adoptionCompleted: true,
         roomTheme: "garden",
+        needs: expect.objectContaining({ health: 100, attention: 80 }),
       },
     });
     const saved = {
@@ -236,7 +258,7 @@ describe("V6 pet persistence", () => {
     await expect(loadPet(store)).resolves.toEqual({ kind: "loaded", pet: saved });
     expect(adoptionCompleted).toBe(false);
     expect(roomTheme).toBe("cozy");
-    expect(version).toBe(6);
+    expect(version).toBe(7);
   });
 
   it("retains malformed and schema-invalid raw pet data without overwrite", async () => {
@@ -250,6 +272,66 @@ describe("V6 pet persistence", () => {
       await expect(loadPet(store)).resolves.toEqual({ kind: "invalid" });
       expect(store.values.get(PET_STORAGE_KEY)).toBe(raw);
     }
+  });
+
+  it("migrates embedded strict V6 pets in a prepared delayed-Clean journal", async () => {
+    const store = memory();
+    const before = { ...createNewPet(1_000), adoptionCompleted: true };
+    const after = careForPet(
+      { ...before, needs: { ...before.needs, hygiene: 20 } },
+      "clean",
+      1_000,
+    );
+    const beforeV6 = asStrictV6({
+      ...before,
+      needs: { ...before.needs, hygiene: 20 },
+    });
+    const afterV6 = asStrictV6(after);
+    await store.setItem(PET_STORAGE_KEY, JSON.stringify(beforeV6));
+    await store.setItem(
+      CARE_GUIDE_PROGRESS_KEY,
+      JSON.stringify(DEFAULT_CARE_GUIDE_PROGRESS),
+    );
+    await store.setItem(
+      CLEAN_COMPLETION_TRANSACTION_KEY,
+      JSON.stringify({
+        version: 2,
+        status: "prepared",
+        before: {
+          pet: beforeV6,
+          progress: DEFAULT_CARE_GUIDE_PROGRESS,
+        },
+        after: {
+          pet: afterV6,
+          progress: { version: 1, firstCareCompleted: true },
+        },
+      }),
+    );
+
+    const loaded = await createPetGuidePersistenceAuthority(store).loadAndRecover();
+    expect(loaded).toMatchObject({
+      petResult: {
+        kind: "loaded",
+        pet: {
+          version: 7,
+          needs: { health: 100, attention: 80, hygiene: after.needs.hygiene },
+        },
+      },
+      careGuideResult: {
+        kind: "loaded",
+        progress: { firstCareCompleted: true },
+      },
+      delayedCleanRecovery: "recovered",
+    });
+    const persistedPet = JSON.parse(store.values.get(PET_STORAGE_KEY) ?? "null") as PetState;
+    expect(persistedPet.version).toBe(7);
+    expect(persistedPet.needs).toMatchObject({ health: 100, attention: 80 });
+    expect(
+      JSON.parse(store.values.get(CLEAN_COMPLETION_TRANSACTION_KEY) ?? "null"),
+    ).toMatchObject({
+      status: "committed",
+      after: { pet: { version: 7 } },
+    });
   });
 
   it("reports unavailable pet storage and save rejection", async () => {
@@ -580,6 +662,90 @@ describe("durable delayed-Clean completion", () => {
     },
   );
 
+  it.each([
+    ["pet", PET_STORAGE_KEY],
+    ["guide", CARE_GUIDE_PROGRESS_KEY],
+    ["marker", CLEAN_COMPLETION_TRANSACTION_KEY],
+  ] as const)(
+    "keeps a stable V7 wellbeing anchor while recovering a V6 V2 journal after %s interruption and later-clock process loss",
+    async (label, failureKey) => {
+      const { before, completion } = cleanFixture();
+      const beforeV6 = asStrictV6(before);
+      const afterV6 = asStrictV6(completion.pet);
+      const store = faultingMemory(failureKey, 1);
+      store.values.set(PET_STORAGE_KEY, JSON.stringify(beforeV6));
+      store.values.set(
+        CARE_GUIDE_PROGRESS_KEY,
+        JSON.stringify(DEFAULT_CARE_GUIDE_PROGRESS),
+      );
+      store.values.set(
+        CLEAN_COMPLETION_TRANSACTION_KEY,
+        JSON.stringify({
+          version: 2,
+          status: "prepared",
+          before: {
+            pet: beforeV6,
+            progress: DEFAULT_CARE_GUIDE_PROGRESS,
+          },
+          after: { pet: afterV6, progress: completion.progress },
+        }),
+      );
+      const firstMigrationAt = 100_000;
+      const laterMigrationAt = 200_000;
+      const now = vi.spyOn(Date, "now").mockReturnValue(firstMigrationAt);
+      try {
+        await expect(
+          createPetGuidePersistenceAuthority(store).loadAndRecover(),
+        ).resolves.toMatchObject({
+          cleanCompletionRecovery: "prepared",
+          delayedCleanRecovery: "pending",
+        });
+
+        now.mockReturnValue(laterMigrationAt);
+        const stableAnchor =
+          label === "pet" ? laterMigrationAt : firstMigrationAt;
+        const expectedPet = migratePetState(afterV6, stableAnchor)!;
+        await expect(
+          createPetGuidePersistenceAuthority(store).loadAndRecover(),
+        ).resolves.toMatchObject({
+          petResult: { kind: "loaded", pet: expectedPet },
+          careGuideResult: {
+            kind: "loaded",
+            progress: completion.progress,
+          },
+          cleanCompletionRecovery: "committed",
+          delayedCleanRecovery: "recovered",
+        });
+        expect(JSON.parse(store.values.get(PET_STORAGE_KEY)!)).toEqual(
+          expectedPet,
+        );
+        expect(
+          JSON.parse(store.values.get(CLEAN_COMPLETION_TRANSACTION_KEY)!),
+        ).toMatchObject({
+          version: 2,
+          status: "committed",
+          after: {
+            pet: {
+              version: 7,
+              wellbeingLastUpdatedAt: stableAnchor,
+              needs: { health: 100, attention: 80 },
+            },
+          },
+        });
+
+        now.mockReturnValue(laterMigrationAt + 60_000);
+        await expect(
+          createPetGuidePersistenceAuthority(store).loadAndRecover(),
+        ).resolves.toMatchObject({
+          petResult: { kind: "loaded", pet: expectedPet },
+          cleanCompletionRecovery: "committed",
+        });
+      } finally {
+        now.mockRestore();
+      }
+    },
+  );
+
   it("orders a later reset after pending Clean and suppresses Clean publication", async () => {
     const store = deferredWriteMemory(CLEAN_COMPLETION_TRANSACTION_KEY);
     const { before, completion } = cleanFixture();
@@ -679,6 +845,95 @@ describe("durable delayed-Clean completion", () => {
         },
         cleanCompletionRecovery: "committed",
       });
+    },
+  );
+
+  it.each([
+    ["pet", PET_STORAGE_KEY],
+    ["guide", CARE_GUIDE_PROGRESS_KEY],
+    ["marker", CLEAN_COMPLETION_TRANSACTION_KEY],
+  ] as const)(
+    "keeps a stable V7 wellbeing anchor while recovering a V6 V4 journal after %s interruption and later-clock process loss",
+    async (label, failureKey) => {
+      const resetPet = createNewPet(35_150);
+      const resetPetV6 = asStrictV6(resetPet);
+      const beforePetRaw = "{bad-pet";
+      const beforeGuideRaw = "{bad-guide";
+      const store = faultingMemory(failureKey, 1);
+      store.values.set(PET_STORAGE_KEY, beforePetRaw);
+      store.values.set(CARE_GUIDE_PROGRESS_KEY, beforeGuideRaw);
+      store.values.set(
+        CLEAN_COMPLETION_TRANSACTION_KEY,
+        JSON.stringify({
+          version: 4,
+          operation: "explicit-reset",
+          status: "prepared",
+          before: { petRaw: beforePetRaw, progressRaw: beforeGuideRaw },
+          after: {
+            pet: resetPetV6,
+            progress: DEFAULT_CARE_GUIDE_PROGRESS,
+          },
+          targetGeneration: {
+            id: resetPet.id,
+            createdAt: resetPet.createdAt,
+          },
+        }),
+      );
+      const firstMigrationAt = 300_000;
+      const laterMigrationAt = 400_000;
+      const now = vi.spyOn(Date, "now").mockReturnValue(firstMigrationAt);
+      try {
+        await expect(
+          createPetGuidePersistenceAuthority(store).loadAndRecover(),
+        ).resolves.toMatchObject({
+          cleanCompletionRecovery: "prepared",
+          explicitResetRecovery: "pending",
+        });
+
+        now.mockReturnValue(laterMigrationAt);
+        const stableAnchor =
+          label === "pet" ? laterMigrationAt : firstMigrationAt;
+        const expectedPet = migratePetState(resetPetV6, stableAnchor)!;
+        await expect(
+          createPetGuidePersistenceAuthority(store).loadAndRecover(),
+        ).resolves.toEqual({
+          petResult: { kind: "loaded", pet: expectedPet },
+          careGuideResult: {
+            kind: "loaded",
+            progress: DEFAULT_CARE_GUIDE_PROGRESS,
+          },
+          cleanCompletionRecovery: "committed",
+          explicitResetRecovery: "recovered",
+        });
+        expect(JSON.parse(store.values.get(PET_STORAGE_KEY)!)).toEqual(
+          expectedPet,
+        );
+        expect(
+          JSON.parse(store.values.get(CLEAN_COMPLETION_TRANSACTION_KEY)!),
+        ).toMatchObject({
+          version: 4,
+          operation: "explicit-reset",
+          status: "committed",
+          after: {
+            pet: {
+              version: 7,
+              wellbeingLastUpdatedAt: stableAnchor,
+              needs: { health: 100, attention: 80 },
+            },
+          },
+        });
+
+        now.mockReturnValue(laterMigrationAt + 60_000);
+        await expect(
+          createPetGuidePersistenceAuthority(store).loadAndRecover(),
+        ).resolves.toMatchObject({
+          petResult: { kind: "loaded", pet: expectedPet },
+          cleanCompletionRecovery: "committed",
+          explicitResetRecovery: "committed-residue",
+        });
+      } finally {
+        now.mockRestore();
+      }
     },
   );
 
