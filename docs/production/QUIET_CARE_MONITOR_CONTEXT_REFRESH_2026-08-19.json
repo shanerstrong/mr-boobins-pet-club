@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "kind": "managed-context-quiet-care-monitor-refresh",
+  "refreshId": "2026-08-19-quiet-care-monitor-prototype",
+  "createdOn": "2026-08-19",
+  "hashAlgorithm": "sha256",
+  "gitBlobIdentityCommand": "git hash-object --path=<path> <path>",
+  "authorization": {
+    "milestone": "Build — Quiet Care Monitor LCD Prototype",
+    "scope": "Record only the exact final provisional LCD and explicit Color Pixel presenter implementation, shared immutable V7 presentation model, factual documentation, committed V7 state rollover, and four-file representative evidence after code/documentation/evidence freeze.",
+    "generalMutableContextException": false,
+    "simulationPersistenceLifecycleOrIntentChangeAuthorized": false,
+    "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+    "classificationChangeAuthorized": true,
+    "classificationChangeScope": "Exactly one four-file, 249894-byte normal-Git representative-evidence group plus generatedAt; every prior group and source-inventory anchor remains unchanged.",
+    "dependencyChangeAuthorized": false,
+    "externalOrGitActionAuthorized": false,
+    "classicControlsAuthorized": false,
+    "subjectiveAcceptanceOrLockAuthorized": false
+  },
+  "repositoryState": {
+    "head": "398bd7eccaba3364de4a3c80073b592e3ed9f9d3",
+    "headParent": "8e01e9d36faaaa74d79ea6f51777fce6319875e5",
+    "branch": "codex/jack-v05",
+    "stagedPathCount": 0,
+    "stagedPaths": [],
+    "externalOrGitActionPerformed": false
+  },
+  "immutablePredecessor": {
+    "role": "latest-append-only-asset-control-record",
+    "record": "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
+    "recordBytes": 14873,
+    "recordSha256": "d68c8dde360cdd1cb303f8e8720978a259c97dfcb62008ce15b48a3ddc49ecd4",
+    "immutable": true
+  },
+  "transitions": [
+    {
+      "path": "App.tsx",
+      "role": "app-used-session-presentation-selection-and-shared-model-adapter",
+      "prior": { "bytes": 124143, "sha256": "7606a0852ce92f5e14d429b63befa0961934e4f91d4efe6a95eafd04f36c9a1b", "gitNormalizedBlobOid": "aae7d69c2e3a50e8cf8622edd4b0d89aa241ec25", "identitySource": "v7-gameplay-commit" },
+      "current": { "bytes": 124319, "sha256": "e975f165b9c6b70c05e47143ff3c5db227e5cd1964aec68c4896ed92e5f329bd", "gitNormalizedBlobOid": "1386be01a64de6f38aae1c89747f12b6d0dca8d4", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "role": "durable-provisional-lcd-product-policy",
+      "prior": { "bytes": 28988, "sha256": "91b9a0a76e9e31bc7a2da4df1666bd699cc4055f3f42b852ddcdb32b17a2de3d", "gitNormalizedBlobOid": "bc4185e44ed6e56655f299a1ba5aa2bec41b62d1", "identitySource": "v7-gameplay-commit" },
+      "current": { "bytes": 29941, "sha256": "b6fd0fa65721a4a2ece3063c9c2f4f09b13dc69b9df997b5d907fd2c06aacff9", "gitNormalizedBlobOid": "4d3943dcd95414c50b5fb5ae7c5986eb7d2e9249", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/QUALITY_GATES.md",
+      "role": "lcd-presentation-deterministic-and-live-quality-gate-contract",
+      "prior": { "bytes": 12486, "sha256": "b158a6f590564754c86aa7ac5a2e26ca82c9579b59abfedda96380022d2b7fa4", "gitNormalizedBlobOid": "b25b264ddf9a45985403e3091ed3f239c7bfc49e", "identitySource": "v7-gameplay-commit" },
+      "current": { "bytes": 13107, "sha256": "e6f651df0624ab88ada4b5d479039bd019e1cb25322f7431f2c7099cb93d8ac5", "gitNormalizedBlobOid": "4996608bdd6aa1011ae08ab5f53c4b8a6ea5f02a", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/production/CREATIVE_DIRECTION.md",
+      "role": "provisional-not-accepted-quiet-care-monitor-taste-status",
+      "prior": { "bytes": 5030, "sha256": "e1c3222dcab31c53c4b920944c276aa8e7cf4a33896efcf87701cf8dc61db7ef", "gitNormalizedBlobOid": "8c443f800256e91861ba8ea66c4f89d10bd9779e", "identitySource": "v7-gameplay-commit" },
+      "current": { "bytes": 5548, "sha256": "8d1abdaa118e4c8f0e7b01614368df4cd1017542c6d49fb8afa0c0ffb8bec894", "gitNormalizedBlobOid": "04beff105f1aa7b2d21a3f097b9acc00f28e1332", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/GAME_PRODUCTION_PLAN.md",
+      "role": "presentation-track-implementation-checkpoint",
+      "prior": { "bytes": 23255, "sha256": "95ef191bbb896ab45e5ce24d6e8192b089c158c99f922e08493e3a66b6807528", "gitNormalizedBlobOid": "23b7d8955e8e3fbcf86422c00dd67c62fc800dd6", "identitySource": "v7-gameplay-commit" },
+      "current": { "bytes": 24254, "sha256": "c2fea6c4fc0852eef48053befdaebd2e94c7555e061f553a543038f1b30c3b21", "gitNormalizedBlobOid": "080e0a532cada0bcb559b1e489e77f6a44dd5059", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/production/PRODUCTION_DASHBOARD.md",
+      "role": "current-quiet-care-monitor-slice-status",
+      "prior": { "bytes": 10273, "sha256": "0fa0a671ef67ae37a13464c32a7150860e8d61f0a40d47ff57232353a5c6fc0c", "gitNormalizedBlobOid": "31d8432bde6b4513758632cf4703922e483317d2", "identitySource": "v7-gameplay-commit" },
+      "current": { "bytes": 10827, "sha256": "b9ed767bfa1f6ad7962a80b0924550623c924f10ef9e772277605527b665ef9d", "gitNormalizedBlobOid": "efae92806495cdee588ec94c2bdcbff5a3c678d7", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "PLANS.md",
+      "role": "accepted-bounded-lcd-implementation-plan",
+      "prior": { "bytes": 20772, "sha256": "8e98a4329be7a9e3a3ac58b9ed2c0d855345f38e60fe6bdfb590e756b2b21764", "gitNormalizedBlobOid": "726fe00b5f1244886327af5b5a103f68ca51fb17", "identitySource": "v7-gameplay-commit" },
+      "current": { "bytes": 22235, "sha256": "adc6b38da11e9d931a929c12cbf160a4d44634f2fa4294e27585e96419280152", "gitNormalizedBlobOid": "660f97c7f7f98bfcd9e7aa68876cf43d97cd88a7", "gitState": "tracked-modified" }
+    }
+  ],
+  "additions": [
+    { "path": "src/lcd-presentation-policy.ts", "role": "deterministic-lcd-state-frame-and-status-policy", "priorState": "absent-at-v7-head", "bytes": 3402, "sha256": "2d257dc9371af92ddd29c0aff0749ad636915cb3531a3745eaf7ebba19c407f7", "gitNormalizedBlobOid": "37b7b2bdec4a534fa1fe78d4e524c32e4046c64f", "gitState": "untracked" },
+    { "path": "src/lcd-presentation-policy.test.ts", "role": "lcd-state-frame-reduced-motion-and-non-color-coverage", "priorState": "absent-at-v7-head", "bytes": 2801, "sha256": "dcac2dfdfb1bcb630f7013f3f2ff73059cfdd76784ae905212877eff13153ac5", "gitNormalizedBlobOid": "b26192ca4736aaa426effa6f960cb9d9ebfdb4d1", "gitState": "untracked" },
+    { "path": "src/pet-presentation-model.ts", "role": "deep-frozen-shared-v7-presentation-model-and-session-mode-contract", "priorState": "absent-at-v7-head", "bytes": 7604, "sha256": "a966e6a58c0fb29658faa5a8dcf883d529a46b1a374b0baccf9a6980e0012f3a", "gitNormalizedBlobOid": "e43cd3ac70efd696e708d9ecdf6477b3451ce316", "gitState": "untracked" },
+    { "path": "src/pet-presentation-model.test.ts", "role": "mode-model-status-medicine-and-no-mutation-coverage", "priorState": "absent-at-v7-head", "bytes": 6212, "sha256": "15f2d919b0867a6c81e21b04c48ee09ab6c0c9c3ca14b8bec9d9aa4e6b916338", "gitNormalizedBlobOid": "cc53ec655fbc2da792e6f84201c030e96c093822", "gitState": "untracked" },
+    { "path": "src/pet-presentation-stage.tsx", "role": "explicit-three-d-color-pixel-lcd-presenter-adapter-and-session-switcher", "priorState": "absent-at-v7-head", "bytes": 5385, "sha256": "730b15f9206f4582cf382f195c830be423518af539ac5be8408be2e25e72aa87", "gitNormalizedBlobOid": "537af8c0516d12d7d674be75c63892e71b5ee3c0", "gitState": "untracked" },
+    { "path": "src/quiet-care-monitor.tsx", "role": "original-code-native-quiet-care-monitor-presenter", "priorState": "absent-at-v7-head", "bytes": 14603, "sha256": "6094dfe2501ddf357a8fe535ce9871ecd44eccd45295feb058fe9fe12271262e", "gitNormalizedBlobOid": "2bf6c194b870ca59a747201fb6820f02f4cf12dd", "gitState": "untracked" }
+  ],
+  "committedV7StateSuccessors": [
+    { "path": "src/persistence.ts", "bytes": 56676, "sha256": "86cca46e758c7fc98282ab223d313594d27edbc28cb4911d7588b35a9c2b1338", "gitNormalizedBlobOid": "ee8fdf7578b8f10a3331c1eed344e3be9a3e3229", "priorState": "tracked-modified", "currentState": "tracked-clean-at-v7-head", "bytesChanged": false },
+    { "path": "src/persistence.test.ts", "bytes": 87216, "sha256": "798b9b143c0bfdddf7e74d0f9c6c95b2ceddf36c2161d2a3a27e6f11a0eee318", "gitNormalizedBlobOid": "b3624e32e80af85f00bf429afcc6c24a5c3cab0a", "priorState": "tracked-modified", "currentState": "tracked-clean-at-v7-head", "bytesChanged": false },
+    { "path": "src/day-one-ui.test.ts", "bytes": 35071, "sha256": "b7cd34d38473ae9cb0a3a63b2ad3d65a46c8a1eca64e4dc107985938dab27918", "gitNormalizedBlobOid": "b80d50afb72f3852724c6826a3073a0a600827c2", "priorState": "tracked-modified", "currentState": "tracked-clean-at-v7-head", "bytesChanged": false },
+    { "path": "evidence/health-status-medicine/status-medicine-390x844.jpg", "bytes": 40477, "sha256": "9a15da2ad4edbfa9939fe28bee5023e21d6767a8073d0cf7e216499e33b08fe3", "gitNormalizedBlobOid": "3acaa3fb6257d907a89355a0a890c692f0adb805", "priorState": "untracked", "currentState": "tracked-clean-at-v7-head", "bytesChanged": false },
+    { "path": "evidence/health-status-medicine/status-medicine-1440x900.jpg", "bytes": 67890, "sha256": "4396f872b40e6cc06f7804cbec51449e16f97b30dd5bb033f1d88d3ffe5f9b3d", "gitNormalizedBlobOid": "76c3a943b10f69202779cb3d3855976dd6779a1a", "priorState": "untracked", "currentState": "tracked-clean-at-v7-head", "bytesChanged": false }
+  ],
+  "representativeEvidence": {
+    "kind": "normal-git-provisional-lcd-and-explicit-color-pixel-live-evidence",
+    "groupId": "normal-git-evidence-quiet-care-monitor",
+    "fileCount": 4,
+    "bytes": 249894,
+    "files": [
+      { "path": "evidence/lcd-presentation/color-pixel-direct-1440x900.jpg", "bytes": 85204, "sha256": "3f9224bdd2941b4bd5eeee29dfe89de9a474368e75d9e5339605ebda44b664a4", "gitNormalizedBlobOid": "5ff44370fa0c41f73bddc679789fe9f7aba01000", "dimensions": [1440, 900], "signature": "jpeg-jfif" },
+      { "path": "evidence/lcd-presentation/color-pixel-direct-390x844.jpg", "bytes": 49232, "sha256": "4ff6d37921da2f42aefd8805aab67adfd5f8bdb7acffedbe149cd5f05c46af97", "gitNormalizedBlobOid": "cee02281ea8b40152b90005bbf6fce4d4871a17b", "dimensions": [390, 844], "signature": "jpeg-jfif" },
+      { "path": "evidence/lcd-presentation/lcd-status-medicine-1440x900.jpg", "bytes": 74760, "sha256": "007c265302e4f12d9566875487942d8646e32aa29f52f0ebb9a0ce8a176646e8", "gitNormalizedBlobOid": "51036d0efd932fca1c1cf26c5d0efe1bfedb2bed", "dimensions": [1440, 900], "signature": "jpeg-jfif" },
+      { "path": "evidence/lcd-presentation/lcd-status-medicine-390x844.jpg", "bytes": 40698, "sha256": "0f35fd89b2a75efa860bea72c363cc597f68471a22434ef7f40be833118a6ad1", "gitNormalizedBlobOid": "b716b110f72e9823249dbaf1ad0d14f1233a6342", "dimensions": [390, 844], "signature": "jpeg-jfif" }
+    ]
+  },
+  "liveVerification": {
+    "phone": { "pageReportedViewport": [390, 844], "documentScrollWidth": 390, "horizontalOverflow": false, "minimumSelectorAndDirectControlPx": 44, "lcdStatusMedicineChecked": true, "explicitColorPixelChecked": true },
+    "desktop": { "pageReportedViewport": [1440, 900], "documentScrollWidth": 1440, "horizontalOverflow": false, "minimumSelectorAndDirectControlPx": 44, "lcdStatusMedicineChecked": true, "explicitColorPixelChecked": true },
+    "sessionOnlyReloadRestoredThreeD": true,
+    "keyboardFocusAndSelectionChecked": true,
+    "statusModalIsolationEscapeAndTriggerRestorationChecked": true,
+    "transientStatesChecked": ["feed", "play", "clean", "training", "reward", "sleep", "tired", "boop"],
+    "reducedMotionBrowserOverrideAvailable": false,
+    "reducedMotionCoveredDeterministically": true,
+    "observedNewRuntimeErrors": 0
+  },
+  "unchangedInvariants": {
+    "classificationPath": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+    "priorClassificationBytes": 138776,
+    "priorClassificationSha256": "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a",
+    "currentClassificationBytes": 140025,
+    "currentClassificationSha256": "80a017770c774dcab3c137831bf3da6ae09c205d397e73debc99342d67c0d8e3",
+    "priorClassificationGroupCount": 23,
+    "currentClassificationGroupCount": 24,
+    "packageJsonBytes": 1277,
+    "packageJsonSha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa",
+    "packageLockJsonBytes": 483873,
+    "packageLockJsonSha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38",
+    "governedAssetFileCount": 125,
+    "governedAssetBytes": 448676672,
+    "governedAssetAggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f",
+    "assetPathChanges": 0,
+    "assetByteChanges": 0,
+    "assetTierChanges": 0,
+    "runtimeImportChanges": 0,
+    "assetDispositionChanges": 0,
+    "classificationChanges": 1,
+    "representativeEvidenceAdditions": 4,
+    "representativeEvidenceBytes": 249894,
+    "dependencyChanges": 0,
+    "simulationPersistenceLifecycleOrIntentChanges": 0
+  },
+  "controlPlanePredecessors": {
+    "assetPolicy": { "path": "docs/production/asset-policy.v1.json", "bytes": 49221, "sha256": "7f8e92558224d2ee1ad128a9b8bfc9cd170ea0dd35199b472635ba4aaecf8b9e" },
+    "assetVerifier": { "path": "scripts/verify-assets.mjs", "bytes": 227502, "sha256": "fd0e8d801fb4b7e82b49173d81e1164a136b06afa8e0907939a76a3f0e374d01" }
+  },
+  "finalVerificationPlan": {
+    "jsonAndNodeSyntax": true,
+    "fullAndScopedGitDiffChecks": true,
+    "assetVerifierPassesRequired": 2,
+    "exactQualityGatesRequired": true,
+    "independentReadOnlyConfirmationRequired": true,
+    "stagedPathCountRequired": 0
+  }
+}

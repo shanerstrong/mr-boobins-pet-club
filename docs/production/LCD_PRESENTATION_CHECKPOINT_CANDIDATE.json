@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "kind": "lcd-presentation-checkpoint-candidate-index",
+  "generatedAt": "2026-08-19T06:20:16.3462150Z",
+  "parentHead": "398bd7eccaba3364de4a3c80073b592e3ed9f9d3",
+  "branch": "codex/jack-v05",
+  "hashAlgorithm": "sha256",
+  "gitBlobIdentityCommand": "git hash-object --path=<path> <path>",
+  "aggregateFormat": "ordinal-case-sensitive path<TAB>bytes<TAB>lowercase-sha256<TAB>path-attributed-git-blob-oid<LF>, hashed as UTF-8",
+  "status": "verified-local-commit-candidate-separate-approval-required",
+  "sourceOfTruth": "repository working tree over the exact parent HEAD",
+  "scope": {
+    "objective": "Checkpoint only the completed and independently reviewed provisional Quiet Care Monitor plus explicit Color Pixel mode: code-native presentation model, policy, components and tests; factual documentation; four representative JPEG captures; and the exact managed-context, policy, verifier, and classification successors required by that slice.",
+    "creativeStatus": "Provisional only. Mark has not accepted or locked the Quiet Care Monitor, Color Pixel presentation, or any related look.",
+    "classicControlsStarted": false,
+    "implementationChangedByCheckpointTask": false,
+    "assetOrEvidenceBytesChangedByCheckpointTask": false,
+    "existingFilesChangedByCheckpointTask": false,
+    "gitOrExternalActionPerformedByCheckpointTask": false
+  },
+  "receivedWorktreeBeforeThisTask": {
+    "visibleStatusPathCount": 558,
+    "trackedModifiedPathCount": 10,
+    "untrackedPathCount": 548,
+    "visibleBytes": 2609706992,
+    "includedExistingPathCount": 21,
+    "includedExistingBytes": 981249,
+    "excludedExistingPathCount": 537,
+    "excludedExistingBytes": 2608725743,
+    "unresolvedPathCount": 0,
+    "allVisiblePathsAccountedFor": true,
+    "stagedPathCount": 0
+  },
+  "candidate": {
+    "fileCount": 22,
+    "nonSelfFileCount": 21,
+    "nonSelfBytes": 981249,
+    "nonSelfAggregateBodyBytes": 3117,
+    "nonSelfAggregateSha256": "321969a7dd7516b5c49fcff9e5f98f46eebbe5594b5109e4f5aa5ef4c8ded010",
+    "totalBytes": null,
+    "totalBytesReportedInCompanionReport": true,
+    "files": [
+      { "path": "App.tsx", "statusRelativeToParent": "modified", "bytes": 124319, "sha256": "e975f165b9c6b70c05e47143ff3c5db227e5cd1964aec68c4896ed92e5f329bd", "gitNormalizedBlobOid": "1386be01a64de6f38aae1c89747f12b6d0dca8d4" },
+      { "path": "PLANS.md", "statusRelativeToParent": "modified", "bytes": 22235, "sha256": "adc6b38da11e9d931a929c12cbf160a4d44634f2fa4294e27585e96419280152", "gitNormalizedBlobOid": "660f97c7f7f98bfcd9e7aa68876cf43d97cd88a7" },
+      { "path": "docs/DECISIONS.md", "statusRelativeToParent": "modified", "bytes": 29941, "sha256": "b6fd0fa65721a4a2ece3063c9c2f4f09b13dc69b9df997b5d907fd2c06aacff9", "gitNormalizedBlobOid": "4d3943dcd95414c50b5fb5ae7c5986eb7d2e9249" },
+      { "path": "docs/GAME_PRODUCTION_PLAN.md", "statusRelativeToParent": "modified", "bytes": 24254, "sha256": "c2fea6c4fc0852eef48053befdaebd2e94c7555e061f553a543038f1b30c3b21", "gitNormalizedBlobOid": "080e0a532cada0bcb559b1e489e77f6a44dd5059" },
+      { "path": "docs/QUALITY_GATES.md", "statusRelativeToParent": "modified", "bytes": 13107, "sha256": "e6f651df0624ab88ada4b5d479039bd019e1cb25322f7431f2c7099cb93d8ac5", "gitNormalizedBlobOid": "4996608bdd6aa1011ae08ab5f53c4b8a6ea5f02a" },
+      { "path": "docs/production/CREATIVE_DIRECTION.md", "statusRelativeToParent": "modified", "bytes": 5548, "sha256": "8d1abdaa118e4c8f0e7b01614368df4cd1017542c6d49fb8afa0c0ffb8bec894", "gitNormalizedBlobOid": "04beff105f1aa7b2d21a3f097b9acc00f28e1332" },
+      { "path": "docs/production/PRODUCTION_DASHBOARD.md", "statusRelativeToParent": "modified", "bytes": 10827, "sha256": "b9ed767bfa1f6ad7962a80b0924550623c924f10ef9e772277605527b665ef9d", "gitNormalizedBlobOid": "efae92806495cdee588ec94c2bdcbff5a3c678d7" },
+      { "path": "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json", "statusRelativeToParent": "untracked", "bytes": 13584, "sha256": "d32813e7d7652e096ef55f300459f70f236c705f3c7ab506caed161c4a44dddf", "gitNormalizedBlobOid": "9b66641d2ee05765bcf22b446f4aa0f502a5a009" },
+      { "path": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json", "statusRelativeToParent": "modified", "bytes": 140025, "sha256": "80a017770c774dcab3c137831bf3da6ae09c205d397e73debc99342d67c0d8e3", "gitNormalizedBlobOid": "3f4b1489a5ba5e2a57e7e2c2896e96f555ff5447" },
+      { "path": "docs/production/asset-policy.v1.json", "statusRelativeToParent": "modified", "bytes": 52449, "sha256": "55ac293b71dc81eba17b04966fa6d4333b7e22e30228e6aeea53bb05dfe9b7ea", "gitNormalizedBlobOid": "ecca902fcb2497d4075a3c436fd17c8548500b0a" },
+      { "path": "evidence/lcd-presentation/color-pixel-direct-1440x900.jpg", "statusRelativeToParent": "untracked", "bytes": 85204, "sha256": "3f9224bdd2941b4bd5eeee29dfe89de9a474368e75d9e5339605ebda44b664a4", "gitNormalizedBlobOid": "5ff44370fa0c41f73bddc679789fe9f7aba01000" },
+      { "path": "evidence/lcd-presentation/color-pixel-direct-390x844.jpg", "statusRelativeToParent": "untracked", "bytes": 49232, "sha256": "4ff6d37921da2f42aefd8805aab67adfd5f8bdb7acffedbe149cd5f05c46af97", "gitNormalizedBlobOid": "cee02281ea8b40152b90005bbf6fce4d4871a17b" },
+      { "path": "evidence/lcd-presentation/lcd-status-medicine-1440x900.jpg", "statusRelativeToParent": "untracked", "bytes": 74760, "sha256": "007c265302e4f12d9566875487942d8646e32aa29f52f0ebb9a0ce8a176646e8", "gitNormalizedBlobOid": "51036d0efd932fca1c1cf26c5d0efe1bfedb2bed" },
+      { "path": "evidence/lcd-presentation/lcd-status-medicine-390x844.jpg", "statusRelativeToParent": "untracked", "bytes": 40698, "sha256": "0f35fd89b2a75efa860bea72c363cc597f68471a22434ef7f40be833118a6ad1", "gitNormalizedBlobOid": "b716b110f72e9823249dbaf1ad0d14f1233a6342" },
+      { "path": "scripts/verify-assets.mjs", "statusRelativeToParent": "modified", "bytes": 255059, "sha256": "5696aa9e18ee18e14f8d16b59718a97c57a86421d29ed3f6c397219545905cc5", "gitNormalizedBlobOid": "99dc4f1250001d4e13b8ba7562751c7ffef16f66" },
+      { "path": "src/lcd-presentation-policy.test.ts", "statusRelativeToParent": "untracked", "bytes": 2801, "sha256": "dcac2dfdfb1bcb630f7013f3f2ff73059cfdd76784ae905212877eff13153ac5", "gitNormalizedBlobOid": "b26192ca4736aaa426effa6f960cb9d9ebfdb4d1" },
+      { "path": "src/lcd-presentation-policy.ts", "statusRelativeToParent": "untracked", "bytes": 3402, "sha256": "2d257dc9371af92ddd29c0aff0749ad636915cb3531a3745eaf7ebba19c407f7", "gitNormalizedBlobOid": "37b7b2bdec4a534fa1fe78d4e524c32e4046c64f" },
+      { "path": "src/pet-presentation-model.test.ts", "statusRelativeToParent": "untracked", "bytes": 6212, "sha256": "15f2d919b0867a6c81e21b04c48ee09ab6c0c9c3ca14b8bec9d9aa4e6b916338", "gitNormalizedBlobOid": "cc53ec655fbc2da792e6f84201c030e96c093822" },
+      { "path": "src/pet-presentation-model.ts", "statusRelativeToParent": "untracked", "bytes": 7604, "sha256": "a966e6a58c0fb29658faa5a8dcf883d529a46b1a374b0baccf9a6980e0012f3a", "gitNormalizedBlobOid": "e43cd3ac70efd696e708d9ecdf6477b3451ce316" },
+      { "path": "src/pet-presentation-stage.tsx", "statusRelativeToParent": "untracked", "bytes": 5385, "sha256": "730b15f9206f4582cf382f195c830be423518af539ac5be8408be2e25e72aa87", "gitNormalizedBlobOid": "537af8c0516d12d7d674be75c63892e71b5ee3c0" },
+      { "path": "src/quiet-care-monitor.tsx", "statusRelativeToParent": "untracked", "bytes": 14603, "sha256": "6094dfe2501ddf357a8fe535ce9871ecd44eccd45295feb058fe9fe12271262e", "gitNormalizedBlobOid": "2bf6c194b870ca59a747201fb6820f02f4cf12dd" },
+      { "path": "docs/production/LCD_PRESENTATION_CHECKPOINT_CANDIDATE.json", "statusRelativeToParent": "untracked", "bytes": null, "sha256": null, "gitNormalizedBlobOid": null, "identityReportedInCompanionReport": true }
+    ]
+  },
+  "selfIndexSemantics": {
+    "path": "docs/production/LCD_PRESENTATION_CHECKPOINT_CANDIDATE.json",
+    "countedAsCandidate": true,
+    "recursiveDigestStoredInsideSelf": false,
+    "reason": "A file cannot contain its own final byte size, SHA-256, or Git blob OID without changing those identities. The final candidate identity and total bytes are reported in the companion report after this JSON is final."
+  },
+  "excluded": {
+    "existingFileCount": 537,
+    "existingBytes": 2608725743,
+    "finalFileCountIncludingCompanionReport": 538,
+    "finalBytesIncludingCompanionReport": null,
+    "unresolved": [],
+    "groups": [
+      {
+        "id": "immutable-safe-return-exclusions-except-committed-scene-successor",
+        "pathSetSource": "docs/production/SAFE_RETURN_CHECKPOINT_CANDIDATE.json excluded.groups",
+        "pathSetSourceBytes": 238966,
+        "pathSetSourceSha256": "3593f4ce5d26242472c379fe84ed2b186ed0080a4702b7b50ee9e0c8b71348e4",
+        "excludedSourceEntry": "src/pet-room-scene.web.tsx",
+        "fileCount": 482,
+        "bytes": 2603594246,
+        "aggregateWithoutSceneBodyBytes": 65444,
+        "aggregateWithoutSceneSha256": "b23c6f05cf7300895be352f24454bddc108ec9c426f96d20c50557822e95780a",
+        "verification": "All 482 immutable-ledger paths remained present and at their recorded byte sizes. Unchanged bulk preservation contents were validated through immutable manifests and the current verifier rather than needlessly rehashing multi-gigabyte archives."
+      },
+      {
+        "id": "prior-untracked-checkpoint-reports",
+        "fileCount": 3,
+        "bytes": 31610,
+        "files": [
+          { "path": "docs/production/SAFE_RETURN_CHECKPOINT_REPORT.md", "bytes": 12114, "sha256": "9c9dbc2430a9275e28b4b102b6d98615875b30fc798d5c0d442d63b1797f1e1a", "gitNormalizedBlobOid": "5be8b2584d17f51a5ab8ee04218c3c158083ebe4" },
+          { "path": "docs/production/ALPHA_INSPECT_CHECKPOINT_REPORT.md", "bytes": 9368, "sha256": "1071ce47d4edb3c27dec3409568d34e691285eaa0fb6e2c57559efcbe5c7a99c", "gitNormalizedBlobOid": "af9bbc3505873cdd0f8d7eefed10b5d673580a72" },
+          { "path": "docs/production/V7_GAMEPLAY_CHECKPOINT_REPORT.md", "bytes": 10128, "sha256": "2ee772642bb50a359958b1d6d3a64400ae15a5b7e890e44f2bc68f029e719ffd", "gitNormalizedBlobOid": "46849c5979f0127af1d6a92c3d2febef2a2a21c0" }
+        ],
+        "disposition": "preserve untracked and exclude from this candidate"
+      },
+      {
+        "id": "inherited-clean-baseline-checkpoint-report",
+        "path": "docs/production/V0.6-V0.8_CHECKPOINT_REPORT.md",
+        "visibleStatusPath": false,
+        "bytes": 14973,
+        "sha256": "0941297e94f30129d7f9812a1aa527c523ad51a00826ed2f9b57e3ffd4409617",
+        "gitNormalizedBlobOid": "b94e1738751f36a6821964038265a9068dbbb578",
+        "disposition": "already inherited clean from parent HEAD; preserved and not part of this candidate delta"
+      },
+      {
+        "id": "paused-50.1-intro-cinematic-artifacts",
+        "fileCount": 52,
+        "bytes": 5099887,
+        "aggregateBodyBytes": 9223,
+        "aggregateSha256": "bb81773fb7e732d8c4560473f58ede511d5ab97f1d4917fa45d4a6defb67b043",
+        "liveHashedPathByPath": true,
+        "membersDefinedByExactVisiblePathsUnder": [
+          "output/intro-cinematic-concepts/",
+          "output/pdf/mr-boobins-intro-cinematic-concepts-exploratory.pdf",
+          "tmp/pdfs/intro-cinematic-concepts-render/"
+        ],
+        "subgroups": [
+          { "path": "output/intro-cinematic-concepts/", "fileCount": 31, "bytes": 1725877, "aggregateSha256": "0d1b32a3b3101f2c761e01532ba026b89b69acaf13da77ae74946b1febeb9dd3" },
+          { "path": "output/pdf/mr-boobins-intro-cinematic-concepts-exploratory.pdf", "fileCount": 1, "bytes": 683903, "aggregateSha256": "c6f9c2fbb75685583e7d18cd2cb80d4ec16edcc52d400b96380c2c6bc7678c7f" },
+          { "path": "tmp/pdfs/intro-cinematic-concepts-render/", "fileCount": 20, "bytes": 2690107, "aggregateSha256": "645f1303db6727ad1d066ee572d48a213d7700e3dc0831434114319cdd5c24d9" }
+        ],
+        "disposition": "paused concurrent cinematic work; preserve unchanged and exclude"
+      },
+      {
+        "id": "lcd-presentation-checkpoint-companion-report",
+        "path": "docs/production/LCD_PRESENTATION_CHECKPOINT_REPORT.md",
+        "fileCount": 1,
+        "bytes": null,
+        "sha256": null,
+        "gitNormalizedBlobOid": null,
+        "identityReportedAfterFinalization": true,
+        "disposition": "companion decision report outside the exact candidate to avoid circular candidate/report digest dependency"
+      }
+    ]
+  },
+  "statusAccountingAfterThisTask": {
+    "visiblePathCount": 560,
+    "candidatePathCount": 22,
+    "excludedPathCount": 538,
+    "unresolvedPathCount": 0,
+    "allVisiblePathsAccountedFor": true,
+    "onlyNewPathsFromThisTask": [
+      "docs/production/LCD_PRESENTATION_CHECKPOINT_CANDIDATE.json",
+      "docs/production/LCD_PRESENTATION_CHECKPOINT_REPORT.md"
+    ]
+  },
+  "runtimeAndImportCoverage": {
+    "appUsedPresentationModulesIncluded": [
+      "src/pet-presentation-model.ts",
+      "src/lcd-presentation-policy.ts",
+      "src/pet-presentation-stage.tsx",
+      "src/quiet-care-monitor.tsx"
+    ],
+    "presentationModes": ["3d", "color-pixel", "lcd"],
+    "classicControlsStarted": false,
+    "allStaticAndLocalImportsSatisfiedByParentOrCandidate": true,
+    "productionExportRouteCount": 3,
+    "smokeReferencedRuntimeAssetCount": 22,
+    "unexpectedLfsPointerCount": 0,
+    "privateOrProhibitedCandidatePathCount": 0,
+    "credentialLikeFindingCount": 0
+  },
+  "evidence": {
+    "groupId": "normal-git-evidence-quiet-care-monitor",
+    "technicalAdmissionOnly": true,
+    "subjectiveAcceptanceOrLock": false,
+    "fileCount": 4,
+    "bytes": 249894,
+    "files": [
+      { "path": "evidence/lcd-presentation/color-pixel-direct-1440x900.jpg", "bytes": 85204, "sha256": "3f9224bdd2941b4bd5eeee29dfe89de9a474368e75d9e5339605ebda44b664a4", "dimensions": [1440, 900], "signature": "jpeg-jfif" },
+      { "path": "evidence/lcd-presentation/color-pixel-direct-390x844.jpg", "bytes": 49232, "sha256": "4ff6d37921da2f42aefd8805aab67adfd5f8bdb7acffedbe149cd5f05c46af97", "dimensions": [390, 844], "signature": "jpeg-jfif" },
+      { "path": "evidence/lcd-presentation/lcd-status-medicine-1440x900.jpg", "bytes": 74760, "sha256": "007c265302e4f12d9566875487942d8646e32aa29f52f0ebb9a0ce8a176646e8", "dimensions": [1440, 900], "signature": "jpeg-jfif" },
+      { "path": "evidence/lcd-presentation/lcd-status-medicine-390x844.jpg", "bytes": 40698, "sha256": "0f35fd89b2a75efa860bea72c363cc597f68471a22434ef7f40be833118a6ad1", "dimensions": [390, 844], "signature": "jpeg-jfif" }
+    ]
+  },
+  "integrity": {
+    "classification": {
+      "path": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+      "priorBytes": 138776,
+      "priorSha256": "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a",
+      "currentBytes": 140025,
+      "currentSha256": "80a017770c774dcab3c137831bf3da6ae09c205d397e73debc99342d67c0d8e3",
+      "change": "exactly one four-file, 249894-byte normal-Git representative-evidence group plus generatedAt; all prior groups and source anchors unchanged"
+    },
+    "governedPostBaselineAssetSet": {
+      "fileCount": 125,
+      "bytes": 448676672,
+      "aggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f",
+      "verifiedByAssetVerifierPassCount": 2
+    },
+    "packages": {
+      "packageJson": { "bytes": 1277, "sha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa" },
+      "packageLockJson": { "bytes": 483873, "sha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38" },
+      "changedByCandidate": false
+    },
+    "contextSuccessor": {
+      "path": "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json",
+      "bytes": 13584,
+      "sha256": "d32813e7d7652e096ef55f300459f70f236c705f3c7ab506caed161c4a44dddf",
+      "predecessor": "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
+      "predecessorSha256": "d68c8dde360cdd1cb303f8e8720978a259c97dfcb62008ce15b48a3ddc49ecd4"
+    },
+    "assetPolicy": { "bytes": 52449, "sha256": "55ac293b71dc81eba17b04966fa6d4333b7e22e30228e6aeea53bb05dfe9b7ea" },
+    "assetVerifier": { "bytes": 255059, "sha256": "5696aa9e18ee18e14f8d16b59718a97c57a86421d29ed3f6c397219545905cc5" },
+    "simulationPersistenceLifecycleIntentOrAssetByteChange": false,
+    "headUnchanged": true,
+    "stagedPathCount": 0
+  },
+  "verification": {
+    "commandsRunByThisCheckpointTask": [
+      { "command": "git diff --check", "result": "pass" },
+      { "command": "powershell.exe -NoProfile -Command \"Get-Content -Raw '.codex-kit/model-routing.json' | ConvertFrom-Json | Out-Null; Get-Content -Raw '.codex-kit/manifest.json' | ConvertFrom-Json | Out-Null\"", "result": "pass" },
+      { "command": "npm run check:assets", "result": "pass", "freshPassCount": 2 },
+      { "command": "npm run lint", "result": "pass" },
+      { "command": "npm run typecheck", "result": "pass" },
+      { "command": "npm test", "result": "pass", "testFileCount": 15, "testCount": 270 },
+      { "command": "npm run export:web", "result": "pass", "routeCount": 3 },
+      { "command": "npm run smoke", "result": "pass", "runtimeAssetCount": 22 }
+    ],
+    "coordinatorConfirmedFreshDependencyGate": {
+      "command": "npm run check:deps",
+      "result": "pass-at-critical-threshold",
+      "critical": 0,
+      "high": 16,
+      "moderate": 7,
+      "rerunByThisCheckpointTask": false,
+      "reason": "The coordinator supplied the fresh exact result; this checkpoint task did not repeat the external npm audit call."
+    },
+    "additionalChecks": [
+      { "check": "node --check scripts/verify-assets.mjs", "result": "pass" },
+      { "check": "candidate/config/context/classification JSON parsing", "result": "pass" },
+      { "check": "candidate text EOF and trailing-whitespace scan", "result": "pass", "checkedPathCount": 17 },
+      { "check": "candidate LFS-pointer/private-path/credential-like scans", "result": "pass", "findingCount": 0 },
+      { "check": "representative JPEG signature and dimensions", "result": "pass", "fileCount": 4 },
+      { "check": "status path union against immutable exclusions, candidate, paused cinematic paths, and reports", "result": "pass", "unresolvedPathCount": 0 }
+    ],
+    "liveAndIndependentReviewEvidence": {
+      "source": "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json",
+      "phoneViewport": [390, 844],
+      "desktopViewport": [1440, 900],
+      "horizontalOverflow": false,
+      "minimumSelectorAndDirectControlPx": 44,
+      "lcdStatusMedicineChecked": true,
+      "explicitColorPixelChecked": true,
+      "sessionOnlyReloadRestoredThreeD": true,
+      "keyboardAndModalFocusChecked": true,
+      "reducedMotionCoveredDeterministically": true,
+      "observedNewRuntimeErrors": 0,
+      "checkpointTaskReranBrowserQA": false
+    }
+  },
+  "knownRisksAndNonApprovals": [
+    "The Quiet Care Monitor and Color Pixel presentations remain provisional; Mark has not accepted or locked the look.",
+    "Classic controls are explicitly not started, so the full first-reviewable milestone remains incomplete.",
+    "The current pre-alpha intro/title direction remains rejected as final, and all paused cinematic artifacts remain excluded unchanged.",
+    "The fresh dependency gate reported 16 high and 7 moderate production-tree findings but zero critical findings; breaking fixes were not authorized or applied.",
+    "Checksums prove current identity and stability; they are not backups.",
+    "The candidate JSON is self-indexed by path/count only and cannot recursively contain its own final digest, byte size, or blob OID.",
+    "This companion report and all earlier checkpoint reports are outside the exact candidate delta.",
+    "No commit, push, Git LFS action/configuration, upload, Drive change, deletion, cleanup, deployment, publication, dependency change, runtime change beyond these already-reviewed candidate bytes, subjective acceptance/locking, or global Project Kit installation is approved by this record."
+  ],
+  "approval": {
+    "commitApproved": false,
+    "pushApproved": false,
+    "lfsActionApproved": false,
+    "uploadApproved": false,
+    "cleanupApproved": false,
+    "deployOrPublishApproved": false,
+    "dependencyChangeApproved": false,
+    "subjectiveAcceptanceOrLockApproved": false,
+    "globalProjectKitInstallApproved": false,
+    "exactPasteReadyAuthorizationInCompanionReport": true
+  }
+}

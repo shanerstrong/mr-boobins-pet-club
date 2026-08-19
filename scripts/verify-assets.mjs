@@ -25,6 +25,7 @@ const alphaInspectStatusRefreshPath = "docs/production/ALPHA_INSPECT_SAFE_RETURN
 const alphaInspectReviewFixRefreshPath = "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json";
 const upContactShadowRefreshPath = "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json";
 const healthStatusMedicineRefreshPath = "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json";
+const quietCareMonitorRefreshPath = "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json";
 const selfPath = "scripts/verify-assets.mjs";
 
 const normalize = (value) => value.replaceAll("\\", "/").replace(/^\.\//, "");
@@ -245,6 +246,7 @@ function verify() {
   let alphaInspectReviewFixRefresh;
   let upContactShadowRefresh;
   let healthStatusMedicineRefresh;
+  let quietCareMonitorRefresh;
   try {
     policy = JSON.parse(readFileSync(absolute(policyPath), "utf8"));
     inventory = JSON.parse(readFileSync(absolute(inventoryPath), "utf8"));
@@ -261,6 +263,7 @@ function verify() {
     alphaInspectReviewFixRefresh = existsSync(absolute(alphaInspectReviewFixRefreshPath)) ? JSON.parse(readFileSync(absolute(alphaInspectReviewFixRefreshPath), "utf8")) : null;
     upContactShadowRefresh = existsSync(absolute(upContactShadowRefreshPath)) ? JSON.parse(readFileSync(absolute(upContactShadowRefreshPath), "utf8")) : null;
     healthStatusMedicineRefresh = existsSync(absolute(healthStatusMedicineRefreshPath)) ? JSON.parse(readFileSync(absolute(healthStatusMedicineRefreshPath), "utf8")) : null;
+    quietCareMonitorRefresh = existsSync(absolute(quietCareMonitorRefreshPath)) ? JSON.parse(readFileSync(absolute(quietCareMonitorRefreshPath), "utf8")) : null;
   } catch (error) {
     errors.push(`Policy/inventory JSON parse failure: ${error.message}`);
     return finish(errors, warnings);
@@ -391,6 +394,16 @@ function verify() {
   const healthStatusMedicineEvidenceByPath = new Map(healthStatusMedicineEvidenceFiles.map((entry) => [normalize(entry.currentPath), entry]));
   const healthStatusMedicinePolicyTransitions = healthStatusMedicinePolicy?.authorizedTransitions ?? [];
   const healthStatusMedicinePolicyTransitionByPath = new Map(healthStatusMedicinePolicyTransitions.map((entry) => [normalize(entry.path), entry]));
+  const quietCareMonitorPolicies = policy.quietCareMonitorContextRefreshes ?? [];
+  const quietCareMonitorPolicy = quietCareMonitorPolicies.find((entry) => normalize(entry.record) === quietCareMonitorRefreshPath);
+  const quietCareMonitorTransitions = quietCareMonitorRefresh?.transitions ?? [];
+  const quietCareMonitorTransitionByPath = new Map(quietCareMonitorTransitions.map((entry) => [normalize(entry.path), entry]));
+  const quietCareMonitorAdditions = quietCareMonitorRefresh?.additions ?? [];
+  const quietCareMonitorAdditionByPath = new Map(quietCareMonitorAdditions.map((entry) => [normalize(entry.path), entry]));
+  const quietCareMonitorV7StateSuccessors = quietCareMonitorRefresh?.committedV7StateSuccessors ?? [];
+  const quietCareMonitorV7StateSuccessorByPath = new Map(quietCareMonitorV7StateSuccessors.map((entry) => [normalize(entry.path), entry]));
+  const quietCareMonitorEvidenceFiles = quietCareMonitorRefresh?.representativeEvidence?.files ?? [];
+  const quietCareMonitorEvidenceByPath = new Map(quietCareMonitorEvidenceFiles.map((entry) => [normalize(entry.path), entry]));
   const expectedHealthStatusMedicineTransitions = new Map([
     ["App.tsx", {
       prior: { bytes: 117794, sha256: "8262c0892427dd1929e1d5c5724c50c655fd1b28ca8f59c6411b0d735a7cdf2a", gitBlobOid: "653263bb5ceb3ce429692886d0138e0d9834fe0d" },
@@ -436,6 +449,36 @@ function verify() {
   const expectedHealthStatusMedicineEvidence = new Map([
     ["evidence/health-status-medicine/status-medicine-390x844.jpg", { sourcePath: "evidence/health-status-medicine/status-medicine-390x844.png", bytes: 40477, sha256: "9a15da2ad4edbfa9939fe28bee5023e21d6767a8073d0cf7e216499e33b08fe3", gitBlobOid: "3acaa3fb6257d907a89355a0a890c692f0adb805", width: 390, height: 844 }],
     ["evidence/health-status-medicine/status-medicine-1440x900.jpg", { sourcePath: "evidence/health-status-medicine/status-medicine-1440x900.png", bytes: 67890, sha256: "4396f872b40e6cc06f7804cbec51449e16f97b30dd5bb033f1d88d3ffe5f9b3d", gitBlobOid: "76c3a943b10f69202779cb3d3855976dd6779a1a", width: 1440, height: 900 }],
+  ]);
+  const expectedQuietCareMonitorTransitions = new Map([
+    ["App.tsx", { prior: { bytes: 124143, sha256: "7606a0852ce92f5e14d429b63befa0961934e4f91d4efe6a95eafd04f36c9a1b", gitBlobOid: "aae7d69c2e3a50e8cf8622edd4b0d89aa241ec25" }, current: { bytes: 124319, sha256: "e975f165b9c6b70c05e47143ff3c5db227e5cd1964aec68c4896ed92e5f329bd", gitBlobOid: "1386be01a64de6f38aae1c89747f12b6d0dca8d4" } }],
+    ["docs/DECISIONS.md", { prior: { bytes: 28988, sha256: "91b9a0a76e9e31bc7a2da4df1666bd699cc4055f3f42b852ddcdb32b17a2de3d", gitBlobOid: "bc4185e44ed6e56655f299a1ba5aa2bec41b62d1" }, current: { bytes: 29941, sha256: "b6fd0fa65721a4a2ece3063c9c2f4f09b13dc69b9df997b5d907fd2c06aacff9", gitBlobOid: "4d3943dcd95414c50b5fb5ae7c5986eb7d2e9249" } }],
+    ["docs/QUALITY_GATES.md", { prior: { bytes: 12486, sha256: "b158a6f590564754c86aa7ac5a2e26ca82c9579b59abfedda96380022d2b7fa4", gitBlobOid: "b25b264ddf9a45985403e3091ed3f239c7bfc49e" }, current: { bytes: 13107, sha256: "e6f651df0624ab88ada4b5d479039bd019e1cb25322f7431f2c7099cb93d8ac5", gitBlobOid: "4996608bdd6aa1011ae08ab5f53c4b8a6ea5f02a" } }],
+    ["docs/production/CREATIVE_DIRECTION.md", { prior: { bytes: 5030, sha256: "e1c3222dcab31c53c4b920944c276aa8e7cf4a33896efcf87701cf8dc61db7ef", gitBlobOid: "8c443f800256e91861ba8ea66c4f89d10bd9779e" }, current: { bytes: 5548, sha256: "8d1abdaa118e4c8f0e7b01614368df4cd1017542c6d49fb8afa0c0ffb8bec894", gitBlobOid: "04beff105f1aa7b2d21a3f097b9acc00f28e1332" } }],
+    ["docs/GAME_PRODUCTION_PLAN.md", { prior: { bytes: 23255, sha256: "95ef191bbb896ab45e5ce24d6e8192b089c158c99f922e08493e3a66b6807528", gitBlobOid: "23b7d8955e8e3fbcf86422c00dd67c62fc800dd6" }, current: { bytes: 24254, sha256: "c2fea6c4fc0852eef48053befdaebd2e94c7555e061f553a543038f1b30c3b21", gitBlobOid: "080e0a532cada0bcb559b1e489e77f6a44dd5059" } }],
+    ["docs/production/PRODUCTION_DASHBOARD.md", { prior: { bytes: 10273, sha256: "0fa0a671ef67ae37a13464c32a7150860e8d61f0a40d47ff57232353a5c6fc0c", gitBlobOid: "31d8432bde6b4513758632cf4703922e483317d2" }, current: { bytes: 10827, sha256: "b9ed767bfa1f6ad7962a80b0924550623c924f10ef9e772277605527b665ef9d", gitBlobOid: "efae92806495cdee588ec94c2bdcbff5a3c678d7" } }],
+    ["PLANS.md", { prior: { bytes: 20772, sha256: "8e98a4329be7a9e3a3ac58b9ed2c0d855345f38e60fe6bdfb590e756b2b21764", gitBlobOid: "726fe00b5f1244886327af5b5a103f68ca51fb17" }, current: { bytes: 22235, sha256: "adc6b38da11e9d931a929c12cbf160a4d44634f2fa4294e27585e96419280152", gitBlobOid: "660f97c7f7f98bfcd9e7aa68876cf43d97cd88a7" } }],
+  ]);
+  const expectedQuietCareMonitorAdditions = new Map([
+    ["src/lcd-presentation-policy.ts", { bytes: 3402, sha256: "2d257dc9371af92ddd29c0aff0749ad636915cb3531a3745eaf7ebba19c407f7", gitBlobOid: "37b7b2bdec4a534fa1fe78d4e524c32e4046c64f" }],
+    ["src/lcd-presentation-policy.test.ts", { bytes: 2801, sha256: "dcac2dfdfb1bcb630f7013f3f2ff73059cfdd76784ae905212877eff13153ac5", gitBlobOid: "b26192ca4736aaa426effa6f960cb9d9ebfdb4d1" }],
+    ["src/pet-presentation-model.ts", { bytes: 7604, sha256: "a966e6a58c0fb29658faa5a8dcf883d529a46b1a374b0baccf9a6980e0012f3a", gitBlobOid: "e43cd3ac70efd696e708d9ecdf6477b3451ce316" }],
+    ["src/pet-presentation-model.test.ts", { bytes: 6212, sha256: "15f2d919b0867a6c81e21b04c48ee09ab6c0c9c3ca14b8bec9d9aa4e6b916338", gitBlobOid: "cc53ec655fbc2da792e6f84201c030e96c093822" }],
+    ["src/pet-presentation-stage.tsx", { bytes: 5385, sha256: "730b15f9206f4582cf382f195c830be423518af539ac5be8408be2e25e72aa87", gitBlobOid: "537af8c0516d12d7d674be75c63892e71b5ee3c0" }],
+    ["src/quiet-care-monitor.tsx", { bytes: 14603, sha256: "6094dfe2501ddf357a8fe535ce9871ecd44eccd45295feb058fe9fe12271262e", gitBlobOid: "2bf6c194b870ca59a747201fb6820f02f4cf12dd" }],
+  ]);
+  const expectedQuietCareMonitorV7StateSuccessors = new Map([
+    ["src/persistence.ts", { bytes: 56676, sha256: "86cca46e758c7fc98282ab223d313594d27edbc28cb4911d7588b35a9c2b1338", gitBlobOid: "ee8fdf7578b8f10a3331c1eed344e3be9a3e3229", priorState: "tracked-modified" }],
+    ["src/persistence.test.ts", { bytes: 87216, sha256: "798b9b143c0bfdddf7e74d0f9c6c95b2ceddf36c2161d2a3a27e6f11a0eee318", gitBlobOid: "b3624e32e80af85f00bf429afcc6c24a5c3cab0a", priorState: "tracked-modified" }],
+    ["src/day-one-ui.test.ts", { bytes: 35071, sha256: "b7cd34d38473ae9cb0a3a63b2ad3d65a46c8a1eca64e4dc107985938dab27918", gitBlobOid: "b80d50afb72f3852724c6826a3073a0a600827c2", priorState: "tracked-modified" }],
+    ["evidence/health-status-medicine/status-medicine-390x844.jpg", { bytes: 40477, sha256: "9a15da2ad4edbfa9939fe28bee5023e21d6767a8073d0cf7e216499e33b08fe3", gitBlobOid: "3acaa3fb6257d907a89355a0a890c692f0adb805", priorState: "untracked" }],
+    ["evidence/health-status-medicine/status-medicine-1440x900.jpg", { bytes: 67890, sha256: "4396f872b40e6cc06f7804cbec51449e16f97b30dd5bb033f1d88d3ffe5f9b3d", gitBlobOid: "76c3a943b10f69202779cb3d3855976dd6779a1a", priorState: "untracked" }],
+  ]);
+  const expectedQuietCareMonitorEvidence = new Map([
+    ["evidence/lcd-presentation/color-pixel-direct-1440x900.jpg", { bytes: 85204, sha256: "3f9224bdd2941b4bd5eeee29dfe89de9a474368e75d9e5339605ebda44b664a4", gitBlobOid: "5ff44370fa0c41f73bddc679789fe9f7aba01000", width: 1440, height: 900 }],
+    ["evidence/lcd-presentation/color-pixel-direct-390x844.jpg", { bytes: 49232, sha256: "4ff6d37921da2f42aefd8805aab67adfd5f8bdb7acffedbe149cd5f05c46af97", gitBlobOid: "cee02281ea8b40152b90005bbf6fce4d4871a17b", width: 390, height: 844 }],
+    ["evidence/lcd-presentation/lcd-status-medicine-1440x900.jpg", { bytes: 74760, sha256: "007c265302e4f12d9566875487942d8646e32aa29f52f0ebb9a0ce8a176646e8", gitBlobOid: "51036d0efd932fca1c1cf26c5d0efe1bfedb2bed", width: 1440, height: 900 }],
+    ["evidence/lcd-presentation/lcd-status-medicine-390x844.jpg", { bytes: 40698, sha256: "0f35fd89b2a75efa860bea72c363cc597f68471a22434ef7f40be833118a6ad1", gitBlobOid: "b716b110f72e9823249dbaf1ad0d14f1233a6342", width: 390, height: 844 }],
   ]);
   const expectedAlphaInspectReviewFixTransitions = new Map([
     ["docs/DECISIONS.md", {
@@ -522,8 +565,24 @@ function verify() {
   const currentTrackedPaths = new Set(gitPaths(["ls-files", "--cached", "-z"]));
   const currentModifiedPaths = new Set(gitPaths(["ls-files", "--modified", "-z"]));
   const currentUntrackedPaths = new Set(gitPaths(["ls-files", "--others", "--exclude-standard", "-z"]));
+  const v7ParentCommit = "8e01e9d36faaaa74d79ea6f51777fce6319875e5";
+  const v7GameplayCommit = "398bd7eccaba3364de4a3c80073b592e3ed9f9d3";
+  const assertQuietTransitionCurrent = (path, predecessor) => {
+    const transition = quietCareMonitorTransitionByPath.get(path);
+    assert(Boolean(transition), `Quiet Care Monitor content successor is missing: ${path}`);
+    if (!transition) return;
+    assert(transition.prior?.bytes === predecessor?.bytes && transition.prior?.sha256 === predecessor?.sha256 && transition.prior?.gitNormalizedBlobOid === predecessor?.gitNormalizedBlobOid, `Quiet Care Monitor predecessor chain drifted: ${path}`);
+    assert(existsSync(absolute(path)) && statSync(absolute(path)).size === transition.current?.bytes && fileHash(path) === transition.current?.sha256 && pathAttributedGitBlobOid(path) === transition.current?.gitNormalizedBlobOid && currentTrackedPaths.has(path) && currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `Quiet Care Monitor current content identity/state drifted: ${path}`);
+  };
+  const assertQuietStateCurrent = (path, predecessor) => {
+    const successor = quietCareMonitorV7StateSuccessorByPath.get(path);
+    assert(Boolean(successor), `Quiet Care Monitor committed V7 state successor is missing: ${path}`);
+    if (!successor) return;
+    assert(successor.bytes === predecessor?.bytes && successor.sha256 === predecessor?.sha256 && successor.gitNormalizedBlobOid === predecessor?.gitNormalizedBlobOid && successor.currentState === "tracked-clean-at-v7-head" && successor.bytesChanged === false, `Quiet Care Monitor committed V7 state chain drifted: ${path}`);
+    assert(existsSync(absolute(path)) && statSync(absolute(path)).size === successor.bytes && fileHash(path) === successor.sha256 && pathAttributedGitBlobOid(path) === successor.gitNormalizedBlobOid && currentTrackedPaths.has(path) && !currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `Quiet Care Monitor committed V7 state is not clean: ${path}`);
+  };
 
-  assert(policy.status === "preservation-verified-alpha-inspect-local-commit-with-authorized-v7-health-status-successor", "Asset policy status must recognize the Alpha Inspect commit and exact V7 health/status successor");
+  assert(policy.status === "preservation-verified-v7-local-commit-with-authorized-quiet-care-monitor-successor", "Asset policy status must recognize the V7 commit and exact Quiet Care Monitor successor");
   assert(postCommitContextPolicies.length === 1 && Boolean(alphaInspectStatusPolicy), "Asset policy must declare exactly one post-commit context refresh");
   assert(alphaInspectStatusPolicy?.recordBytes === 18829 && alphaInspectStatusPolicy?.recordSha256 === "e2849dbd7c9c0ad1214c286628dcedc73567beb86b39fb99223cffaae99f0839", "Alpha Inspect status policy record identity drifted");
   assert(existsSync(absolute(alphaInspectStatusRefreshPath)) && statSync(absolute(alphaInspectStatusRefreshPath)).size === 18829 && fileHash(alphaInspectStatusRefreshPath) === "e2849dbd7c9c0ad1214c286628dcedc73567beb86b39fb99223cffaae99f0839", "Alpha Inspect status refresh record drifted");
@@ -532,7 +591,7 @@ function verify() {
   assert(alphaInspectStatusRefresh?.authorization?.assetPathByteTierImportOrDispositionChangeAuthorized === false && alphaInspectStatusRefresh?.authorization?.dependencyChangeAuthorized === false && alphaInspectStatusRefresh?.authorization?.externalOrGitActionAuthorized === false && alphaInspectStatusRefresh?.authorization?.subjectiveAcceptanceOrLockAuthorized === false, "Alpha Inspect status refresh authority widened");
   assert(alphaInspectStatusPolicy?.kind === "checksum-bound-managed-context-status-refresh" && alphaInspectStatusPolicy?.milestone === "Build — Alpha Inspect Managed-Context Reconciliation" && alphaInspectStatusPolicy?.generalMutableContextException === false, "Alpha Inspect status policy contract drifted");
   assert(alphaInspectStatusPolicy?.assetPathByteTierImportOrDispositionChangeAuthorized === false && alphaInspectStatusPolicy?.subjectiveAcceptanceOrLockAuthorized === false, "Alpha Inspect status policy authority widened");
-  assert(gitOutput(["rev-parse", "HEAD"]) === "8e01e9d36faaaa74d79ea6f51777fce6319875e5" && gitOutput(["merge-base", "--is-ancestor", safeReturnCommit, "HEAD"]) === "", "Alpha Inspect HEAD or Safe Return ancestry drifted");
+  assert(gitOutput(["rev-parse", "HEAD"]) === v7GameplayCommit && gitOutput(["rev-parse", `${v7GameplayCommit}^`]) === v7ParentCommit && gitOutput(["merge-base", "--is-ancestor", safeReturnCommit, "HEAD"]) === "", "V7 HEAD/parent or Safe Return ancestry drifted");
   assert(gitOutput(["rev-parse", `${safeReturnCommit}^`]) === safeReturnParent, "Safe Return commit/parent identity drifted");
   assert(gitOutput(["rev-parse", `${safeReturnCommit}^{tree}`]) === "9093b7e66df70941e5a58da588c314523e6dfd58", "Safe Return commit tree drifted");
   assert(gitOutput(["show", "-s", "--format=%s", safeReturnCommit]) === "feat: secure safe return checkpoint", "Safe Return commit subject drifted");
@@ -598,9 +657,9 @@ function verify() {
       const currentHealthSuccessor = healthStatusMedicineTransitionByPath.get(path) ?? healthStatusMedicineSupportingTransitionByPath.get(path);
       assert(currentTrackedPaths.has(path) && !currentUntrackedPaths.has(path), `Safe Return committed successor is not currently tracked: ${path}`);
       if (currentHealthSuccessor) {
-        assert(currentModifiedPaths.has(path), `Authorized V7 health/status successor is not tracked-modified: ${path}`);
         assert(candidateEntry?.bytes === currentHealthSuccessor.prior?.bytes && candidateEntry?.sha256 === currentHealthSuccessor.prior?.sha256 && candidateEntry?.gitNormalizedBlobOid === currentHealthSuccessor.prior?.gitNormalizedBlobOid, `V7 health/status predecessor does not match the Safe Return commit: ${path}`);
-        assert(existsSync(absolute(path)) && statSync(absolute(path)).size === currentHealthSuccessor.current?.bytes && fileHash(path) === currentHealthSuccessor.current?.sha256 && pathAttributedGitBlobOid(path) === currentHealthSuccessor.current?.gitNormalizedBlobOid, `Authorized V7 health/status working identity drifted: ${path}`);
+        if (quietCareMonitorTransitionByPath.has(path)) assertQuietTransitionCurrent(path, currentHealthSuccessor.current);
+        else assertQuietStateCurrent(path, currentHealthSuccessor.current);
       } else {
         assert(!currentModifiedPaths.has(path), `Safe Return committed successor is unexpectedly modified: ${path}`);
       }
@@ -661,11 +720,11 @@ function verify() {
     assert(transition?.current?.bytes === expected.current.bytes && transition?.current?.sha256 === expected.current.sha256 && transition?.current?.gitNormalizedBlobOid === expected.current.gitBlobOid && transition?.current?.lastWriteTimeUtc === expected.current.lastWriteTimeUtc && transition?.current?.gitState === "tracked-modified", `Alpha Inspect current transition record drifted: ${path}`);
     assert(policyTransition?.priorBytes === expected.prior.bytes && policyTransition?.priorSha256 === expected.prior.sha256 && policyTransition?.priorGitBlobOid === expected.prior.gitBlobOid && policyTransition?.currentBytes === expected.current.bytes && policyTransition?.currentSha256 === expected.current.sha256 && policyTransition?.currentGitBlobOid === expected.current.gitBlobOid, `Alpha Inspect policy transition drifted: ${path}`);
     if (path !== "src/pet-room-scene.web.tsx") {
-      assert(existsSync(absolute(path)) && statSync(absolute(path)).size === expected.current.bytes && fileHash(path) === expected.current.sha256 && pathAttributedGitBlobOid(path) === expected.current.gitBlobOid, `Alpha Inspect current transition identity drifted: ${path}`);
       const stateSuccessor = healthStatusMedicineStateSuccessorByPath.get(path);
       if (stateSuccessor) {
         assert(stateSuccessor.bytes === expected.current.bytes && stateSuccessor.sha256 === expected.current.sha256 && stateSuccessor.gitNormalizedBlobOid === expected.current.gitBlobOid && stateSuccessor.priorState === "tracked-modified" && stateSuccessor.currentState === "tracked-clean-at-alpha-inspect-head" && stateSuccessor.bytesChanged === false, `Alpha Inspect committed-state successor drifted: ${path}`);
-        assert(currentTrackedPaths.has(path) && !currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `Alpha Inspect committed-state successor is not clean: ${path}`);
+        if (quietCareMonitorTransitionByPath.has(path)) assertQuietTransitionCurrent(path, stateSuccessor);
+        else assert(existsSync(absolute(path)) && statSync(absolute(path)).size === stateSuccessor.bytes && fileHash(path) === stateSuccessor.sha256 && pathAttributedGitBlobOid(path) === stateSuccessor.gitNormalizedBlobOid && currentTrackedPaths.has(path) && !currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `Alpha Inspect committed-state successor is not clean: ${path}`);
       } else {
         assert(Math.abs(statSync(absolute(path)).mtimeMs - new Date(expected.current.lastWriteTimeUtc).getTime()) < 1 && currentModifiedPaths.has(path), `Alpha Inspect current transition state/mtime drifted: ${path}`);
       }
@@ -709,7 +768,8 @@ function verify() {
       const current = authorizedSuccessor.current;
       if (contentSuccessor) {
         assert(contentSuccessor.prior?.bytes === current?.bytes && contentSuccessor.prior?.sha256 === current?.sha256 && contentSuccessor.prior?.gitNormalizedBlobOid === current?.gitNormalizedBlobOid, `V7 content successor does not follow the review-fix identity: ${path}`);
-        assert(existsSync(absolute(path)) && statSync(absolute(path)).size === contentSuccessor.current?.bytes && fileHash(path) === contentSuccessor.current?.sha256 && pathAttributedGitBlobOid(path) === contentSuccessor.current?.gitNormalizedBlobOid && currentModifiedPaths.has(path), `Frozen Alpha Inspect V7 content successor drifted: ${path}`);
+        if (quietCareMonitorTransitionByPath.has(path)) assertQuietTransitionCurrent(path, contentSuccessor.current);
+        else assert(existsSync(absolute(path)) && statSync(absolute(path)).size === contentSuccessor.current?.bytes && fileHash(path) === contentSuccessor.current?.sha256 && pathAttributedGitBlobOid(path) === contentSuccessor.current?.gitNormalizedBlobOid && currentModifiedPaths.has(path), `Frozen Alpha Inspect V7 content successor drifted: ${path}`);
       } else if (stateSuccessor) {
         assert(stateSuccessor.bytes === current?.bytes && stateSuccessor.sha256 === current?.sha256 && stateSuccessor.gitNormalizedBlobOid === current?.gitNormalizedBlobOid && stateSuccessor.priorState === current?.gitState && stateSuccessor.bytesChanged === false, `Review-fix committed-state successor drifted: ${path}`);
         assert(existsSync(absolute(path)) && statSync(absolute(path)).size === stateSuccessor.bytes && fileHash(path) === stateSuccessor.sha256 && pathAttributedGitBlobOid(path) === stateSuccessor.gitNormalizedBlobOid && currentTrackedPaths.has(path) && !currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `Review-fix committed-state successor is not clean: ${path}`);
@@ -723,10 +783,12 @@ function verify() {
       assert(currentTrackedPaths.has(path) && !currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), "Frozen Alpha Inspect authorized Up contact-shadow scene successor is not clean");
     } else if (contentSuccessor) {
       assert(contentSuccessor.prior?.bytes === expected.bytes && contentSuccessor.prior?.sha256 === expected.sha256 && contentSuccessor.prior?.gitNormalizedBlobOid === expected.gitBlobOid, `V7 content successor does not follow the frozen Alpha Inspect identity: ${path}`);
-      assert(existsSync(absolute(path)) && statSync(absolute(path)).size === contentSuccessor.current?.bytes && fileHash(path) === contentSuccessor.current?.sha256 && pathAttributedGitBlobOid(path) === contentSuccessor.current?.gitNormalizedBlobOid && currentModifiedPaths.has(path), `Frozen Alpha Inspect V7 content successor drifted: ${path}`);
+      if (quietCareMonitorTransitionByPath.has(path)) assertQuietTransitionCurrent(path, contentSuccessor.current);
+      else assert(existsSync(absolute(path)) && statSync(absolute(path)).size === contentSuccessor.current?.bytes && fileHash(path) === contentSuccessor.current?.sha256 && pathAttributedGitBlobOid(path) === contentSuccessor.current?.gitNormalizedBlobOid && currentModifiedPaths.has(path), `Frozen Alpha Inspect V7 content successor drifted: ${path}`);
     } else if (stateSuccessor) {
       assert(stateSuccessor.bytes === expected.bytes && stateSuccessor.sha256 === expected.sha256 && stateSuccessor.gitNormalizedBlobOid === expected.gitBlobOid && stateSuccessor.priorState === expected.gitState && stateSuccessor.currentState === "tracked-clean-at-alpha-inspect-head" && stateSuccessor.bytesChanged === false, `Frozen Alpha Inspect committed-state successor drifted: ${path}`);
-      assert(existsSync(absolute(path)) && statSync(absolute(path)).size === stateSuccessor.bytes && fileHash(path) === stateSuccessor.sha256 && pathAttributedGitBlobOid(path) === stateSuccessor.gitNormalizedBlobOid && currentTrackedPaths.has(path) && !currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `Frozen Alpha Inspect committed-state successor is not clean: ${path}`);
+      if (quietCareMonitorTransitionByPath.has(path)) assertQuietTransitionCurrent(path, stateSuccessor);
+      else assert(existsSync(absolute(path)) && statSync(absolute(path)).size === stateSuccessor.bytes && fileHash(path) === stateSuccessor.sha256 && pathAttributedGitBlobOid(path) === stateSuccessor.gitNormalizedBlobOid && currentTrackedPaths.has(path) && !currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `Frozen Alpha Inspect committed-state successor is not clean: ${path}`);
     } else {
       assert(existsSync(absolute(path)) && statSync(absolute(path)).size === expected.bytes && fileHash(path) === expected.sha256 && pathAttributedGitBlobOid(path) === expected.gitBlobOid, `Frozen Alpha Inspect current identity drifted: ${path}`);
       assert(Math.abs(statSync(absolute(path)).mtimeMs - new Date(expected.lastWriteTimeUtc).getTime()) < 1, `Frozen Alpha Inspect current mtime drifted: ${path}`);
@@ -774,7 +836,8 @@ function verify() {
       const stateSuccessor = healthStatusMedicineStateSuccessorByPath.get(path);
       if (contentSuccessor) {
         assert(contentSuccessor.prior?.bytes === expectedCurrent.bytes && contentSuccessor.prior?.sha256 === expectedCurrent.sha256 && contentSuccessor.prior?.gitNormalizedBlobOid === expectedCurrent.gitBlobOid, `V7 content successor does not follow the review-fix identity: ${path}`);
-        assert(existsSync(absolute(path)) && statSync(absolute(path)).size === contentSuccessor.current?.bytes && fileHash(path) === contentSuccessor.current?.sha256 && pathAttributedGitBlobOid(path) === contentSuccessor.current?.gitNormalizedBlobOid && currentModifiedPaths.has(path), `Alpha Inspect review-fix V7 content successor drifted: ${path}`);
+        if (quietCareMonitorTransitionByPath.has(path)) assertQuietTransitionCurrent(path, contentSuccessor.current);
+        else assert(existsSync(absolute(path)) && statSync(absolute(path)).size === contentSuccessor.current?.bytes && fileHash(path) === contentSuccessor.current?.sha256 && pathAttributedGitBlobOid(path) === contentSuccessor.current?.gitNormalizedBlobOid && currentModifiedPaths.has(path), `Alpha Inspect review-fix V7 content successor drifted: ${path}`);
       } else if (stateSuccessor) {
         assert(stateSuccessor.bytes === expectedCurrent.bytes && stateSuccessor.sha256 === expectedCurrent.sha256 && stateSuccessor.gitNormalizedBlobOid === expectedCurrent.gitBlobOid && stateSuccessor.priorState === expectedCurrent.gitState && stateSuccessor.currentState === "tracked-clean-at-alpha-inspect-head", `Alpha Inspect review-fix committed-state successor drifted: ${path}`);
         assert(existsSync(absolute(path)) && statSync(absolute(path)).size === stateSuccessor.bytes && fileHash(path) === stateSuccessor.sha256 && pathAttributedGitBlobOid(path) === stateSuccessor.gitNormalizedBlobOid && currentTrackedPaths.has(path) && !currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `Alpha Inspect review-fix committed-state successor is not clean: ${path}`);
@@ -869,29 +932,35 @@ function verify() {
     assert(Boolean(transition && policyTransition && identityPredecessor), `V7 health/status transition chain is incomplete: ${path}`);
     assert(transition?.prior?.bytes === expected.prior.bytes && transition?.prior?.sha256 === expected.prior.sha256 && transition?.prior?.gitNormalizedBlobOid === expected.prior.gitBlobOid && transition?.prior?.identitySource === "safe-return-committed-successor", `V7 health/status prior identity drifted: ${path}`);
     assert(identityPredecessor?.current?.bytes === expected.prior.bytes && identityPredecessor?.current?.sha256 === expected.prior.sha256, `V7 health/status prior does not preserve initial-journal history: ${path}`);
-    const committed = execFileSync("git", ["show", `HEAD:${path}`], { cwd: root });
-    assert(committed.length === expected.prior.bytes && sha256(committed) === expected.prior.sha256 && gitOutput(["rev-parse", `HEAD:${path}`]) === expected.prior.gitBlobOid, `V7 health/status prior does not match committed HEAD: ${path}`);
+    const committedPrior = execFileSync("git", ["show", `${v7ParentCommit}:${path}`], { cwd: root });
+    assert(committedPrior.length === expected.prior.bytes && sha256(committedPrior) === expected.prior.sha256 && gitOutput(["rev-parse", `${v7ParentCommit}:${path}`]) === expected.prior.gitBlobOid, `V7 health/status prior does not match the Alpha Inspect commit: ${path}`);
     assert(transition?.current?.bytes === expected.current.bytes && transition?.current?.sha256 === expected.current.sha256 && transition?.current?.gitNormalizedBlobOid === expected.current.gitBlobOid && transition?.current?.lastWriteTimeUtc === expected.current.lastWriteTimeUtc && transition?.current?.gitState === "tracked-modified", `V7 health/status current record drifted: ${path}`);
     assert(policyTransition?.priorBytes === expected.prior.bytes && policyTransition?.priorSha256 === expected.prior.sha256 && policyTransition?.priorGitBlobOid === expected.prior.gitBlobOid && policyTransition?.currentBytes === expected.current.bytes && policyTransition?.currentSha256 === expected.current.sha256 && policyTransition?.currentGitBlobOid === expected.current.gitBlobOid, `V7 health/status policy transition drifted: ${path}`);
-    assert(existsSync(absolute(path)) && statSync(absolute(path)).size === expected.current.bytes && fileHash(path) === expected.current.sha256 && pathAttributedGitBlobOid(path) === expected.current.gitBlobOid, `V7 health/status current file identity drifted: ${path}`);
-    assert(Math.abs(statSync(absolute(path)).mtimeMs - new Date(expected.current.lastWriteTimeUtc).getTime()) < 1 && currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `V7 health/status current state drifted: ${path}`);
+    const committedV7 = execFileSync("git", ["show", `${v7GameplayCommit}:${path}`], { cwd: root });
+    assert(committedV7.length === expected.current.bytes && sha256(committedV7) === expected.current.sha256 && gitOutput(["rev-parse", `${v7GameplayCommit}:${path}`]) === expected.current.gitBlobOid, `V7 health/status successor does not match the V7 commit: ${path}`);
+    if (quietCareMonitorTransitionByPath.has(path)) assertQuietTransitionCurrent(path, transition.current);
+    else assertQuietStateCurrent(path, transition.current);
   }
   assert(healthStatusMedicineSupportingTransitions.length === 4 && healthStatusMedicineSupportingTransitionByPath.size === expectedHealthStatusMedicineSupportingTransitions.size && healthStatusMedicinePolicy?.supportingContentTransitionCount === 4, "V7 supporting-content transition set drifted");
   for (const [path, expected] of expectedHealthStatusMedicineSupportingTransitions) {
     const transition = healthStatusMedicineSupportingTransitionByPath.get(path);
     assert(transition?.prior?.bytes === expected.prior.bytes && transition?.prior?.sha256 === expected.prior.sha256 && transition?.prior?.gitNormalizedBlobOid === expected.prior.gitBlobOid, `V7 supporting-content prior identity drifted: ${path}`);
-    const committed = execFileSync("git", ["show", `HEAD:${path}`], { cwd: root });
-    assert(committed.length === expected.prior.bytes && sha256(committed) === expected.prior.sha256 && gitOutput(["rev-parse", `HEAD:${path}`]) === expected.prior.gitBlobOid, `V7 supporting-content prior does not match committed HEAD: ${path}`);
+    const committedPrior = execFileSync("git", ["show", `${v7ParentCommit}:${path}`], { cwd: root });
+    assert(committedPrior.length === expected.prior.bytes && sha256(committedPrior) === expected.prior.sha256 && gitOutput(["rev-parse", `${v7ParentCommit}:${path}`]) === expected.prior.gitBlobOid, `V7 supporting-content prior does not match the Alpha Inspect commit: ${path}`);
     assert(transition?.current?.bytes === expected.current.bytes && transition?.current?.sha256 === expected.current.sha256 && transition?.current?.gitNormalizedBlobOid === expected.current.gitBlobOid && transition?.current?.lastWriteTimeUtc === expected.current.lastWriteTimeUtc && transition?.current?.gitState === "tracked-modified", `V7 supporting-content current record drifted: ${path}`);
-    assert(existsSync(absolute(path)) && statSync(absolute(path)).size === expected.current.bytes && fileHash(path) === expected.current.sha256 && pathAttributedGitBlobOid(path) === expected.current.gitBlobOid && currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `V7 supporting-content current identity/state drifted: ${path}`);
+    const committedV7 = execFileSync("git", ["show", `${v7GameplayCommit}:${path}`], { cwd: root });
+    assert(committedV7.length === expected.current.bytes && sha256(committedV7) === expected.current.sha256 && gitOutput(["rev-parse", `${v7GameplayCommit}:${path}`]) === expected.current.gitBlobOid, `V7 supporting-content successor does not match the V7 commit: ${path}`);
+    if (quietCareMonitorTransitionByPath.has(path)) assertQuietTransitionCurrent(path, transition.current);
+    else assertQuietStateCurrent(path, transition.current);
   }
   assert(healthStatusMedicineStateSuccessors.length === 8 && healthStatusMedicineStateSuccessorByPath.size === expectedHealthStatusMedicineStateSuccessors.size && healthStatusMedicinePolicy?.committedStateSuccessorCount === 8, "V7 committed-state successor set drifted");
   for (const [path, expected] of expectedHealthStatusMedicineStateSuccessors) {
     const successor = healthStatusMedicineStateSuccessorByPath.get(path);
     assert(successor?.bytes === expected.bytes && successor?.sha256 === expected.sha256 && successor?.gitNormalizedBlobOid === expected.gitBlobOid && successor?.priorState === expected.priorState && successor?.currentState === "tracked-clean-at-alpha-inspect-head" && successor?.bytesChanged === false, `V7 committed-state successor record drifted: ${path}`);
-    const committed = execFileSync("git", ["show", `HEAD:${path}`], { cwd: root });
-    assert(committed.length === expected.bytes && sha256(committed) === expected.sha256 && gitOutput(["rev-parse", `HEAD:${path}`]) === expected.gitBlobOid, `V7 committed-state successor does not match HEAD: ${path}`);
-    assert(existsSync(absolute(path)) && statSync(absolute(path)).size === expected.bytes && fileHash(path) === expected.sha256 && pathAttributedGitBlobOid(path) === expected.gitBlobOid && currentTrackedPaths.has(path) && !currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `V7 committed-state successor is not clean: ${path}`);
+    const committed = execFileSync("git", ["show", `${v7GameplayCommit}:${path}`], { cwd: root });
+    assert(committed.length === expected.bytes && sha256(committed) === expected.sha256 && gitOutput(["rev-parse", `${v7GameplayCommit}:${path}`]) === expected.gitBlobOid, `V7 committed-state successor does not match the V7 commit: ${path}`);
+    if (quietCareMonitorTransitionByPath.has(path)) assertQuietTransitionCurrent(path, successor);
+    else assert(existsSync(absolute(path)) && statSync(absolute(path)).size === expected.bytes && fileHash(path) === expected.sha256 && pathAttributedGitBlobOid(path) === expected.gitBlobOid && currentTrackedPaths.has(path) && !currentModifiedPaths.has(path) && !currentUntrackedPaths.has(path), `V7 committed-state successor is not clean: ${path}`);
   }
   assert(healthStatusMedicineEvidenceFiles.length === 2 && healthStatusMedicineEvidenceByPath.size === expectedHealthStatusMedicineEvidence.size && healthStatusMedicineRefresh?.representativeEvidence?.bytes === 108367 && healthStatusMedicineRefresh?.representativeEvidence?.fileCount === 2, "V7 representative-evidence set drifted");
   for (const [path, expected] of expectedHealthStatusMedicineEvidence) {
@@ -901,6 +970,7 @@ function verify() {
     assert(!existsSync(absolute(expected.sourcePath)), `V7 representative-evidence obsolete PNG extension still exists: ${expected.sourcePath}`);
     assert(existsSync(absolute(path)) && statSync(absolute(path)).size === expected.bytes && fileHash(path) === expected.sha256 && pathAttributedGitBlobOid(path) === expected.gitBlobOid, `V7 representative-evidence identity drifted: ${path}`);
     assert(dimensions?.width === expected.width && dimensions?.height === expected.height && dimensions?.signature === "jpeg-jfif", `V7 representative-evidence JPEG signature/dimensions drifted: ${path}`);
+    assertQuietStateCurrent(path, { bytes: evidence.bytes, sha256: evidence.sha256, gitNormalizedBlobOid: evidence.gitNormalizedBlobOid });
   }
   const healthStatusEvidenceRule = (policy.classificationRules ?? []).find((entry) => entry.id === "normal-git-evidence-health-status-medicine");
   const healthStatusEvidenceSet = (policy.representativeEvidenceSets ?? []).find((entry) => entry.id === "health-status-medicine");
@@ -909,9 +979,10 @@ function verify() {
   assert(healthStatusEvidenceSet?.maxFiles === 2 && healthStatusEvidenceSet?.paths?.length === 2 && new Set(healthStatusEvidenceSet.paths.map(normalize)).size === 2 && expectedHealthStatusEvidencePaths.every((path) => healthStatusEvidenceSet.paths.map(normalize).includes(path)), "V7 representative-evidence retention set drifted");
   const healthStatusInvariants = healthStatusMedicineRefresh?.unchangedInvariants;
   assert(healthStatusInvariants?.classificationPath === classificationPath && healthStatusInvariants?.priorClassificationBytes === 138055 && healthStatusInvariants?.priorClassificationSha256 === "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb" && healthStatusMedicinePolicy?.priorClassificationSha256 === "6ffeda49065df33d9120aea0a452c2f710cec2829b045bf341faab4ec08f60fb", "V7 health/status prior-classification invariant drifted");
-  assert(healthStatusInvariants?.currentClassificationBytes === 138776 && healthStatusInvariants?.currentClassificationSha256 === "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a" && healthStatusMedicinePolicy?.currentClassificationBytes === 138776 && healthStatusMedicinePolicy?.currentClassificationSha256 === "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a" && statSync(absolute(classificationPath)).size === 138776 && fileHash(classificationPath) === "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a", "V7 health/status current-classification identity drifted");
-  const priorHealthStatusClassification = JSON.parse(execFileSync("git", ["show", `HEAD:${classificationPath}`], { cwd: root, encoding: "utf8" }));
-  const currentHealthStatusClassification = JSON.parse(readFileSync(absolute(classificationPath), "utf8"));
+  const committedV7ClassificationBuffer = execFileSync("git", ["show", `${v7GameplayCommit}:${classificationPath}`], { cwd: root });
+  assert(healthStatusInvariants?.currentClassificationBytes === 138776 && healthStatusInvariants?.currentClassificationSha256 === "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a" && healthStatusMedicinePolicy?.currentClassificationBytes === 138776 && healthStatusMedicinePolicy?.currentClassificationSha256 === "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a" && committedV7ClassificationBuffer.length === 138776 && sha256(committedV7ClassificationBuffer) === "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a", "V7 health/status committed-classification identity drifted");
+  const priorHealthStatusClassification = JSON.parse(execFileSync("git", ["show", `${v7ParentCommit}:${classificationPath}`], { cwd: root, encoding: "utf8" }));
+  const currentHealthStatusClassification = JSON.parse(committedV7ClassificationBuffer.toString("utf8"));
   const healthStatusClassificationGroup = currentHealthStatusClassification.groups?.find((group) => group.id === "normal-git-evidence-health-status-medicine");
   const unchangedHealthStatusClassificationGroups = currentHealthStatusClassification.groups?.filter((group) => group.id !== "normal-git-evidence-health-status-medicine");
   assert(healthStatusInvariants?.priorClassificationGroupCount === 22 && healthStatusInvariants?.currentClassificationGroupCount === 23 && priorHealthStatusClassification.groups?.length === 22 && currentHealthStatusClassification.groups?.length === 23, "V7 health/status classification group count drifted");
@@ -922,6 +993,68 @@ function verify() {
   assert(healthStatusInvariants?.governedAssetFileCount === 125 && healthStatusInvariants?.governedAssetBytes === 448676672 && healthStatusInvariants?.governedAssetAggregateSha256 === "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f", "V7 health/status governed-asset invariant drifted");
   assert(healthStatusInvariants?.assetPathChanges === 0 && healthStatusInvariants?.assetByteChanges === 0 && healthStatusInvariants?.assetTierChanges === 0 && healthStatusInvariants?.runtimeImportChanges === 0 && healthStatusInvariants?.assetDispositionChanges === 0 && healthStatusInvariants?.classificationChanges === 1 && healthStatusInvariants?.evidencePathRenames === 2 && healthStatusInvariants?.evidenceByteChanges === 0, "V7 health/status asset/classification scope widened");
   assert(healthStatusMedicineRefresh?.controlPlanePredecessors?.assetPolicy?.bytes === 47778 && healthStatusMedicineRefresh?.controlPlanePredecessors?.assetPolicy?.sha256 === "5745e4e7dd54090a33ebf9bc220d15db3fd0b5126c170a3eb35a74bb8fb32e54" && healthStatusMedicineRefresh?.controlPlanePredecessors?.assetVerifier?.bytes === 206218 && healthStatusMedicineRefresh?.controlPlanePredecessors?.assetVerifier?.sha256 === "e6c84064c08c02cc5d5bce02e0cd3415d5d029e73a920b774a62524f33f24dc6", "V7 health/status control-plane predecessor identity drifted");
+  assert(quietCareMonitorPolicies.length === 1 && Boolean(quietCareMonitorPolicy), "Asset policy must declare exactly one Quiet Care Monitor managed-context successor");
+  assert(existsSync(absolute(quietCareMonitorRefreshPath)) && statSync(absolute(quietCareMonitorRefreshPath)).size === 13584 && fileHash(quietCareMonitorRefreshPath) === "d32813e7d7652e096ef55f300459f70f236c705f3c7ab506caed161c4a44dddf" && quietCareMonitorPolicy?.recordBytes === 13584 && quietCareMonitorPolicy?.recordSha256 === "d32813e7d7652e096ef55f300459f70f236c705f3c7ab506caed161c4a44dddf", "Quiet Care Monitor context/policy record identity drifted");
+  const quietClassificationScope = "Exactly one four-file, 249894-byte normal-Git representative-evidence group plus generatedAt; every prior group and source-inventory anchor remains unchanged.";
+  assert(quietCareMonitorRefresh?.schemaVersion === 1 && quietCareMonitorRefresh?.kind === "managed-context-quiet-care-monitor-refresh" && quietCareMonitorRefresh?.hashAlgorithm === "sha256" && quietCareMonitorRefresh?.refreshId === "2026-08-19-quiet-care-monitor-prototype", "Quiet Care Monitor context schema/kind/hash drifted");
+  assert(quietCareMonitorRefresh?.authorization?.milestone === "Build — Quiet Care Monitor LCD Prototype" && quietCareMonitorRefresh?.authorization?.generalMutableContextException === false && quietCareMonitorRefresh?.authorization?.simulationPersistenceLifecycleOrIntentChangeAuthorized === false && quietCareMonitorRefresh?.authorization?.assetPathByteTierImportOrDispositionChangeAuthorized === false && quietCareMonitorRefresh?.authorization?.classificationChangeAuthorized === true && quietCareMonitorRefresh?.authorization?.classificationChangeScope === quietClassificationScope && quietCareMonitorRefresh?.authorization?.dependencyChangeAuthorized === false && quietCareMonitorRefresh?.authorization?.externalOrGitActionAuthorized === false && quietCareMonitorRefresh?.authorization?.classicControlsAuthorized === false && quietCareMonitorRefresh?.authorization?.subjectiveAcceptanceOrLockAuthorized === false, "Quiet Care Monitor context authority widened");
+  assert(quietCareMonitorPolicy?.kind === "checksum-bound-managed-context-quiet-care-monitor-refresh" && quietCareMonitorPolicy?.milestone === "Build — Quiet Care Monitor LCD Prototype" && quietCareMonitorPolicy?.predecessor === healthStatusMedicineRefreshPath && quietCareMonitorPolicy?.predecessorRecordSha256 === "d68c8dde360cdd1cb303f8e8720978a259c97dfcb62008ce15b48a3ddc49ecd4", "Quiet Care Monitor policy predecessor contract drifted");
+  assert(quietCareMonitorPolicy?.generalMutableContextException === false && quietCareMonitorPolicy?.simulationPersistenceLifecycleOrIntentChangeAuthorized === false && quietCareMonitorPolicy?.assetPathByteTierImportOrDispositionChangeAuthorized === false && quietCareMonitorPolicy?.classificationChangeAuthorized === true && quietCareMonitorPolicy?.classificationChangeScope === quietClassificationScope && quietCareMonitorPolicy?.dependencyChangeAuthorized === false && quietCareMonitorPolicy?.externalOrGitActionAuthorized === false && quietCareMonitorPolicy?.classicControlsAuthorized === false && quietCareMonitorPolicy?.subjectiveAcceptanceOrLockAuthorized === false, "Quiet Care Monitor policy authority widened");
+  assert(quietCareMonitorRefresh?.repositoryState?.head === v7GameplayCommit && quietCareMonitorRefresh?.repositoryState?.headParent === v7ParentCommit && quietCareMonitorRefresh?.repositoryState?.branch === "codex/jack-v05" && quietCareMonitorRefresh?.repositoryState?.stagedPathCount === 0 && quietCareMonitorRefresh?.repositoryState?.stagedPaths?.length === 0 && quietCareMonitorRefresh?.repositoryState?.externalOrGitActionPerformed === false, "Quiet Care Monitor repository-state record drifted");
+  assert(quietCareMonitorRefresh?.immutablePredecessor?.record === healthStatusMedicineRefreshPath && quietCareMonitorRefresh?.immutablePredecessor?.recordBytes === 14873 && quietCareMonitorRefresh?.immutablePredecessor?.recordSha256 === "d68c8dde360cdd1cb303f8e8720978a259c97dfcb62008ce15b48a3ddc49ecd4" && quietCareMonitorRefresh?.immutablePredecessor?.immutable === true && fileHash(healthStatusMedicineRefreshPath) === "d68c8dde360cdd1cb303f8e8720978a259c97dfcb62008ce15b48a3ddc49ecd4", "Quiet Care Monitor immutable predecessor drifted");
+
+  assert(quietCareMonitorTransitions.length === expectedQuietCareMonitorTransitions.size && quietCareMonitorTransitionByPath.size === expectedQuietCareMonitorTransitions.size && quietCareMonitorPolicy?.transitionCount === expectedQuietCareMonitorTransitions.size, "Quiet Care Monitor content-transition set drifted");
+  for (const [path, expected] of expectedQuietCareMonitorTransitions) {
+    const transition = quietCareMonitorTransitionByPath.get(path);
+    assert(transition?.prior?.bytes === expected.prior.bytes && transition?.prior?.sha256 === expected.prior.sha256 && transition?.prior?.gitNormalizedBlobOid === expected.prior.gitBlobOid && transition?.prior?.identitySource === "v7-gameplay-commit", `Quiet Care Monitor prior identity drifted: ${path}`);
+    assert(transition?.current?.bytes === expected.current.bytes && transition?.current?.sha256 === expected.current.sha256 && transition?.current?.gitNormalizedBlobOid === expected.current.gitBlobOid && transition?.current?.gitState === "tracked-modified", `Quiet Care Monitor current record drifted: ${path}`);
+    const committed = execFileSync("git", ["show", `${v7GameplayCommit}:${path}`], { cwd: root });
+    assert(committed.length === expected.prior.bytes && sha256(committed) === expected.prior.sha256 && gitOutput(["rev-parse", `${v7GameplayCommit}:${path}`]) === expected.prior.gitBlobOid, `Quiet Care Monitor prior does not match the V7 commit: ${path}`);
+    assertQuietTransitionCurrent(path, transition.prior);
+  }
+  assert(quietCareMonitorAdditions.length === expectedQuietCareMonitorAdditions.size && quietCareMonitorAdditionByPath.size === expectedQuietCareMonitorAdditions.size && quietCareMonitorPolicy?.additionCount === expectedQuietCareMonitorAdditions.size, "Quiet Care Monitor addition set drifted");
+  const v7TreePaths = new Set(gitPaths(["ls-tree", "-r", "--name-only", "-z", v7GameplayCommit]));
+  for (const [path, expected] of expectedQuietCareMonitorAdditions) {
+    const addition = quietCareMonitorAdditionByPath.get(path);
+    assert(addition?.priorState === "absent-at-v7-head" && addition?.bytes === expected.bytes && addition?.sha256 === expected.sha256 && addition?.gitNormalizedBlobOid === expected.gitBlobOid && addition?.gitState === "untracked", `Quiet Care Monitor addition record drifted: ${path}`);
+    assert(!v7TreePaths.has(path) && existsSync(absolute(path)) && statSync(absolute(path)).size === expected.bytes && fileHash(path) === expected.sha256 && pathAttributedGitBlobOid(path) === expected.gitBlobOid && currentUntrackedPaths.has(path) && !currentTrackedPaths.has(path), `Quiet Care Monitor addition identity/state drifted: ${path}`);
+  }
+  assert(quietCareMonitorV7StateSuccessors.length === expectedQuietCareMonitorV7StateSuccessors.size && quietCareMonitorV7StateSuccessorByPath.size === expectedQuietCareMonitorV7StateSuccessors.size && quietCareMonitorPolicy?.committedV7StateSuccessorCount === expectedQuietCareMonitorV7StateSuccessors.size, "Quiet Care Monitor committed V7 state-successor set drifted");
+  for (const [path, expected] of expectedQuietCareMonitorV7StateSuccessors) {
+    const successor = quietCareMonitorV7StateSuccessorByPath.get(path);
+    assert(successor?.bytes === expected.bytes && successor?.sha256 === expected.sha256 && successor?.gitNormalizedBlobOid === expected.gitBlobOid && successor?.priorState === expected.priorState && successor?.currentState === "tracked-clean-at-v7-head" && successor?.bytesChanged === false, `Quiet Care Monitor committed V7 state record drifted: ${path}`);
+    const committed = execFileSync("git", ["show", `${v7GameplayCommit}:${path}`], { cwd: root });
+    assert(committed.length === expected.bytes && sha256(committed) === expected.sha256 && gitOutput(["rev-parse", `${v7GameplayCommit}:${path}`]) === expected.gitBlobOid, `Quiet Care Monitor committed V7 state does not match the V7 commit: ${path}`);
+    assertQuietStateCurrent(path, successor);
+  }
+  assert(quietCareMonitorEvidenceFiles.length === expectedQuietCareMonitorEvidence.size && quietCareMonitorEvidenceByPath.size === expectedQuietCareMonitorEvidence.size && quietCareMonitorRefresh?.representativeEvidence?.fileCount === 4 && quietCareMonitorRefresh?.representativeEvidence?.bytes === 249894, "Quiet Care Monitor representative-evidence set drifted");
+  for (const [path, expected] of expectedQuietCareMonitorEvidence) {
+    const evidence = quietCareMonitorEvidenceByPath.get(path);
+    const dimensions = existsSync(absolute(path)) ? jpegDimensions(path) : null;
+    assert(evidence?.bytes === expected.bytes && evidence?.sha256 === expected.sha256 && evidence?.gitNormalizedBlobOid === expected.gitBlobOid && evidence?.dimensions?.join("x") === `${expected.width}x${expected.height}` && evidence?.signature === "jpeg-jfif", `Quiet Care Monitor representative-evidence record drifted: ${path}`);
+    assert(existsSync(absolute(path)) && statSync(absolute(path)).size === expected.bytes && fileHash(path) === expected.sha256 && pathAttributedGitBlobOid(path) === expected.gitBlobOid && dimensions?.width === expected.width && dimensions?.height === expected.height && dimensions?.signature === "jpeg-jfif", `Quiet Care Monitor representative-evidence identity/dimensions drifted: ${path}`);
+  }
+  const quietEvidenceRule = (policy.classificationRules ?? []).find((entry) => entry.id === "normal-git-evidence-quiet-care-monitor");
+  const quietEvidenceSet = (policy.representativeEvidenceSets ?? []).find((entry) => entry.id === "quiet-care-monitor-presentation");
+  const expectedQuietEvidencePaths = [...expectedQuietCareMonitorEvidence.keys()];
+  assert(quietEvidenceRule?.tier === "normal-git" && quietEvidenceRule?.pathGlobs?.length === 4 && new Set(quietEvidenceRule.pathGlobs.map(normalize)).size === 4 && expectedQuietEvidencePaths.every((path) => quietEvidenceRule.pathGlobs.map(normalize).includes(path)), "Quiet Care Monitor representative-evidence rule drifted");
+  assert(quietEvidenceSet?.maxFiles === 4 && quietEvidenceSet?.paths?.length === 4 && new Set(quietEvidenceSet.paths.map(normalize)).size === 4 && expectedQuietEvidencePaths.every((path) => quietEvidenceSet.paths.map(normalize).includes(path)), "Quiet Care Monitor representative-evidence retention set drifted");
+
+  const quietInvariants = quietCareMonitorRefresh?.unchangedInvariants;
+  assert(quietInvariants?.priorClassificationBytes === 138776 && quietInvariants?.priorClassificationSha256 === "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a" && quietCareMonitorPolicy?.priorClassificationBytes === 138776 && quietCareMonitorPolicy?.priorClassificationSha256 === "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a", "Quiet Care Monitor prior-classification invariant drifted");
+  assert(quietInvariants?.currentClassificationBytes === 140025 && quietInvariants?.currentClassificationSha256 === "80a017770c774dcab3c137831bf3da6ae09c205d397e73debc99342d67c0d8e3" && quietCareMonitorPolicy?.currentClassificationBytes === 140025 && quietCareMonitorPolicy?.currentClassificationSha256 === "80a017770c774dcab3c137831bf3da6ae09c205d397e73debc99342d67c0d8e3" && statSync(absolute(classificationPath)).size === 140025 && fileHash(classificationPath) === "80a017770c774dcab3c137831bf3da6ae09c205d397e73debc99342d67c0d8e3", "Quiet Care Monitor current-classification identity drifted");
+  const currentQuietClassification = JSON.parse(readFileSync(absolute(classificationPath), "utf8"));
+  const quietClassificationGroup = currentQuietClassification.groups?.find((group) => group.id === "normal-git-evidence-quiet-care-monitor");
+  const unchangedQuietClassificationGroups = currentQuietClassification.groups?.filter((group) => group.id !== "normal-git-evidence-quiet-care-monitor");
+  assert(quietInvariants?.priorClassificationGroupCount === 23 && quietInvariants?.currentClassificationGroupCount === 24 && currentHealthStatusClassification.groups?.length === 23 && currentQuietClassification.groups?.length === 24, "Quiet Care Monitor classification group count drifted");
+  assert(currentQuietClassification.sourceInventory === currentHealthStatusClassification.sourceInventory && currentQuietClassification.sourceInventoryAssetsSha256 === currentHealthStatusClassification.sourceInventoryAssetsSha256 && currentQuietClassification.sourceInventoryEvidenceSha256 === currentHealthStatusClassification.sourceInventoryEvidenceSha256 && JSON.stringify(unchangedQuietClassificationGroups) === JSON.stringify(currentHealthStatusClassification.groups), "Quiet Care Monitor classification changed a prior group or source anchor");
+  assert(quietClassificationGroup?.tier === "normal-git" && quietClassificationGroup?.fileCount === 4 && quietClassificationGroup?.bytes === 249894 && quietClassificationGroup?.files?.length === 4 && quietClassificationGroup.files.every((entry) => expectedQuietCareMonitorEvidence.get(normalize(entry.path))?.bytes === entry.bytes && expectedQuietCareMonitorEvidence.get(normalize(entry.path))?.sha256 === entry.sha256), "Quiet Care Monitor classification evidence group drifted");
+  assert(quietInvariants?.packageJsonBytes === 1277 && quietInvariants?.packageJsonSha256 === "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa" && statSync(absolute("package.json")).size === 1277 && fileHash("package.json") === quietInvariants.packageJsonSha256 && quietInvariants?.packageLockJsonBytes === 483873 && quietInvariants?.packageLockJsonSha256 === "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38" && statSync(absolute("package-lock.json")).size === 483873 && fileHash("package-lock.json") === quietInvariants.packageLockJsonSha256, "Quiet Care Monitor package invariant drifted");
+  assert(quietInvariants?.governedAssetFileCount === 125 && quietInvariants?.governedAssetBytes === 448676672 && quietInvariants?.governedAssetAggregateSha256 === "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f", "Quiet Care Monitor governed-asset invariant drifted");
+  assert(quietInvariants?.assetPathChanges === 0 && quietInvariants?.assetByteChanges === 0 && quietInvariants?.assetTierChanges === 0 && quietInvariants?.runtimeImportChanges === 0 && quietInvariants?.assetDispositionChanges === 0 && quietInvariants?.classificationChanges === 1 && quietInvariants?.representativeEvidenceAdditions === 4 && quietInvariants?.representativeEvidenceBytes === 249894 && quietInvariants?.dependencyChanges === 0 && quietInvariants?.simulationPersistenceLifecycleOrIntentChanges === 0, "Quiet Care Monitor scope invariant widened");
+  assert(quietCareMonitorRefresh?.controlPlanePredecessors?.assetPolicy?.bytes === 49221 && quietCareMonitorRefresh?.controlPlanePredecessors?.assetPolicy?.sha256 === "7f8e92558224d2ee1ad128a9b8bfc9cd170ea0dd35199b472635ba4aaecf8b9e" && quietCareMonitorRefresh?.controlPlanePredecessors?.assetVerifier?.bytes === 227502 && quietCareMonitorRefresh?.controlPlanePredecessors?.assetVerifier?.sha256 === "fd0e8d801fb4b7e82b49173d81e1164a136b06afa8e0907939a76a3f0e374d01", "Quiet Care Monitor control-plane predecessor identity drifted");
+  assert(quietCareMonitorRefresh?.liveVerification?.phone?.pageReportedViewport?.join("x") === "390x844" && quietCareMonitorRefresh?.liveVerification?.phone?.documentScrollWidth === 390 && quietCareMonitorRefresh?.liveVerification?.phone?.horizontalOverflow === false && quietCareMonitorRefresh?.liveVerification?.phone?.minimumSelectorAndDirectControlPx === 44 && quietCareMonitorRefresh?.liveVerification?.desktop?.pageReportedViewport?.join("x") === "1440x900" && quietCareMonitorRefresh?.liveVerification?.desktop?.documentScrollWidth === 1440 && quietCareMonitorRefresh?.liveVerification?.desktop?.horizontalOverflow === false && quietCareMonitorRefresh?.liveVerification?.desktop?.minimumSelectorAndDirectControlPx === 44, "Quiet Care Monitor live viewport record drifted");
+  assert(quietCareMonitorRefresh?.liveVerification?.sessionOnlyReloadRestoredThreeD === true && quietCareMonitorRefresh?.liveVerification?.keyboardFocusAndSelectionChecked === true && quietCareMonitorRefresh?.liveVerification?.statusModalIsolationEscapeAndTriggerRestorationChecked === true && quietCareMonitorRefresh?.liveVerification?.reducedMotionBrowserOverrideAvailable === false && quietCareMonitorRefresh?.liveVerification?.reducedMotionCoveredDeterministically === true && quietCareMonitorRefresh?.liveVerification?.observedNewRuntimeErrors === 0, "Quiet Care Monitor live interaction record drifted");
   assert(alphaInspectReviewFixRefresh?.controlPlanePredecessors?.assetPolicy?.bytes === 39843 && alphaInspectReviewFixRefresh?.controlPlanePredecessors?.assetPolicy?.sha256 === "19e656e02f1ebe953285b3e269bee22d927cacf8aea6e57b3c5fb38faf2146a0", "Alpha Inspect review-fix asset-policy predecessor drifted");
   assert(alphaInspectReviewFixRefresh?.unchangedInvariants?.sceneSha256 === "ea74d4243ad80cf3d7e92001cd7b0bfebd869276ffb9c091c767cde09560ac14", "Alpha Inspect review-fix historical scene invariant drifted");
   assert(alphaInspectReviewFixRefresh?.unchangedInvariants?.policyTestSha256 === "a6d6fb93f08faee1c41c2526abe1206af3c3160f1664ac78627a3c87ee5acc19" && fileHash("src/pet-room-3d-policy.test.ts") === "a6d6fb93f08faee1c41c2526abe1206af3c3160f1664ac78627a3c87ee5acc19", "Alpha Inspect review-fix policy-test invariant drifted");
@@ -1032,8 +1165,9 @@ function verify() {
     assert(existsSync(absolute(path)), `Initial-journal ambiguity supporting file is missing: ${path}`);
     const currentSuccessor = healthStatusMedicineSupportingTransitionByPath.get(path);
     if (currentSuccessor) {
-      assert(currentSuccessor.prior?.bytes === expected.current.bytes && currentSuccessor.prior?.sha256 === expected.current.sha256 && currentSuccessor.prior?.gitNormalizedBlobOid === pathAttributedGitBlobOid(path, execFileSync("git", ["show", `HEAD:${path}`], { cwd: root })), `Initial-journal supporting V7 predecessor drifted: ${path}`);
-      assert(statSync(absolute(path)).size === currentSuccessor.current?.bytes && fileHash(path) === currentSuccessor.current?.sha256 && pathAttributedGitBlobOid(path) === currentSuccessor.current?.gitNormalizedBlobOid && currentModifiedPaths.has(path), `Initial-journal supporting V7 current identity drifted: ${path}`);
+      assert(currentSuccessor.prior?.bytes === expected.current.bytes && currentSuccessor.prior?.sha256 === expected.current.sha256 && currentSuccessor.prior?.gitNormalizedBlobOid === pathAttributedGitBlobOid(path, execFileSync("git", ["show", `${v7ParentCommit}:${path}`], { cwd: root })), `Initial-journal supporting V7 predecessor drifted: ${path}`);
+      if (quietCareMonitorTransitionByPath.has(path)) assertQuietTransitionCurrent(path, currentSuccessor.current);
+      else assertQuietStateCurrent(path, currentSuccessor.current);
     } else if (existsSync(absolute(path))) {
       assert(statSync(absolute(path)).size === expected.current.bytes && fileHash(path) === expected.current.sha256, `Initial-journal ambiguity supporting identity drifted: ${path}`);
       assert(Math.abs(statSync(absolute(path)).mtimeMs - new Date(expected.current.lastWriteTimeUtc).getTime()) < 1, `Initial-journal ambiguity supporting mtime drifted: ${path}`);
@@ -1083,7 +1217,8 @@ function verify() {
   const postBaselineAssetPaths = new Set([...postBaselinePaths].filter((path) => path.startsWith("assets/")));
   const postBaselineEvidencePaths = new Set([...postBaselinePaths].filter((path) => path.startsWith("evidence/")));
   const authorizedEvidenceExtensionPaths = new Set(expectedHealthStatusMedicineEvidence.keys());
-  const allowedCurrentEvidencePaths = new Set([...postBaselineEvidencePaths, ...authorizedEvidenceExtensionPaths]);
+  const authorizedQuietCareMonitorEvidencePaths = new Set(expectedQuietCareMonitorEvidence.keys());
+  const allowedCurrentEvidencePaths = new Set([...postBaselineEvidencePaths, ...authorizedEvidenceExtensionPaths, ...authorizedQuietCareMonitorEvidencePaths]);
   const expectedCandidateEofTransitions = new Map([
     ["assets/3d/jack/v3/README.md", {
       currentBytes: 1553,
@@ -1477,8 +1612,11 @@ function verify() {
     assert(Boolean(record && existsSync(absolute(record))), `Missing post-baseline provenance record: ${record ?? "undefined"}`);
   }
   if (existsSync(absolute(postBaselineIntake?.creativeStatus?.authoritativeRecord ?? ""))) {
-    const creativeSuccessor = alphaInspectTransitionByPath.get(normalize(postBaselineIntake.creativeStatus.authoritativeRecord));
-    assert(creativeSuccessor?.prior?.sha256 === postBaselineIntake.creativeStatus.authoritativeRecordSha256 && fileHash(postBaselineIntake.creativeStatus.authoritativeRecord) === creativeSuccessor?.current?.sha256, "Post-baseline creative authority successor chain drifted");
+    const creativePath = normalize(postBaselineIntake.creativeStatus.authoritativeRecord);
+    const creativeSuccessor = alphaInspectTransitionByPath.get(creativePath);
+    const committedStateSuccessor = healthStatusMedicineStateSuccessorByPath.get(creativePath);
+    const quietSuccessor = quietCareMonitorTransitionByPath.get(creativePath);
+    assert(creativeSuccessor?.prior?.sha256 === postBaselineIntake.creativeStatus.authoritativeRecordSha256 && committedStateSuccessor?.sha256 === creativeSuccessor?.current?.sha256 && quietSuccessor?.prior?.sha256 === committedStateSuccessor?.sha256 && fileHash(creativePath) === quietSuccessor?.current?.sha256, "Post-baseline creative authority successor chain drifted");
   }
   if (existsSync(absolute(postBaselineIntake?.provenance?.v3Donor?.record ?? ""))) {
     const successor = candidateEofTransitionByPath.get(normalize(postBaselineIntake.provenance.v3Donor.record));

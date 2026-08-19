@@ -121,6 +121,8 @@ Track A — domain and care:
 
 Implementation checkpoint — 2026-08-18: Track A is implemented pending final evidence and gates. Strict V1–V6 records migrate to six-need V7 with health `100`, attention `80`, and a separate wellbeing timestamp that prevents retroactive pre-upgrade decay while legacy needs, age, and Safe Return catch-up remain exact. Attention decays at the approved awake/sleeping rates and PLAY restores `28`; health changes only through additive approved neglect decay or bounded Medicine. Health zero is nonfatal and active starvation remains the only death path. The App exposes read-only Status and a separate typed Medicine intent with deterministic health bands, recommendations, reachability, sleeping, dead, and healthy-state guards. Delayed-Clean journals normalize embedded V6 pets without weakening raw-before or malformed-save protections.
 
+Commit checkpoint — 2026-08-19: Track A is committed locally at `398bd7e`; its candidate/report exclusions and every paused cinematic path remain outside the implementation scope.
+
 Track B — control contract:
 
 - Extract typed player intents from `App.tsx`.
@@ -132,6 +134,8 @@ Track C — presentation contract:
 - Build original LCD and color-pixel presenters from the same read-only view model.
 - Switch presentations without advancing or mutating pet state.
 - Treat 3D as an additive presenter until the durable product decision is resolved.
+
+Implementation checkpoint — 2026-08-19: the provisional Quiet Care Monitor prototype is implemented pending final context reconciliation and gates. A deep-frozen V7 `PetPresentationModel` exposes the same ordered six needs, status/recommendation, medicine availability, warnings, and semantic activity to every presenter. Session-only `three-d`, `color-pixel`, and `lcd` selection defaults to 3D, never writes storage, and explicitly renders the existing code-native pixel scene for Color Pixel. Quiet Care Monitor is code-native, uses only system text and two/three-frame state treatments, retains meaningful reduced-motion end frames and non-color-only warning cues, and leaves all direct typed actions outside the presenter. This is not Mark's acceptance or lock; classic three-button controls have not begun.
 
 Exit: every numbered first-milestone acceptance criterion passes; representative screens exist for both presentation modes and both control schemes.
 

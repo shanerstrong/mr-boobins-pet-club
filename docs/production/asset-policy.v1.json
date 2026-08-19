@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "policyId": "mr-boobins-asset-control-v1",
-  "status": "preservation-verified-alpha-inspect-local-commit-with-authorized-v7-health-status-successor",
+  "status": "preservation-verified-v7-local-commit-with-authorized-quiet-care-monitor-successor",
   "repositorySourceOfTruth": true,
   "runtimeLfsPolicy": "Runtime assets consumed by GitHub Pages remain normal Git unless the deployment workflow explicitly fetches and verifies LFS objects.",
   "baselineTextNormalization": {
@@ -31,6 +31,7 @@
     "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
+    "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json",
     "assets/3d/jack/asset-manifest.json",
     "assets/3d/jack/SOURCE_LEDGER.md",
     "assets/3d/jack/v2/asset-manifest-v2.json",
@@ -57,6 +58,7 @@
     "docs/production/ALPHA_INSPECT_REVIEW_FIX_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
+    "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json",
     "assets/3d/jack/asset-manifest.json",
     "assets/3d/jack/v2/asset-manifest-v2.json",
     "assets/3d/jack/animations/clip-manifest.json",
@@ -532,6 +534,44 @@
       "currentClassificationSha256": "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a"
     }
   ],
+  "quietCareMonitorContextRefreshes": [
+    {
+      "record": "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json",
+      "recordBytes": 13584,
+      "recordSha256": "d32813e7d7652e096ef55f300459f70f236c705f3c7ab506caed161c4a44dddf",
+      "kind": "checksum-bound-managed-context-quiet-care-monitor-refresh",
+      "milestone": "Build — Quiet Care Monitor LCD Prototype",
+      "predecessor": "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
+      "predecessorRecordSha256": "d68c8dde360cdd1cb303f8e8720978a259c97dfcb62008ce15b48a3ddc49ecd4",
+      "generalMutableContextException": false,
+      "simulationPersistenceLifecycleOrIntentChangeAuthorized": false,
+      "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+      "classificationChangeAuthorized": true,
+      "classificationChangeScope": "Exactly one four-file, 249894-byte normal-Git representative-evidence group plus generatedAt; every prior group and source-inventory anchor remains unchanged.",
+      "dependencyChangeAuthorized": false,
+      "externalOrGitActionAuthorized": false,
+      "classicControlsAuthorized": false,
+      "subjectiveAcceptanceOrLockAuthorized": false,
+      "transitionCount": 7,
+      "additionCount": 6,
+      "committedV7StateSuccessorCount": 5,
+      "representativeEvidence": {
+        "groupId": "normal-git-evidence-quiet-care-monitor",
+        "fileCount": 4,
+        "bytes": 249894,
+        "paths": [
+          "evidence/lcd-presentation/color-pixel-direct-1440x900.jpg",
+          "evidence/lcd-presentation/color-pixel-direct-390x844.jpg",
+          "evidence/lcd-presentation/lcd-status-medicine-1440x900.jpg",
+          "evidence/lcd-presentation/lcd-status-medicine-390x844.jpg"
+        ]
+      },
+      "priorClassificationBytes": 138776,
+      "priorClassificationSha256": "febaa595afbd1d65e536f292bacd448b2d7c601649c8f8a5b85b159feb35a84a",
+      "currentClassificationBytes": 140025,
+      "currentClassificationSha256": "80a017770c774dcab3c137831bf3da6ae09c205d397e73debc99342d67c0d8e3"
+    }
+  ],
   "postBaselineIntakes": [
     {
       "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
@@ -863,6 +903,17 @@
       ]
     },
     {
+      "id": "normal-git-evidence-quiet-care-monitor",
+      "tier": "normal-git",
+      "disposition": "Representative provisional Quiet Care Monitor LCD, explicit Color Pixel, direct-control, Status, and Medicine phone/desktop evidence retained in Git. Retention does not imply subjective acceptance or locking.",
+      "pathGlobs": [
+        "evidence/lcd-presentation/color-pixel-direct-1440x900.jpg",
+        "evidence/lcd-presentation/color-pixel-direct-390x844.jpg",
+        "evidence/lcd-presentation/lcd-status-medicine-1440x900.jpg",
+        "evidence/lcd-presentation/lcd-status-medicine-390x844.jpg"
+      ]
+    },
+    {
       "id": "proposed-cold-archive",
       "tier": "cold-archive-verified",
       "disposition": "Rejected iteration, redundant checkpoint, raw candidate, unused derivative, or bulk evidence preserved in the restricted authenticated-download-verified Drive cold archive. Keep originals untouched and excluded pending separate cleanup approval.",
@@ -962,6 +1013,16 @@
       "paths": [
         "evidence/health-status-medicine/status-medicine-390x844.jpg",
         "evidence/health-status-medicine/status-medicine-1440x900.jpg"
+      ]
+    },
+    {
+      "id": "quiet-care-monitor-presentation",
+      "maxFiles": 4,
+      "paths": [
+        "evidence/lcd-presentation/color-pixel-direct-1440x900.jpg",
+        "evidence/lcd-presentation/color-pixel-direct-390x844.jpg",
+        "evidence/lcd-presentation/lcd-status-medicine-1440x900.jpg",
+        "evidence/lcd-presentation/lcd-status-medicine-390x844.jpg"
       ]
     }
   ]

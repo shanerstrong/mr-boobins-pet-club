@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-18T19:18:48.862Z",
+  "generatedAt": "2026-08-19T05:14:40.350Z",
   "sourceInventory": "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
   "sourceInventoryAssetsSha256": "30d0685dfb16000426ccd7bfcfa74f074a7d4072175e2670e34355969b1c6292",
   "sourceInventoryEvidenceSha256": "40ee3701e1046461ccf3d0e465842a82e89207c04326826c5ae67d8d0005c600",
@@ -3168,6 +3168,35 @@
           "path": "evidence/health-status-medicine/status-medicine-390x844.jpg",
           "bytes": 40477,
           "sha256": "9a15da2ad4edbfa9939fe28bee5023e21d6767a8073d0cf7e216499e33b08fe3"
+        }
+      ]
+    },
+    {
+      "id": "normal-git-evidence-quiet-care-monitor",
+      "tier": "normal-git",
+      "disposition": "Representative provisional Quiet Care Monitor LCD, explicit Color Pixel, direct-control, Status, and Medicine phone/desktop evidence retained in Git. Retention does not imply subjective acceptance or locking.",
+      "fileCount": 4,
+      "bytes": 249894,
+      "files": [
+        {
+          "path": "evidence/lcd-presentation/color-pixel-direct-1440x900.jpg",
+          "bytes": 85204,
+          "sha256": "3f9224bdd2941b4bd5eeee29dfe89de9a474368e75d9e5339605ebda44b664a4"
+        },
+        {
+          "path": "evidence/lcd-presentation/color-pixel-direct-390x844.jpg",
+          "bytes": 49232,
+          "sha256": "4ff6d37921da2f42aefd8805aab67adfd5f8bdb7acffedbe149cd5f05c46af97"
+        },
+        {
+          "path": "evidence/lcd-presentation/lcd-status-medicine-1440x900.jpg",
+          "bytes": 74760,
+          "sha256": "007c265302e4f12d9566875487942d8646e32aa29f52f0ebb9a0ce8a176646e8"
+        },
+        {
+          "path": "evidence/lcd-presentation/lcd-status-medicine-390x844.jpg",
+          "bytes": 40698,
+          "sha256": "0f35fd89b2a75efa860bea72c363cc597f68471a22434ef7f40be833118a6ad1"
         }
       ]
     },

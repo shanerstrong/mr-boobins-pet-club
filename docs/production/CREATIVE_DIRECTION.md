@@ -1,6 +1,6 @@
 # Creative direction and taste memory
 
-Updated: 2026-08-17
+Updated: 2026-08-19
 
 ## Purpose
 
@@ -47,6 +47,7 @@ Codex may say that an artifact **passes named objective checks** and may describ
 | --- | --- | --- |
 | Current Baby V2 Meshy runtime asset | It has passed named runtime and animation-contract checks and can support the current bounded 3D test. | This record does not claim Mark has locked its likeness, style, or final visual quality. |
 | Code-native pixel Jack | It supports fallback and functional testing and was already documented as provisional. | It is not an approved likeness or final art direction. |
+| Quiet Care Monitor LCD prototype | Mark approved it as the provisional inexpensive direction to prototype. The bounded version uses a rounded charcoal casing, pale-celery display, deep-ink/moss/burgundy system, original code-native segment/grid Jack, six-need rail, and explicit status/recommendation treatment. | Permission to prototype is not subjective acceptance or locking. Its look, final production treatment, and replacement of any other presenter remain unapproved until Mark reviews the rendered result. |
 
 ### Accepted and locked
 

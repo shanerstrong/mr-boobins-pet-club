@@ -67,7 +67,18 @@ import {
   type DogEmote,
   type TrainingVisualAction,
 } from "./src/pixel-dog";
-import { PetRoomScene } from "./src/pet-room-scene";
+import {
+  PetPresentationStage,
+  PresentationModeSwitcher,
+} from "./src/pet-presentation-stage";
+import {
+  createPetPresentationModel,
+  DEFAULT_PRESENTATION_MODE,
+  resolvePresentationModeSwitch,
+  type PetPresentationActivity,
+  type PetPresentationModel,
+  type PresentationMode,
+} from "./src/pet-presentation-model";
 import {
   TRAINING_CELEBRATION_DURATION_MS,
   TRAINING_COMMANDS,
@@ -95,7 +106,6 @@ import {
   createNewPet,
   getBoopReaction,
   getGrowthStage,
-  getHygieneAppearance,
   getVirtualClock,
   isSleeping,
   normalizeNickname,
@@ -250,6 +260,11 @@ function PetClub() {
   const [returnContext, setReturnContext] = useState<ReturnContext | null>(null);
   const [message, setMessage] = useState("");
   const [emote, setEmote] = useState<DogEmote>(null);
+  const [presentationCue, setPresentationCue] =
+    useState<PetPresentationActivity | null>(null);
+  const [presentationMode, setPresentationMode] = useState<PresentationMode>(
+    DEFAULT_PRESENTATION_MODE,
+  );
   const [messageOpacity] = useState(() => new Animated.Value(1));
   const messageTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const interactionScheduler = useRef(createInteractionScheduler());
@@ -394,6 +409,7 @@ function PetClub() {
     setCareLocked(false);
     setMessage("");
     setEmote(null);
+    setPresentationCue(null);
     setSleepMenuOpen(false);
     setStatusOpen(false);
     setRestartOpen(false);
@@ -500,6 +516,7 @@ function PetClub() {
       setScreen("title");
       setMessage("");
       setEmote(null);
+      setPresentationCue(null);
       setReturnContext(null);
       setTrainingProgress(DEFAULT_TRAINING_PROGRESS);
       setTrainingSaveFailed(false);
@@ -1077,17 +1094,24 @@ function PetClub() {
   };
 
   const setTransientMessage = useCallback(
-    (nextMessage: string, nextEmote: DogEmote, duration = 3000) => {
+    (
+      nextMessage: string,
+      nextEmote: DogEmote,
+      duration = 3000,
+      nextPresentationCue: PetPresentationActivity | null = null,
+    ) => {
       messageTimer.current = restoreMessagePresentation(
         messageTimer.current,
         messageOpacity,
       );
       setMessage(nextMessage);
       setEmote(nextEmote);
+      setPresentationCue(nextPresentationCue);
       const generation = uiGeneration.current;
       messageTimer.current = setTimeout(() => {
         if (generation !== uiGeneration.current) return;
         setEmote(null);
+        setPresentationCue(null);
         if (reduced) {
           setMessage("");
           return;
@@ -1229,6 +1253,7 @@ function PetClub() {
     pulse.setValue(0);
     setMessage("");
     setEmote(null);
+    setPresentationCue(null);
     setAudioGestureGranted(true);
     playSound("uiOpen");
     stopTrainingAnimations();
@@ -1371,6 +1396,7 @@ function PetClub() {
     setCareLocked(true);
     setCleaningPhase("water");
     setEmote("cleaning");
+    setPresentationCue(null);
     setMessage("Cleaning: water → dirt washout → shake → sparkle.");
     const schedule = (delay: number, callback: () => void) => {
       interactionScheduler.current.schedule(token, delay, callback);
@@ -1638,6 +1664,8 @@ function PetClub() {
     setTransientMessage(
       `Medicine helped ${resolution.pet.name} feel better.`,
       "happy",
+      3000,
+      "medicine",
     );
     playSound("uiConfirm");
     playSound("happy");
@@ -1889,6 +1917,25 @@ function PetClub() {
             trainingState.phase === "treat-in-flight"
           ? trainingState.command
           : null;
+  const petPresentationModel = createPetPresentationModel({
+    pet,
+    emote: displayEmote,
+    cleaningPhase,
+    trainingAction: trainingVisualAction,
+    trainingTreatVisible: trainingState.phase === "treat-in-flight",
+    medicineFeedback: presentationCue === "medicine",
+    careLocked,
+    careReachable: screen === "room" && !careLocked,
+    reducedMotion: reduced,
+  });
+  const changePresentationMode = (nextMode: PresentationMode) => {
+    const resolution = resolvePresentationModeSwitch(
+      pet,
+      petPresentationModel,
+      nextMode,
+    );
+    setPresentationMode(resolution.mode);
+  };
 
   let content;
   if (screen === "title") {
@@ -1940,11 +1987,9 @@ function PetClub() {
         bob={bob}
         careAvailable={careAvailable}
         careLocked={careLocked}
-        cleaningPhase={cleaningPhase}
         clock={clock}
         compactPhone={width < 350}
         desktop={desktop}
-        displayEmote={displayEmote}
         feedProgress={feedProgress}
         growthHint={growthHint}
         message={terminalPolicy.terminal ? returnSummary ?? terminalPolicy.terminalMessage! : message || ambientMessage}
@@ -1963,19 +2008,18 @@ function PetClub() {
         onSleep={sleeping ? wakeUp : openSleepMenu}
         onTrain={beginTraining}
         pet={pet}
+        presentationMode={presentationMode}
+        presentationModel={petPresentationModel}
+        onPresentationModeChange={changePresentationMode}
         pulse={pulse}
-        reduced={reduced}
         sleeping={sleeping}
-        stage={stage}
         wag={wag}
         zoom={zoom}
-        trainingAction={trainingVisualAction}
         trainingAnimation={trainingAnimation}
         trainingAnimationRevision={trainingAnimationRevision}
         trainingPoseHeld={trainingState.phase === "awaiting-treat"}
         trainingDisabled={pet.isDead || sleeping || careLocked || trainingOpen}
         trainingTreatProgress={trainingTreatProgress}
-        trainingTreatVisible={trainingState.phase === "treat-in-flight"}
         trainingModeOpen={trainingOpen}
       />
     );
@@ -2253,11 +2297,9 @@ type RoomScreenProps = {
   boopStatus: string;
   careAvailable: boolean;
   careLocked: boolean;
-  cleaningPhase: CleaningPhase | null;
   clock: ReturnType<typeof getVirtualClock>;
   compactPhone: boolean;
   desktop: boolean;
-  displayEmote: DogEmote;
   feedProgress: Animated.Value;
   growthHint: string;
   message: string;
@@ -2265,23 +2307,22 @@ type RoomScreenProps = {
   onBoop: () => void;
   onCare: (action: CareAction) => void;
   onOpenSettings: () => void;
+  onPresentationModeChange: (mode: PresentationMode) => void;
   onStatus: () => void;
   onSleep: () => void;
   onTrain: () => void;
   pet: PetState;
+  presentationMode: PresentationMode;
+  presentationModel: PetPresentationModel;
   pulse: Animated.Value;
-  reduced: boolean;
   sleeping: boolean;
-  stage: GrowthStage;
   wag: Animated.Value;
   zoom: Animated.Value;
-  trainingAction: TrainingVisualAction;
   trainingAnimation: Animated.Value;
   trainingAnimationRevision: number;
   trainingPoseHeld: boolean;
   trainingDisabled: boolean;
   trainingTreatProgress: Animated.Value;
-  trainingTreatVisible: boolean;
   trainingModeOpen: boolean;
 };
 
@@ -2292,10 +2333,8 @@ function RoomScreen(props: RoomScreenProps) {
     boopStatus,
     careAvailable,
     careLocked,
-    cleaningPhase,
     clock,
     desktop,
-    displayEmote,
     feedProgress,
     growthHint,
     message,
@@ -2303,35 +2342,26 @@ function RoomScreen(props: RoomScreenProps) {
     onBoop,
     onCare,
     onOpenSettings,
+    onPresentationModeChange,
     onStatus,
     onSleep,
     onTrain,
     pet,
+    presentationMode,
+    presentationModel,
     pulse,
-    reduced,
     sleeping,
-    stage,
     wag,
     zoom,
-    trainingAction,
     trainingAnimation,
     trainingAnimationRevision,
     trainingPoseHeld,
     trainingDisabled,
     trainingTreatProgress,
-    trainingTreatVisible,
     trainingModeOpen,
   } = props;
-  const hygieneAppearance = pet.isDead
-    ? "clear"
-    : getHygieneAppearance(pet.needs.hygiene);
   if (!desktop) {
-    return (
-      <MobileRoomScreen
-        {...props}
-        hygieneAppearance={hygieneAppearance}
-      />
-    );
+    return <MobileRoomScreen {...props} />;
   }
   return (
     <View style={[s.roomCard, desktop && s.roomCardDesktop]}>
@@ -2347,28 +2377,22 @@ function RoomScreen(props: RoomScreenProps) {
           <UtilityButton label="⚙" accessibilityLabel="Open settings" disabled={pet.isDead || careLocked} onPress={onOpenSettings} />
         </View>
       </View>
+      <PresentationModeSwitcher
+        mode={presentationMode}
+        onChange={onPresentationModeChange}
+      />
       <View style={[desktop && s.roomGrid]}>
         <View style={desktop && s.roomVisualColumn}>
-          <PetRoomScene
+          <PetPresentationStage
+            mode={presentationMode}
+            model={presentationModel}
             bob={bob}
-            cleaningPhase={pet.isDead ? null : cleaningPhase}
-            clockLabel={clock.label}
-            daypart={clock.daypart}
-            dead={pet.isDead}
-            emote={displayEmote}
             feedProgress={feedProgress}
-            hygieneAppearance={hygieneAppearance}
             large={desktop}
-            lowHappiness={!pet.isDead && pet.needs.happiness <= 30}
             onBoop={onBoop}
             boopDisabled={!boopAvailable}
             boopStatus={boopStatus}
             pulse={pulse}
-            reduced={reduced}
-            roomTheme={pet.roomTheme}
-            sleeping={sleeping}
-            stage={stage}
-            tired={!pet.isDead && pet.needs.energy <= 25}
             wag={wag}
             zoom={zoom}
             careDisabled={!careAvailable}
@@ -2376,12 +2400,10 @@ function RoomScreen(props: RoomScreenProps) {
             restLabel={sleeping ? "Wake" : "Rest"}
             onCare={onCare}
             onRest={onSleep}
-            trainingAction={trainingAction}
             trainingProgress={trainingAnimation}
             trainingAnimationRevision={trainingAnimationRevision}
             trainingPoseHeld={trainingPoseHeld}
             trainingTreatProgress={trainingTreatProgress}
-            trainingTreatVisible={trainingTreatVisible}
             trainingModeOpen={trainingModeOpen}
           />
           <Text
@@ -2436,36 +2458,32 @@ function MobileRoomScreen({
   boopStatus,
   careAvailable,
   careLocked,
-  cleaningPhase,
   clock,
   compactPhone,
-  displayEmote,
   feedProgress,
-  hygieneAppearance,
   message,
   messageOpacity,
   onBoop,
   onCare,
   onOpenSettings,
+  onPresentationModeChange,
   onStatus,
   onSleep,
   onTrain,
   pet,
+  presentationMode,
+  presentationModel,
   pulse,
-  reduced,
   sleeping,
-  stage,
   wag,
   zoom,
-  trainingAction,
   trainingAnimation,
   trainingAnimationRevision,
   trainingPoseHeld,
   trainingDisabled,
   trainingTreatProgress,
-  trainingTreatVisible,
   trainingModeOpen,
-}: RoomScreenProps & { hygieneAppearance: ReturnType<typeof getHygieneAppearance> }) {
+}: RoomScreenProps) {
   const actionDisabled = !careAvailable;
   const restDisabled = pet.isDead || careLocked;
 
@@ -2499,39 +2517,32 @@ function MobileRoomScreen({
         />
       </View>
 
+      <PresentationModeSwitcher
+        mode={presentationMode}
+        onChange={onPresentationModeChange}
+      />
+
       <View style={s.deviceScreenFrame}>
-        <PetRoomScene
+        <PetPresentationStage
+          mode={presentationMode}
+          model={presentationModel}
           bob={bob}
           boopDisabled={!boopAvailable}
           boopStatus={boopStatus}
           careDisabled={actionDisabled}
-          cleaningPhase={pet.isDead ? null : cleaningPhase}
-          clockLabel={clock.label}
-          daypart={clock.daypart}
-          dead={pet.isDead}
-          emote={displayEmote}
           feedProgress={feedProgress}
-          hygieneAppearance={hygieneAppearance}
-          lowHappiness={!pet.isDead && pet.needs.happiness <= 30}
           onBoop={onBoop}
           onCare={onCare}
           onRest={onSleep}
           pulse={pulse}
-          reduced={reduced}
           restDisabled={restDisabled}
           restLabel={sleeping ? "Wake" : "Rest"}
-          roomTheme={pet.roomTheme}
-          sleeping={sleeping}
-          stage={stage}
-          tired={!pet.isDead && pet.needs.energy <= 25}
           wag={wag}
           zoom={zoom}
-          trainingAction={trainingAction}
           trainingProgress={trainingAnimation}
           trainingAnimationRevision={trainingAnimationRevision}
           trainingPoseHeld={trainingPoseHeld}
           trainingTreatProgress={trainingTreatProgress}
-          trainingTreatVisible={trainingTreatVisible}
           trainingModeOpen={trainingModeOpen}
         />
         <View pointerEvents="none" style={s.mobileMessageOverlay}>
