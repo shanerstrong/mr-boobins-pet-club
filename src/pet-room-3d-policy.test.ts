@@ -48,6 +48,7 @@ describe("pet-room 3D presentation policy", () => {
             poseHeld: false,
             stage,
           });
+          expect(transform.position[0]).toBe(0.15);
           expect(transform.position[1]).toBe(ROOM_WALKABLE_SURFACE_Y + JACK_GROUND_CLEARANCE);
           expect(transform.rotation).toEqual([0, 0.55, 0]);
           expect(transform.scale).toBe(large ? 3.5 : 3.65);
@@ -82,7 +83,8 @@ describe("pet-room 3D presentation policy", () => {
   it("covers the measured animation dip without floating Jack above the rug", () => {
     const worstWorldDip = Math.abs(JACK_SOURCE_WORST_MIN_Y) * 3.65;
     expect(JACK_GROUND_CLEARANCE).toBeGreaterThan(worstWorldDip);
-    expect(JACK_GROUND_CLEARANCE - worstWorldDip).toBeLessThan(0.001);
+    expect(worstWorldDip).toBeCloseTo(0.003894711, 8);
+    expect(JACK_GROUND_CLEARANCE - worstWorldDip).toBeLessThan(0.004);
     expect(ROOM_FLOOR_PLANE_Y).toBeLessThan(ROOM_WALKABLE_SURFACE_Y);
   });
 

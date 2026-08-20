@@ -40,7 +40,7 @@ if (
 
 const entrySource = readFileSync(entryBundles[0], 'utf8');
 const requiredAssets = [
-  { name: 'Jack Baby GLB', stem: 'jack-baby-v2-all-clips.', extension: '.glb' },
+  { name: 'Jack Baby V2.3 GLB', stem: 'jack-baby-v2.3-all-clips.', extension: '.glb' },
   { name: 'cozy music', stem: 'pet-room-cozy.v1.', extension: '.wav' },
   { name: 'play music', stem: 'pet-room-play.v1.', extension: '.wav' },
   { name: 'sleep music', stem: 'pet-room-sleep.v1.', extension: '.wav' },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-19T05:14:40.350Z",
+  "generatedAt": "2026-08-19T22:18:28.285Z",
   "sourceInventory": "docs/production/V0.6-V0.8_PREPOLICY_INVENTORY.json",
   "sourceInventoryAssetsSha256": "30d0685dfb16000426ccd7bfcfa74f074a7d4072175e2670e34355969b1c6292",
   "sourceInventoryEvidenceSha256": "40ee3701e1046461ccf3d0e465842a82e89207c04326826c5ae67d8d0005c600",
@@ -9,8 +9,8 @@
       "id": "local-only-private",
       "tier": "private-backup-verified",
       "disposition": "Keep originals local/private and exclude them from Git/review mirrors. The approved restricted Drive bundle and manifest passed authenticated-download SHA-256 verification; cleanup remains separately approval-gated.",
-      "fileCount": 59,
-      "bytes": 22677256,
+      "fileCount": 60,
+      "bytes": 22699699,
       "files": [
         {
           "path": "assets/3d/device/references/device-shell-imagegen-reference.png",
@@ -233,6 +233,11 @@
           "sha256": "91eaf33a24dee4a8249b13ba42a70f13c929e77ec0e6bd05478720309b12a27a"
         },
         {
+          "path": "assets/3d/jack/v2/tools/__pycache__/retarget_quaternius_canine_v2.cpython-311.pyc",
+          "bytes": 22443,
+          "sha256": "e1f05193c15a48649ed530f36dd9ec13326644fb38642c69458245b48723080f"
+        },
+        {
           "path": "assets/3d/room/references/living-room-v1-imagegen-reference.png",
           "bytes": 1837450,
           "sha256": "0ba13441baada07fe101696872f89ad381d79309bb1c0c60454cff78898aeb68"
@@ -313,8 +318,8 @@
       "id": "normal-git-assets",
       "tier": "normal-git",
       "disposition": "Include as code, documentation, manifest, license, small runtime asset, or current GitHub Pages runtime dependency.",
-      "fileCount": 94,
-      "bytes": 4124864,
+      "fileCount": 103,
+      "bytes": 9906552,
       "files": [
         {
           "path": "assets/3d/jack/README.md",
@@ -537,6 +542,11 @@
           "sha256": "3b9f7fbf950cd5f2a3c3249f3f532aaca97a1f0f12aa3c3ea514d33a8a42b998"
         },
         {
+          "path": "assets/3d/jack/v2/animations/clip-manifest-v2.3.json",
+          "bytes": 4706,
+          "sha256": "49c6a7de7cf35890f4a769d5d47426decebc531d6218edecfedc0da2d4300cce"
+        },
+        {
           "path": "assets/3d/jack/v2/animations/clip-manifest-v2.json",
           "bytes": 3851,
           "sha256": "84dac586755cdc08251b075eddadf637abb756b7833f0fdd7834b43607adf369"
@@ -550,6 +560,16 @@
           "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb",
           "bytes": 2630728,
           "sha256": "e097d15872b9a08f94604fda649a260c4ab23b57989c95f6d4b9944e778821b1"
+        },
+        {
+          "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2.2-all-clips.glb",
+          "bytes": 2734524,
+          "sha256": "4cfcd4c4a56e4699e9c333d2fba380c703aadda2fcfab867af88907e543add15"
+        },
+        {
+          "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2.3-all-clips.glb",
+          "bytes": 3010908,
+          "sha256": "4c20e089749105b60eca52630c5af3d7f5d6706e17af5bdc5650b13b2db5bdba"
         },
         {
           "path": "assets/3d/jack/v2/rig/quadruped-rig-contract-v2.json",
@@ -592,6 +612,11 @@
           "sha256": "7c3742c36144ed70a3867ff004139307b3b073f3b3e78da03e9f761a6f1dcd44"
         },
         {
+          "path": "assets/3d/jack/v2/tools/diagnose_held_contacts.py",
+          "bytes": 5170,
+          "sha256": "2dc015493985659cfc0fd5289e3509726829d8a5f0953881e843fdb7e2ab35c1"
+        },
+        {
           "path": "assets/3d/jack/v2/tools/diagnose_pose_axes.py",
           "bytes": 2638,
           "sha256": "b417712f78e8c0600e6b036a933b99ec96eaede7f71b4bb2be666fdfac7a27a8"
@@ -610,6 +635,16 @@
           "path": "assets/3d/jack/v2/tools/inspect_animation_donor.py",
           "bytes": 4265,
           "sha256": "3aafa3c0fb848a40bb1eced2a1150794dd22895075f7788aea83b38f8c4a3425"
+        },
+        {
+          "path": "assets/3d/jack/v2/tools/inspect_canine_motion.py",
+          "bytes": 3307,
+          "sha256": "02783a6d494569c6d0b2dfcaea49e242bc7694ebf96123f804c173ccad15f91c"
+        },
+        {
+          "path": "assets/3d/jack/v2/tools/inspect_glb_pose.mjs",
+          "bytes": 3919,
+          "sha256": "fdb1b87263728e19963da604665b6b3242c15b93066746d7bd232106aae4b0bb"
         },
         {
           "path": "assets/3d/jack/v2/tools/inspect_quadruped_source.py",
@@ -642,14 +677,29 @@
           "sha256": "5c5548ec818a48f4f536bcdb192a936ddebf4e544709f45335e27da11b1d74cd"
         },
         {
+          "path": "assets/3d/jack/v2/tools/render_pose_adjustment_board.py",
+          "bytes": 5966,
+          "sha256": "bbea658e18d011f85c46a8249141c1236dccc1fc1d84a5a2f86bd994a8d01202"
+        },
+        {
           "path": "assets/3d/jack/v2/tools/render_runtime_idle_fallback.py",
           "bytes": 3251,
           "sha256": "ff88d26296be4c6724f95f81068cda5153779337936038be5c7f24199023ca26"
         },
         {
+          "path": "assets/3d/jack/v2/tools/repair_glb_root_motion.mjs",
+          "bytes": 4845,
+          "sha256": "610934cce5e46f4fb21b2f8b9bd0a5df38e0635f471022dc105dd065186f80c9"
+        },
+        {
           "path": "assets/3d/jack/v2/tools/repair_quadruped_rig.py",
           "bytes": 12693,
           "sha256": "e3f1dbb22d10e95c16125b731f821feb6c8cbbbf6e10774cebcfd4b910a549ed"
+        },
+        {
+          "path": "assets/3d/jack/v2/tools/retarget_complete_canine_v2.py",
+          "bytes": 8343,
+          "sha256": "1f147012d7877880a5e978e524b05e4df389ddcb64cd1222cd8d5b0c40541a0c"
         },
         {
           "path": "assets/3d/jack/v2/tools/retarget_quaternius_canine_v2.py",
@@ -792,8 +842,8 @@
       "id": "proposed-cold-archive",
       "tier": "cold-archive-verified",
       "disposition": "Rejected iteration, redundant checkpoint, raw candidate, unused derivative, or bulk evidence preserved in the restricted authenticated-download-verified Drive cold archive. Keep originals untouched and excluded pending separate cleanup approval.",
-      "fileCount": 291,
-      "bytes": 536212240,
+      "fileCount": 290,
+      "bytes": 533477716,
       "files": [
         {
           "path": "assets/3d/jack/exports/jack-baby.glb",
@@ -924,11 +974,6 @@
           "path": "assets/3d/jack/v2/exports/preview/jack-adult-v2.2-all-clips.glb",
           "bytes": 2735536,
           "sha256": "178e8fc60d97c8168d9ba8d46091e4609fad0b7656679544f3658c4ed5a2e48a"
-        },
-        {
-          "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2.2-all-clips.glb",
-          "bytes": 2734524,
-          "sha256": "4cfcd4c4a56e4699e9c333d2fba380c703aadda2fcfab867af88907e543add15"
         },
         {
           "path": "assets/3d/jack/v2/exports/preview/jack-teen-v2-all-clips.glb",
@@ -2287,6 +2332,35 @@
       ]
     },
     {
+      "id": "jack-v2.3-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Exact V2.3 editable/intermediate source files are checksum-indexed but do not yet have a separately verified preservation destination. Keep them untouched and excluded; the current runtime GLB is routed separately to normal Git.",
+      "fileCount": 4,
+      "bytes": 20192563,
+      "files": [
+        {
+          "path": "assets/3d/jack/v2/exports/jack-animations-v2.3.glb",
+          "bytes": 927820,
+          "sha256": "fff72e930998ab1bbab104979bfa6164942c2ba20315108d1b4e0b18f34ef024"
+        },
+        {
+          "path": "assets/3d/jack/v2/exports/jack-baby-v2.3.glb",
+          "bytes": 2093332,
+          "sha256": "423a86ac46994b0301ecf369b641e3182631cd1738a0c5199febd8ba38c1936c"
+        },
+        {
+          "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-d-complete-canine.blend",
+          "bytes": 8584658,
+          "sha256": "f457944f4f496e06981c2edeb54bae346a00e85445b4d8f3a9b293ca69bdb7a0"
+        },
+        {
+          "path": "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-d-complete-canine.blend1",
+          "bytes": 8586753,
+          "sha256": "b02e4cda2cab790f2919041b58aefccd5f6643cf6a517995851a239921f3d48a"
+        }
+      ]
+    },
+    {
       "id": "postbaseline-v3-reproducibility-normal-git",
       "tier": "normal-git",
       "disposition": "Propose the bounded Jack V3 research README, provenance ledger, and project-authored reproducibility scripts for ordinary Git. This is not staging, preservation, runtime promotion, or subjective visual acceptance.",
@@ -2814,6 +2888,70 @@
       ]
     },
     {
+      "id": "normal-git-evidence-jack-animation-completion",
+      "tier": "normal-git",
+      "disposition": "Bounded technical and representative evidence for the provisional V2.3 awake-care animation candidate. Retention proves the source/runtime contract and rejected-cycle containment; it does not imply subjective animation acceptance or locking.",
+      "fileCount": 11,
+      "bytes": 4768231,
+      "files": [
+        {
+          "path": "evidence/3d-jack/v2/baby-v2.3-complete-canine-export.json",
+          "bytes": 2295,
+          "sha256": "80bcfd2d06528cf434f742ba487262991fce1230fd77cbbf1a8fbc6c9d6f46cc"
+        },
+        {
+          "path": "evidence/3d-jack/v2/baby-v2.3-complete-canine-retarget.json",
+          "bytes": 5394,
+          "sha256": "13fba52b04825f2cec97371c94a78137b26810b1c500f83d34bef7b3a8d28adb"
+        },
+        {
+          "path": "evidence/3d-jack/v2/baby-v2.3-glb-validation.json",
+          "bytes": 1424,
+          "sha256": "c90014f22f5a1a8f27263f6b4c5a5dd5ba1dcf21a50e2f340318d85653a0ab42"
+        },
+        {
+          "path": "evidence/3d-jack/v2/baby-v2.3-runtime-playback.json",
+          "bytes": 6020,
+          "sha256": "acffc6d7b7036d3733680c224915b6ed91dc485622ee6783ebfda1cea087fbc5"
+        },
+        {
+          "path": "evidence/3d-jack/v2/jack-v2.3-complete-canine-motion-reel.mp4",
+          "bytes": 1081770,
+          "sha256": "0b44d1c300d94d3379a14fad9088e6b557629d86c0412b893395dec67066c11d"
+        },
+        {
+          "path": "evidence/3d-jack/v2/jack-v2.3-complete-canine-risk-pose-board.png",
+          "bytes": 3446815,
+          "sha256": "1192f2d6d523a3caecb7f83ba47212c82b8428a14c5d2bc8feba79c02cb6ddda"
+        },
+        {
+          "path": "evidence/3d-jack/v2/quaternius-canine-motion-samples.json",
+          "bytes": 216918,
+          "sha256": "748122eddb214f2beca97980cf31566f435b4e6d02179cbc70aa783257a434e6"
+        },
+        {
+          "path": "evidence/3d-jack/v2/training_paw-held-contacts.json",
+          "bytes": 1947,
+          "sha256": "9ce24a7693cc5c431b2e9d7a1507ee1d0e79e71b0f934e4497acfc818cf803f8"
+        },
+        {
+          "path": "evidence/3d-jack/v2/training_sit-held-contacts.json",
+          "bytes": 1890,
+          "sha256": "9a4cdaca465a5e53d0f3305bda8057b2f35bd5ddf821740d19cb6f51f8e04975"
+        },
+        {
+          "path": "evidence/3d-jack/v2/training_up-held-contacts-frame25.json",
+          "bytes": 1738,
+          "sha256": "102d6bae3f9307dde29c87cc31da2b83c79ae87582f3320d6c94b06fb56ea464"
+        },
+        {
+          "path": "evidence/3d-jack/v2/training_up-held-contacts.json",
+          "bytes": 2020,
+          "sha256": "d0c6a30efa67d57c4cf8058539fa6b8512d5a3cc46793bbf09b159555a1aeafe"
+        }
+      ]
+    },
+    {
       "id": "normal-git-evidence-contract",
       "tier": "normal-git",
       "disposition": "Representative deterministic 3D contract evidence retained in Git.",
@@ -2844,6 +2982,55 @@
           "path": "evidence/3d-jack/v2/v2-package-validation.json",
           "bytes": 296,
           "sha256": "8ba16696c1deb8344693e545d820ccc034bf9bb70a77108f56692d9ab20ff38c"
+        }
+      ]
+    },
+    {
+      "id": "jack-v2.3-evidence-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Raw V2.3 diagnostic boards are checksum-indexed but not approved representative evidence and do not yet have a separately verified preservation destination. Keep them untouched and excluded.",
+      "fileCount": 8,
+      "bytes": 18848824,
+      "files": [
+        {
+          "path": "evidence/3d-jack/v2/feed-adjust-x.png",
+          "bytes": 1733842,
+          "sha256": "560de7ed17fcbcbf20435350ba9e2547e78e903bd28cf4027e89a6422aea179e"
+        },
+        {
+          "path": "evidence/3d-jack/v2/jack-v2.3-complete-canine-locomotion-pose-board.png",
+          "bytes": 6767532,
+          "sha256": "917ce0494288159d2e82b159b3eaf82e73ab05589962b794ba3d22e2147cfe26"
+        },
+        {
+          "path": "evidence/3d-jack/v2/paw-adjust-y.png",
+          "bytes": 1723939,
+          "sha256": "69937d3ee04aa29d6adc3f64a91ae9fa42b67de97ade2c481cc2c7e5a0106893"
+        },
+        {
+          "path": "evidence/3d-jack/v2/paw-adjust-z.png",
+          "bytes": 1739762,
+          "sha256": "26e3dc9b16e3a059956d4c3c7edc340be4d07d4428cd6199210359d4502eff84"
+        },
+        {
+          "path": "evidence/3d-jack/v2/sit-adjust-y.png",
+          "bytes": 1704144,
+          "sha256": "3672f8f9cc32953309a0d74d30e8b51111b1d5175664cacb65ba08c42bd993a2"
+        },
+        {
+          "path": "evidence/3d-jack/v2/sit-adjust-z.png",
+          "bytes": 1745386,
+          "sha256": "ceefda60fd35a5db64501a92b1a5567f92cf5f5427006cfcbed9219b6f56613e"
+        },
+        {
+          "path": "evidence/3d-jack/v2/sleep-adjust-x.png",
+          "bytes": 1691923,
+          "sha256": "dc19e803c2c4d940764b7b7e5f0501ff0abf464861c1469ca205b19cb6f193cb"
+        },
+        {
+          "path": "evidence/3d-jack/v2/up-adjust-x.png",
+          "bytes": 1742296,
+          "sha256": "2773a8c9f2905268285eb5c873d01794528ee4b71bca8c9b928fe4d8e528ec22"
         }
       ]
     },
@@ -3149,6 +3336,55 @@
           "path": "evidence/baby-day1/sleep-dialog-keyboard-390x844.jpg",
           "bytes": 35346,
           "sha256": "39c78e1d7481240c45b17ce51edbb285ee9dd09d652e15edb52321452307a0da"
+        }
+      ]
+    },
+    {
+      "id": "normal-git-evidence-classic-controls",
+      "tier": "normal-git",
+      "disposition": "Representative LCD/Color Pixel × Direct/Classic phone/desktop parity evidence retained in Git. Retention records objective behavior and does not imply subjective presentation acceptance or locking.",
+      "fileCount": 8,
+      "bytes": 598369,
+      "files": [
+        {
+          "path": "evidence/classic-controls/color-pixel-classic-1440x900.jpg",
+          "bytes": 93972,
+          "sha256": "65e558d8152ab8ce0afb023b7555cb7a483ed234199b94372c0d6ba0c5f46392"
+        },
+        {
+          "path": "evidence/classic-controls/color-pixel-classic-390x844.jpg",
+          "bytes": 49661,
+          "sha256": "72bd035c0ad0580ee0af1cbf8aaa172c9c0287dcd8b7bd0f906463a47e44b89f"
+        },
+        {
+          "path": "evidence/classic-controls/color-pixel-direct-1440x900.jpg",
+          "bytes": 89936,
+          "sha256": "e64651ef412814d573c4aaf3094e37d7de0a36fce19290d7eddb723c38ee7550"
+        },
+        {
+          "path": "evidence/classic-controls/color-pixel-direct-390x844.jpg",
+          "bytes": 50145,
+          "sha256": "88616bea94117f8921a0f4117a635923eb02b3780f8fe05ab035c3caa3b1cd53"
+        },
+        {
+          "path": "evidence/classic-controls/lcd-classic-1440x900.jpg",
+          "bytes": 106282,
+          "sha256": "90ec9bcacee745443d4b58971b5f4d60a5748ac27a9788f077250af90bcf12cb"
+        },
+        {
+          "path": "evidence/classic-controls/lcd-classic-390x844.jpg",
+          "bytes": 53817,
+          "sha256": "52f130c52887ae2f2cef4c40cf96c0ce448bb99f968101f8d735a80c5005472f"
+        },
+        {
+          "path": "evidence/classic-controls/lcd-direct-1440x900.jpg",
+          "bytes": 100964,
+          "sha256": "3222f0751f892e10d8fa3ec198e22aee6e7b9c20c76dad67b6f6b0e3e8d16c42"
+        },
+        {
+          "path": "evidence/classic-controls/lcd-direct-390x844.jpg",
+          "bytes": 53592,
+          "sha256": "5e20cd965d37007bc376eddfbcabad0c9e2c86d355cfa8b6ee61d0b81eb66629"
         }
       ]
     },

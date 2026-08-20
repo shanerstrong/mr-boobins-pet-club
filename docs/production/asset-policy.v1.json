@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "policyId": "mr-boobins-asset-control-v1",
-  "status": "preservation-verified-v7-local-commit-with-authorized-quiet-care-monitor-successor",
+  "status": "preservation-verified-lcd-local-commit-with-authorized-classic-controls-and-v2.3-animation-successor",
   "repositorySourceOfTruth": true,
   "runtimeLfsPolicy": "Runtime assets consumed by GitHub Pages remain normal Git unless the deployment workflow explicitly fetches and verifies LFS objects.",
   "baselineTextNormalization": {
@@ -32,6 +32,9 @@
     "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
     "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json",
+    "docs/production/CLASSIC_THREE_BUTTON_CONTROLS_CONTEXT_REFRESH_2026-08-19.json",
+    "docs/production/JACK_ANIMATION_CLEANUP_CONTEXT_REFRESH_2026-08-19.json",
+    "docs/production/JACK_ANIMATION_COMPLETION_CONTEXT_REFRESH_2026-08-19.json",
     "assets/3d/jack/asset-manifest.json",
     "assets/3d/jack/SOURCE_LEDGER.md",
     "assets/3d/jack/v2/asset-manifest-v2.json",
@@ -59,6 +62,9 @@
     "docs/production/UP_CONTACT_SHADOW_CONTEXT_REFRESH_2026-08-17.json",
     "docs/production/HEALTH_ATTENTION_STATUS_MEDICINE_CONTEXT_REFRESH_2026-08-18.json",
     "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json",
+    "docs/production/CLASSIC_THREE_BUTTON_CONTROLS_CONTEXT_REFRESH_2026-08-19.json",
+    "docs/production/JACK_ANIMATION_CLEANUP_CONTEXT_REFRESH_2026-08-19.json",
+    "docs/production/JACK_ANIMATION_COMPLETION_CONTEXT_REFRESH_2026-08-19.json",
     "assets/3d/jack/asset-manifest.json",
     "assets/3d/jack/v2/asset-manifest-v2.json",
     "assets/3d/jack/animations/clip-manifest.json",
@@ -136,7 +142,9 @@
     { "path": "assets/audio/v1/ui/ui-confirm.master.v1.wav", "maxBytes": 27790, "sha256": "0a87f45bccb7605483436203e8bafb13c9b1fdbcd7f81eb2984e2712c7b56b56", "reviewStatus": "awaiting-Mark-audible-review" },
     { "path": "assets/audio/v1/ui/ui-open.master.v1.wav", "maxBytes": 22030, "sha256": "8d8b1d6d8fdb5da858f9f9b519c5f76235d81cbe2ac9b486ae4ebb80b40fbe5f", "reviewStatus": "awaiting-Mark-audible-review" },
     { "path": "assets/audio/v1/ui/ui-tap.master.v1.wav", "maxBytes": 7246, "sha256": "c477cdf761ac3389e57fef1e053fda50526516dcbc67279884f99856bb13be6e", "reviewStatus": "awaiting-Mark-audible-review" },
-    { "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb", "maxBytes": 4194304 }
+    { "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb", "maxBytes": 4194304 },
+    { "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2.2-all-clips.glb", "maxBytes": 2734524, "sha256": "4cfcd4c4a56e4699e9c333d2fba380c703aadda2fcfab867af88907e543add15", "reviewStatus": "superseded-provisional-rollback-candidate" },
+    { "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2.3-all-clips.glb", "maxBytes": 3010908, "sha256": "4c20e089749105b60eca52630c5af3d7f5d6706e17af5bdc5650b13b2db5bdba", "reviewStatus": "provisional-awaiting-Mark-animation-review" }
   ],
   "forbiddenRuntimePathFragments": [
     "/references/",
@@ -572,6 +580,114 @@
       "currentClassificationSha256": "80a017770c774dcab3c137831bf3da6ae09c205d397e73debc99342d67c0d8e3"
     }
   ],
+  "classicThreeButtonControlContextRefreshes": [
+    {
+      "record": "docs/production/CLASSIC_THREE_BUTTON_CONTROLS_CONTEXT_REFRESH_2026-08-19.json",
+      "recordBytes": 15311,
+      "recordSha256": "a5d8d121dc06abf12aa4ee5557895726c67b654d0a003ff3f0732529d6ce20df",
+      "kind": "checksum-bound-managed-context-classic-three-button-controls-refresh",
+      "milestone": "Build — Classic Three-Button Controls",
+      "predecessor": "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json",
+      "predecessorRecordSha256": "d32813e7d7652e096ef55f300459f70f236c705f3c7ab506caed161c4a44dddf",
+      "generalMutableContextException": false,
+      "simulationPersistenceLifecycleOrBalanceChangeAuthorized": false,
+      "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+      "classificationChangeAuthorized": true,
+      "classificationChangeScope": "Exactly one eight-file, 598369-byte normal-Git representative-evidence group plus generatedAt; every prior group and source-inventory anchor remains unchanged.",
+      "dependencyChangeAuthorized": false,
+      "externalOrGitActionAuthorized": false,
+      "classicControlsAuthorized": true,
+      "presentationBehaviorChangeAuthorized": false,
+      "subjectiveAcceptanceOrLockAuthorized": false,
+      "transitionCount": 6,
+      "additionCount": 2,
+      "committedQuietCareStateSuccessorCount": 11,
+      "representativeEvidence": {
+        "groupId": "normal-git-evidence-classic-controls",
+        "fileCount": 8,
+        "bytes": 598369,
+        "paths": [
+          "evidence/classic-controls/color-pixel-classic-1440x900.jpg",
+          "evidence/classic-controls/color-pixel-classic-390x844.jpg",
+          "evidence/classic-controls/color-pixel-direct-1440x900.jpg",
+          "evidence/classic-controls/color-pixel-direct-390x844.jpg",
+          "evidence/classic-controls/lcd-classic-1440x900.jpg",
+          "evidence/classic-controls/lcd-classic-390x844.jpg",
+          "evidence/classic-controls/lcd-direct-1440x900.jpg",
+          "evidence/classic-controls/lcd-direct-390x844.jpg"
+        ]
+      },
+      "priorClassificationBytes": 140025,
+      "priorClassificationSha256": "80a017770c774dcab3c137831bf3da6ae09c205d397e73debc99342d67c0d8e3",
+      "currentClassificationBytes": 142084,
+      "currentClassificationSha256": "dc0c458f1e682e699352f1dfc51927784b1c1dec80d0977ef4392049e140c7ed"
+    }
+  ],
+  "jackAnimationCleanupContextRefreshes": [
+    {
+      "record": "docs/production/JACK_ANIMATION_CLEANUP_CONTEXT_REFRESH_2026-08-19.json",
+      "recordBytes": 10480,
+      "recordSha256": "519e467fa8b4c071f1d8eb9ad5a2075881f90ca9ee3ae7fc554e75b51feb374c",
+      "kind": "checksum-bound-managed-context-jack-animation-cleanup-refresh",
+      "milestone": "Build — Jack Animation Cleanup",
+      "predecessor": "docs/production/CLASSIC_THREE_BUTTON_CONTROLS_CONTEXT_REFRESH_2026-08-19.json",
+      "predecessorRecordSha256": "a5d8d121dc06abf12aa4ee5557895726c67b654d0a003ff3f0732529d6ce20df",
+      "generalMutableContextException": false,
+      "simulationPersistenceLifecycleOrBalanceChangeAuthorized": false,
+      "dependencyChangeAuthorized": false,
+      "externalOrGitActionAuthorized": false,
+      "subjectiveAcceptanceOrLockAuthorized": false,
+      "runtimeAssetByteChangeAuthorized": false,
+      "runtimeAssetPathAdditionAuthorized": true,
+      "assetTierChangeAuthorized": true,
+      "assetTierChangeScope": "Exactly one existing 2734524-byte Baby V2.2 preview GLB moves from proposed-cold-archive to normal-git-assets because it is now imported by the GitHub Pages runtime; its bytes and SHA-256 remain unchanged.",
+      "classificationChangeAuthorized": true,
+      "classificationChangeScope": "Only generatedAt plus the exact Baby V2.2 GLB entry moving from proposed-cold-archive to normal-git-assets; every other file entry, group, source-inventory anchor, byte, SHA-256, tier, and disposition remains unchanged.",
+      "transitionCount": 9,
+      "runtimeAssetTransition": {
+        "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2.2-all-clips.glb",
+        "bytes": 2734524,
+        "sha256": "4cfcd4c4a56e4699e9c333d2fba380c703aadda2fcfab867af88907e543add15",
+        "gitNormalizedBlobOid": "9cbc337142e70cca3571cceca2c5a494cc9ce10f",
+        "priorGroupId": "proposed-cold-archive",
+        "currentGroupId": "normal-git-assets",
+        "reviewStatus": "provisional-awaiting-Mark-animation-review"
+      },
+      "priorClassificationBytes": 142084,
+      "priorClassificationSha256": "dc0c458f1e682e699352f1dfc51927784b1c1dec80d0977ef4392049e140c7ed",
+      "currentClassificationBytes": 142084,
+      "currentClassificationSha256": "e02a72ea14d61c0f8fa34ac603e34af50388728858b6f4a3d42bc2f75bc743d5"
+    }
+  ],
+  "jackAnimationCompletionContextRefreshes": [
+    {
+      "record": "docs/production/JACK_ANIMATION_COMPLETION_CONTEXT_REFRESH_2026-08-19.json",
+      "recordBytes": 19997,
+      "recordSha256": "9d90525b5e0f2d5b4c509e070a6b14749c80ccf69684def5f239cc0461a41637",
+      "kind": "checksum-bound-managed-context-jack-animation-completion-refresh",
+      "milestone": "Build — Jack Animation Completion",
+      "predecessor": "docs/production/JACK_ANIMATION_CLEANUP_CONTEXT_REFRESH_2026-08-19.json",
+      "predecessorRecordSha256": "519e467fa8b4c071f1d8eb9ad5a2075881f90ca9ee3ae7fc554e75b51feb374c",
+      "generalMutableContextException": false,
+      "simulationPersistenceLifecycleOrBalanceChangeAuthorized": false,
+      "dependencyChangeAuthorized": false,
+      "externalOrGitActionAuthorized": false,
+      "subjectiveAcceptanceOrLockAuthorized": false,
+      "transitionCount": 13,
+      "assetAdditionCount": 13,
+      "evidenceAdditionCount": 19,
+      "runtimeAsset": {
+        "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2.3-all-clips.glb",
+        "bytes": 3010908,
+        "sha256": "4c20e089749105b60eca52630c5af3d7f5d6706e17af5bdc5650b13b2db5bdba",
+        "reviewStatus": "provisional-awaiting-Mark-animation-review"
+      },
+      "priorClassificationBytes": 142084,
+      "priorClassificationSha256": "e02a72ea14d61c0f8fa34ac603e34af50388728858b6f4a3d42bc2f75bc743d5",
+      "currentClassificationBytes": 150031,
+      "currentClassificationSha256": "01c9b57b704f4634b1f003942561e05ea30ed0b89e35e7047c8ac0b1522ce929"
+    }
+  ],
   "postBaselineIntakes": [
     {
       "record": "docs/production/POST_BASELINE_ASSET_INTAKE_2026-08-16.json",
@@ -808,7 +924,22 @@
         "assets/**/*.txt",
         "assets/**/*.py",
         "assets/**/*.ps1",
-        "assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb"
+        "assets/3d/jack/v2/tools/inspect_glb_pose.mjs",
+        "assets/3d/jack/v2/tools/repair_glb_root_motion.mjs",
+        "assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb",
+        "assets/3d/jack/v2/exports/preview/jack-baby-v2.2-all-clips.glb",
+        "assets/3d/jack/v2/exports/preview/jack-baby-v2.3-all-clips.glb"
+      ]
+    },
+    {
+      "id": "jack-v2.3-source-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Exact V2.3 editable/intermediate source files are checksum-indexed but do not yet have a separately verified preservation destination. Keep them untouched and excluded; the current runtime GLB is routed separately to normal Git.",
+      "pathGlobs": [
+        "assets/3d/jack/v2/exports/jack-animations-v2.3.glb",
+        "assets/3d/jack/v2/exports/jack-baby-v2.3.glb",
+        "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-d-complete-canine.blend",
+        "assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-d-complete-canine.blend1"
       ]
     },
     {
@@ -914,6 +1045,54 @@
       ]
     },
     {
+      "id": "normal-git-evidence-classic-controls",
+      "tier": "normal-git",
+      "disposition": "Representative LCD/Color Pixel × Direct/Classic phone/desktop parity evidence retained in Git. Retention records objective behavior and does not imply subjective presentation acceptance or locking.",
+      "pathGlobs": [
+        "evidence/classic-controls/color-pixel-classic-1440x900.jpg",
+        "evidence/classic-controls/color-pixel-classic-390x844.jpg",
+        "evidence/classic-controls/color-pixel-direct-1440x900.jpg",
+        "evidence/classic-controls/color-pixel-direct-390x844.jpg",
+        "evidence/classic-controls/lcd-classic-1440x900.jpg",
+        "evidence/classic-controls/lcd-classic-390x844.jpg",
+        "evidence/classic-controls/lcd-direct-1440x900.jpg",
+        "evidence/classic-controls/lcd-direct-390x844.jpg"
+      ]
+    },
+    {
+      "id": "normal-git-evidence-jack-animation-completion",
+      "tier": "normal-git",
+      "disposition": "Bounded technical and representative evidence for the provisional V2.3 awake-care animation candidate. Retention proves the source/runtime contract and rejected-cycle containment; it does not imply subjective animation acceptance or locking.",
+      "pathGlobs": [
+        "evidence/3d-jack/v2/baby-v2.3-complete-canine-export.json",
+        "evidence/3d-jack/v2/baby-v2.3-complete-canine-retarget.json",
+        "evidence/3d-jack/v2/baby-v2.3-glb-validation.json",
+        "evidence/3d-jack/v2/baby-v2.3-runtime-playback.json",
+        "evidence/3d-jack/v2/jack-v2.3-complete-canine-motion-reel.mp4",
+        "evidence/3d-jack/v2/jack-v2.3-complete-canine-risk-pose-board.png",
+        "evidence/3d-jack/v2/quaternius-canine-motion-samples.json",
+        "evidence/3d-jack/v2/training_paw-held-contacts.json",
+        "evidence/3d-jack/v2/training_sit-held-contacts.json",
+        "evidence/3d-jack/v2/training_up-held-contacts-frame25.json",
+        "evidence/3d-jack/v2/training_up-held-contacts.json"
+      ]
+    },
+    {
+      "id": "jack-v2.3-evidence-preservation-pending",
+      "tier": "cold-archive-pending",
+      "disposition": "Raw V2.3 diagnostic boards are checksum-indexed but not approved representative evidence and do not yet have a separately verified preservation destination. Keep them untouched and excluded.",
+      "pathGlobs": [
+        "evidence/3d-jack/v2/feed-adjust-x.png",
+        "evidence/3d-jack/v2/jack-v2.3-complete-canine-locomotion-pose-board.png",
+        "evidence/3d-jack/v2/paw-adjust-y.png",
+        "evidence/3d-jack/v2/paw-adjust-z.png",
+        "evidence/3d-jack/v2/sit-adjust-y.png",
+        "evidence/3d-jack/v2/sit-adjust-z.png",
+        "evidence/3d-jack/v2/sleep-adjust-x.png",
+        "evidence/3d-jack/v2/up-adjust-x.png"
+      ]
+    },
+    {
       "id": "proposed-cold-archive",
       "tier": "cold-archive-verified",
       "disposition": "Rejected iteration, redundant checkpoint, raw candidate, unused derivative, or bulk evidence preserved in the restricted authenticated-download-verified Drive cold archive. Keep originals untouched and excluded pending separate cleanup approval.",
@@ -924,6 +1103,23 @@
     }
   ],
   "representativeEvidenceSets": [
+    {
+      "id": "jack-animation-completion-v2.3",
+      "maxFiles": 11,
+      "paths": [
+        "evidence/3d-jack/v2/baby-v2.3-complete-canine-export.json",
+        "evidence/3d-jack/v2/baby-v2.3-complete-canine-retarget.json",
+        "evidence/3d-jack/v2/baby-v2.3-glb-validation.json",
+        "evidence/3d-jack/v2/baby-v2.3-runtime-playback.json",
+        "evidence/3d-jack/v2/jack-v2.3-complete-canine-motion-reel.mp4",
+        "evidence/3d-jack/v2/jack-v2.3-complete-canine-risk-pose-board.png",
+        "evidence/3d-jack/v2/quaternius-canine-motion-samples.json",
+        "evidence/3d-jack/v2/training_paw-held-contacts.json",
+        "evidence/3d-jack/v2/training_sit-held-contacts.json",
+        "evidence/3d-jack/v2/training_up-held-contacts-frame25.json",
+        "evidence/3d-jack/v2/training_up-held-contacts.json"
+      ]
+    },
     {
       "id": "v06",
       "maxFiles": 6,
@@ -1023,6 +1219,20 @@
         "evidence/lcd-presentation/color-pixel-direct-390x844.jpg",
         "evidence/lcd-presentation/lcd-status-medicine-1440x900.jpg",
         "evidence/lcd-presentation/lcd-status-medicine-390x844.jpg"
+      ]
+    },
+    {
+      "id": "classic-controls-parity-matrix",
+      "maxFiles": 8,
+      "paths": [
+        "evidence/classic-controls/color-pixel-classic-1440x900.jpg",
+        "evidence/classic-controls/color-pixel-classic-390x844.jpg",
+        "evidence/classic-controls/color-pixel-direct-1440x900.jpg",
+        "evidence/classic-controls/color-pixel-direct-390x844.jpg",
+        "evidence/classic-controls/lcd-classic-1440x900.jpg",
+        "evidence/classic-controls/lcd-classic-390x844.jpg",
+        "evidence/classic-controls/lcd-direct-1440x900.jpg",
+        "evidence/classic-controls/lcd-direct-390x844.jpg"
       ]
     }
   ]

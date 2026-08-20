@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "status": "exported-see-separate-roundtrip-validation",
+  "source": "jack-baby-quadruped-v2-repair-d-complete-canine.blend",
+  "blenderVersion": "4.5.12 LTS",
+  "triangleCount": 9738,
+  "vertexCount": 8224,
+  "jointCount": 27,
+  "materialCount": 1,
+  "images": [
+    {
+      "name": "jack_baby_basecolor_v2",
+      "width": 1024,
+      "height": 1024
+    }
+  ],
+  "decodedTextureBytes": 4194304,
+  "clipCount": 28,
+  "clips": [
+    "boop_comfortable",
+    "boop_need_energy",
+    "boop_need_happiness",
+    "boop_need_hunger",
+    "boop_need_hygiene",
+    "boop_rejected",
+    "celebration_goofy_shimmy",
+    "celebration_happy_hop",
+    "celebration_spin_wag",
+    "clean_reaction",
+    "death_rest",
+    "dirty",
+    "feed",
+    "idle",
+    "play",
+    "run",
+    "sleep",
+    "tail_wag",
+    "tired",
+    "training_attention",
+    "training_paw",
+    "training_return_idle",
+    "training_sit",
+    "training_treat_eat",
+    "training_treat_receive",
+    "training_up",
+    "wake",
+    "walk"
+  ],
+  "rootIdentity": true,
+  "rootMotionGameplay": false,
+  "simulationMutation": false,
+  "directHumanoidAnimation": false,
+  "outputs": [
+    {
+      "role": "babyMobile",
+      "file": "jack-baby-v2.3.glb",
+      "bytes": 2093332,
+      "sha256": "423a86ac46994b0301ecf369b641e3182631cd1738a0c5199febd8ba38c1936c"
+    },
+    {
+      "role": "sharedAnimations",
+      "file": "jack-animations-v2.3.glb",
+      "bytes": 927820,
+      "sha256": "fff72e930998ab1bbab104979bfa6164942c2ba20315108d1b4e0b18f34ef024"
+    },
+    {
+      "role": "allClipsPreview",
+      "file": "jack-baby-v2.3-all-clips.glb",
+      "bytes": 3010908,
+      "sha256": "4c20e089749105b60eca52630c5af3d7f5d6706e17af5bdc5650b13b2db5bdba"
+    }
+  ],
+  "postExportRootTravelRepair": {
+    "tool": "repair_glb_root_motion.mjs",
+    "node": "Hips",
+    "clips": ["sleep", "wake", "death_rest", "training_sit", "training_paw", "training_up"],
+    "policy": "Freeze translation to each clip's first sample while preserving key times and rotations.",
+    "runtimeSleepDisposition": "The repaired donor sleep clip remains source evidence only; live sleep uses the stable bed illustration after visual QA rejected the donor collapse cycle."
+  }
+}

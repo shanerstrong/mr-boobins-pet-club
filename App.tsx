@@ -142,6 +142,28 @@ import {
   healthBandLabels,
   resolveHealthPlayerIntent,
 } from "./src/pet-care-policy";
+import {
+  CLASSIC_CONTROL_MIN_TARGET_PX,
+  CONTROL_MODE_LABELS,
+  CONTROL_MODES,
+  DEFAULT_CONTROL_MODE,
+  createClassicRoomMenu,
+  createClassicSleepMenu,
+  createClassicStatusMenu,
+  createClassicTrainingMenu,
+  cycleClassicSelection,
+  dispatchClassicActivation,
+  dispatchClassicRoomAction,
+  dispatchClassicSleepAction,
+  dispatchClassicStatusAction,
+  dispatchClassicTrainingAction,
+  resolveClassicKeyCommand,
+  resolveClassicSelection,
+  resolveControlModeSwitch,
+  type ClassicActionId,
+  type ClassicMenuItem,
+  type ControlMode,
+} from "./src/classic-controls";
 
 type Mode = "loading" | "available" | "invalid" | "unavailable" | "session";
 type Screen = AppScreen;
@@ -264,6 +286,9 @@ function PetClub() {
     useState<PetPresentationActivity | null>(null);
   const [presentationMode, setPresentationMode] = useState<PresentationMode>(
     DEFAULT_PRESENTATION_MODE,
+  );
+  const [controlMode, setControlMode] = useState<ControlMode>(
+    DEFAULT_CONTROL_MODE,
   );
   const [messageOpacity] = useState(() => new Animated.Value(1));
   const messageTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1936,6 +1961,14 @@ function PetClub() {
     );
     setPresentationMode(resolution.mode);
   };
+  const changeControlMode = (nextMode: ControlMode) => {
+    const resolution = resolveControlModeSwitch(
+      pet,
+      petPresentationModel,
+      nextMode,
+    );
+    setControlMode(resolution.mode);
+  };
 
   let content;
   if (screen === "title") {
@@ -1987,6 +2020,7 @@ function PetClub() {
         bob={bob}
         careAvailable={careAvailable}
         careLocked={careLocked}
+        classicControllerActive={!modalOpen}
         clock={clock}
         compactPhone={width < 350}
         desktop={desktop}
@@ -1998,6 +2032,8 @@ function PetClub() {
         boopStatus={boopAvailability.reason}
         onBoop={boop}
         onCare={care}
+        controlMode={controlMode}
+        onControlModeChange={changeControlMode}
         onOpenSettings={() => {
           if (!terminalPolicy.settingsDisabled && !careLocked && !trainingOpen) {
             playSound("uiOpen");
@@ -2076,6 +2112,7 @@ function PetClub() {
         )}
       </ScrollView>
       <SleepDialog
+        classic={controlMode === "classic"}
         reduced={reduced}
         visible={sleepMenuOpen}
         onCancel={closeSleepMenu}
@@ -2083,6 +2120,7 @@ function PetClub() {
       />
       <StatusDialog
         bandLabel={healthBandLabels[healthBand]}
+        classic={controlMode === "classic"}
         medicineAvailable={medicineAvailability.available}
         medicineMessage={medicineAvailability.message}
         onCancel={closeStatus}
@@ -2093,6 +2131,7 @@ function PetClub() {
         visible={statusOpen}
       />
       <TrainingDialog
+        classic={controlMode === "classic"}
         onCancel={closeTraining}
         onChooseCommand={chooseTrainingCommand}
         onDone={closeTraining}
@@ -2291,14 +2330,209 @@ function SettingsScreen({
   );
 }
 
+function ControlModeSwitcher({
+  mode,
+  onChange,
+}: {
+  mode: ControlMode;
+  onChange: (mode: ControlMode) => void;
+}) {
+  return (
+    <View
+      accessibilityLabel="Control mode"
+      accessibilityRole="radiogroup"
+      style={s.controlModeSwitcher}
+    >
+      {CONTROL_MODES.map((option) => (
+        <ControlModeButton
+          key={option}
+          label={CONTROL_MODE_LABELS[option]}
+          mode={option}
+          selected={mode === option}
+          onPress={() => onChange(option)}
+        />
+      ))}
+    </View>
+  );
+}
+
+function ControlModeButton({
+  label,
+  mode,
+  selected,
+  onPress,
+}: {
+  label: string;
+  mode: ControlMode;
+  selected: boolean;
+  onPress: () => void;
+}) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <Pressable
+      accessibilityLabel={`${label} controls`}
+      accessibilityRole="radio"
+      accessibilityState={{ selected }}
+      {...(Platform.OS === "web" ? ({ "aria-checked": selected } as const) : {})}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
+      onPress={onPress}
+      style={({ pressed }) => [
+        s.controlModeButton,
+        selected && s.controlModeButtonSelected,
+        focused && s.focusRing,
+        pressed && s.utilityPressed,
+      ]}
+      testID={`control-mode-${mode}`}
+    >
+      <Text style={[s.controlModeLabel, selected && s.controlModeLabelSelected]}>
+        {label}
+      </Text>
+    </Pressable>
+  );
+}
+
+function ClassicController({
+  active,
+  contextLabel,
+  items,
+  onActivate,
+}: {
+  active: boolean;
+  contextLabel: string;
+  items: readonly ClassicMenuItem[];
+  onActivate: (action: ClassicActionId) => void;
+}) {
+  const [selectedId, setSelectedId] = useState<ClassicActionId | null>(
+    items[0]?.id ?? null,
+  );
+  const [announcement, setAnnouncement] = useState("");
+  const [controllerFocused, setControllerFocused] = useState(false);
+  const selected = resolveClassicSelection(items, selectedId);
+
+  const move = useCallback(
+    (direction: -1 | 1) => {
+      const next = cycleClassicSelection(items, selectedId, direction);
+      if (!next) return;
+      setSelectedId(next.id);
+      setAnnouncement(
+        `${next.label}. ${next.available ? "Available." : next.reason}`,
+      );
+    },
+    [items, selectedId],
+  );
+
+  const activate = useCallback(() => {
+    const current = resolveClassicSelection(items, selectedId);
+    const resolution = dispatchClassicActivation(current, onActivate);
+    setAnnouncement(resolution.announcement);
+  }, [items, onActivate, selectedId]);
+
+  useEffect(() => {
+    if (!active || Platform.OS !== "web") return;
+    const listener = (event: KeyboardEvent) => {
+      const element = event.target instanceof HTMLElement ? event.target : null;
+      const command = resolveClassicKeyCommand({
+        active,
+        key: event.key,
+        target: element
+          ? {
+              tagName: element.tagName,
+              role: element.getAttribute("role"),
+              contentEditable: element.isContentEditable,
+            }
+          : null,
+      });
+      if (!command) return;
+      event.preventDefault();
+      if (command === "previous") move(-1);
+      else if (command === "next") move(1);
+      else activate();
+    };
+    document.addEventListener("keydown", listener);
+    return () => document.removeEventListener("keydown", listener);
+  }, [activate, active, move]);
+
+  if (!selected) return null;
+  const status = selected.available ? "Available" : selected.reason;
+
+  return (
+    <View
+      accessibilityLabel={`${contextLabel}. Classic three-button controller.`}
+      onBlur={() => setControllerFocused(false)}
+      onFocus={() => setControllerFocused(true)}
+      style={[s.classicController, controllerFocused && s.focusRing]}
+      tabIndex={0}
+      testID={`classic-controller-${contextLabel.toLowerCase().replaceAll(" ", "-")}`}
+    >
+      <Text style={s.classicEyebrow}>CLASSIC • {contextLabel.toUpperCase()}</Text>
+      <View
+        accessible
+        accessibilityLabel={`Selected action ${selected.label}. ${status}`}
+        accessibilityLiveRegion="polite"
+        accessibilityState={{ disabled: !selected.available, selected: true }}
+        style={[
+          s.classicSelection,
+          !selected.available && s.classicSelectionBlocked,
+        ]}
+      >
+        <Text style={s.classicSelectionLabel}>{selected.label.toUpperCase()}</Text>
+        <Text style={s.classicSelectionReason}>{status}</Text>
+      </View>
+      <Text accessibilityLiveRegion="polite" style={s.classicAnnouncement}>
+        {announcement}
+      </Text>
+      <View accessibilityLabel="Classic controller buttons" style={s.classicButtons}>
+        <ClassicControlButton label="◀" accessibilityLabel="Previous action" onPress={() => move(-1)} />
+        <ClassicControlButton label="SELECT" accessibilityLabel={`Select ${selected.label}`} onPress={activate} select />
+        <ClassicControlButton label="▶" accessibilityLabel="Next action" onPress={() => move(1)} />
+      </View>
+      <Text style={s.classicKeyboardHint}>← / → / ENTER • DISABLED ITEMS DO NOT SKIP</Text>
+    </View>
+  );
+}
+
+function ClassicControlButton({
+  accessibilityLabel,
+  label,
+  onPress,
+  select = false,
+}: {
+  accessibilityLabel: string;
+  label: string;
+  onPress: () => void;
+  select?: boolean;
+}) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <Pressable
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
+      onPress={onPress}
+      style={({ pressed }) => [
+        s.classicButton,
+        select && s.classicSelectButton,
+        focused && s.focusRing,
+        pressed && s.classicButtonPressed,
+      ]}
+    >
+      <Text style={s.classicButtonLabel}>{label}</Text>
+    </Pressable>
+  );
+}
+
 type RoomScreenProps = {
   bob: Animated.Value;
   boopAvailable: boolean;
   boopStatus: string;
   careAvailable: boolean;
   careLocked: boolean;
+  classicControllerActive: boolean;
   clock: ReturnType<typeof getVirtualClock>;
   compactPhone: boolean;
+  controlMode: ControlMode;
   desktop: boolean;
   feedProgress: Animated.Value;
   growthHint: string;
@@ -2306,6 +2540,7 @@ type RoomScreenProps = {
   messageOpacity?: Animated.Value;
   onBoop: () => void;
   onCare: (action: CareAction) => void;
+  onControlModeChange: (mode: ControlMode) => void;
   onOpenSettings: () => void;
   onPresentationModeChange: (mode: PresentationMode) => void;
   onStatus: () => void;
@@ -2326,6 +2561,39 @@ type RoomScreenProps = {
   trainingModeOpen: boolean;
 };
 
+function roomClassicItems({
+  boopAvailable,
+  boopStatus,
+  careAvailable,
+  careLocked,
+  pet,
+  sleeping,
+  trainingDisabled,
+}: RoomScreenProps): readonly ClassicMenuItem[] {
+  return createClassicRoomMenu({
+    boopAvailable,
+    boopReason: boopStatus,
+    careAvailable,
+    careLocked,
+    petIsDead: pet.isDead,
+    sleeping,
+    trainingDisabled,
+  });
+}
+
+function activateClassicRoomAction(
+  action: ClassicActionId,
+  { onBoop, onCare, onSleep, onStatus, onTrain }: RoomScreenProps,
+) {
+  dispatchClassicRoomAction(action, {
+    onStatus,
+    onCare,
+    onRest: onSleep,
+    onTrain,
+    onBoop,
+  });
+}
+
 function RoomScreen(props: RoomScreenProps) {
   const {
     bob,
@@ -2333,7 +2601,9 @@ function RoomScreen(props: RoomScreenProps) {
     boopStatus,
     careAvailable,
     careLocked,
+    classicControllerActive,
     clock,
+    controlMode,
     desktop,
     feedProgress,
     growthHint,
@@ -2341,6 +2611,7 @@ function RoomScreen(props: RoomScreenProps) {
     messageOpacity,
     onBoop,
     onCare,
+    onControlModeChange,
     onOpenSettings,
     onPresentationModeChange,
     onStatus,
@@ -2351,14 +2622,14 @@ function RoomScreen(props: RoomScreenProps) {
     presentationModel,
     pulse,
     sleeping,
-    wag,
-    zoom,
     trainingAnimation,
     trainingAnimationRevision,
-    trainingPoseHeld,
     trainingDisabled,
-    trainingTreatProgress,
     trainingModeOpen,
+    trainingPoseHeld,
+    trainingTreatProgress,
+    wag,
+    zoom,
   } = props;
   if (!desktop) {
     return <MobileRoomScreen {...props} />;
@@ -2373,14 +2644,17 @@ function RoomScreen(props: RoomScreenProps) {
           </Text>
         </View>
         <View style={s.utilityRow}>
-          <UtilityButton label="STATUS" accessibilityLabel="Open Jack's status" disabled={careLocked} onPress={onStatus} />
+          <UtilityButton label="STATUS" accessibilityLabel="Open Jack's status" disabled={careLocked || controlMode === "classic"} onPress={onStatus} />
           <UtilityButton label="⚙" accessibilityLabel="Open settings" disabled={pet.isDead || careLocked} onPress={onOpenSettings} />
         </View>
       </View>
-      <PresentationModeSwitcher
-        mode={presentationMode}
-        onChange={onPresentationModeChange}
-      />
+      <View style={s.modeSwitcherStack}>
+        <ControlModeSwitcher mode={controlMode} onChange={onControlModeChange} />
+        <PresentationModeSwitcher
+          mode={presentationMode}
+          onChange={onPresentationModeChange}
+        />
+      </View>
       <View style={[desktop && s.roomGrid]}>
         <View style={desktop && s.roomVisualColumn}>
           <PetPresentationStage
@@ -2390,13 +2664,13 @@ function RoomScreen(props: RoomScreenProps) {
             feedProgress={feedProgress}
             large={desktop}
             onBoop={onBoop}
-            boopDisabled={!boopAvailable}
+            boopDisabled={!boopAvailable || controlMode === "classic"}
             boopStatus={boopStatus}
             pulse={pulse}
             wag={wag}
             zoom={zoom}
-            careDisabled={!careAvailable}
-            restDisabled={pet.isDead || careLocked}
+            careDisabled={!careAvailable || controlMode === "classic"}
+            restDisabled={pet.isDead || careLocked || controlMode === "classic"}
             restLabel={sleeping ? "Wake" : "Rest"}
             onCare={onCare}
             onRest={onSleep}
@@ -2420,20 +2694,29 @@ function RoomScreen(props: RoomScreenProps) {
             ))}
           </View>
           <FixedMessage message={message} opacity={messageOpacity} dead={pet.isDead} />
-          <View style={s.actions}>
-            <ActionButton label="BOOP" disabled={!boopAvailable} onPress={onBoop} compact />
-            <ActionButton label="FEED" disabled={!careAvailable} onPress={() => onCare("feed")} compact />
-            <ActionButton label="PLAY" disabled={!careAvailable} onPress={() => onCare("play")} compact />
-            <ActionButton label="CLEAN" disabled={!careAvailable} onPress={() => onCare("clean")} compact />
-            <ActionButton label="TRAIN" disabled={trainingDisabled} onPress={onTrain} compact />
-            <ActionButton
-              label={sleeping ? "WAKE UP" : "SLEEP"}
-              disabled={pet.isDead || careLocked}
-              onPress={onSleep}
-              tone="sleep"
-              compact
+          {controlMode === "direct" ? (
+            <View style={s.actions}>
+              <ActionButton label="BOOP" disabled={!boopAvailable} onPress={onBoop} compact />
+              <ActionButton label="FEED" disabled={!careAvailable} onPress={() => onCare("feed")} compact />
+              <ActionButton label="PLAY" disabled={!careAvailable} onPress={() => onCare("play")} compact />
+              <ActionButton label="CLEAN" disabled={!careAvailable} onPress={() => onCare("clean")} compact />
+              <ActionButton label="TRAIN" disabled={trainingDisabled} onPress={onTrain} compact />
+              <ActionButton
+                label={sleeping ? "WAKE UP" : "SLEEP"}
+                disabled={pet.isDead || careLocked}
+                onPress={onSleep}
+                tone="sleep"
+                compact
+              />
+            </View>
+          ) : (
+            <ClassicController
+              active={classicControllerActive}
+              contextLabel="Room actions"
+              items={roomClassicItems(props)}
+              onActivate={(action) => activateClassicRoomAction(action, props)}
             />
-          </View>
+          )}
           <Text style={s.growthHint}>{growthHint}</Text>
           <Text style={s.note}>
             {careLocked
@@ -2458,13 +2741,16 @@ function MobileRoomScreen({
   boopStatus,
   careAvailable,
   careLocked,
+  classicControllerActive,
   clock,
   compactPhone,
+  controlMode,
   feedProgress,
   message,
   messageOpacity,
   onBoop,
   onCare,
+  onControlModeChange,
   onOpenSettings,
   onPresentationModeChange,
   onStatus,
@@ -2483,9 +2769,46 @@ function MobileRoomScreen({
   trainingDisabled,
   trainingTreatProgress,
   trainingModeOpen,
+  ...roomProps
 }: RoomScreenProps) {
   const actionDisabled = !careAvailable;
   const restDisabled = pet.isDead || careLocked;
+  const fullProps: RoomScreenProps = {
+    bob,
+    boopAvailable,
+    boopStatus,
+    careAvailable,
+    careLocked,
+    classicControllerActive,
+    clock,
+    compactPhone,
+    controlMode,
+    feedProgress,
+    message,
+    messageOpacity,
+    onBoop,
+    onCare,
+    onControlModeChange,
+    onOpenSettings,
+    onPresentationModeChange,
+    onStatus,
+    onSleep,
+    onTrain,
+    pet,
+    presentationMode,
+    presentationModel,
+    pulse,
+    sleeping,
+    trainingAnimation,
+    trainingAnimationRevision,
+    trainingDisabled,
+    trainingModeOpen,
+    trainingPoseHeld,
+    trainingTreatProgress,
+    wag,
+    zoom,
+    ...roomProps,
+  };
 
   return (
     <View style={s.deviceShell}>
@@ -2517,25 +2840,28 @@ function MobileRoomScreen({
         />
       </View>
 
-      <PresentationModeSwitcher
-        mode={presentationMode}
-        onChange={onPresentationModeChange}
-      />
+      <View style={s.modeSwitcherStack}>
+        <ControlModeSwitcher mode={controlMode} onChange={onControlModeChange} />
+        <PresentationModeSwitcher
+          mode={presentationMode}
+          onChange={onPresentationModeChange}
+        />
+      </View>
 
       <View style={s.deviceScreenFrame}>
         <PetPresentationStage
           mode={presentationMode}
           model={presentationModel}
           bob={bob}
-          boopDisabled={!boopAvailable}
+          boopDisabled={!boopAvailable || controlMode === "classic"}
           boopStatus={boopStatus}
-          careDisabled={actionDisabled}
+          careDisabled={actionDisabled || controlMode === "classic"}
           feedProgress={feedProgress}
           onBoop={onBoop}
           onCare={onCare}
           onRest={onSleep}
           pulse={pulse}
-          restDisabled={restDisabled}
+          restDisabled={restDisabled || controlMode === "classic"}
           restLabel={sleeping ? "Wake" : "Rest"}
           wag={wag}
           zoom={zoom}
@@ -2553,14 +2879,23 @@ function MobileRoomScreen({
         </View>
       </View>
 
-      <View accessibilityLabel="Care actions" style={s.deviceActionStrip}>
-        <DeviceActionButton icon="◆" label="Feed" tint="#ef8a78" disabled={actionDisabled} onPress={() => onCare("feed")} />
-        <DeviceActionButton icon="◉" label="Play" tint="#a9cf82" disabled={actionDisabled} onPress={() => onCare("play")} />
-        <DeviceActionButton icon="✦" label="Clean" tint="#91cadd" disabled={actionDisabled} onPress={() => onCare("clean")} />
-        <DeviceActionButton icon="☾" label={sleeping ? "Wake" : "Rest"} tint="#b4a1d4" disabled={restDisabled} onPress={onSleep} />
-        <DeviceActionButton icon="★" label="Train" tint="#efc553" disabled={trainingDisabled} onPress={onTrain} />
-        <DeviceActionButton icon="＋" label="Status" tint="#f0d7a6" disabled={careLocked} onPress={onStatus} />
-      </View>
+      {controlMode === "direct" ? (
+        <View accessibilityLabel="Care actions" style={s.deviceActionStrip}>
+          <DeviceActionButton icon="◆" label="Feed" tint="#ef8a78" disabled={actionDisabled} onPress={() => onCare("feed")} />
+          <DeviceActionButton icon="◉" label="Play" tint="#a9cf82" disabled={actionDisabled} onPress={() => onCare("play")} />
+          <DeviceActionButton icon="✦" label="Clean" tint="#91cadd" disabled={actionDisabled} onPress={() => onCare("clean")} />
+          <DeviceActionButton icon="☾" label={sleeping ? "Wake" : "Rest"} tint="#b4a1d4" disabled={restDisabled} onPress={onSleep} />
+          <DeviceActionButton icon="★" label="Train" tint="#efc553" disabled={trainingDisabled} onPress={onTrain} />
+          <DeviceActionButton icon="＋" label="Status" tint="#f0d7a6" disabled={careLocked} onPress={onStatus} />
+        </View>
+      ) : (
+        <ClassicController
+          active={classicControllerActive}
+          contextLabel="Room actions"
+          items={roomClassicItems(fullProps)}
+          onActivate={(action) => activateClassicRoomAction(action, fullProps)}
+        />
+      )}
 
       <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={s.devicePawOrnament}>
         <View style={[s.pawToe, s.pawToeOne]} />
@@ -2872,6 +3207,7 @@ function FocusableButton({
 }
 
 function TrainingDialog({
+  classic,
   onCancel,
   onChooseCommand,
   onDone,
@@ -2881,6 +3217,7 @@ function TrainingDialog({
   reduced,
   state,
 }: {
+  classic: boolean;
   onCancel: () => void;
   onChooseCommand: (command: TrainingCommand) => void;
   onDone: () => void;
@@ -2891,6 +3228,51 @@ function TrainingDialog({
   state: TrainingState;
 }) {
   const visible = state.phase !== "closed";
+  const dialogRef = useRef<View>(null);
+  const cancelRef = useRef(onCancel);
+  useEffect(() => {
+    cancelRef.current = onCancel;
+  }, [onCancel]);
+  useEffect(() => {
+    if (!visible || Platform.OS !== "web") return;
+    const dialog = dialogRef.current as unknown as HTMLElement | null;
+    const focusableSelector =
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    return installDialogFocusBoundary(
+      {
+        getActiveElement: () =>
+          document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null,
+        getFocusableElements: () =>
+          dialog
+            ? Array.from(
+                dialog.querySelectorAll<HTMLElement>(focusableSelector),
+              )
+            : [],
+        contains: (element) =>
+          Boolean(
+            dialog &&
+              element &&
+              dialog.contains(element as unknown as Node),
+          ),
+        addKeydownListener: (listener) =>
+          document.addEventListener(
+            "keydown",
+            listener as unknown as (event: KeyboardEvent) => void,
+          ),
+        removeKeydownListener: (listener) =>
+          document.removeEventListener(
+            "keydown",
+            listener as unknown as (event: KeyboardEvent) => void,
+          ),
+        scheduleInitialFocus: (callback) => setTimeout(callback, 0),
+        cancelInitialFocus: (handle) =>
+          clearTimeout(handle as ReturnType<typeof setTimeout>),
+      },
+      () => cancelRef.current(),
+    );
+  }, [visible]);
   const announcement = getTrainingAnnouncement(state);
   const commandLabel = state.command
     ? trainingCommandLabels[state.command]
@@ -2903,6 +3285,7 @@ function TrainingDialog({
     paw: "◒",
     up: "↥",
   };
+  const classicItems = createClassicTrainingMenu(state.phase);
 
   return (
     <Modal
@@ -2913,6 +3296,8 @@ function TrainingDialog({
     >
       <View style={s.trainingOverlay}>
         <View
+          ref={dialogRef}
+          role="dialog"
           accessibilityLabel="Training Mode"
           accessibilityViewIsModal
           style={s.trainingDialog}
@@ -2945,6 +3330,23 @@ function TrainingDialog({
           <Text accessibilityLiveRegion="polite" style={s.trainingMessage}>
             {announcement}
           </Text>
+
+          {classic && (
+            <ClassicController
+              active={visible}
+              contextLabel="Training actions"
+              items={classicItems}
+              onActivate={(action) =>
+                dispatchClassicTrainingAction(action, {
+                  onChooseCommand,
+                  onCancel,
+                  onGiveTreat,
+                  onShowAgain,
+                  onDone,
+                })
+              }
+            />
+          )}
 
           {state.phase === "choosing" && (
             <View accessibilityLabel="Training commands" style={s.trainingCommands}>
@@ -3044,6 +3446,7 @@ function TrainingDialog({
 
 function StatusDialog({
   bandLabel,
+  classic,
   medicineAvailable,
   medicineMessage,
   onCancel,
@@ -3054,6 +3457,7 @@ function StatusDialog({
   visible,
 }: {
   bandLabel: string;
+  classic: boolean;
   medicineAvailable: boolean;
   medicineMessage: string;
   onCancel: () => void;
@@ -3108,6 +3512,10 @@ function StatusDialog({
       () => cancelRef.current(),
     );
   }, [visible]);
+  const classicItems = createClassicStatusMenu(
+    medicineAvailable,
+    medicineMessage,
+  );
 
   return (
     <Modal
@@ -3139,6 +3547,19 @@ function StatusDialog({
             ))}
           </View>
           <Text style={s.note}>{medicineMessage}</Text>
+          {classic && (
+            <ClassicController
+              active={visible}
+              contextLabel="Status actions"
+              items={classicItems}
+              onActivate={(action) =>
+                dispatchClassicStatusAction(action, {
+                  onMedicine,
+                  onClose: onCancel,
+                })
+              }
+            />
+          )}
           <View style={s.statusActions}>
             <ActionButton
               label="GIVE MEDICINE"
@@ -3155,11 +3576,13 @@ function StatusDialog({
 }
 
 function SleepDialog({
+  classic,
   reduced,
   visible,
   onCancel,
   onChoose,
 }: {
+  classic: boolean;
   reduced: boolean;
   visible: boolean;
   onCancel: () => void;
@@ -3210,6 +3633,7 @@ function SleepDialog({
       () => cancelRef.current(),
     );
   }, [visible]);
+  const classicItems = createClassicSleepMenu(sleepOptions);
 
   return (
     <Modal transparent animationType={reduced ? "none" : "fade"} visible={visible} onRequestClose={onCancel}>
@@ -3223,6 +3647,16 @@ function SleepDialog({
         >
           <Text style={s.pixelTitle}>SLEEP TIMER</Text>
           <Text style={s.bodyText}>Choose a duration in pet hours.</Text>
+          {classic && (
+            <ClassicController
+              active={visible}
+              contextLabel="Sleep actions"
+              items={classicItems}
+              onActivate={(action) =>
+                dispatchClassicSleepAction(action, { onChoose, onCancel })
+              }
+            />
+          )}
           <View style={s.sleepOptions}>
             {sleepOptions.map((hours) => (
               <ChoiceButton
@@ -3341,6 +3775,25 @@ const s = StyleSheet.create({
   daylightNote: { color: "#60767c", fontSize: 15, lineHeight: 22, textAlign: "center" },
   roomCard: { width: "100%", alignSelf: "center", padding: 10, gap: 8, borderRadius: 26, borderWidth: 2, borderColor: outline, backgroundColor: appBg, shadowColor: ink, shadowOpacity: 0.14, shadowRadius: 12, shadowOffset: { width: 0, height: 4 } },
   roomCardDesktop: { maxWidth: 1400, padding: 20 },
+  modeSwitcherStack: { width: "100%", gap: 6 },
+  controlModeSwitcher: { width: "100%", minHeight: 48, flexDirection: "row", alignItems: "stretch", justifyContent: "center", gap: 6 },
+  controlModeButton: { flex: 1, minWidth: 0, minHeight: 44, paddingHorizontal: 8, alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: "#8c7655", borderRadius: 12, backgroundColor: "#fff6df" },
+  controlModeButtonSelected: { borderColor: "#4c3928", backgroundColor: "#efd6a8" },
+  controlModeLabel: { color: "#6e5d43", fontSize: 12, lineHeight: 16, fontWeight: "900", textAlign: "center" },
+  controlModeLabelSelected: { color: "#4c3928" },
+  classicController: { width: "100%", gap: 7, padding: 10, borderWidth: 3, borderColor: "#4c3928", borderRadius: 18, backgroundColor: "#fff6df" },
+  classicEyebrow: { color: "#6e5d43", fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 10, lineHeight: 14, fontWeight: "900", letterSpacing: 0.5, textAlign: "center" },
+  classicSelection: { minHeight: 58, paddingHorizontal: 10, paddingVertical: 6, alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: "#48784b", borderRadius: 12, backgroundColor: "#e4edc9" },
+  classicSelectionBlocked: { borderColor: "#9a533f", backgroundColor: "#f4d6c9" },
+  classicSelectionLabel: { color: ink, fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 17, lineHeight: 21, fontWeight: "900", textAlign: "center" },
+  classicSelectionReason: { color: "#5f5548", fontSize: 12, lineHeight: 16, fontWeight: "700", textAlign: "center" },
+  classicAnnouncement: { minHeight: 16, color: "#5f5548", fontSize: 11, lineHeight: 15, textAlign: "center" },
+  classicButtons: { width: "100%", flexDirection: "row", alignItems: "stretch", justifyContent: "center", gap: 8 },
+  classicButton: { flex: 1, minWidth: CLASSIC_CONTROL_MIN_TARGET_PX, minHeight: CLASSIC_CONTROL_MIN_TARGET_PX, alignItems: "center", justifyContent: "center", paddingHorizontal: 8, borderWidth: 2, borderColor: "#4c3928", borderRadius: 999, backgroundColor: "#efd6a8", shadowColor: "#6d5d43", shadowOpacity: 0.2, shadowRadius: 0, shadowOffset: { width: 0, height: 3 } },
+  classicSelectButton: { flex: 1.5, backgroundColor: "#efc553" },
+  classicButtonPressed: { transform: [{ translateY: 2 }], shadowOpacity: 0.08 },
+  classicButtonLabel: { color: "#4c3928", fontFamily: "Roboto Mono, ui-monospace, monospace", fontSize: 14, lineHeight: 18, fontWeight: "900", textAlign: "center" },
+  classicKeyboardHint: { color: "#6e5d43", fontSize: 9, lineHeight: 12, fontWeight: "800", letterSpacing: 0.2, textAlign: "center" },
   deviceShell: {
     width: "100%",
     maxWidth: 390,

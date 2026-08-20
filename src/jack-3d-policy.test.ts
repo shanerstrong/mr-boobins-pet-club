@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
-import clipManifest from "../assets/3d/jack/v2/animations/clip-manifest-v2.json";
+import clipManifest from "../assets/3d/jack/v2/animations/clip-manifest-v2.3.json";
 import {
+  JACK_3D_RUNTIME_PACKAGE,
   isJack3DStageSupported,
   isLoopingJack3DClip,
   resolveJack3DClip,
+  shouldUseJack3DRuntime,
+  shouldTreatJack3DContextLossAsFailure,
   type Jack3DVisualState,
 } from "./jack-3d-policy";
 
@@ -19,7 +22,49 @@ const idle: Jack3DVisualState = {
 };
 
 describe("Jack 3D presentation policy", () => {
-  it("maps every training action to its validated V2 clip", () => {
+  it("identifies the complete V2.3 canine-motion runtime and transition blend", () => {
+    expect(JACK_3D_RUNTIME_PACKAGE).toEqual({
+      asset: "jack-baby-v2.3-all-clips.glb",
+      blendSeconds: 0.22,
+      clipCount: 28,
+      id: "baby-v2.3",
+      retargetedCanineClips: [
+        "idle",
+        "walk",
+        "run",
+        "tail_wag",
+        "feed",
+        "sleep",
+        "wake",
+        "play",
+        "clean_reaction",
+        "boop_comfortable",
+        "boop_need_hunger",
+        "boop_need_energy",
+        "boop_need_hygiene",
+        "boop_need_happiness",
+        "boop_rejected",
+        "tired",
+        "dirty",
+        "death_rest",
+        "training_attention",
+        "training_sit",
+        "training_paw",
+        "training_up",
+        "training_treat_receive",
+        "training_treat_eat",
+        "celebration_happy_hop",
+        "celebration_spin_wag",
+        "celebration_goofy_shimmy",
+        "training_return_idle",
+      ],
+    });
+    expect(JACK_3D_RUNTIME_PACKAGE.blendSeconds).toBeGreaterThan(0);
+    expect(JACK_3D_RUNTIME_PACKAGE.blendSeconds).toBeLessThan(0.3);
+    expect(clipManifest.clips).toHaveLength(JACK_3D_RUNTIME_PACKAGE.clipCount);
+  });
+
+  it("maps every training action to its validated V2.3 clip", () => {
     expect(resolveJack3DClip({ ...idle, trainingAction: "sit" })).toBe("training_sit");
     expect(resolveJack3DClip({ ...idle, trainingAction: "paw" })).toBe("training_paw");
     expect(resolveJack3DClip({ ...idle, trainingAction: "up" })).toBe("training_up");
@@ -53,6 +98,74 @@ describe("Jack 3D presentation policy", () => {
     expect(isJack3DStageSupported("adult")).toBe(false);
   });
 
+  it("uses the stable bed illustration for sleep and other established fallbacks", () => {
+    expect(
+      shouldUseJack3DRuntime({
+        dead: false,
+        modelAvailable: true,
+        reduced: false,
+        sleeping: false,
+        stage: "baby",
+        trainingModeOpen: false,
+      }),
+    ).toBe(true);
+    expect(
+      shouldUseJack3DRuntime({
+        dead: false,
+        modelAvailable: true,
+        reduced: false,
+        sleeping: true,
+        stage: "baby",
+        trainingModeOpen: false,
+      }),
+    ).toBe(false);
+    expect(
+      shouldUseJack3DRuntime({
+        dead: false,
+        modelAvailable: true,
+        reduced: true,
+        sleeping: false,
+        stage: "baby",
+        trainingModeOpen: false,
+      }),
+    ).toBe(false);
+    expect(
+      shouldUseJack3DRuntime({
+        dead: false,
+        modelAvailable: false,
+        reduced: false,
+        sleeping: false,
+        stage: "baby",
+        trainingModeOpen: false,
+      }),
+    ).toBe(false);
+    expect(
+      shouldUseJack3DRuntime({
+        dead: true,
+        modelAvailable: true,
+        reduced: false,
+        sleeping: false,
+        stage: "baby",
+        trainingModeOpen: false,
+      }),
+    ).toBe(false);
+    expect(
+      shouldUseJack3DRuntime({
+        dead: false,
+        modelAvailable: true,
+        reduced: false,
+        sleeping: false,
+        stage: "baby",
+        trainingModeOpen: true,
+      }),
+    ).toBe(false);
+  });
+
+  it("does not turn an intentional sleep-fallback teardown into a permanent 3D failure", () => {
+    expect(shouldTreatJack3DContextLossAsFailure(true)).toBe(true);
+    expect(shouldTreatJack3DContextLossAsFailure(false)).toBe(false);
+  });
+
   it("loops only persistent poses", () => {
     expect(isLoopingJack3DClip("idle")).toBe(true);
     expect(isLoopingJack3DClip("sleep")).toBe(true);
@@ -60,7 +173,7 @@ describe("Jack 3D presentation policy", () => {
     expect(isLoopingJack3DClip("training_sit")).toBe(false);
   });
 
-  it("resolves only clips present in the validated V2 package", () => {
+  it("resolves only clips present in the validated V2.3 manifest", () => {
     const available = new Set(clipManifest.clips.map((clip) => clip.name));
     const states: Jack3DVisualState[] = [
       idle,

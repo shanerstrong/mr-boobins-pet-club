@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "status": "retargeted-proof-pending-visual-approval",
+  "input": "jack-baby-quadruped-v2-repair-c-quaternius-h.blend",
+  "donor": "Husky.blend",
+  "output": "jack-baby-quadruped-v2-repair-d-complete-canine.blend",
+  "blenderVersion": "4.5.12 LTS",
+  "retargetedClips": [
+    "boop_comfortable",
+    "boop_need_energy",
+    "boop_need_happiness",
+    "boop_need_hunger",
+    "boop_need_hygiene",
+    "boop_rejected",
+    "celebration_goofy_shimmy",
+    "celebration_happy_hop",
+    "celebration_spin_wag",
+    "clean_reaction",
+    "death_rest",
+    "dirty",
+    "feed",
+    "idle",
+    "play",
+    "run",
+    "sleep",
+    "tail_wag",
+    "tired",
+    "training_attention",
+    "training_paw",
+    "training_return_idle",
+    "training_sit",
+    "training_treat_eat",
+    "training_treat_receive",
+    "training_up",
+    "wake",
+    "walk"
+  ],
+  "retargetedClipCount": 28,
+  "totalClipCount": 28,
+  "actionNames": [
+    "boop_comfortable",
+    "boop_need_energy",
+    "boop_need_happiness",
+    "boop_need_hunger",
+    "boop_need_hygiene",
+    "boop_rejected",
+    "celebration_goofy_shimmy",
+    "celebration_happy_hop",
+    "celebration_spin_wag",
+    "clean_reaction",
+    "death_rest",
+    "dirty",
+    "feed",
+    "idle",
+    "play",
+    "run",
+    "sleep",
+    "tail_wag",
+    "tired",
+    "training_attention",
+    "training_paw",
+    "training_return_idle",
+    "training_sit",
+    "training_treat_eat",
+    "training_treat_receive",
+    "training_up",
+    "wake",
+    "walk"
+  ],
+  "floorRepair": {
+    "idle": {
+      "correctedFrames": 91,
+      "worstBeforeMeters": -0.039499,
+      "worstAfterMeters": 0.0
+    },
+    "walk": {
+      "correctedFrames": 31,
+      "worstBeforeMeters": -0.061893,
+      "worstAfterMeters": 0.0
+    },
+    "run": {
+      "correctedFrames": 21,
+      "worstBeforeMeters": -0.124602,
+      "worstAfterMeters": 0.0
+    },
+    "play": {
+      "correctedFrames": 91,
+      "worstBeforeMeters": -0.122406,
+      "worstAfterMeters": 0.0
+    },
+    "clean_reaction": {
+      "correctedFrames": 46,
+      "worstBeforeMeters": -0.039522,
+      "worstAfterMeters": 0.0
+    },
+    "dirty": {
+      "correctedFrames": 28,
+      "worstBeforeMeters": -0.039505,
+      "worstAfterMeters": 0.0
+    },
+    "celebration_happy_hop": {
+      "correctedFrames": 46,
+      "worstBeforeMeters": -0.121604,
+      "worstAfterMeters": 0.0
+    },
+    "tail_wag": {
+      "correctedFrames": 37,
+      "worstBeforeMeters": -0.042252,
+      "worstAfterMeters": 0.0
+    },
+    "feed": {
+      "correctedFrames": 67,
+      "worstBeforeMeters": -0.052161,
+      "worstAfterMeters": 0.0
+    },
+    "sleep": {
+      "correctedFrames": 97,
+      "worstBeforeMeters": -0.241662,
+      "worstAfterMeters": 0.0
+    },
+    "wake": {
+      "correctedFrames": 43,
+      "worstBeforeMeters": -0.140944,
+      "worstAfterMeters": 0.0
+    },
+    "boop_comfortable": {
+      "correctedFrames": 22,
+      "worstBeforeMeters": -0.042147,
+      "worstAfterMeters": 0.0
+    },
+    "boop_need_hunger": {
+      "correctedFrames": 25,
+      "worstBeforeMeters": -0.050927,
+      "worstAfterMeters": 0.0
+    },
+    "boop_need_energy": {
+      "correctedFrames": 25,
+      "worstBeforeMeters": -0.041355,
+      "worstAfterMeters": 0.0
+    },
+    "boop_need_hygiene": {
+      "correctedFrames": 25,
+      "worstBeforeMeters": -0.039499,
+      "worstAfterMeters": 0.0
+    },
+    "boop_need_happiness": {
+      "correctedFrames": 25,
+      "worstBeforeMeters": -0.104154,
+      "worstAfterMeters": 0.0
+    },
+    "boop_rejected": {
+      "correctedFrames": 6,
+      "worstBeforeMeters": -0.039499,
+      "worstAfterMeters": 0.0
+    },
+    "tired": {
+      "correctedFrames": 61,
+      "worstBeforeMeters": -0.043766,
+      "worstAfterMeters": 0.0
+    },
+    "death_rest": {
+      "correctedFrames": 55,
+      "worstBeforeMeters": -0.135045,
+      "worstAfterMeters": 0.0
+    },
+    "training_attention": {
+      "correctedFrames": 31,
+      "worstBeforeMeters": -0.042504,
+      "worstAfterMeters": 0.0
+    },
+    "training_sit": {
+      "correctedFrames": 26,
+      "worstBeforeMeters": -0.045415,
+      "worstAfterMeters": 0.0
+    },
+    "training_paw": {
+      "correctedFrames": 19,
+      "worstBeforeMeters": -0.039499,
+      "worstAfterMeters": -0.000307
+    },
+    "training_up": {
+      "correctedFrames": 11,
+      "worstBeforeMeters": -0.121604,
+      "worstAfterMeters": 0.0
+    },
+    "training_treat_receive": {
+      "correctedFrames": 31,
+      "worstBeforeMeters": -0.121604,
+      "worstAfterMeters": 0.0
+    },
+    "training_treat_eat": {
+      "correctedFrames": 49,
+      "worstBeforeMeters": -0.052161,
+      "worstAfterMeters": 0.0
+    },
+    "celebration_spin_wag": {
+      "correctedFrames": 61,
+      "worstBeforeMeters": -0.124888,
+      "worstAfterMeters": 0.0
+    },
+    "celebration_goofy_shimmy": {
+      "correctedFrames": 67,
+      "worstBeforeMeters": -0.120749,
+      "worstAfterMeters": 0.0
+    },
+    "training_return_idle": {
+      "correctedFrames": 25,
+      "worstBeforeMeters": -0.039499,
+      "worstAfterMeters": 0.0
+    }
+  },
+  "rootMotionGameplay": false,
+  "simulationMutation": false,
+  "directHumanoidAnimation": false
+}

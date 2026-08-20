@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "source": "jack-baby-quadruped-v2-repair-d-complete-canine.blend",
+  "action": "training_paw",
+  "markerSeconds": 0.8,
+  "markerFrame": 24.0,
+  "hipsLocation": [
+    1e-09,
+    -0.143476635,
+    -0.013602249
+  ],
+  "hipsLocationCurves": {
+    "0": {
+      "24": 1e-09,
+      "24.0": 1e-09
+    },
+    "1": {
+      "24": -0.143476635,
+      "24.0": -0.143476635
+    },
+    "2": {
+      "24": -0.013602249,
+      "24.0": -0.013602249
+    }
+  },
+  "hipsTranslationSensitivity": {
+    "0": {
+      "-0.05": 0.041451368,
+      "0.05": 0.041451368
+    },
+    "1": {
+      "-0.05": 0.041451372,
+      "0.05": 0.041451365
+    },
+    "2": {
+      "-0.05": 0.07417801,
+      "0.05": 0.008724835
+    }
+  },
+  "globalMinimum": {
+    "vertex": 6670,
+    "posedBlenderXyz": [
+      0.054572552,
+      0.224000171,
+      0.041451368
+    ],
+    "groups": [
+      {
+        "group": "R_backleg2",
+        "weight": 0.7235305
+      },
+      {
+        "group": "R_backleg1",
+        "weight": 0.2522812
+      },
+      {
+        "group": "R_backleg0",
+        "weight": 0.0241883
+      }
+    ]
+  },
+  "contacts": {
+    "left": {
+      "vertex": 6462,
+      "hindWeight": 1.0,
+      "posedBlenderXyz": [
+        0.145708993,
+        0.225909486,
+        0.081538305
+      ],
+      "posedGltfXyz": [
+        0.145708993,
+        0.081538305,
+        -0.225909486
+      ],
+      "restBlenderXyz": [
+        0.057361234,
+        0.173981935,
+        -0.031837191
+      ]
+    },
+    "right": {
+      "vertex": 6670,
+      "hindWeight": 1.0,
+      "posedBlenderXyz": [
+        0.054572552,
+        0.224000171,
+        0.041451368
+      ],
+      "posedGltfXyz": [
+        0.054572552,
+        0.041451368,
+        -0.224000171
+      ],
+      "restBlenderXyz": [
+        -0.143135697,
+        0.230524212,
+        -0.034657389
+      ]
+    }
+  }
+}

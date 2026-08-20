@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "kind": "managed-context-jack-animation-completion-refresh",
+  "refreshId": "2026-08-19-jack-animation-completion",
+  "createdOn": "2026-08-19",
+  "hashAlgorithm": "sha256",
+  "gitBlobIdentityCommand": "git hash-object --path=<path> <path>",
+  "authorization": {
+    "milestone": "Build — Jack Animation Completion",
+    "scope": "Replace the visibly rejected mixed/procedural awake animation package with the bounded Baby V2.3 complete-canine candidate, remove baked root travel from six non-runtime source clips, and contain donor Sleep, death, and Training failures behind the existing stable code-native semantic presenters.",
+    "generalMutableContextException": false,
+    "simulationPersistenceLifecycleOrBalanceChangeAuthorized": false,
+    "dependencyChangeAuthorized": false,
+    "externalOrGitActionAuthorized": false,
+    "subjectiveAcceptanceOrLockAuthorized": false,
+    "modelGeometryTextureOrMaterialChangeAuthorized": false,
+    "runtimeAssetPathAdditionAuthorized": true,
+    "runtimeAssetByteChangeAuthorized": true,
+    "assetClassificationChangeAuthorized": true,
+    "classificationScope": "Add only the exact V2.3 runtime, reproducibility tools, bounded representative evidence, and preservation-pending source/raw-evidence groups. Preserve all earlier groups and immutable records; retain V2.2 as an unaccepted rollback candidate."
+  },
+  "repositoryState": {
+    "head": "cfcf124156571d74d24afdbc3c72e453d9d5b795",
+    "branch": "codex/jack-v05",
+    "stagedPathCount": 0,
+    "stagedPaths": [],
+    "externalOrGitActionPerformed": false
+  },
+  "immutablePredecessor": {
+    "record": "docs/production/JACK_ANIMATION_CLEANUP_CONTEXT_REFRESH_2026-08-19.json",
+    "recordBytes": 10480,
+    "recordSha256": "519e467fa8b4c071f1d8eb9ad5a2075881f90ca9ee3ae7fc554e75b51feb374c",
+    "immutable": true
+  },
+  "transitions": [
+    {"path":"docs/DECISIONS.md","role":"durable-v2.3-runtime-and-fallback-decision","prior":{"bytes":31724,"sha256":"eae0a28aaff0dc86359001d1d12e6a242a5b92bb354e32a13db56eafe3083a1d","gitNormalizedBlobOid":"53a1b6538da94bd6dadd1284e983aa17b2d41a3d"},"current":{"bytes":33014,"sha256":"d4b1d0a37f699234b87f61f16edad3c7959f49becd1c8528f64b5af04797794b","gitNormalizedBlobOid":"727c05e518781003c42b16ab53aef1b706b3120c","gitState":"tracked-modified"}},
+    {"path":"docs/GAME_PRODUCTION_PLAN.md","role":"v2.3-awake-care-and-rest-command-risk-plan","prior":{"bytes":25096,"sha256":"f69827dc74f7997885b7576596f06c23398776582fcf05c434deeefbf731f4fc","gitNormalizedBlobOid":"afc655acf8f0b340a520bdf76905c94bedff79dd"},"current":{"bytes":25465,"sha256":"0f23538e95e164577c68158af9ae11ac86a1a744c9200084499d852c7e473fcf","gitNormalizedBlobOid":"24528db38499dff8fd7bf226d68cc475faaae1df","gitState":"tracked-modified"}},
+    {"path":"docs/QUALITY_GATES.md","role":"v2.3-runtime-root-repair-and-semantic-fallback-gate","prior":{"bytes":13832,"sha256":"3e3f69543e489acec9623fde16c56bcbb91b7065adf709b9eb6c6d98ee37602f","gitNormalizedBlobOid":"bc9e58e55a582192114f8ec32f276cab75bbee97"},"current":{"bytes":14306,"sha256":"c3301a8ff681a048347e822523063fda5738d41b81b40dbe5751ca1a17582180","gitNormalizedBlobOid":"13062893bfcb9c875a30e599ff181533c51b472f","gitState":"tracked-modified"}},
+    {"path":"docs/production/CREATIVE_DIRECTION.md","role":"binding-v2.3-provisional-status-and-rejected-donor-cycles","prior":{"bytes":6514,"sha256":"3651e6b895776700a182f229c86141f72d1a6e8ad71cf18ebdca0cd16e7dce91","gitNormalizedBlobOid":"eea0b80545cff8663f72272a2d2461341711b299"},"current":{"bytes":7239,"sha256":"c720529da042ef31b7fcdd3c8dc0700231de05a64c93b89a31f2659d7dfe559a","gitNormalizedBlobOid":"0c65b054447dd089febb143558f26825e722a34b","gitState":"tracked-modified"}},
+    {"path":"docs/production/PRODUCTION_DASHBOARD.md","role":"current-animation-completion-delivery-status","prior":{"bytes":11401,"sha256":"c9c301a6ed68f5ccb10bb2e685b25bdd6d85f90a19a4bac60ae10a5b72c0404b","gitNormalizedBlobOid":"35c23ed154fa677d4abf4c8b80fa09f3a1b3e722"},"current":{"bytes":11900,"sha256":"243d195db780aaa934762c22547f4829e4559674b189a05da06f5d3a239f779b","gitNormalizedBlobOid":"74a6f9dcc3073b004f9c833343098a66d7fdfa8e","gitState":"tracked-modified"}},
+    {"path":"src/jack-3d-policy.ts","role":"v2.3-runtime-package-and-presentation-containment-policy","prior":{"bytes":2498,"sha256":"d28d7ae84850714834bd4a8ee2115b1bd20a8ab805220eb7ca91476ce072185b","gitNormalizedBlobOid":"a75213a3275a6748d76c29e7f56c4069133b3785"},"current":{"bytes":3662,"sha256":"695ac4c85dcbab59a773e5d8578176c5babd400d9e000c9eb4c5cb3b785468eb","gitNormalizedBlobOid":"3fbf36357e1ca807f9ececa3ee06eeb465c844d4","gitState":"tracked-modified"}},
+    {"path":"src/jack-3d-policy.test.ts","role":"v2.3-package-clip-presentation-and-context-loss-tests","prior":{"bytes":4617,"sha256":"7c0fc0fbc404ef678c646a39f2276070073d556f7cde14ee9ec92d911a5b53af","gitNormalizedBlobOid":"19e3b4eebf34a2120eccf5a34d2118c2a7edeb94"},"current":{"bytes":6898,"sha256":"7bf9026fe4c4aec0d626285c5a70cb1f256bdd102f62076aa5197a4958ce48b9","gitNormalizedBlobOid":"8addac280ff5e3d4b8715ac5ec8d9cedd780574f","gitState":"tracked-modified"}},
+    {"path":"src/pet-room-scene.web.tsx","role":"v2.3-runtime-import-and-intentional-presenter-teardown-recovery","prior":{"bytes":19310,"sha256":"3b9bfecf163ef89f316907012da3c863062fe0578dc427081c416d7caff3ae11","gitNormalizedBlobOid":"7280fa927fe69f49419c36c218396c0ba550e2b2"},"current":{"bytes":20158,"sha256":"bd83d3cda1f07815bb12a41b05fd8402c82c0afa756455bbac422abd2e999140","gitNormalizedBlobOid":"88d2f952564e951358852f6fe4fbaf9d5698ba82","gitState":"tracked-modified"}},
+    {"path":"src/pet-room-3d-policy.ts","role":"v2.3-measured-grounding-contract","prior":{"bytes":2804,"sha256":"394bcad2239ca0d8af8dd9daa1ff2cba57f9451377a475752312f72e1983dd5b","gitNormalizedBlobOid":"57e652ca1f105948f0386266c98108805eee2449"},"current":{"bytes":2754,"sha256":"8d341e127a67082391af30fbb0b4e54c96e31354e7400a0d265a73094c4b6369","gitNormalizedBlobOid":"2d910011a9617250435476e7bed3e1775c214faf","gitState":"tracked-modified"}},
+    {"path":"src/pet-room-3d-policy.test.ts","role":"v2.3-grounding-contract-tests","prior":{"bytes":3844,"sha256":"a6d6fb93f08faee1c41c2526abe1206af3c3160f1664ac78627a3c87ee5acc19","gitNormalizedBlobOid":"59a28efc8923c052e79774dbfa84bd9c12c54a01"},"current":{"bytes":3951,"sha256":"a80c43adcb478c30819a34b05556ef701009f5ae3c615641aefe268d86fc2f38","gitNormalizedBlobOid":"72d97cb3acac6c228bca9a4b01b9ca4db5507385","gitState":"tracked-modified"}},
+    {"path":"src/up-contact-shadow-policy.ts","role":"post-repair-held-up-contact-source-coordinates","prior":{"bytes":1244,"sha256":"92d7eb0ba294d928b7a630324397f431970bcb8cef19d0bb5cfd6b62d85700e7","gitNormalizedBlobOid":"98f1a2efb9faebe483184da4ead0edd98f3d10d4"},"current":{"bytes":1239,"sha256":"08241bb7819fc9a9a9f8f63ce70b4bb428cc0a6c5b5d42bc13a13432bc34ecda","gitNormalizedBlobOid":"63916f06ad1a73466c6b643c92c1d18974987d04","gitState":"tracked-modified"}},
+    {"path":"src/up-contact-shadow-policy.test.ts","role":"post-repair-held-up-contact-tests","prior":{"bytes":1764,"sha256":"751e78825ec419dd537412b41db61cd434ecb7f4bb9b0aa6009ef9d993954735","gitNormalizedBlobOid":"da67d3d0d28afc28c4a4a045dfbbad8b4bf9027f"},"current":{"bytes":1764,"sha256":"ae20bea8cf7e1e2bb72a937bacccd3f3a78622fb4abca274694008885681f9b8","gitNormalizedBlobOid":"7dbf178bf0097bda819a0ef66330216ca3e7aee3","gitState":"tracked-modified"}},
+    {"path":"scripts/verify-export.mjs","role":"v2.3-static-export-runtime-asset-smoke-contract","prior":{"bytes":3905,"sha256":"0b6b4f49fc62749fd0242dc18efe9d00871ef6ecaba0a6e74f1a1af53c5588e6","gitNormalizedBlobOid":"ee439d48cda15b5d9813132a905daddc2c7f79e7"},"current":{"bytes":3905,"sha256":"13e8c97c67db92059eb1931f2e507cff6af29bc3ba4ffa820413ad9e94da1f02","gitNormalizedBlobOid":"b51905e802c1d7b3618a0677686b87106ebc60ca","gitState":"tracked-modified"}}
+  ],
+  "assetAdditions": [
+    {"path":"assets/3d/jack/v2/animations/clip-manifest-v2.3.json","bytes":4706,"sha256":"49c6a7de7cf35890f4a769d5d47426decebc531d6218edecfedc0da2d4300cce","gitNormalizedBlobOid":"304a05480aa696e42b2bf2a64b1d66695d45199a","groupId":"normal-git-assets"},
+    {"path":"assets/3d/jack/v2/exports/jack-animations-v2.3.glb","bytes":927820,"sha256":"fff72e930998ab1bbab104979bfa6164942c2ba20315108d1b4e0b18f34ef024","gitNormalizedBlobOid":"56ae657ca71f6a6b30466e0035fd876dfdd1e0d9","groupId":"jack-v2.3-source-preservation-pending"},
+    {"path":"assets/3d/jack/v2/exports/jack-baby-v2.3.glb","bytes":2093332,"sha256":"423a86ac46994b0301ecf369b641e3182631cd1738a0c5199febd8ba38c1936c","gitNormalizedBlobOid":"fa7dbd3dac5c10aa01b3027a98f51925d6edf3ff","groupId":"jack-v2.3-source-preservation-pending"},
+    {"path":"assets/3d/jack/v2/exports/preview/jack-baby-v2.3-all-clips.glb","bytes":3010908,"sha256":"4c20e089749105b60eca52630c5af3d7f5d6706e17af5bdc5650b13b2db5bdba","gitNormalizedBlobOid":"af8117acef28880c12d3316b2533d7c782e31efd","groupId":"normal-git-assets","reviewStatus":"provisional-awaiting-Mark-animation-review"},
+    {"path":"assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-d-complete-canine.blend","bytes":8584658,"sha256":"f457944f4f496e06981c2edeb54bae346a00e85445b4d8f3a9b293ca69bdb7a0","gitNormalizedBlobOid":"36df282de6556c46ac2112114b6c718e0610956a","groupId":"jack-v2.3-source-preservation-pending"},
+    {"path":"assets/3d/jack/v2/source/jack-baby-quadruped-v2-repair-d-complete-canine.blend1","bytes":8586753,"sha256":"b02e4cda2cab790f2919041b58aefccd5f6643cf6a517995851a239921f3d48a","gitNormalizedBlobOid":"95ce82d74224f3ac05ab96e4b7048da055a4bc9c","groupId":"jack-v2.3-source-preservation-pending"},
+    {"path":"assets/3d/jack/v2/tools/__pycache__/retarget_quaternius_canine_v2.cpython-311.pyc","bytes":22443,"sha256":"e1f05193c15a48649ed530f36dd9ec13326644fb38642c69458245b48723080f","gitNormalizedBlobOid":"275739c83f94bd169426a811e89fd909f0658f33","groupId":"local-only-private"},
+    {"path":"assets/3d/jack/v2/tools/diagnose_held_contacts.py","bytes":5170,"sha256":"2dc015493985659cfc0fd5289e3509726829d8a5f0953881e843fdb7e2ab35c1","gitNormalizedBlobOid":"84e499574e4b96f15b07ffaf0911b8327200edaf","groupId":"normal-git-assets"},
+    {"path":"assets/3d/jack/v2/tools/inspect_canine_motion.py","bytes":3307,"sha256":"02783a6d494569c6d0b2dfcaea49e242bc7694ebf96123f804c173ccad15f91c","gitNormalizedBlobOid":"c0abeac1bc619357eb4c6fb2f5d2072b7b336afa","groupId":"normal-git-assets"},
+    {"path":"assets/3d/jack/v2/tools/inspect_glb_pose.mjs","bytes":3919,"sha256":"fdb1b87263728e19963da604665b6b3242c15b93066746d7bd232106aae4b0bb","gitNormalizedBlobOid":"40812af2c0ef0781b987df36be4bb5b9ae5c6c93","groupId":"normal-git-assets"},
+    {"path":"assets/3d/jack/v2/tools/render_pose_adjustment_board.py","bytes":5966,"sha256":"bbea658e18d011f85c46a8249141c1236dccc1fc1d84a5a2f86bd994a8d01202","gitNormalizedBlobOid":"490c355a39f88ef1ab436a6401fd9126c0b87ec4","groupId":"normal-git-assets"},
+    {"path":"assets/3d/jack/v2/tools/repair_glb_root_motion.mjs","bytes":4845,"sha256":"610934cce5e46f4fb21b2f8b9bd0a5df38e0635f471022dc105dd065186f80c9","gitNormalizedBlobOid":"e60e59901294f7aa2d721832794ed227920cfb12","groupId":"normal-git-assets"},
+    {"path":"assets/3d/jack/v2/tools/retarget_complete_canine_v2.py","bytes":8343,"sha256":"1f147012d7877880a5e978e524b05e4df389ddcb64cd1222cd8d5b0c40541a0c","gitNormalizedBlobOid":"3c48afc70b715de016803c17c45cfab59b5d26fe","groupId":"normal-git-assets"}
+  ],
+  "evidenceAdditions": [
+    {"path":"evidence/3d-jack/v2/baby-v2.3-complete-canine-export.json","bytes":2295,"sha256":"80bcfd2d06528cf434f742ba487262991fce1230fd77cbbf1a8fbc6c9d6f46cc","gitNormalizedBlobOid":"6035641aea4864458e2233c740872c8a82b5d504","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/baby-v2.3-complete-canine-retarget.json","bytes":5394,"sha256":"13fba52b04825f2cec97371c94a78137b26810b1c500f83d34bef7b3a8d28adb","gitNormalizedBlobOid":"4eb2cc4573b3adcc314fe05db30a2a0a7fc1c1bd","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/baby-v2.3-glb-validation.json","bytes":1424,"sha256":"c90014f22f5a1a8f27263f6b4c5a5dd5ba1dcf21a50e2f340318d85653a0ab42","gitNormalizedBlobOid":"6d16b8e07d9587e94b8c6d8ce8f1097f69e1c02c","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/baby-v2.3-runtime-playback.json","bytes":6020,"sha256":"acffc6d7b7036d3733680c224915b6ed91dc485622ee6783ebfda1cea087fbc5","gitNormalizedBlobOid":"b503b5edb8245784522eea0b377a879b27555a07","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/feed-adjust-x.png","bytes":1733842,"sha256":"560de7ed17fcbcbf20435350ba9e2547e78e903bd28cf4027e89a6422aea179e","gitNormalizedBlobOid":"f4f8356c59a4a52b8a1234f8b9443381f7707a0e","groupId":"jack-v2.3-evidence-preservation-pending"},
+    {"path":"evidence/3d-jack/v2/jack-v2.3-complete-canine-locomotion-pose-board.png","bytes":6767532,"sha256":"917ce0494288159d2e82b159b3eaf82e73ab05589962b794ba3d22e2147cfe26","gitNormalizedBlobOid":"e0c1906067ff6ed950964b7256eb0e0c9674d271","groupId":"jack-v2.3-evidence-preservation-pending"},
+    {"path":"evidence/3d-jack/v2/jack-v2.3-complete-canine-motion-reel.mp4","bytes":1081770,"sha256":"0b44d1c300d94d3379a14fad9088e6b557629d86c0412b893395dec67066c11d","gitNormalizedBlobOid":"311125a21e3207a246e378896a8fbe44c2e1f31e","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/jack-v2.3-complete-canine-risk-pose-board.png","bytes":3446815,"sha256":"1192f2d6d523a3caecb7f83ba47212c82b8428a14c5d2bc8feba79c02cb6ddda","gitNormalizedBlobOid":"700d3dd6bec5d37597611ff853bc5fdf800a64f3","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/paw-adjust-y.png","bytes":1723939,"sha256":"69937d3ee04aa29d6adc3f64a91ae9fa42b67de97ade2c481cc2c7e5a0106893","gitNormalizedBlobOid":"b3bbe06bdf4a8677de55de201a4391fa86bef2c4","groupId":"jack-v2.3-evidence-preservation-pending"},
+    {"path":"evidence/3d-jack/v2/paw-adjust-z.png","bytes":1739762,"sha256":"26e3dc9b16e3a059956d4c3c7edc340be4d07d4428cd6199210359d4502eff84","gitNormalizedBlobOid":"23eb3a3ead48c24f8b36bdecbd90dac27e59b8f8","groupId":"jack-v2.3-evidence-preservation-pending"},
+    {"path":"evidence/3d-jack/v2/quaternius-canine-motion-samples.json","bytes":216918,"sha256":"748122eddb214f2beca97980cf31566f435b4e6d02179cbc70aa783257a434e6","gitNormalizedBlobOid":"fee7deeeccdd0ece4b01f627b5d9f50bf4b32ea7","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/sit-adjust-y.png","bytes":1704144,"sha256":"3672f8f9cc32953309a0d74d30e8b51111b1d5175664cacb65ba08c42bd993a2","gitNormalizedBlobOid":"01b6ab082733f269e6d8107921e338ae325cd978","groupId":"jack-v2.3-evidence-preservation-pending"},
+    {"path":"evidence/3d-jack/v2/sit-adjust-z.png","bytes":1745386,"sha256":"ceefda60fd35a5db64501a92b1a5567f92cf5f5427006cfcbed9219b6f56613e","gitNormalizedBlobOid":"40aa3f905cc92a65534dedd68eb13800769b628c","groupId":"jack-v2.3-evidence-preservation-pending"},
+    {"path":"evidence/3d-jack/v2/sleep-adjust-x.png","bytes":1691923,"sha256":"dc19e803c2c4d940764b7b7e5f0501ff0abf464861c1469ca205b19cb6f193cb","gitNormalizedBlobOid":"34dc57a5daaef98741f9c430db5732bbe5911744","groupId":"jack-v2.3-evidence-preservation-pending"},
+    {"path":"evidence/3d-jack/v2/training_paw-held-contacts.json","bytes":1947,"sha256":"9ce24a7693cc5c431b2e9d7a1507ee1d0e79e71b0f934e4497acfc818cf803f8","gitNormalizedBlobOid":"6db0333f857d9c134a1d08304bcefd603608e1e5","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/training_sit-held-contacts.json","bytes":1890,"sha256":"9a4cdaca465a5e53d0f3305bda8057b2f35bd5ddf821740d19cb6f51f8e04975","gitNormalizedBlobOid":"5a6db3a6e71ae52c89ffc3c2eba1950c294507ae","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/training_up-held-contacts-frame25.json","bytes":1738,"sha256":"102d6bae3f9307dde29c87cc31da2b83c79ae87582f3320d6c94b06fb56ea464","gitNormalizedBlobOid":"ab6f816fa3822283b64639f8f9f2aa2911aac5cc","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/training_up-held-contacts.json","bytes":2020,"sha256":"d0c6a30efa67d57c4cf8058539fa6b8512d5a3cc46793bbf09b159555a1aeafe","gitNormalizedBlobOid":"57b85f0f27c1971b4b5544fa4bb6281f1d46f244","groupId":"normal-git-evidence-jack-animation-completion"},
+    {"path":"evidence/3d-jack/v2/up-adjust-x.png","bytes":1742296,"sha256":"2773a8c9f2905268285eb5c873d01794528ee4b71bca8c9b928fe4d8e528ec22","gitNormalizedBlobOid":"8d6ae5caf19e303b2b745038309fe41ebd6170b4","groupId":"jack-v2.3-evidence-preservation-pending"}
+  ],
+  "runtimeTransition": {
+    "priorRuntimePath": "assets/3d/jack/v2/exports/preview/jack-baby-v2.2-all-clips.glb",
+    "currentRuntimePath": "assets/3d/jack/v2/exports/preview/jack-baby-v2.3-all-clips.glb",
+    "currentBytes": 3010908,
+    "currentSha256": "4c20e089749105b60eca52630c5af3d7f5d6706e17af5bdc5650b13b2db5bdba",
+    "crossfadeSeconds": 0.22,
+    "threeDStates": "alive-awake-non-training-baby-or-little-puppy",
+    "stableSemanticFallbackStates": ["sleeping", "dead", "training"],
+    "v2.2RetainedAsRollbackCandidate": true,
+    "subjectiveAcceptanceOrLock": false
+  },
+  "rootTravelRepair": {
+    "operation": "freeze Hips translation to the first sample after export",
+    "clips": ["sleep", "wake", "death_rest", "training_sit", "training_paw", "training_up"],
+    "appliedTo": ["assets/3d/jack/v2/exports/jack-animations-v2.3.glb", "assets/3d/jack/v2/exports/preview/jack-baby-v2.3-all-clips.glb"],
+    "keyTimingChanged": false,
+    "rotationChanged": false
+  },
+  "classificationTransition": {
+    "path": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+    "prior": {"bytes":142084,"sha256":"e02a72ea14d61c0f8fa34ac603e34af50388728858b6f4a3d42bc2f75bc743d5","groupCount":25},
+    "current": {"bytes":150031,"sha256":"01c9b57b704f4634b1f003942561e05ea30ed0b89e35e7047c8ac0b1522ce929","groupCount":28},
+    "normalGitAssets": {"fileCount":103,"bytes":9906552},
+    "sourcePreservationPending": {"fileCount":4,"bytes":20192563},
+    "representativeEvidence": {"fileCount":11,"bytes":4768231},
+    "evidencePreservationPending": {"fileCount":8,"bytes":18848824},
+    "localOnlyPrivate": {"fileCount":60,"bytes":22699699}
+  },
+  "liveVerification": {
+    "phone": {"pageReportedViewport":[390,844],"documentScrollWidth":390,"horizontalOverflow":false},
+    "desktop": {"pageReportedViewport":[1440,900],"documentScrollWidth":1440,"horizontalOverflow":false},
+    "checkedStates": ["idle","play","feed","clean","training-fallback","sleep-fallback","wake-to-3d"],
+    "awakeCollapsedLimbOrUnexpectedFloorPenetrationObserved": false,
+    "intentionalPresenterTeardownRestores3D": true,
+    "donorRestOrCommandCycleAccepted": false,
+    "subjectiveAcceptanceClaimed": false
+  },
+  "unchangedInvariants": {
+    "packageJsonBytes": 1277,
+    "packageJsonSha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa",
+    "packageLockJsonBytes": 483873,
+    "packageLockJsonSha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38",
+    "governedAssetFileCount": 125,
+    "governedAssetBytes": 448676672,
+    "governedAssetAggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f",
+    "dependencyChanges": 0,
+    "simulationPersistenceLifecycleOrBalanceChanges": 0
+  },
+  "controlPlanePredecessors": {
+    "assetPolicy": {"bytes":59345,"sha256":"4a61fd430750b9b360cd658e421c587ea1a4d9d307601b0b6ce40a4fcaeed0aa"},
+    "assetVerifier": {"bytes":304397,"sha256":"bcdac3b3aea704fbb9a2333a181569441cdbde43659e90c1fa3f03576f5b71eb"}
+  },
+  "finalVerificationPlan": {
+    "jsonAndNodeSyntax": true,
+    "fullAndScopedGitDiffChecks": true,
+    "assetVerifierPassesRequired": 2,
+    "exactQualityGatesRequired": true,
+    "stagedPathCountRequired": 0
+  }
+}

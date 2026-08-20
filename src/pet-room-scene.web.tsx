@@ -22,13 +22,16 @@ import {
   Mesh,
   MeshStandardMaterial,
   TOUCH,
+  type AnimationAction,
   type Object3D,
 } from "three";
 import { clone as cloneSkeleton } from "three/examples/jsm/utils/SkeletonUtils.js";
 import {
-  isJack3DStageSupported,
+  JACK_3D_RUNTIME_PACKAGE,
   isLoopingJack3DClip,
   resolveJack3DClip,
+  shouldTreatJack3DContextLossAsFailure,
+  shouldUseJack3DRuntime,
   type Jack3DClipName,
 } from "./jack-3d-policy";
 import {
@@ -47,7 +50,7 @@ import {
   UP_CONTACT_SHADOW_STYLE,
   resolveSettledUpContactShadows,
 } from "./up-contact-shadow-policy";
-import jackModelModule from "../assets/3d/jack/v2/exports/preview/jack-baby-v2-all-clips.glb";
+import jackModelModule from "../assets/3d/jack/v2/exports/preview/jack-baby-v2.3-all-clips.glb";
 
 const JACK_MODEL_URL = Asset.fromModule(jackModelModule).uri;
 
@@ -105,7 +108,18 @@ export function PetRoomScene(props: PetRoomSceneProps) {
   const [inspectEnabled, setInspectEnabled] = useState(false);
   const [inspectResetRevision, setInspectResetRevision] = useState(0);
   const [ready, setReady] = useState(false);
-  const supported = isJack3DStageSupported(props.stage) && !props.reduced && Boolean(JACK_MODEL_URL);
+  // The current donor's collapse cycle failed live sleep/death QA. Keep the
+  // stable, non-gory code-native illustrations for those states until a
+  // purpose-built 3D rest clip wins visual review.
+  const supported = shouldUseJack3DRuntime({
+    dead: props.dead,
+    modelAvailable: Boolean(JACK_MODEL_URL),
+    reduced: props.reduced,
+    sleeping: props.sleeping,
+    stage: props.stage,
+    trainingModeOpen: props.trainingModeOpen,
+  });
+  const handleUnexpectedContextLoss = useCallback(() => setFailed(true), []);
 
   if (!supported || failed) {
     return <PetRoomSceneShell {...props} />;
@@ -129,11 +143,9 @@ export function PetRoomScene(props: PetRoomSceneProps) {
             }}
             dpr={[1, 1.5]}
             gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
-            onCreated={({ gl }) => {
-              gl.domElement.addEventListener("webglcontextlost", () => setFailed(true), { once: true });
-            }}
             style={styles.canvas}
           >
+            <WebGLContextLossGuard onFailure={handleUnexpectedContextLoss} />
             <Suspense fallback={null}>
               <DollhouseRoom
                 {...props}
@@ -196,6 +208,20 @@ export function PetRoomScene(props: PetRoomSceneProps) {
       </View>
     </PetRoomSceneShell>
   );
+}
+
+function WebGLContextLossGuard({ onFailure }: { onFailure: () => void }) {
+  const { gl } = useThree();
+
+  useEffect(() => {
+    const handleContextLoss = () => {
+      if (shouldTreatJack3DContextLossAsFailure(true)) onFailure();
+    };
+    gl.domElement.addEventListener("webglcontextlost", handleContextLoss, { once: true });
+    return () => gl.domElement.removeEventListener("webglcontextlost", handleContextLoss);
+  }, [gl, onFailure]);
+
+  return null;
 }
 
 function DollhouseRoom(
@@ -326,6 +352,10 @@ function JackModel({
   const scene = useMemo(() => cloneSkeleton(gltf.scene), [gltf.scene]);
   const { actions } = useAnimations(gltf.animations, root);
   const transform = resolveJackRoomTransform({ clip, large, poseHeld, stage });
+  const activeActionRef = useRef<AnimationAction | null>(null);
+  const stopTimersRef = useRef(
+    new Map<AnimationAction, ReturnType<typeof setTimeout>>(),
+  );
 
   useEffect(() => {
     scene.traverse((node: Object3D) => {
@@ -343,18 +373,38 @@ function JackModel({
     onReady();
   }, [onReady, scene]);
 
+  // AnimationAction instances are imperative Three.js mixer controllers.
+  // eslint-disable-next-line react-hooks/immutability
   useEffect(() => {
     const action = actions[clip];
     if (!action) return;
 
+    const pendingStop = stopTimersRef.current.get(action);
+    if (pendingStop) {
+      clearTimeout(pendingStop);
+      stopTimersRef.current.delete(action);
+    }
+    const previous = activeActionRef.current;
     const looping = isLoopingJack3DClip(clip);
     action.reset();
-    // AnimationAction is an imperative Three.js controller owned by the mixer.
     // eslint-disable-next-line react-hooks/immutability
     action.enabled = true;
     action.clampWhenFinished = !looping;
     action.setLoop(looping ? LoopRepeat : LoopOnce, looping ? Infinity : 1);
-    action.fadeIn(0.12).play();
+    action.setEffectiveTimeScale(1);
+    action.setEffectiveWeight(1);
+    if (previous && previous !== action) {
+      previous.paused = false;
+      previous.fadeOut(JACK_3D_RUNTIME_PACKAGE.blendSeconds);
+      const stopTimer = setTimeout(() => {
+        if (activeActionRef.current !== previous) previous.stop();
+        stopTimersRef.current.delete(previous);
+      }, JACK_3D_RUNTIME_PACKAGE.blendSeconds * 1000 + 40);
+      stopTimersRef.current.set(previous, stopTimer);
+      action.fadeIn(JACK_3D_RUNTIME_PACKAGE.blendSeconds);
+    }
+    action.play();
+    activeActionRef.current = action;
     const commandHoldSeconds: Partial<Record<Jack3DClipName, number>> = {
       training_sit: 1,
       training_paw: 0.8,
@@ -368,10 +418,17 @@ function JackModel({
       action.paused = true;
     }
 
-    return () => {
-      action.stop();
-    };
   }, [actions, animationRevision, clip, poseHeld]);
+
+  useEffect(
+    () => () => {
+      for (const timer of stopTimersRef.current.values()) clearTimeout(timer);
+      stopTimersRef.current.clear();
+      for (const action of Object.values(actions)) action?.stop();
+      activeActionRef.current = null;
+    },
+    [actions],
+  );
 
   return (
     <group

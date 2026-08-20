@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "kind": "managed-context-classic-three-button-controls-refresh",
+  "refreshId": "2026-08-19-classic-three-button-controls",
+  "createdOn": "2026-08-19",
+  "hashAlgorithm": "sha256",
+  "gitBlobIdentityCommand": "git hash-object --path=<path> <path>",
+  "authorization": {
+    "milestone": "Build — Classic Three-Button Controls",
+    "scope": "Record only the session-only Direct/Classic selector, App-used three-button parity controller, factual documentation, committed Quiet Care Monitor state rollover, and exact eight-file LCD/Color Pixel × Direct/Classic phone/desktop evidence matrix.",
+    "generalMutableContextException": false,
+    "simulationPersistenceLifecycleOrBalanceChangeAuthorized": false,
+    "assetPathByteTierImportOrDispositionChangeAuthorized": false,
+    "classificationChangeAuthorized": true,
+    "classificationChangeScope": "Exactly one eight-file, 598369-byte normal-Git representative-evidence group plus generatedAt; every prior group and source-inventory anchor remains unchanged.",
+    "dependencyChangeAuthorized": false,
+    "externalOrGitActionAuthorized": false,
+    "classicControlsAuthorized": true,
+    "presentationBehaviorChangeAuthorized": false,
+    "subjectiveAcceptanceOrLockAuthorized": false
+  },
+  "repositoryState": {
+    "head": "cfcf124156571d74d24afdbc3c72e453d9d5b795",
+    "headParent": "398bd7eccaba3364de4a3c80073b592e3ed9f9d3",
+    "branch": "codex/jack-v05",
+    "stagedPathCount": 0,
+    "stagedPaths": [],
+    "externalOrGitActionPerformed": false
+  },
+  "immutablePredecessor": {
+    "role": "latest-append-only-managed-context-record",
+    "record": "docs/production/QUIET_CARE_MONITOR_CONTEXT_REFRESH_2026-08-19.json",
+    "recordBytes": 13584,
+    "recordSha256": "d32813e7d7652e096ef55f300459f70f236c705f3c7ab506caed161c4a44dddf",
+    "immutable": true
+  },
+  "transitions": [
+    {
+      "path": "App.tsx",
+      "role": "session-only-control-mode-and-existing-callback-controller-wiring",
+      "prior": { "bytes": 124319, "sha256": "e975f165b9c6b70c05e47143ff3c5db227e5cd1964aec68c4896ed92e5f329bd", "gitNormalizedBlobOid": "1386be01a64de6f38aae1c89747f12b6d0dca8d4", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 139724, "sha256": "98d8f6608cb91aa5694b8213cfe40604c687f78986149e804c7102dc7b4afb89", "gitNormalizedBlobOid": "5cc2d848d4889f27d4efaecb4b07e932c62d3cab", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "PLANS.md",
+      "role": "bounded-classic-controller-plan-and-sequencing",
+      "prior": { "bytes": 22235, "sha256": "adc6b38da11e9d931a929c12cbf160a4d44634f2fa4294e27585e96419280152", "gitNormalizedBlobOid": "660f97c7f7f98bfcd9e7aa68876cf43d97cd88a7", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 22302, "sha256": "3293bff1dcdead60a9fa239477815135bcc597c4933638bae6c6699791499257", "gitNormalizedBlobOid": "4775e99b23d4a0c477b2bcd17d64bc38d7ad033a", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "role": "durable-session-only-classic-controller-policy",
+      "prior": { "bytes": 29941, "sha256": "b6fd0fa65721a4a2ece3063c9c2f4f09b13dc69b9df997b5d907fd2c06aacff9", "gitNormalizedBlobOid": "4d3943dcd95414c50b5fb5ae7c5986eb7d2e9249", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 30774, "sha256": "a951322a4bd0d04f012ca1da3c973b0ced3c7ee4d26ffa0a6762cbb16b2a8086", "gitNormalizedBlobOid": "ea449fb031b69d2b7c968b50ebb5d25e785838c2", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/GAME_PRODUCTION_PLAN.md",
+      "role": "classic-controller-track-checkpoint",
+      "prior": { "bytes": 24254, "sha256": "c2fea6c4fc0852eef48053befdaebd2e94c7555e061f553a543038f1b30c3b21", "gitNormalizedBlobOid": "080e0a532cada0bcb559b1e489e77f6a44dd5059", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 24840, "sha256": "2f19fe51d6ff4542e57fb6d22c7605cf3261513bfcebb392c703f34f210c8584", "gitNormalizedBlobOid": "24bdeacfda6065e17f573fd1a2b077205ef12689", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/QUALITY_GATES.md",
+      "role": "classic-controller-parity-keyboard-dialog-and-matrix-quality-contract",
+      "prior": { "bytes": 13107, "sha256": "e6f651df0624ab88ada4b5d479039bd019e1cb25322f7431f2c7099cb93d8ac5", "gitNormalizedBlobOid": "4996608bdd6aa1011ae08ab5f53c4b8a6ea5f02a", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 13589, "sha256": "5b942c35795daeadf1c48b11dbe84cee6dbac254f6a980d01900a6fd6420a06e", "gitNormalizedBlobOid": "e9608af74aee5f844ce9b5699b48c9845f0255dd", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/production/PRODUCTION_DASHBOARD.md",
+      "role": "current-classic-controller-delivery-status",
+      "prior": { "bytes": 10827, "sha256": "b9ed767bfa1f6ad7962a80b0924550623c924f10ef9e772277605527b665ef9d", "gitNormalizedBlobOid": "efae92806495cdee588ec94c2bdcbff5a3c678d7", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 10917, "sha256": "357faa0b0647663aa090e1bbed5ca4c6af0f5d08dfad698b1917d4ed9a314444", "gitNormalizedBlobOid": "5345e1e96c4cefaf181feeee48a0fab394297242", "gitState": "tracked-modified" }
+    }
+  ],
+  "additions": [
+    { "path": "src/classic-controls.ts", "role": "pure-session-control-mode-menu-cycle-App-used-dispatch-and-keyboard-policy", "priorState": "absent-at-quiet-care-monitor-head", "bytes": 9922, "sha256": "ae2a78f737709538364e7155fa9f0419bd276ad21f5becf8c34014fce8f6e644", "gitNormalizedBlobOid": "9b9c89e771bd16497c51242c265ce53f625d7a74", "gitState": "untracked" },
+    { "path": "src/classic-controls.test.ts", "role": "App-used-room-status-sleep-training-parity-wrap-disabled-dispatch-keyboard-and-no-persistence-tests", "priorState": "absent-at-quiet-care-monitor-head", "bytes": 11680, "sha256": "4336e3b6b31b4e38ffb455e7548acba84892353991182cd73cc8bff965d19566", "gitNormalizedBlobOid": "77040a364abafcbd2ed4ad0e9dadb3425ffcb15c", "gitState": "untracked" }
+  ],
+  "committedQuietCareStateSuccessors": [
+    { "path": "docs/production/CREATIVE_DIRECTION.md", "bytes": 5548, "sha256": "8d1abdaa118e4c8f0e7b01614368df4cd1017542c6d49fb8afa0c0ffb8bec894", "gitNormalizedBlobOid": "04beff105f1aa7b2d21a3f097b9acc00f28e1332", "priorState": "tracked-modified", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false },
+    { "path": "src/lcd-presentation-policy.ts", "bytes": 3402, "sha256": "2d257dc9371af92ddd29c0aff0749ad636915cb3531a3745eaf7ebba19c407f7", "gitNormalizedBlobOid": "37b7b2bdec4a534fa1fe78d4e524c32e4046c64f", "priorState": "untracked", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false },
+    { "path": "src/lcd-presentation-policy.test.ts", "bytes": 2801, "sha256": "dcac2dfdfb1bcb630f7013f3f2ff73059cfdd76784ae905212877eff13153ac5", "gitNormalizedBlobOid": "b26192ca4736aaa426effa6f960cb9d9ebfdb4d1", "priorState": "untracked", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false },
+    { "path": "src/pet-presentation-model.ts", "bytes": 7604, "sha256": "a966e6a58c0fb29658faa5a8dcf883d529a46b1a374b0baccf9a6980e0012f3a", "gitNormalizedBlobOid": "e43cd3ac70efd696e708d9ecdf6477b3451ce316", "priorState": "untracked", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false },
+    { "path": "src/pet-presentation-model.test.ts", "bytes": 6212, "sha256": "15f2d919b0867a6c81e21b04c48ee09ab6c0c9c3ca14b8bec9d9aa4e6b916338", "gitNormalizedBlobOid": "cc53ec655fbc2da792e6f84201c030e96c093822", "priorState": "untracked", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false },
+    { "path": "src/pet-presentation-stage.tsx", "bytes": 5385, "sha256": "730b15f9206f4582cf382f195c830be423518af539ac5be8408be2e25e72aa87", "gitNormalizedBlobOid": "537af8c0516d12d7d674be75c63892e71b5ee3c0", "priorState": "untracked", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false },
+    { "path": "src/quiet-care-monitor.tsx", "bytes": 14603, "sha256": "6094dfe2501ddf357a8fe535ce9871ecd44eccd45295feb058fe9fe12271262e", "gitNormalizedBlobOid": "2bf6c194b870ca59a747201fb6820f02f4cf12dd", "priorState": "untracked", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false },
+    { "path": "evidence/lcd-presentation/color-pixel-direct-1440x900.jpg", "bytes": 85204, "sha256": "3f9224bdd2941b4bd5eeee29dfe89de9a474368e75d9e5339605ebda44b664a4", "gitNormalizedBlobOid": "5ff44370fa0c41f73bddc679789fe9f7aba01000", "priorState": "untracked", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false },
+    { "path": "evidence/lcd-presentation/color-pixel-direct-390x844.jpg", "bytes": 49232, "sha256": "4ff6d37921da2f42aefd8805aab67adfd5f8bdb7acffedbe149cd5f05c46af97", "gitNormalizedBlobOid": "cee02281ea8b40152b90005bbf6fce4d4871a17b", "priorState": "untracked", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false },
+    { "path": "evidence/lcd-presentation/lcd-status-medicine-1440x900.jpg", "bytes": 74760, "sha256": "007c265302e4f12d9566875487942d8646e32aa29f52f0ebb9a0ce8a176646e8", "gitNormalizedBlobOid": "51036d0efd932fca1c1cf26c5d0efe1bfedb2bed", "priorState": "untracked", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false },
+    { "path": "evidence/lcd-presentation/lcd-status-medicine-390x844.jpg", "bytes": 40698, "sha256": "0f35fd89b2a75efa860bea72c363cc597f68471a22434ef7f40be833118a6ad1", "gitNormalizedBlobOid": "b716b110f72e9823249dbaf1ad0d14f1233a6342", "priorState": "untracked", "currentState": "tracked-clean-at-quiet-care-monitor-head", "bytesChanged": false }
+  ],
+  "representativeEvidence": {
+    "kind": "normal-git-classic-control-parity-matrix-live-evidence",
+    "groupId": "normal-git-evidence-classic-controls",
+    "fileCount": 8,
+    "bytes": 598369,
+    "files": [
+      { "path": "evidence/classic-controls/color-pixel-classic-1440x900.jpg", "bytes": 93972, "sha256": "65e558d8152ab8ce0afb023b7555cb7a483ed234199b94372c0d6ba0c5f46392", "gitNormalizedBlobOid": "d2bc696043c8cf5f1dbb3ce7fdf80dba41ff2845", "dimensions": [1440, 900], "signature": "jpeg-jfif" },
+      { "path": "evidence/classic-controls/color-pixel-classic-390x844.jpg", "bytes": 49661, "sha256": "72bd035c0ad0580ee0af1cbf8aaa172c9c0287dcd8b7bd0f906463a47e44b89f", "gitNormalizedBlobOid": "bcbebd71b2cadf3faefaf438259514165a52709e", "dimensions": [390, 844], "signature": "jpeg-jfif" },
+      { "path": "evidence/classic-controls/color-pixel-direct-1440x900.jpg", "bytes": 89936, "sha256": "e64651ef412814d573c4aaf3094e37d7de0a36fce19290d7eddb723c38ee7550", "gitNormalizedBlobOid": "31b54b770348effff7d58603a4156b0040b06af7", "dimensions": [1440, 900], "signature": "jpeg-jfif" },
+      { "path": "evidence/classic-controls/color-pixel-direct-390x844.jpg", "bytes": 50145, "sha256": "88616bea94117f8921a0f4117a635923eb02b3780f8fe05ab035c3caa3b1cd53", "gitNormalizedBlobOid": "8872e476009e711a6239d84e6fe0729684bb9b72", "dimensions": [390, 844], "signature": "jpeg-jfif" },
+      { "path": "evidence/classic-controls/lcd-classic-1440x900.jpg", "bytes": 106282, "sha256": "90ec9bcacee745443d4b58971b5f4d60a5748ac27a9788f077250af90bcf12cb", "gitNormalizedBlobOid": "244683ffeab3cb13b3a9e71aa9021fef15c1ec14", "dimensions": [1440, 900], "signature": "jpeg-jfif" },
+      { "path": "evidence/classic-controls/lcd-classic-390x844.jpg", "bytes": 53817, "sha256": "52f130c52887ae2f2cef4c40cf96c0ce448bb99f968101f8d735a80c5005472f", "gitNormalizedBlobOid": "cdfdda7edad1524660c91a0585f510c7df46cc81", "dimensions": [390, 844], "signature": "jpeg-jfif" },
+      { "path": "evidence/classic-controls/lcd-direct-1440x900.jpg", "bytes": 100964, "sha256": "3222f0751f892e10d8fa3ec198e22aee6e7b9c20c76dad67b6f6b0e3e8d16c42", "gitNormalizedBlobOid": "fb6e2438e0f6170aab1ffc13701e69c4403d259b", "dimensions": [1440, 900], "signature": "jpeg-jfif" },
+      { "path": "evidence/classic-controls/lcd-direct-390x844.jpg", "bytes": 53592, "sha256": "5e20cd965d37007bc376eddfbcabad0c9e2c86d355cfa8b6ee61d0b81eb66629", "gitNormalizedBlobOid": "dd9a3f009c0c69ceee5b15484b3c73ff8f7c4821", "dimensions": [390, 844], "signature": "jpeg-jfif" }
+    ]
+  },
+  "liveVerification": {
+    "phone": { "pageReportedViewport": [390, 844], "documentScrollWidth": 390, "horizontalOverflow": false, "matrixModesChecked": ["lcd-direct", "lcd-classic", "color-pixel-direct", "color-pixel-classic"] },
+    "desktop": { "pageReportedViewport": [1440, 900], "documentScrollWidth": 1440, "horizontalOverflow": false, "matrixModesChecked": ["lcd-direct", "lcd-classic", "color-pixel-direct", "color-pixel-classic"] },
+    "reloadRestoredDirect": true,
+    "threeDRemainedPresentationDefault": true,
+    "sessionOnlyModeSwitchPreservedPetAndPresentationState": true,
+    "roomWrapBothDirectionsChecked": true,
+    "disabledMedicineReasonAndNoMutationChecked": true,
+    "statusSleepAndTrainingDialogsChecked": true,
+    "trainingPawRewardResultDoneChecked": true,
+    "keyboardArrowEnterChecked": true,
+    "nativeInteractiveTargetFilteringCoveredDeterministically": true,
+    "modalIsolationEscapeAndTriggerRestorationChecked": true,
+    "observedNewRuntimeErrors": 0,
+    "observedNewRuntimeWarnings": 0,
+    "nonErrorRuntimeLogs": ["THREE.WebGLRenderer: Context Lost. when switching away from the 3D presenter"]
+  },
+  "unchangedInvariants": {
+    "classificationPath": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+    "priorClassificationBytes": 140025,
+    "priorClassificationSha256": "80a017770c774dcab3c137831bf3da6ae09c205d397e73debc99342d67c0d8e3",
+    "currentClassificationBytes": 142084,
+    "currentClassificationSha256": "dc0c458f1e682e699352f1dfc51927784b1c1dec80d0977ef4392049e140c7ed",
+    "priorClassificationGroupCount": 24,
+    "currentClassificationGroupCount": 25,
+    "packageJsonBytes": 1277,
+    "packageJsonSha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa",
+    "packageLockJsonBytes": 483873,
+    "packageLockJsonSha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38",
+    "governedAssetFileCount": 125,
+    "governedAssetBytes": 448676672,
+    "governedAssetAggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f",
+    "assetPathChanges": 0,
+    "assetByteChanges": 0,
+    "assetTierChanges": 0,
+    "runtimeImportChanges": 0,
+    "assetDispositionChanges": 0,
+    "classificationChanges": 1,
+    "representativeEvidenceAdditions": 8,
+    "representativeEvidenceBytes": 598369,
+    "dependencyChanges": 0,
+    "simulationPersistenceLifecycleOrBalanceChanges": 0
+  },
+  "controlPlanePredecessors": {
+    "assetPolicy": { "path": "docs/production/asset-policy.v1.json", "bytes": 52449, "sha256": "55ac293b71dc81eba17b04966fa6d4333b7e22e30228e6aeea53bb05dfe9b7ea" },
+    "assetVerifier": { "path": "scripts/verify-assets.mjs", "bytes": 255059, "sha256": "5696aa9e18ee18e14f8d16b59718a97c57a86421d29ed3f6c397219545905cc5" }
+  },
+  "finalVerificationPlan": {
+    "jsonAndNodeSyntax": true,
+    "fullAndScopedGitDiffChecks": true,
+    "assetVerifierPassesRequired": 2,
+    "exactQualityGatesRequired": true,
+    "independentReadOnlyConfirmationRequired": true,
+    "stagedPathCountRequired": 0
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "checks": {
+    "skinHasOneRenderableMesh": true,
+    "animationLibraryHasNoRenderableMesh": true,
+    "previewHasOneRenderableMesh": true,
+    "triangleBudget": true,
+    "jointBudget": true,
+    "materialBudget": true,
+    "textureEdgeBudget": true,
+    "decodedTextureBudget": true,
+    "skinPayloadBudget": true,
+    "animationPayloadBudget": true,
+    "clipNames": true,
+    "clipDurations": true,
+    "semanticAnchors": true,
+    "rootIdentity": true,
+    "noRootTranslationChannels": true,
+    "hitNoseInvisible": true,
+    "treatContactTiming": true,
+    "eventClipParity": true,
+    "inverseBindMatrices": true
+  },
+  "metrics": {
+    "triangles": 9738,
+    "joints": 27,
+    "materials": 1,
+    "textures": [
+      [
+        1024,
+        1024
+      ]
+    ],
+    "texture": [
+      1024,
+      1024
+    ],
+    "decodedTextureBytes": 4194304,
+    "skinBytes": 2093332,
+    "animationBytes": 927820,
+    "previewBytes": 3010908,
+    "clipCount": 28,
+    "inverseBindMatrixSha256": "9e6bb93959b910b32c7a6b609eb46f530e14b1ba019ac4596cb2336518608087"
+  },
+  "missingAnchors": [],
+  "durationErrors": {},
+  "rootTranslationChannels": [],
+  "treatContact": {
+    "anchor": "mouth_anchor",
+    "contactMs": 600,
+    "hiddenMs": 633,
+    "maximumDistanceMeters": 0.01,
+    "runtimeTreatMustFollowMouthAnchor": true
+  }
+}

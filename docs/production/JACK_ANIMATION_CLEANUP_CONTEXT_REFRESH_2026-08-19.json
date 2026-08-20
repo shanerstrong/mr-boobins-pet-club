@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "kind": "managed-context-jack-animation-cleanup-refresh",
+  "refreshId": "2026-08-19-jack-animation-cleanup",
+  "createdOn": "2026-08-19",
+  "hashAlgorithm": "sha256",
+  "gitBlobIdentityCommand": "git hash-object --path=<path> <path>",
+  "authorization": {
+    "milestone": "Build — Jack Animation Cleanup",
+    "scope": "Record only the materially different Baby V2.2 hybrid runtime, bounded clip crossfades, factual animation-status documentation, and exact technical routing of the existing V2.2 GLB into normal Git as the current GitHub Pages runtime dependency.",
+    "generalMutableContextException": false,
+    "simulationPersistenceLifecycleOrBalanceChangeAuthorized": false,
+    "dependencyChangeAuthorized": false,
+    "externalOrGitActionAuthorized": false,
+    "subjectiveAcceptanceOrLockAuthorized": false,
+    "runtimeAssetByteChangeAuthorized": false,
+    "runtimeAssetPathAdditionAuthorized": true,
+    "assetTierChangeAuthorized": true,
+    "assetTierChangeScope": "Exactly one existing 2734524-byte Baby V2.2 preview GLB moves from proposed-cold-archive to normal-git-assets because it is now imported by the GitHub Pages runtime; its bytes and SHA-256 remain unchanged.",
+    "classificationChangeAuthorized": true,
+    "classificationChangeScope": "Only generatedAt plus the exact Baby V2.2 GLB entry moving from proposed-cold-archive to normal-git-assets; every other file entry, group, source-inventory anchor, byte, SHA-256, tier, and disposition remains unchanged."
+  },
+  "repositoryState": {
+    "head": "cfcf124156571d74d24afdbc3c72e453d9d5b795",
+    "headParent": "398bd7eccaba3364de4a3c80073b592e3ed9f9d3",
+    "branch": "codex/jack-v05",
+    "stagedPathCount": 0,
+    "stagedPaths": [],
+    "externalOrGitActionPerformed": false
+  },
+  "immutablePredecessor": {
+    "role": "latest-append-only-managed-context-record",
+    "record": "docs/production/CLASSIC_THREE_BUTTON_CONTROLS_CONTEXT_REFRESH_2026-08-19.json",
+    "recordBytes": 15311,
+    "recordSha256": "a5d8d121dc06abf12aa4ee5557895726c67b654d0a003ff3f0732529d6ce20df",
+    "immutable": true
+  },
+  "transitions": [
+    {
+      "path": "docs/DECISIONS.md",
+      "role": "durable-provisional-v2.2-runtime-and-blend-decision",
+      "prior": { "bytes": 30774, "sha256": "a951322a4bd0d04f012ca1da3c973b0ced3c7ee4d26ffa0a6762cbb16b2a8086", "gitNormalizedBlobOid": "ea449fb031b69d2b7c968b50ebb5d25e785838c2", "identitySource": "classic-controls-current" },
+      "current": { "bytes": 31724, "sha256": "eae0a28aaff0dc86359001d1d12e6a242a5b92bb354e32a13db56eafe3083a1d", "gitNormalizedBlobOid": "53a1b6538da94bd6dadd1284e983aa17b2d41a3d", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/GAME_PRODUCTION_PLAN.md",
+      "role": "v2.2-baby-runtime-and-retained-custom-clip-risk-status",
+      "prior": { "bytes": 24840, "sha256": "2f19fe51d6ff4542e57fb6d22c7605cf3261513bfcebb392c703f34f210c8584", "gitNormalizedBlobOid": "24bdeacfda6065e17f573fd1a2b077205ef12689", "identitySource": "classic-controls-current" },
+      "current": { "bytes": 25096, "sha256": "f69827dc74f7997885b7576596f06c23398776582fcf05c434deeefbf731f4fc", "gitNormalizedBlobOid": "afc655acf8f0b340a520bdf76905c94bedff79dd", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/QUALITY_GATES.md",
+      "role": "v2.2-runtime-blend-phone-desktop-animation-quality-contract",
+      "prior": { "bytes": 13589, "sha256": "5b942c35795daeadf1c48b11dbe84cee6dbac254f6a980d01900a6fd6420a06e", "gitNormalizedBlobOid": "e9608af74aee5f844ce9b5699b48c9845f0255dd", "identitySource": "classic-controls-current" },
+      "current": { "bytes": 13832, "sha256": "3e3f69543e489acec9623fde16c56bcbb91b7065adf709b9eb6c6d98ee37602f", "gitNormalizedBlobOid": "bc9e58e55a582192114f8ec32f276cab75bbee97", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/production/CREATIVE_DIRECTION.md",
+      "role": "binding-procedural-motion-rejection-and-provisional-v2.2-status",
+      "prior": { "bytes": 5548, "sha256": "8d1abdaa118e4c8f0e7b01614368df4cd1017542c6d49fb8afa0c0ffb8bec894", "gitNormalizedBlobOid": "04beff105f1aa7b2d21a3f097b9acc00f28e1332", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 6514, "sha256": "3651e6b895776700a182f229c86141f72d1a6e8ad71cf18ebdca0cd16e7dce91", "gitNormalizedBlobOid": "eea0b80545cff8663f72272a2d2461341711b299", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "docs/production/PRODUCTION_DASHBOARD.md",
+      "role": "current-animation-cleanup-delivery-status",
+      "prior": { "bytes": 10917, "sha256": "357faa0b0647663aa090e1bbed5ca4c6af0f5d08dfad698b1917d4ed9a314444", "gitNormalizedBlobOid": "5345e1e96c4cefaf181feeee48a0fab394297242", "identitySource": "classic-controls-current" },
+      "current": { "bytes": 11401, "sha256": "c9c301a6ed68f5ccb10bb2e685b25bdd6d85f90a19a4bac60ae10a5b72c0404b", "gitNormalizedBlobOid": "35c23ed154fa677d4abf4c8b80fa09f3a1b3e722", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "src/jack-3d-policy.ts",
+      "role": "v2.2-runtime-package-and-bounded-blend-contract",
+      "prior": { "bytes": 2202, "sha256": "d98e5eb6d5797e64f2e0204705f6cccc934891963387b737845e5c3d0534fb91", "gitNormalizedBlobOid": "5161e106ed9bfa89e6c5ccf7f0e6bf7b1c67fc86", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 2498, "sha256": "d28d7ae84850714834bd4a8ee2115b1bd20a8ab805220eb7ca91476ce072185b", "gitNormalizedBlobOid": "a75213a3275a6748d76c29e7f56c4069133b3785", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "src/jack-3d-policy.test.ts",
+      "role": "v2.2-runtime-package-clip-count-and-blend-policy-tests",
+      "prior": { "bytes": 3891, "sha256": "2010fd344284784ec18be96f4af029260521a04d73f017bcd32f3c2d8014eead", "gitNormalizedBlobOid": "5967433d722bfa01e1760028ffb807ad2920a03c", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 4617, "sha256": "7c0fc0fbc404ef678c646a39f2276070073d556f7cde14ee9ec92d911a5b53af", "gitNormalizedBlobOid": "19e3b4eebf34a2120eccf5a34d2118c2a7edeb94", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "src/pet-room-scene.web.tsx",
+      "role": "v2.2-runtime-import-and-safe-imperative-crossfade-controller",
+      "prior": { "bytes": 18031, "sha256": "dcc5f779dfa7425b70795544f78a23d0351aafea681c8e06711c88cb6a23a644", "gitNormalizedBlobOid": "62e285f0bf708c46c0ef74d00f4e5ec53f4463d3", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 19310, "sha256": "3b9bfecf163ef89f316907012da3c863062fe0578dc427081c416d7caff3ae11", "gitNormalizedBlobOid": "7280fa927fe69f49419c36c218396c0ba550e2b2", "gitState": "tracked-modified" }
+    },
+    {
+      "path": "scripts/verify-export.mjs",
+      "role": "v2.2-static-export-runtime-asset-smoke-contract",
+      "prior": { "bytes": 3898, "sha256": "fc39c7789295250db3cda97f990cb8d0a7f200fcc27abc4fb94e0a206a4de922", "gitNormalizedBlobOid": "99e264925d7b4735b3a7379456855fb039a76dbe", "identitySource": "quiet-care-monitor-commit" },
+      "current": { "bytes": 3905, "sha256": "0b6b4f49fc62749fd0242dc18efe9d00871ef6ecaba0a6e74f1a1af53c5588e6", "gitNormalizedBlobOid": "ee439d48cda15b5d9813132a905daddc2c7f79e7", "gitState": "tracked-modified" }
+    }
+  ],
+  "runtimeAssetTransition": {
+    "path": "assets/3d/jack/v2/exports/preview/jack-baby-v2.2-all-clips.glb",
+    "bytes": 2734524,
+    "sha256": "4cfcd4c4a56e4699e9c333d2fba380c703aadda2fcfab867af88907e543add15",
+    "gitNormalizedBlobOid": "9cbc337142e70cca3571cceca2c5a494cc9ce10f",
+    "prior": { "groupId": "proposed-cold-archive", "tier": "cold-archive-verified", "gitState": "untracked" },
+    "current": { "groupId": "normal-git-assets", "tier": "normal-git", "gitState": "untracked", "reviewStatus": "provisional-awaiting-Mark-animation-review", "importedBy": "src/pet-room-scene.web.tsx" },
+    "bytesChanged": false,
+    "subjectiveAcceptanceOrLock": false
+  },
+  "liveVerification": {
+    "phone": { "pageReportedViewport": [390, 844], "documentScrollWidth": 390, "horizontalOverflow": false },
+    "desktop": { "pageReportedViewport": [1440, 900], "documentScrollWidth": 1440, "horizontalOverflow": false },
+    "checkedStates": ["idle", "play", "feed", "clean-reaction", "sleep", "wake-to-idle", "training-up-held", "training-reward"],
+    "collapsedLimbOrUnexpectedFloorPenetrationObserved": false,
+    "cameraOrGroundingContractChanged": false,
+    "retainedCustomClipsStillProvisional": true,
+    "subjectiveAcceptanceClaimed": false
+  },
+  "classificationTransition": {
+    "path": "docs/production/V0.6-V0.8_ASSET_CLASSIFICATION.json",
+    "prior": { "bytes": 142084, "sha256": "dc0c458f1e682e699352f1dfc51927784b1c1dec80d0977ef4392049e140c7ed", "groupCount": 25 },
+    "current": { "bytes": 142084, "sha256": "e02a72ea14d61c0f8fa34ac603e34af50388728858b6f4a3d42bc2f75bc743d5", "groupCount": 25 },
+    "normalGitAssets": { "priorFileCount": 94, "currentFileCount": 95, "priorBytes": 4124864, "currentBytes": 6859388 },
+    "proposedColdArchive": { "priorFileCount": 291, "currentFileCount": 290, "priorBytes": 536212240, "currentBytes": 533477716 },
+    "movedPathCount": 1,
+    "movedBytes": 2734524
+  },
+  "unchangedInvariants": {
+    "packageJsonBytes": 1277,
+    "packageJsonSha256": "9a8da679e65de153a806328c432ef8040eab8eecae40f778961bd69840f1ecfa",
+    "packageLockJsonBytes": 483873,
+    "packageLockJsonSha256": "cd14e95daefbd563eb2f58207cb9bbd3edbb40f05cfeafaeece4454a57522b38",
+    "governedAssetFileCount": 125,
+    "governedAssetBytes": 448676672,
+    "governedAssetAggregateSha256": "531942b4f52e51762d142c04dc79dc280456c09e50d8f699da463baf402a7b4f",
+    "modelAssetByteChanges": 0,
+    "runtimeAssetPathAdditions": 1,
+    "assetTierChanges": 1,
+    "classificationGroupAdditions": 0,
+    "representativeEvidenceAdditions": 0,
+    "dependencyChanges": 0,
+    "simulationPersistenceLifecycleOrBalanceChanges": 0
+  },
+  "controlPlanePredecessors": {
+    "assetPolicy": { "path": "docs/production/asset-policy.v1.json", "bytes": 56508, "sha256": "ebf2808bcfb51d34e707c0910e1bd33b1435f3b27c0ca7ace7b657fa72ee3cd0" },
+    "assetVerifier": { "path": "scripts/verify-assets.mjs", "bytes": 282445, "sha256": "4a0f269c7a9da4b0905453c313cf06360643798a3893be8379877374f9324ded" }
+  },
+  "finalVerificationPlan": {
+    "jsonAndNodeSyntax": true,
+    "fullAndScopedGitDiffChecks": true,
+    "assetVerifierPassesRequired": 2,
+    "exactQualityGatesRequired": true,
+    "stagedPathCountRequired": 0
+  }
+}

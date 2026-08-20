@@ -72,7 +72,7 @@ Before additional pets or rooms enter production, supervised players should unde
 | Persistence | Strict V6 pet record plus separate audio/training/first-care records; V1–V5 migration and malformed-save retention preserved | Strict migration for new needs; interrupted-write and expanded golden-path browser coverage |
 | Controls | Direct touch/mouse/semantic controls | Shared action contract plus classic three-button parity |
 | Presentation | Color room, 3D early-stage web default, pixel fallback | LCD plus color-pixel switch over one state; explicitly classify 3D |
-| Character art | V2 runtime Baby; validated V2.2 age outputs exist | Reconcile V2/V2.2 and integrate only after slice/performance gates |
+| Character art | Provisional V2.3 complete-canine awake-care runtime for Baby/Little Puppy; stable code-native Sleep/death/Training fallbacks | Review awake care motion in context; author proper 3D rest and command cycles rather than shipping rejected donor poses; validate later age-stage presentation separately |
 | Audio | Functional provisional SFX/music plus cue contract | Route the app through the versioned cue manifest and finish provenance/mastering |
 | Accessibility | Reduced motion, labels, target sizes, muted default, sleep-modal initial focus/isolation/trap/restore | Complete keyboard parity and intended-player observation |
 | QA | Strong pure unit tests; manual visual evidence | Browser golden path, save fixtures, device matrix, performance and long-session measurements |
@@ -86,7 +86,7 @@ Outcome: a reproducible, known-good baseline before broader work.
 
 - Preserve all current dirty/untracked user work.
 - Run the existing deterministic gates and record results.
-- Reconcile V2 versus V2.2 runtime/asset documentation.
+- Reconcile Teen/Adult runtime support only after their age-stage presentation gates; Baby/Little Puppy awake non-training 3D states use the provisional V2.3 complete-canine candidate while Sleep/death/Training remain on stable semantic fallbacks.
 - Decide which of the roughly 500 MB of source/evidence belongs in Git, Git LFS, a release archive, or local-only storage.
 - Align package/app/document version labels.
 
@@ -135,7 +135,9 @@ Track C — presentation contract:
 - Switch presentations without advancing or mutating pet state.
 - Treat 3D as an additive presenter until the durable product decision is resolved.
 
-Implementation checkpoint — 2026-08-19: the provisional Quiet Care Monitor prototype is implemented pending final context reconciliation and gates. A deep-frozen V7 `PetPresentationModel` exposes the same ordered six needs, status/recommendation, medicine availability, warnings, and semantic activity to every presenter. Session-only `three-d`, `color-pixel`, and `lcd` selection defaults to 3D, never writes storage, and explicitly renders the existing code-native pixel scene for Color Pixel. Quiet Care Monitor is code-native, uses only system text and two/three-frame state treatments, retains meaningful reduced-motion end frames and non-color-only warning cues, and leaves all direct typed actions outside the presenter. This is not Mark's acceptance or lock; classic three-button controls have not begun.
+Implementation checkpoint — 2026-08-19: the provisional Quiet Care Monitor prototype is committed and remains unaccepted/unlocked creative work. A deep-frozen V7 `PetPresentationModel` exposes the same ordered six needs, status/recommendation, medicine availability, warnings, and semantic activity to every presenter. Session-only `three-d`, `color-pixel`, and `lcd` selection defaults to 3D, never writes storage, and explicitly renders the existing code-native pixel scene for Color Pixel. Quiet Care Monitor is code-native, uses only system text and two/three-frame state treatments, retains meaningful reduced-motion end frames and non-color-only warning cues, and leaves typed actions outside the presenter.
+
+Track B implementation checkpoint — 2026-08-19: Direct remains the session/reload default. Classic uses one Left/Select/Right adapter over the exact existing room, Status/Medicine, Sleep, and Training callbacks; it creates no save key and never advances or replaces pet state while switching modes. The room selection order is deterministic and wraps both directions. Disabled actions remain highlighted with their truthful reason and Select performs no mutation. The direct/native controls remain present in Direct and inside dialogs; Classic adds keyboard shortcuts, screen-reader selected/live state, 44px targets, modal focus containment, Escape close, and trigger restoration.
 
 Exit: every numbered first-milestone acceptance criterion passes; representative screens exist for both presentation modes and both control schemes.
 
@@ -261,7 +263,7 @@ Until resolved, implementation must preserve reversibility and must not claim pu
 | V0.6–V0.8 baseline and large excluded asset/evidence set | Controlled delivery risk | Baseline `9c8a821`, immutable inventory, restricted-Drive preservation, and deterministic classification are in place; retain originals and keep LFS/cleanup separately gated |
 | Full-body 3D click triggered signature nose Boop | Resolved in current tranche | Runtime Boop is restricted to the semantic nose target; retain browser regression coverage |
 | Brief and 3D/pixel documentation disagree | High scope risk | Resolve presentation hierarchy and update durable decisions before large art production |
-| V2 runtime versus promoted V2.2 assets | High asset-integration risk | Reconcile manifests, performance, and age-stage support before switching runtime files |
+| Provisional V2.3 complete-canine motion and missing production rest/command cycles | High visible-quality risk | Review the awake non-training CC0 canine-derived candidate in context; keep the rejected donor Sleep/death/Sit/Paw/Up cycles out of runtime and use stable semantic illustrations until authored 3D replacements pass phone/desktop live QA. Do not describe technical validation as subjective acceptance. |
 | Browser golden path is evidence-driven rather than continuously automated | Medium regression risk | Keep App-level lifecycle/component tests deterministic; expand browser automation after typed interaction seams are extracted |
 | 6.3 MB main web entry remains large | Medium performance risk | Eager GLB fetch is removed; measure named devices, then split/lazy-load where evidence warrants |
 | Per-second state save | Medium storage/performance risk | Measure churn; separate display ticks from meaningful persistence commits |

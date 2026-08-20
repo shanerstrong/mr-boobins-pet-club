@@ -35,6 +35,43 @@ export type Jack3DVisualState = {
   trainingTreatVisible: boolean;
 };
 
+export const JACK_3D_RUNTIME_PACKAGE = {
+  asset: "jack-baby-v2.3-all-clips.glb",
+  blendSeconds: 0.22,
+  clipCount: 28,
+  id: "baby-v2.3",
+  retargetedCanineClips: [
+    "idle",
+    "walk",
+    "run",
+    "tail_wag",
+    "feed",
+    "sleep",
+    "wake",
+    "play",
+    "clean_reaction",
+    "boop_comfortable",
+    "boop_need_hunger",
+    "boop_need_energy",
+    "boop_need_hygiene",
+    "boop_need_happiness",
+    "boop_rejected",
+    "tired",
+    "dirty",
+    "death_rest",
+    "training_attention",
+    "training_sit",
+    "training_paw",
+    "training_up",
+    "training_treat_receive",
+    "training_treat_eat",
+    "celebration_happy_hop",
+    "celebration_spin_wag",
+    "celebration_goofy_shimmy",
+    "training_return_idle",
+  ],
+} as const;
+
 const TRAINING_CLIP: Exclude<TrainingVisualAction, null | "eating"> extends infer T
   ? Record<Extract<T, string>, Jack3DClipName>
   : never = {
@@ -48,6 +85,39 @@ const TRAINING_CLIP: Exclude<TrainingVisualAction, null | "eating"> extends infe
 
 export function isJack3DStageSupported(stage: GrowthStage): boolean {
   return stage === "baby" || stage === "little-puppy";
+}
+
+/**
+ * Runtime presentation gate. The current donor sleep/death and command clips
+ * remain source evidence but do not replace the stable semantic illustrations.
+ */
+export function shouldUseJack3DRuntime({
+  dead,
+  modelAvailable,
+  reduced,
+  sleeping,
+  stage,
+  trainingModeOpen,
+}: {
+  dead: boolean;
+  modelAvailable: boolean;
+  reduced: boolean;
+  sleeping: boolean;
+  stage: GrowthStage;
+  trainingModeOpen: boolean;
+}): boolean {
+  return (
+    isJack3DStageSupported(stage) &&
+    modelAvailable &&
+    !dead &&
+    !reduced &&
+    !sleeping &&
+    !trainingModeOpen
+  );
+}
+
+export function shouldTreatJack3DContextLossAsFailure(runtimeExpected: boolean): boolean {
+  return runtimeExpected;
 }
 
 /** Pure presentation mapping; this never mutates pet or training state. */

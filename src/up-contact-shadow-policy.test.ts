@@ -16,14 +16,14 @@ describe("settled Up contact-shadow policy", () => {
     const desktop = resolveSettledUpContactShadows({ clip: "training_up", large: true, poseHeld: true, stage: "little-puppy" });
 
     expect(phone[0]).toEqual([
-      0.3958606043534193,
+      0.531193582711174,
       0.002,
-      -0.22344023802665977,
+      0.23961509994192487,
     ]);
     expect(phone[1]).toEqual([
-      -0.2910213269810302,
+      0.06565142316485165,
       0.002,
-      0.22661544660338,
+      0.5162235506621967,
     ]);
     expect(desktop).toHaveLength(2);
     expect(desktop[0][1]).toBe(0.002);
